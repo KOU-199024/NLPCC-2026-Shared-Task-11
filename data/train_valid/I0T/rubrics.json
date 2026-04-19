@@ -1,0 +1,614 @@
+[
+  {
+    "criteria": "The agent has read section 3 completely to understand the calculation of modality gap metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The calculation of centroid distance and linear separability are planned to be implemented",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the caculation of centroid distance and linear separability are implemented",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 3.1 completely to understand the range of different severity levels of modality gap.",
+    "score": 3,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 4 completely to understand the core methodology of I0T framework.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 4.1 and Appendix D.1 completely to understand the training process of the first stage.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1, Appendix D.1"
+  },
+  {
+    "criteria": "The plan includes the collection of the ShareGPT4V dataset and using the 3 independent subsets of it (LAION, COCO, SAM).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the preparation of CLIP-based models (Long-CLIP, Long-CLIP-only).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the implementation of the combination of contrasive learning and cyclic losses.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the hyperparameters during the training process, and their values match the descriptions in the paper: learning rate of 1e-6, weight decay of 1e-2, batch size of 128, ...",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection and implementation of the ShareGPT4V dataset and its 3 independent subsets (LAION, COCO, SAM) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for fine-tuning CLIP-based models with the combination of contrasive learning and cyclic losses is implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The hyperparameters are set correctly in the configuration files and programs.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The training process has been successfully executed and finished without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Appendix D.2 and Table 3 completely to understand the evaluation of downstream tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D.2, Table 3"
+  },
+  {
+    "criteria": "The plan includes the collection of the Flickr30k dataset to implement I2T and T2I tasks.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the evaluation of I2T and T2I retrieval tasks on the Flickr30k dataset has been implemented, using R@1 metric.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The models are evaluated successfully on I2T and T2I retrieval tasks on the Flickr30k dataset.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The training outcomes match the results in Table 3: Long-CLIP-only (LCO) trained on COCO subset performs the best on I2T and T2I tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the collection of the CIFAR100 and Birdsnap datasets to implement image classification tasks.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the evaluation of image classification tasks on the CIFAR100 and Birdsnap datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the collection of the Flickr8k-Expert and Flickr8k-CF datasets to implement correlation experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the evaluation correlation with regard to human experts on the Flickr8k-Expert and Flickr8k-CF datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 4.2 completely to understand the second stage of I0T framework, including both the post-hoc method and the learnable method.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The implementation of the post-hoc method is planned to be done by subtracting the mean vectors and normalising by dividing by the Frobenius norms.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the post-hoc method is implemented following the description in the paper: subtract the mean vector and then normalize by dividing by the Frobenius norms",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of additional batch normalization layers is planned as the paper describes.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The hyperparameters (averaging factor $\\alpha$, batch size) in the training process of batch normalization layers are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of Multimodal Contrastive Learning of Sentence and Image Embeddings (MCSIE) is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for additional batch normalization layers is implemented correctly, aligned with the paper.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The hyperparameters are set correctly in the configuration files and programs.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The Multimodal Contrastive Learning of Sentence and Image Embeddings (MCSIE) is implemented correctly according to the paper.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The training process of batch normalisation has been successfully executed and finished without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.1 and table 1 completely to check the experiment settings across variations of Long-CLIP-based models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The modality gap calculation experiments are planned with models alone (LongCLIP, LCO, LCCO, LCCOM).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of retrieval tasks (I2T, T2I) on Flickr30k are planned with models alone (LongCLIP, LCO, LCCO, LCCOM).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of classification tasks (CIFAR100, Birdsnap) are planned with models alone (LongCLIP, LCO, LCCO, LCCOM).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of correlation (Flickr8k-Expert, Flickr8k-CF) are planned with models alone (LongCLIP, LCO, LCCO, LCCOM).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The modality gap calculation experiments are planned with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of retrieval tasks (I2T, T2I) on Flickr30k are planned with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of classification tasks (CIFAR100, Birdsnap) are planned with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of correlation (Flickr8k-Expert, Flickr8k-CF) are planned with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation experiments with models alone (LongCLIP, LCO, LCCO, LCCOM) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for retrieval tasks (I2T, T2I) on Flickr30k with models alone (LongCLIP, LCO, LCCO, LCCOM) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for classification tasks (CIFAR100, Birdsnap) with models alone (LongCLIP, LCO, LCCO, LCCOM) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments (Flickr8k-Expert, Flickr8k-CF) with models alone (LongCLIP, LCO, LCCO, LCCOM) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation experiments with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for retrieval tasks (I2T, T2I) on Flickr30k with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for classification tasks (CIFAR100, Birdsnap) with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments (Flickr8k-Expert, Flickr8k-CF) with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation experiments with models alone (LongCLIP, LCO, LCCO, LCCOM) has been successfully executed without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for retrieval tasks (I2T, T2I) on Flickr30k with models alone (LongCLIP, LCO, LCCO, LCCOM) has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for classification tasks (CIFAR100, Birdsnap) with models alone (LongCLIP, LCO, LCCO, LCCOM) has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments (Flickr8k-Expert, Flickr8k-CF) with models alone (LongCLIP, LCO, LCCO, LCCOM) has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation experiments with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*) has been successfully executed without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for retrieval tasks (I2T, T2I) on Flickr30k with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*) has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for classification tasks (CIFAR100, Birdsnap) with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*) has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments (Flickr8k-Expert, Flickr8k-CF) with additional normalization layers applied both during fine-tuning and after training (+LN, +LN*, +BN, +BN*) has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The outcomes of execution for modality gap calculation experiments match the results in Table 1: all model-only settings still exhibit a high severity of modality gap, and adding batch normalisation (+BN, +BN*) results in a moderate level of modality gap, in which +BN* performs the best with the lowest centroid distance and linear separability metrics.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The outcomes of downstream evaluation experiments match the results in Table 1: LCCO generally achieves higher performance across tasks, while LCCOM exhibits a slight performance decrease alongside a reduced modality gap.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.2 and table 2 completely to check the experiment settings across different ViT-B/32-based CLIP models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The implementation of other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S) is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for implementing other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S) has been written.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The modality gap calculation experiments are planned with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of retrieval tasks (I2T, T2I) on Flickr30k are planned with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of classification tasks (CIFAR100, Birdsnap) are planned with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of correlation (Flickr8k-Expert, Flickr8k-CF) are planned with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The modality gap calculation experiments are planned with I0T framework variants (I0T_{async}, I0T_{post}).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of retrieval tasks (I2T, T2I) on Flickr30k are planned with I0T framework variants (I0T_{async}, I0T_{post}).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of classification tasks (CIFAR100, Birdsnap) are planned with I0T framework variants (I0T_{async}, I0T_{post}).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of correlation (Flickr8k-Expert, Flickr8k-CF) are planned with I0T framework variants (I0T_{async}, I0T_{post}).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation experiments has been implemented with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for retrieval tasks (I2T, T2I) on Flickr30k has been implemented with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for classification tasks (CIFAR100, Birdsnap) has been implemented with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments (Flickr8k-Expert, Flickr8k-CF) has been implemented with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation experiments with I0T framework variants (I0T_{async}, I0T_{post}).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for retrieval tasks (I2T, T2I) on Flickr30k with I0T framework variants (I0T_{async}, I0T_{post}).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for classification tasks (CIFAR100, Birdsnap) with I0T framework variants (I0T_{async}, I0T_{post}).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments (Flickr8k-Expert, Flickr8k-CF) with I0T framework variants (I0T_{async}, I0T_{post}).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation experiments has been executed without errors with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for retrieval tasks (I2T, T2I) on Flickr30k has been executed without errors with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for classification tasks (CIFAR100, Birdsnap) has been executed without errors with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments (Flickr8k-Expert, Flickr8k-CF) has been executed without errors with other ViT-B/32-based CLIP models (CLIP, MG_{$\\lambda=0.375$}, MG_{$\\lambda=0.5$}, MG_{$\\lambda=-0.5$}, CLOOB, Unif-Align, PAC-S).",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation experiments with I0T framework variants (I0T_{async}, I0T_{post}) has been successfully executed without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for retrieval tasks (I2T, T2I) on Flickr30k with I0T framework variants (I0T_{async}, I0T_{post})has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for classification tasks (CIFAR100, Birdsnap) with I0T framework variants (I0T_{async}, I0T_{post}) has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments (Flickr8k-Expert, Flickr8k-CF) with I0T framework variants (I0T_{async}, I0T_{post}) has been successfully executed without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The outcomes of execution for modality gap calculation experiments match the results in Table 2: The I0T variants generally reduce the modality gap, and the I0T_{post} framework exhibits the lowest modality gap on both centroid distance and linear sparability, reaching a low severity of modality gap.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The outcomes of downstream evaluation experiments match the results in Table 2: The I0T variants achieve higher performance than CLOOB and Unif-Align while retaining a low modality gap, and I0T_{post} framework even outperforms all other baselines on retrieval tasks (I2T, T2I).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Figure 4 completely to check the comparison experiment settings of the non-CLIP-based model BLIP.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The implementation of BLIP is planned on modality gap calculation.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of BLIP is planned for correlation experiments on Flickr8k-Expert.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation with BLIP has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments on Flickr8k-Expert with BLIP has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for modality gap calculation with BLIP has been executed successfully without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for correlation experiments on Flickr8k-Expert with BLIP has been executed successfully without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 4: I0T framework exhibits a lower modality gap in terms of centroid distance (CD) while achieving similar correlation performance.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Figure 5 completely to check the experiment settings of automatic reference-free evaluation metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The calculation of cosine similarity distribution for automatic reference-free evaluation metrics (PAC-S, CLIP-S, I0T-S) is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of cosine similarity distribution for automatic reference-free evaluation metrics (PAC-S, CLIP-S, I0T-S) has been implemented",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of cosine similarity distribution for automatic reference-free evaluation metrics (PAC-S, CLIP-S, I0T-S) has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 5: I0T-S framework shows a non-skewed, wider cosine similarity distribution than PAC-S and CLIP-S.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  }
+]

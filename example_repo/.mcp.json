@@ -1,0 +1,8 @@
+{
+    "mcpServers": {
+        "action-recorder": {
+            "command": "uvx",
+            "args": ["mcp-action-recorder", "--work-dir", "./"]
+        }
+    }
+}

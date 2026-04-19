@@ -1,0 +1,464 @@
+[
+  {
+    "criteria": "The agent has read section 2.1 to understand the definition of important notations in the paper",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read section 2.2 to understand the definition of attack algorithm and machine unlearning.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 2.3 to understand the approximate unlearning and the definition of the forget set and remain set.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 2.4 to understand the two unlearning settings (w/ and w/o access to the remain set)",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 4 to understand the core methodology of AMUN.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to understand the steps to build the adversarial set.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The PGD-5 attack algorithm is planned to be implemented.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The Algorihm 1 is planned to be implemented to build the adversarial set.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The fine-tuning with forget set, adversarial set, and remain set is planned for the setting with access to the remain set.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The fine-tuning with forget set and adversarial set only is planned for the setting without access to the remain set.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the PGD-5 attack algorithm has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for Algorihm 1 has been implemented to build the adversarial set.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the fine-tuning with forget set, adversarial set, and remain set has been implemented for the setting with access to the remain set.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the fine-tuning with forget set and adversarial set only has been implemented for the setting without access to the remain set.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.1 to check the experiment settings for baselines.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes the implementation of all baselines (FT, GA, l1-Sparse, SalUn).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the implementation of the variants of AMUN (AMUN, AMUN_{SalUn})",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code of all baselines (FT, GA, l1-Sparse, SalUn) has been implemented",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code of the variants of AMUN (AMUN, AMUN_{SalUn}) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.2 to understand how the evaluation metrics are calculated.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The plan includes the calculation of all basic values (unlearning accuracy, retain accuracy, test accuracy, MIA score).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the calculation of the average gap.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the calculation of the MIA AUC scores",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of all basic values (unlearning accuracy, retain accuracy, test accuracy, MIA score) has been implemented",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of the average gap has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of the MIA AUC scores has been implemented",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.3 to understand the experimental setups for the unlearning settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The random sampling of 10% and 50% of the dataset and different runs are planned for each setting.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for random sampling of 10% and 50% of the dataset, and different runs have been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 6.1, Table 1, and Table 2 to understand the experimental setting for the effectiveness comparison.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The collection of datasets (CIFAR-10, Tiny Imagenet) for the effectiveness comparison experiments is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and implementation of models (ResNet-18 trained on CIFAR-10, VGG19 trained on Tiny Imagenet) for the effectiveness comparison experiments is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of retrain baseline is planned on all experiment settings.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The two unlearning settings are planned to be implemented in the effectiveness comparison experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The different sampling ratios (10%, 50%) are planned to be implemented on both unlearning settings in the effectiveness comparison experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The other unlearning baselines (FT, RL, GA, BS, l1-Sparse, SalUn) are planned to be implemented in the effectiveness comparison experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The variants of AMUN (AMUN, AMUN_{SalUn}) are planned to be implemented in the effectiveness comparison experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection of datasets (CIFAR-10, Tiny Imagenet) has been implemented for the effectiveness comparison experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and implementation of models (ResNet-18, VGG19) has been coded for the effectiveness comparison experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of retrain baseline has been coded on all experiment settings.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for two unlearning settings in the effectiveness comparison experiments has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for different sampling ratios (10%, 50%) on both unlearning settings has been implemented in the effectiveness comparison experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other unlearning baselines (FT, RL, GA, BS, l1-Sparse, SalUn) has been implemented in the effectiveness comparison experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for variants of AMUN (AMUN, AMUN_{SalUn}) has been implemented in the effectiveness comparison experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code of the retrain baseline on all experiment settings has been executed successfully without errors, and the scores are calculated accordingly.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other unlearning baselines (FT, RL, GA, BS, l1-Sparse, SalUn) in the effectiveness comparison experiments has been executed successfully without errors, and the scores are calculated accordingly.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for variants of AMUN (AMUN, AMUN_{SalUn}) in the effectiveness comparison experiments has been executed successfully without errors, and the scores are calculated accordingly.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: The AMUN consistently outperforms other baselines in the unlearning setting with access to the remain set, and the AMUN_{SalUn} performs the second. ",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: The AMUN_{SalUn} consistently outperforms other baselines in the unlearning setting without access to the remain set, and the AMUN performs the second. ",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 3.2, section 6.2.1, and Figure 1 to understand the ablation study of fine-tuning on adversarial examples",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.2.1, Section 3.2"
+  },
+  {
+    "criteria": "The different subset settings of Orig are planned in the fine-tuning ablation study.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The construction of different dataset subsets ($\\mathcal{D}_A, \\mathcal{D}_{AdvL},\\mathcal{D}_{RL}, \\mathcal{D}_{ARL}, \\mathcal{D}_{ARS}$) are planned in the fine-tuning ablation study.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The fine-tuning experiments of models (Orig, Adv, Adv-RS, Adv-RL, Orig-RL, Orig-AdvL) with the corresponding dataset are planned in the fine-tuning ablation study.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the construction of different subset settings of Orig has been implemented in the fine-tuning ablation study.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for construction of different dataset subsets ($\\mathcal{D}_A, \\mathcal{D}_{AdvL},\\mathcal{D}_{RL}, \\mathcal{D}_{ARL}, \\mathcal{D}_{ARS}$) has been implemented in the fine-tuning ablation study.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for fine-tuning experiments of models (Orig, Adv, Adv-RS, Adv-RL, Orig-RL, Orig-AdvL) with the corresponding dataset has been implemented in the fine-tuning ablation study.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The fine-tuning experiments of models (Orig, Adv, Adv-RS, Adv-RL, Orig-RL, Orig-AdvL) with the corresponding dataset has been executed successfully and finished without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 1: The specific choice of \\mathcal{D}_A keeps the closest accuracy to the Orig setting.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 6.2.2, and Table 3 to understand the ablation study settings of adversarially robust models",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.2.1, Section 3.2"
+  },
+  {
+    "criteria": "The preparation of robust ResNet-18 models trained on CIFAR-10 is planned in the adversarially robust model ablation study.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of the retrain baseline and the AMUN method is planned in the adversarially robust model ablation study.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The different sampling ratios (10%, 50%) are planned to be implemented in the adversarially robust model ablation study.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the preparation of robust ResNet-18 models trained on CIFAR-10 has been implemented in the adversarially robust model ablation study.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the implementation of the retrain baseline and the AMUN method has been implemented in the adversarially robust model ablation study.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for different sampling ratios (10%, 50%) has been implemented in the adversarially robust model ablation study.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The ablation study experiments of retrain baseline and the AMUN method on the adversarially robust model have been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: When there is no access to the remain set, AMUN still results in effective unlearning for adversarially robust models.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 6.3 and Figure 2 to understand the continuous learning experiments.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.3"
+  },
+  {
+    "criteria": "The preparation of the ResNet-18 models trained on CIFAR-10 is planned in the continuous learning experiments.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of other baselines (RL, GA, BA, SalUn) is planned in the continuous learning experiments.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of AMUN variants (AMUN, AMUN-A) is planned in the continuous learning experiments.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The two unlearning settings (w/ and w/o the remain set) are planned to be implemented in the continuous learning experiments.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the implementation of other baselines (RL, GA, BA, SalUn) has been implemented in the continuous learning experiments.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the implementation of AMUN variants (AMUN, AMUN-A) has been implemented in the continuous learning experiments.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for two unlearning settings (w/ and w/o the remain set) has been implemented in the continuous learning experiments.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The continuous learning experiments with baselines and the AMUN variants have been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 2: AMUN-A performs better than all the other unlearning methods for all the steps of unlearning in the continuous learning experiments.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  }
+]

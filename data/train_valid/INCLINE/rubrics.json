@@ -1,0 +1,458 @@
+[
+  {
+    "criteria": "The agent has read section 3.1 completely to understand the core methodology of Cross-Lingual Alignment.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the preparation of source and target language sentences.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the steps to calculate the optimal cross-lingual alignment matrix.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the extraction of source and target sentences by taking the hidden state of the last token been implemented",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code has been implemented as equation (2) to derive the cross-lingual alignment matrix.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 3.2 completely to understand the core methodology of Inference-Time Transformation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the calculation of the intervention vector with the cross-lingual alignment matrix.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the adjustment of blending with the hidden state in target language, controlled by ther hyperparameter $\\alpha$",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of the intervention vector is implemented as equation (3).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the adjustment of the intervention vector towards the target language is implemented as equation (4).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agents have planned to implement the INCLINE method.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The main process of INCLINE method is coded by the agents.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 4.1 completely to check the experiment settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The datasets of discriminative tasks (XCOPA, XStoryCloze, XWinograd, XCSQA, XNLI) are planned to be collected and implemented.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The datasets of generative tasks (MZsRE, Flores, WMT23, MGSM) are planned to be collected and implemented.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agents have coded the program to collect and load datasets of discriminative tasks (XCOPA, XStoryCloze, XWinograd, XCSQA, XNLI).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agents have coded the program to collect and load datasets of generative tasks (MZsRE, Flores, WMT23, MGSM).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The BLOOMZ-7B1-MT model is planned to be implemented.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The additional models (LLAMA3-8B-INSTRUCT, LLAMA2-7B-CHAT, MISTRAL-7B-INSTRUCT, FALCON-7B-INSTRUCT) are planned to be implemented.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agents have coded the program to collect and implement the BLOOMZ-7B1-MT model.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agents have coded the program to collect and implement the additional models (LLAMA3-8B-INSTRUCT, LLAMA2-7B-CHAT, MISTRAL-7B-INSTRUCT, FALCON-7B-INSTRUCT).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The naive baselines (vanilla model, MT-GOOGLE, MT-LLM) are planned to be implemented.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The Supervised Fine-Tuning (SFT) baseline is planned to be implemented with hyperparameters in Appendix B.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The intervention method baselines (ITI, CAA) are planned to be implemented.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agents have coded the program to collect outputs from naive baselines (vanilla model, MT-GOOGLE, MT-LLM).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agents have coded the program to implement the Supervised Fine-Tuning (SFT) with hyperparameters in Appendix B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agents have coded the program to implement the intervention method baselines (ITI, CAA)",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 4.2 completely to check the experiment results.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the experiment settings on discriminative tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The experiments of all baselines and the INCLINE method on discriminative tasks (XCOPA, XStoryCloze, XWinograd, XCSQA, XNLI) are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of the SFT + INCLINE setting are additionally planned on discriminative tasks (XCOPA, XStoryCloze, XWinograd, XCSQA, XNLI).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for all baselines and the INCLINE method on discriminative tasks (XCOPA, XStoryCloze, XWinograd, XCSQA, XNLI) are implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the SFT + INCLINE setting on discriminative tasks (XCOPA, XStoryCloze, XWinograd, XCSQA, XNLI) are implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for all baselines, the INCLINE method, and SFT + INCLINE has been executed successfully without errors on discriminative tasks.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: the INCLINE method consistently outperforms previous intervention methods (ITI, CAA) on discriminative tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: the SFT + INCLINE method consistently outperforms the SFT baseline alone on discriminative tasks.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the experiment settings on discriminative tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The experiments of all baselines and the INCLINE method on generative tasks (MZsRE, Flores, WMT23, MGSM) are planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for all baselines and the INCLINE method on generative tasks (MZsRE, Flores, WMT23, MGSM) are implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for all baselines and the INCLINE method has been executed successfully without errors on generative tasks.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: the INCLINE method consistently outperforms previous intervention methods (ITI, CAA) on generative tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Figure 3(a) to check the experiments about the training cost of INCLINE with regard to the number of parallel sentences.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 3(a)"
+  },
+  {
+    "criteria": "The experiments for the training costs of INCLINE with regard to the number of parallel sentences are planned with different amounts of sentences on the XStoryCloze dataset in Swahili.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments for the training costs of INCLINE with regard to the number of parallel sentences is implemented ith different amounts of sentences on the XStoryCloze dataset in Swahili.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the training cost experiment has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 3(a): the accuracy initially improves as the number of training sentences increases, but declines once the dataset becomes too large.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Figure 3(b) to check the Correct Prediction Consistency experiment settings.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 3(b)"
+  },
+  {
+    "criteria": "The Correct Prediction Consistency experiments are planned to be implemented on the XStoryCloze dataset.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments for the Correct Prediction Consistency experiments is implemented on the XStoryCloze dataset.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the training cost experiment has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 3(b): the consistency of INCLINE consistently outperforms the baselines across languages.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Table 3 to check experiment settings of intervening different components",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The component intervention experiments are planned on four different components: hidden states, attention heads, FFN blocks, and embeddings.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the intervention on four different components (hidden states, attention heads, FFN blocks, and embeddings) is implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the intervention experiments has been executed successfully without errors on XStoryCloze, XCSQA, Flores, MGSM dataset with BLOOMZ-7B1-MT.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: the consistency of INCLINE consistently outperforms the baselines across languages.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Figure 4 to check the experiment settings of different $\\alpha$ values.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The experiments with different $\\alpha$ values between -1 and 1 are planned on the XStoryCloze task with BLOOMZ-7B1-MT in Spanish and Chinese.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for experiments with different $\\alpha$ values between -1 and 1 is implemented on the XStoryCloze task with BLOOMZ-7B1-MT in Spanish and Chinese.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for experiments with different $\\alpha$ values is executed successfully without errors on the XStoryCloze task with BLOOMZ-7B1-MT in Spanish and Chinese.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 4: positive $\\alpha$ values work better in Spanish and negative $\\alpha$ values work better in Chinese.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Table 4 to check the experiment settings with various backbone models.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The experiments with various backbone models (BLOOMZ-7B1-MT, LAMA3-8B-INSTRUCT, LAMA2-7B-CHAT, MISTRAL-7B-INSTRUCT, FALCON-7B-INSTRUCT) are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for experiments with various backbone models (BLOOMZ-7B1-MT, LAMA3-8B-INSTRUCT, LAMA2-7B-CHAT, MISTRAL-7B-INSTRUCT, FALCON-7B-INSTRUCT) is implemented completely.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for experiments with various backbone models (BLOOMZ-7B1-MT, LAMA3-8B-INSTRUCT, LAMA2-7B-CHAT, MISTRAL-7B-INSTRUCT, FALCON-7B-INSTRUCT) is executed successfully without errors on the XStoryCloze dataset.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: INCLINE consistently outperforms the baseline across models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Figure 5(a) to check the experiment settings with different model sizes.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 5(a)"
+  },
+  {
+    "criteria": "The experiments with various BLOOMZ model sizes (0.56b, 1b, 3b, 7.1b) are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for experiments with various BLOOMZ model sizes (0.56b, 1b, 3b, 7.1b) is implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for experiments with various BLOOMZ model sizes (0.56b, 1b, 3b, 7.1b) is executed successfully without errors on MZsRE dataset.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 5(a): larger models in the BLOOMZ series exhibit more significant enhancements when INCLINE is applied.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Figure 5(a) to check the In-Context Learning experiment settings.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 5(b)"
+  },
+  {
+    "criteria": "The experiments of In-Context Learning with different shot numbers (0-shot, 2-shot, 4-shot) are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for experiments of In-Context Learning with different shot numbers (0-shot, 2-shot, 4-shot) is implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for experiments of In-Context Learning with different shot numbers (0-shot, 2-shot, 4-shot) is executed successfully without errors on MZsRE dataset with BLOOMZ-7B1-MT.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 5(a): INCLINE can further enhance model performance when combined with in-context learning.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  }
+]

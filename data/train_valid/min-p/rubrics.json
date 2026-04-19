@@ -1,0 +1,494 @@
+[
+  {
+    "criteria": "The agent has read section 3.1 completely to understand the core methodology of the min-p sampling.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Setion 3.1"
+  },
+  {
+    "criteria": "The plan includes the calculation of the maximum probability.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the truncation shreshold.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the construction of the sampling pool.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes sampling from the pool.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of the maximum probability is implemented to identify the token with the highest probability in the distribution $p_{\\mathcal{max}}$.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the truncation threshold is implemented, $p_{\\mathrm{base}}$ is set and scaled by $p_{\\mathrm{max}}$ as equation (1).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the construction of  is implemented, collecting tokens with probability larger than the scaled probabilty as equation (2).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for sampling from the pool is implemented to sample the next token from scaled distribution as equation (3).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.1 completely to check the experimental setups.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Setion 5.1"
+  },
+  {
+    "criteria": "The collection and implementation of models (Mistral 7B, Mistral Large 132B, Llama 3.2 1B, 3B, 8B, 70B) are planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection of the benchmarks (GPQA, GSM8K CoT, AlpacaEval Creative Writing) is planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of metrics (accuracy, win rate, LC-win rate) is planned",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of baseline methods (top-p sampling, temperature sampling, $\\epsilon$ sampling, $\\eta$ sampling, mirostat sampling) are planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The hyperparameters (temperature, p_{mathcal{base}}, ...) are planned to be set as described in the paper.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the models (Mistral 7B, Mistral Large 132B, Llama 3.2 1B, 3B, 8B, 70B) have been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for benchmark collection (GPQA, GSM8K CoT, AlpacaEval Creative Writing) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for metric calculation (accuracy, win rate, LC-win rate) has been implemented",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for baseline methods (top-p sampling, temperature sampling, $\\epsilon$ sampling, $\\eta$ sampling, mirostat sampling) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The hyperparameters (temperature, p_{mathcal{base}}, ...) are set correctly in the configuration files and programs as described in the paper.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.2.1 and Table 2 completely to check the GPQA experiment settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Setion 5.2.1"
+  },
+  {
+    "criteria": "The 5-shot prompting strategy is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all baselines (top-p sampling, temperature sampling, $\\epsilon$ sampling, $\\eta$ sampling, mirostat sampling) with Mistral 7B are planned on the GPQA benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of min-p sampling with Mistral 7B is planned on the GPQA benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=0.7, 1.0, 1.5, 2.0, 3.0$) are planned for each method.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The 5-shot prompting strategy has implemented.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of all baselines (top-p sampling, temperature sampling, $\\epsilon$ sampling, $\\eta$ sampling, mirostat sampling) with Mistral 7B has been implemented on the GPQA benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of min-p sampling with Mistral 7B has been implemented on the GPQA benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=0.7, 1.0, 1.5, 2.0, 3.0$) are implemented for each method.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all baselines (top-p sampling, temperature sampling, $\\epsilon$ sampling, $\\eta$ sampling, mirostat sampling) on the GPQA benchmark are executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of min-p on the GPQA benchmark are executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: Mistral 7B with min-p sampling consistently outperforms all previous baselines across all temperatures on the GPQA benchmark.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Table 3a completely to check the GPQA experiment settings with the large model (Mistral Large 132B).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3a"
+  },
+  {
+    "criteria": "The experiments of other baselines (Temp' only, top-p_{0.95}, top-p_{0.9}) with Mistral Large are planned on the GPQA benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of min-p sampling with Mistral Large is planned on the GPQA benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=0.5, 1.0, 2.0, 3.0, 4.0$) are planned for each method on the GPQA benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of other baselines (Temp' only, top-p_{0.95}, top-p_{0.9}) with Mistral Large has been implemented on the GPQA benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of min-p sampling with Mistral Large has been implemented on the GPQA benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=0.5, 1.0, 2.0, 3.0, 4.0$) are implemented for each method on the GPQA benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of other baselines (Temp' only, top-p_{0.95}, top-p_{0.9}) with Mistral Large on the GPQA benchmark are executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of min-p with Mistral Large on the GPQA benchmark are executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3a: Mistral Large with min-p sampling generally outperforms other baselines, especially when $\\tau >= 1.0$ on the GPQA benchmark. Also, the performance of Mistral Large is higher than Mistral 7B.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.2.2 and Table 2 completely to check the GSM8K CoT experiment settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Setion 5.2.2"
+  },
+  {
+    "criteria": "The 8-shot prompting strategy is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all baselines (top-p sampling, temperature sampling, $\\epsilon$ sampling, $\\eta$ sampling, mirostat sampling) with Mistral 7B are planned on the GSM8K CoT benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of min-p sampling with Mistral 7B is planned on the GSM8K CoT benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=0.7, 1.0, 1.5, 2.0, 3.0$) are planned for each method on the GSM8K CoT benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of all baselines (top-p sampling, temperature sampling, $\\epsilon$ sampling, $\\eta$ sampling, mirostat sampling) with Mistral 7B has been implemented on the GSM8K CoT benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of min-p sampling with Mistral 7B has been implemented on the GSM8K CoT benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=0.7, 1.0, 1.5, 2.0, 3.0$) are implemented for each method on the GSM8K CoT benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all baselines (top-p sampling, temperature sampling, $\\epsilon$ sampling, $\\eta$ sampling, mirostat sampling) on the GSM8K CoT benchmark are executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of min-p on the GPQA benchmark are executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: Mistral 7B with min-p sampling generally outperforms previous baselines when $\\tau>=1.0$ on the GSM8K CoT benchmark.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read section 5.2.3 and Table 3b completely to check the creative writing experiment settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Setion 5.2.3"
+  },
+  {
+    "criteria": "The judge models (openchat-3.5-0106, GPT-4 Turbo) are planned to be implemented",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of baselines (temperature only, $\\epsilon$ sampling, top-p sampling, mirostat sampling) with Mistral 7B are planned on the AlpacaEval Creative Writing benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of min-p sampling with Mistral 7B is planned on the AlpacaEval Creative Writing benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=1.0, 1.5$) are planned for each method on the AlpacaEval Creative Writing benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of baselines (temperature only, $\\epsilon$ sampling, top-p sampling, mirostat sampling) with Mistral 7B has been implemented on the AlpacaEval Creative Writing benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of min-p sampling with Mistral 7B has been implemented on the AlpacaEval Creative Writing benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=1.0, 1.5$) are implemented for each method on the AlpacaEval Creative Writing benchmark.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of baselines (temperature only, $\\epsilon$ sampling, top-p sampling, mirostat sampling) on the AlpacaEval Creative Writing benchmark are executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of min-p on the AlpacaEval Creative Writing benchmark are executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3b: Mistral 7B with min-p sampling consistently outperforms previous baselines across all temperatures on the AlpacaEval Creative Writing benchmark.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Table 3a completely to check the GPQA and GSM8K CoT experiment settings with Llama 3 models (Llama 3.2 1B-Instruct, 3B-Instruct, 8B-Instruct).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1) with Llama 3 models (Llama 3.2 1B-Instruct, 3B-Instruct, 8B-Instruct) are planned on the GPQA benchmark.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1) with Llama 3 models (Llama 3.2 1B-Instruct, 3B-Instruct, 8B-Instruct) are planned on the GSM8K CoT benchmark.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1) with Llama 3 models (Llama 3.2 1B-Instruct, 3B-Instruct, 8B-Instruct) have been implemented on the GSM8K CoT benchmark.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1) with Llama 3 models (Llama 3.2 1B-Instruct, 3B-Instruct, 8B-Instruct) has been implemented on the GPQA benchmark.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1) with Llama 3 models (Llama 3.2 1B-Instruct, 3B-Instruct, 8B-Instruct) has been implemented on the GSM8K CoT benchmark.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1) with Llama 3 models (Llama 3.2 1B-Instruct, 3B-Instruct, 8B-Instruct) on the GPQA benchmark are executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1) with Llama 3 models (Llama 3.2 1B-Instruct, 3B-Instruct, 8B-Instruct) on the GSM8K CoT benchmark are executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 8: Llama 3 models with min-p sampling perform better in most cases on both GPQA and GSM8K CoT benchmarks, especially when the temperature is higher (>1.0).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Table 9 completely to check the GPQA and GSM8K CoT experiment settings with the large Llama model (Llama 3.1 70B).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1, min-p=0.2) with Llama 3.1 70B are planned on the GPQA benchmark.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.2) with Llama 3.1 70B are planned on the GSM8K CoT benchmark.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments with different temperatures ($\\tau=0.5, 0.7, 1.0,  2.0, 3.0, 4.0$) are planned for each method with Llama 3 modesl on the GPQA and GSM8K CoT benchmarks.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1, min-p=0.2) with Llama 3.1 70B has been implemented on the GPQA benchmark.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.2) with Llama 3.1 70B has been implemented on the GSM8K CoT benchmark.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.1, min-p=0.2) with Llama 3.1 70B on the GPQA benchmark are executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The experiments of all sampling methods (Temp' only, top-p=0.9, top-p=0.95, min-p=0.05, min-p=0.2) with Llama 3.1 70B on the GSM8K CoT benchmark are executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 9: Llama 3.1 70B with min-p sampling performs better in most cases on both GPQA and GSM8K CoT benchmarks, especially when the temperature is higher (>1.0).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  }
+]

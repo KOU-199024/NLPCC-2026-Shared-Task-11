@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__action-recorder"
+    ],
+    "deny": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "action-recorder"
+  ]
+}

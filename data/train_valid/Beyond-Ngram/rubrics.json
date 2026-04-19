@@ -1,0 +1,374 @@
+[
+  {
+    "criteria": "The agent has read Section 3 and Table 1 to identify the 8 evaluated languages categorized into 4 typological families (Isolating, Agglutinative, Low Fusional, High Fusional) and their resource availability (High/Low)",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes selecting the 8 target languages: Chinese, Yoruba, Japanese, Turkish, Spanish, Ukrainian, Arabic, and Hebrew.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes categorizing the selected languages into 4 typological families (Isolating, Agglutinative, Low Fusional, High Fusional) and defining their resource levels (High vs. Low) based on the GPT-3 pre-trained data distribution.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded data structures (e.g., dictionaries or mapping configurations) to correctly assign the 8 target languages to their respective typological families and High/Low resource levels",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the data sources (XL-Sum, HeSum) and the models used for summary generation (GPT-3.5-Turbo, Gemini 1.0 Pro)",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes downloading and preparing the source news articles and human-generated reference summaries from the XL-Sum dataset and the HeSum dataset.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan outlines the steps to generate 400 parallel summaries for each language using the GPT-3.5-Turbo (0125) and Gemini 1.0 Pro models.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded the data pipeline to successfully fetch and load the source articles and reference summaries from the XL-Sum and HeSum datasets using the Hugging Face datasets library",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has implemented the generation scripts with API integration for both GPT-3.5-Turbo and Gemini 1.0 Pro to successfully generate exactly 400 parallel summaries for each language.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for generating 400 parallel summaries per language using GPT-3.5-Turbo and Gemini 1.0 Pro APIs executes completely without unhandled rate-limit exceptions or timeout errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the Elo score trends in Figure 1: Gemini-generated summaries generally rank higher for high-fusional and low-resource languages, while GPT summaries rank higher for high-resource languages.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Section 4.1 and Appendix A.5 to understand the corruption strategies applied to one-third of the data for coherence and completeness",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes a strategy to artificially corrupt one-third of the generated summaries to achieve a diverse distribution of scores.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan details the specific coherence corruption techniques, which are replacing verbs and nouns with their lemmas and reordering non-adjacent sentences",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan details the specific completeness corruption techniques, which include shuffling named entities with the same labels and inserting a random, unrelated sentence from another article",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has written code to randomly and reproducibly sample exactly one-third of the generated summaries to apply the corruption strategies.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded the coherence corruption functions, integrating POS tagging to successfully replace verbs and nouns with their lemmas, and implementing logic to reorder non-adjacent sentences.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded the completeness corruption functions, successfully integrating Named Entity Recognition (NER) models to shuffle entities of the same type and injecting random out-of-context sentences from different articles.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The data corruption pipeline (lemmatization, POS tagging, NER shuffling) executes successfully across all 8 target languages without causing out-of-bounds errors or breaking the dataset structure",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Section 5.2 to extract the list of N-Gram Metrics, including ROUGE variants (with mBERT and Monolingual tokenizers), BLEU, and CHRF.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the implementation of standard ROUGE variants (ROUGE-1, ROUGE-2, ROUGE-3, and ROUGE-L) to measure lexical overlap.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the implementation of BLEU and CHRF (character n-gram F-score) metrics for evaluating the summaries.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded the evaluation functions using standard libraries to calculate ROUGE-1, ROUGE-2, ROUGE-3, and ROUGE-L with default whitespace tokenization.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has implemented the code to correctly compute standard BLEU and CHRF metrics between the generated summaries and human references.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Section 5.2 to extract the list of Neural-Based Metrics, including MoverScore, BERTScore (mBERT and Monolingual), Gemini as a Judge, and COMET",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the implementation of contextual embedding metrics: MoverScore and BERTScore.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes setting up \"LLM-as-a-judge\" evaluation by prompting the Gemini 1.0-pro model.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes the adaptation of COMET (specifically the pre-trained wmt22-comet-da model) for summarization evaluation by excluding the source input.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has successfully coded the integration for MoverScore and standard BERTScore to calculate the contextual similarity between summaries.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has implemented the \"Gemini as a Judge\" evaluation script, coding an API prompt format that strictly matches the prompt given to human annotators.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has implemented the code to load the wmt22-comet-da model and modified the evaluation loop to calculate the COMET score by passing only the generation and reference, explicitly dropping the source article input.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The evaluation pipeline for Neural-based metrics (especially running BERTScore, MoverScore, and loading the wmt22-comet-da model) executes successfully without Out-Of-Memory (OOM) errors or tensor dimension mismatches on the GPU.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Section 6 and Table 5 to understand the main findings regarding the impact of typological families on metric correlations, specifically the negative correlation of n-gram metrics with high-fusional languages and the strong correlation of COMET",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes calculating Pearson (and optionally Spearman) correlation coefficients between the automated metrics scores and the human annotations for Coherence and Completeness.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes a specific analysis step to aggregate the correlation results by typological family (Isolating, Agglutinative, Low Fusional, High Fusional) to evaluate the metrics' sensitivities.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan outlines a verification step to confirm that standard n-gram metrics exhibit weak or negative correlations in highly fusional languages (Arabic, Hebrew) compared to isolating or agglutinative languages.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan outlines a comparative analysis step to verify that neural-based metrics, specifically COMET, consistently outperform n-gram metrics across different typological families.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has written the statistical code (e.g., using scipy.stats or pandas.corr) to compute Pearson and Spearman correlation coefficients between all automated metric outputs and the human annotations for Coherence and Completeness.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded data aggregation functions (e.g., using pandas.groupby) to group and summarize the calculated correlations by the four predefined typological families (Isolating, Agglutinative, Low Fusional, High Fusional).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has implemented programmatic checks or evaluation loops to dynamically verify that standard n-gram metrics yield weak or negative correlation values for high-fusional languages (Arabic, Hebrew) compared to the isolating and agglutinative groups.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded a comparative logic block to automatically assert that the COMET metric's correlation scores consistently outperform the standard n-gram metrics across all typological families.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The statistical analysis code to compute Pearson and Spearman correlations runs flawlessly, successfully handling any NaN values or zero-variance arrays without halting execution.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5: standard n-gram metrics (like ROUGE) show weak or negative correlations with human judgments for high-fusional languages (Arabic, Hebrew).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes align with Table 5: neural-based metrics like COMET exhibit a strong inverse trend compared to n-gram metrics, showing better correlation consistently with fusional languages",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Section 6 and Table 6 to check the impact of resource levels (High vs. Low) on neural metrics",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes grouping the correlation results by language resource availability (High-Resource vs. Low-Resource) to evaluate the performance of neural-based metrics.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes a step to verify the hypothesis that language-specific Monolingual BERT models outperform the multilingual mBERT model across both high and low-resource settings.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes a verification step to confirm that COMET achieves the strongest correlation with human scores, and specifically outperforms the \"Gemini as a Judge\" approach in these resource-constrained environments.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded a comparative logic block to automatically assert that the COMET metric's correlation scores consistently outperform the standard n-gram metrics across all typological families.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has implemented the evaluation logic to explicitly compare and confirm that language-specific Monolingual BERT models achieve higher correlations than the multilingual mBERT model across both high and low-resource data slices.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has written the final assertion code to verify that COMET achieves the highest correlation with human scores, specifically demonstrating its superiority over the \"Gemini as a Judge\" approach in low-resource environments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 6: \"Gemini as a judge\" exhibits the lowest correlations with human scores compared to other multilingual neural metrics, regardless of language resource level",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes confirm the trend in Table 6: language-specific Monolingual BERT models achieve higher correlations than the multilingual mBERT model.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The execution outcomes confirm the final conclusion in Table 6: the COMET metric shows the strongest correlation with human scores across both high- and low-resource types, effectively bridging the gap for low-resource languages.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read the \"The Impact of Metrics Adapted to non-English Languages\" subsection in Section 6 and Table 5 to check the significant impact of adequate tokenizers (mBERT or language-specific) and lemmatized texts on improving the correlation of n-gram metrics (ROUGE, BLEU), particularly for reversing negative correlations in fusional languages.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan details the strategy to adapt ROUGE metrics by applying the mBERT Tokenizer (using Byte-Pair Encoding) across all evaluated languages.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan details the strategy to adapt ROUGE and BERTScore by initializing language-specific tokenizers and models (e.g., bert-base-turkish-cased for Turkish, DiktaBERT for Hebrew) as outlined in the paper's appendix.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes a preprocessing step to apply lemmatization to the texts (using specific tools like spacy, zeyrek, or qalsadi) before calculating the BLEU scores, especially for highly fusional languages.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has written code to override the default tokenization in ROUGE by integrating the Byte-Pair Encoding (BPE) tokenizer from the bert-base-multilingual-cased (mBERT) model.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has implemented dynamic model loading to inject language-specific BERT models and tokenizers into BERTScore and ROUGE evaluations based on the target language, utilizing models like DiktaBERT for Hebrew and bert-base-arabic for Arabic",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has coded a comprehensive text preprocessing pipeline that correctly applies language-specific lemmatizers (spaCy for ES/UKR, zeyrek for TR, DiktaBERT for HE, and qalsadi for AR) to the generated and reference texts prior to computing the BLEU score",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The results match the findings in Table 5 regarding adaptations: applying the mBERT tokenizer, a language-specific tokenizer, or lemmatized forms significantly improves or reverses the negative correlations of n-gram metrics for highly morphological languages",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  }
+]
