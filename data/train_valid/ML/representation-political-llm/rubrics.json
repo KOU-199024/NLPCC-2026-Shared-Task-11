@@ -1,0 +1,344 @@
+[
+  {
+    "criteria": "The agent identifies that the core claim is a linear representation of U.S. political ideology in LLM activation space across Llama-2-7b-chat, Mistral-7b-instruct, and Vicuna-7b.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent explains the linear probe definition that predicts ideology as a linear function of head activations with regression coefficients.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent explains that probes are trained with ridge regression using L2 regularization and a tunable lambda hyperparameter.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent locates the head-level probing target and states that attention-head activations x_l,h are used as features before layer normalization.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent identifies that the same lawmaker-trained probes are transferred to predict U.S. news outlet slant without retraining.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes loading and running all three backbone models under a controlled shared decoding setup.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes collecting first-dimension DW-NOMINATE labels for lawmakers from the 116th U.S. Congress and mapping them to prompts.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes reproducing both lawmaker prediction and outlet transfer tasks before running steering experiments.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements one ridge probe per head with saved coefficients and hyperparameters.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements activation extraction hooks to capture per-head features x_l,h at the intended network location.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements transfer evaluation by applying lawmaker-trained probes directly to outlet activations without retraining.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements prompt templates for lawmaker-perspective generation, outlet-perspective generation, and policy-issue statement generation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements data ingestion and preprocessing pipelines for lawmaker and outlet labels with deterministic prompt-label mapping.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The best per-model head-level Spearman scores are in the reported high range and align with the listed top-head patterns.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent identifies the ensemble mechanism that averages predictions from the top-K most predictive heads.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent identifies the non-linear robustness probe as a one-layer MLP with ReLU for comparison against linear probes.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent identifies that probe quality is evaluated using 2-fold cross-validation and Spearman rank correlation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes baseline comparisons between linear probes and one-layer MLP probes.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes robustness checks with label transformations, including cubic, non-monotonic sine, and random permutation labels.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements top-K head selection and ensemble prediction averaging y_hat_K.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements the MLP comparator pipeline and computes the same evaluation metrics for fair baseline comparison.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements 2-fold cross-validation scoring with Spearman rank correlation for every head.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements label-transformation experiments for cubic, sine, and permutation targets in the same training-evaluation framework.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "Cross-validation and metric computation complete for all heads and produce valid fold-level outputs without failure.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "Top-K ensemble evaluation across configured K values executes successfully and writes reproducible summary metrics.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "Label-transformation robustness reproduces lower fit for non-monotonic and permutation targets relative to original labels.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "Transferred probes achieve positive and substantial Spearman correlation on outlet slant, consistent with reported transfer performance.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The ensemble curves show performance improving then tapering, with near-optimal behavior around K equals 32.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The label-transformation results properly include R-squared metrics alongside Spearman correlations, matching the reported differences.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements token-level probe inference over generated sequences for qualitative ideological tracing.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The token-level visualization successfully reproduces the color-coded ideological tracing (blue/red) on generated text similar to Figure 1.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent identifies the extension to non-U.S. political contexts using the Manifesto Project dataset for 411 political parties worldwide.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes evaluating probes on the international Manifesto Project dataset.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes building the outlet dataset from Ad Fontes scores and normalizing labels to the same ideology scale [-1, 1].",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements the data pipeline to load and process the Manifesto Project dataset for international political parties.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The international transfer experiment using the Manifesto Project dataset executes successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The outlet-transfer experiment over the full outlet benchmark executes successfully without crashes.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The international transfer results reproduce the reported strengths and limitations of linear probes in non-U.S. contexts.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent identifies the coherence check experiment in Appendix A.8, which evaluates if steered responses remain coherent across extreme alpha values using GPT-4o.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent identifies the steering intervention formula that adds alpha-scaled probe directions to selected head activations during generation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent identifies the rating protocol using human annotators and GPT-4o, including the reported high agreement.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes testing response coherence across an extended alpha range from -50 to 50.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes intervention sweeps over K values and alpha values, with no-intervention alpha equals zero as a reference condition.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes preparing issue-prompt tasks for nine policy topics used in the steering study.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements the coherence evaluation script using the GPT-4o prompt to classify text as coherent or incoherent.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements intervention-time activation editing with alpha, sigma_hat, and theta_hat across selected heads for each generated token.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent implements automated rating scripts for GPT-4o output parsing and ICC computation against human ratings.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The coherence check experiment over the extended alpha range executes successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The automated rating and aggregation workflow executes for the generated essay set without API or parsing failures that invalidate results.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The intervention grid over issues, K values, and alpha values executes from start to finish error-free.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "Interventions remain effective on post-cutoff events and are strongest in early-to-middle layers, with weak effects in middle-to-last layers.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "Issue-level analysis reproduces stronger steering-response correlation on Immigration and Abortion than on weaker-response topics.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "Length analysis reproduces topic-dependent correlation between intervention and output length, including stronger effects on selected issues.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "Increasing alpha shifts generated text toward more conservative ratings, while decreasing alpha shifts toward more liberal ratings.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The complete probe-training pipeline for all selected models and heads runs end-to-end without runtime errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The reproduced head-wise heatmaps show strongest predictive heads concentrated in middle layers, consistent with the paper trend.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "Non-linear probes do not produce consistent large gains over linear probes, supporting the linear representation hypothesis.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": null
+  }
+]

@@ -1,0 +1,578 @@
+[
+  {
+    "criteria": "The agent has read the Method section and Figure 1 completely to understand the core methodology of CIFormer.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Method, Figure 1"
+  },
+  {
+    "criteria": "The gene embedding vectors are planned to be implemented as described in the Gene Emebdding section.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The positional encoding is planned to be implemented as described in the Model for Positional Encoding section.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The Transformer structure is planned to be implemented as described in the Function for Transformer Encoder Layer section.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The Classifier layer is planned to be implemented as described in the Function for Classification Layer section.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the gene embedding vectors has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the positional encoding has been implemented ",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the Transformer structure has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the Classifier layer has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read the Metrics for Evaluation section completely to understand the metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read the Tool for Comparison section completely to check the baselines.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Dataset section completely to check the required datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The calculation of the accuracy and macro F1 score is planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The Seurat tool is planned to be implemented.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The SingleR tool is planned to be implemented.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The scmap tool is planned to be implemented.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The single-cell Decomposition using Hierarchical Autoencoder (scDHA) tool is planned to be implemented.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The Cell BLAST tool is planned to be implemented.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The Single-cell variational inference (scVI) tool is planned to be implemented.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and processing of the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and processing of the Immune datasets are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and processing of the Brain datasets are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and processing of the Tabula Muris dataset are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and processing of the Zheng 68k dataset are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and processing of the Zhang T dataset are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The collection and processing of the Allen mouse brain dataset are planned.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of the accuracy and macro F1 score has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the Seurat tool has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the SingleR tool has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the scmap tool is planned has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the single-cell Decomposition using Hierarchical Autoencoder (scDHA) tool has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the Cell BLAST tool is planned has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the Single-cell variational inference (scVI) tool has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection and processing of the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection and processing of the Immune datasets (Oetjen, Dahlin, pbmc_10k_v3, Sun) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection and processing of the Brain datasets (Rosenberg, Zeisel, Saunders) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection and processing of the Tabula Muris dataset has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection and processing of the Zheng 68k dataset has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection and processing of the Zhang T dataset has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the collection and processing of the Allen mouse brain dataset has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read the Results section completely to understand the experimental settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Results"
+  },
+  {
+    "criteria": "The agent has read the Effectiveness Evaluation on Intra-Dataset section and Figure 2 completely to understand the experimental settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Intra-Dataset, Figure 2"
+  },
+  {
+    "criteria": "The implementation of the CIForm framework on the nine intra-datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin, TM, Zheng68k, Zhang T, AMB) is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, scDHA, scVI, Cell BLAST) on the nine intra-datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin, TM, Zheng68k, Zhang T, AMB) is planned.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The processing of 5-fold validation and the calculation of accuracy, macro F1, and confusion matrix heatmap is planned in the intra-dataset experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been implemented on the nine intra-datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin, TM, Zheng68k, Zhang T, AMB).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, scDHA, scVI, Cell BLAST) has been implemented on the nine intra-datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin, TM, Zheng68k, Zhang T, AMB).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the processing of 5-fold validation and the calculation of accuracy, macro F1, and the confusion matrix heatmap has been implemented in the intra-dataset experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been executed successfully without errors on the nine intra-datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin, TM, Zheng68k, Zhang T, AMB).",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, scDHA, scVI, Cell BLAST) has been executed successfully without errors on the nine intra-datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin, TM, Zheng68k, Zhang T, AMB).",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the processing of 5-fold validation and the calculation of accuracy, macro F1, and the confusion matrix heatmap has been executed successfully without errors in the intra-dataset experiments.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The intra-dataset results match the findings in Figure 2A: the CIForm framework consistently outperforms other computational methods across datasets with higher macro F1 scores.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The intra-dataset results match the findings in Figure 2B: the CIForm framework is able to annotate cell types with low appearance in the imbalanced dataset.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The intra-dataset results match the findings in Figure 2C: the CIForm framework outperforms current state-of-the-art methods on the Zheng68k dataset significantly.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read the Effectiveness Evaluation on Inter-Dataset section and Figure 3 completely to understand the experimental settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Inter-Dataset, Figure 3"
+  },
+  {
+    "criteria": "The implementation of the CIForm framework is planned on the Immune datasets (Sun, Oetjen, pbmc_10k_v3, Dahlin) for pairwise inter-dataset experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST) is planned on the Immune datasets (Sun, Oetjen, pbmc_10k_v3, Dahlin) for pairwise inter-dataset experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of the CIForm framework is planned on the brain datasets (Zeisel/Saunders as reference, Rosenberg as query) for the inter-dataset experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of other computational methods  (SingleR, Seurat-PCA, Seurat-CCA) is planned on the brain datasets (Zeisel/Saunders as reference, Rosenberg as query) for the inter-dataset experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The calculation of accuracy, macro F1 and the visualisation of Uniform Manifold Approximation and Projection (UMAP) are planned for the inter-dataset experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been implemented on the Immune datasets (Sun, Oetjen, pbmc_10k_v3, Dahlin) for pairwise inter-dataset experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST) has been implemented on the Immune datasets (Sun, Oetjen, pbmc_10k_v3, Dahlin) for pairwise inter-dataset experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been implemented on the brain datasets (Zeisel/Saunders as reference, Rosenberg as query) for the inter-dataset experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods  (SingleR, Seurat-PCA, Seurat-CCA) has been implemented on the brain datasets (Zeisel/Saunders as reference, Rosenberg as query) for the inter-dataset experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of accuracy, macro F1 and the visualisation of Uniform Manifold Approximation and Projection (UMAP) has been implemented for the inter-dataset experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been executed successfully without errors on the Immune datasets (Sun, Oetjen, pbmc_10k_v3, Dahlin) for pairwise inter-dataset experiments.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST) has been executed successfully without errors on the Immune datasets (Sun, Oetjen, pbmc_10k_v3, Dahlin) for pairwise inter-dataset experiments.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been executed successfully without errors on the brain datasets (Zeisel/Saunders as reference, Rosenberg as query) for the inter-dataset experiments.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods  (SingleR, Seurat-PCA, Seurat-CCA) has been executed successfully without errors on the brain datasets (Zeisel/Saunders as reference, Rosenberg as query) for the inter-dataset experiments.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of accuracy, macro F1 and the visualisation of Uniform Manifold Approximation and Projection (UMAP) has been executed successfully without errors for the inter-dataset experiments.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The inter-dataset results match the findings in Figure 3A: the CIForm framework consistently outperforms other computational methods across immune dataset pairs with higher macro F1 scores.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The inter-dataset results match the findings in Figure 3B: the CIForm framework outperforms other computational methods on the brain dataset pairs with higher accuracy.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The inter-dataset results match the findings in Figure 3C: the CIForm framework successfully annotates the majority of the neuron cells for the Rosenberg dataset in the inter-dataset experiments.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read the Effectiveness Evaluation on Multiple Reference Datasets section, Figure 4, and Figure 5 completely to understand the experimental settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Multiple Reference, Figure 4, Figure 5"
+  },
+  {
+    "criteria": "The implementation of the CIForm framework is planned on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with only four major pancreatic cell types.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST, scVI, scDHA) is planned on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with only four major pancreatic cell types.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The calculation of accuracy, macro F1 and the visualisation of Uniform Manifold Approximation and Projection (UMAP) are planned for the Pancreas datasets with only four major pancreatic cell types.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of the CIForm framework is planned on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with all cell types.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The implementation of other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST, scVI, scDHA) is planned on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with all cell types.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The calculation of accuracy, macro F1 and the Sankey plots are planned for the Pancreas datasets with all cell types.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been implemented on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with only four major pancreatic cell types.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST, scVI, scDHA) has been implemented on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with only four major pancreatic cell types.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of accuracy, macro F1 and the visualisation of Uniform Manifold Approximation and Projection (UMAP) has been implemented for the Pancreas datasets with only four major pancreatic cell types.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been implemented on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with all cell types.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST, scVI, scDHA) has been implemented on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with all cell types.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of accuracy, macro F1 and the Sankey plots has been implemented for the Pancreas datasets with all cell types.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been executed successfully without errors on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with only four major pancreatic cell types.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST, scVI, scDHA) has been executed successfully without errors on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with only four major pancreatic cell types.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of accuracy, macro F1 and the visualisation of Uniform Manifold Approximation and Projection (UMAP) has been implemented for the Pancreas datasets with only four major pancreatic cell types.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the CIForm framework has been executed successfully without errors on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with all cell types.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for other computational methods (SingleR, Seurat-PCA, Seurat-CCA, scmap-cluster, scmap-cell, Cell BLAST, scVI, scDHA) has been executed successfully without errors on the Pancreas datasets (Baron Human, Baron Mouse, Muraro, Segerstolpe, Xin) with all cell types.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the calculation of accuracy, macro F1 and the Sankey plots has been executed successfully without errors for the Pancreas datasets with all cell types.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The multiple reference results match the findings in Figure 4A: the accuracy of the CIForm framework outperforms other computational methods across Pancreas datasets with multiple reference sets and only four major cell types.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The multiple reference results match the findings in Figure 4B: the CIForm framework is more successful in categorising beta cells correctly.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The multiple reference results match the findings in Figure 5A and 5B: the accuracy and macro F1 score of the CIForm framework outperform other computational methods across Pancreas datasets with multiple reference sets and all cell types.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  },
+  {
+    "criteria": "The multiple reference results match the findings in Figure 5C: the CIForm framework can successfully annotate both major and rare cell types.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": null
+  }
+]
