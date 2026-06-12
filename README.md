@@ -12,6 +12,8 @@ For each paper in the dataset, both PDF and Markdown formats are provided. In th
 
 #### Training & Validation Data
 
+**(IMPORTANT) Updated on 11th June: Please check the `data/train_valid/` directory for the updated training and validation sets.**
+
 In the training and validation data, we also release the ground-truth `rubrics.json` paired with each paper so you can examine your agent system's results and adjust accordingly.
 
 Each `rubrics.json` is a JSON array of rubric entries. Each entry is structured as follows:
@@ -25,28 +27,28 @@ Each `rubrics.json` is a JSON array of rubric entries. Each entry is structured 
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `criteria` | `string` | A human-readable description of the specific requirement to be evaluated. |
-| `score` | `integer` | The score weight assigned to this criterion (higher values indicate greater importance). |
-| `type` | `string` | The evaluation category this criterion belongs to (see below). |
-| `comment` | `string \| null` | Optional context, such as the relevant section or table in the paper. |
+| Field        | Type              | Description                                                                              |
+| ------------ | ----------------- | ---------------------------------------------------------------------------------------- |
+| `criteria` | `string`        | A human-readable description of the specific requirement to be evaluated.                |
+| `score`    | `integer`       | The score weight assigned to this criterion (higher values indicate greater importance). |
+| `type`     | `string`        | The evaluation category this criterion belongs to (see below).                           |
+| `comment`  | `string \| null` | Optional context, such as the relevant section or table in the paper.                    |
 
 The `type` field categorizes each criterion into one of the following evaluation stages:
 
-| Type | Description |
-|------|-------------|
-| `Paper Observation` | The agent has correctly read and understood the relevant sections of the paper. |
-| `Plan Writing` | The agent has formulated a plan that covers the necessary components for reproduction. |
-| `Code Implementation` | The agent has written code that implements the required functionality. |
-| `Command Execution` | The agent has successfully executed the implemented code without errors. |
-| `Result Matching` | The agent's execution outcomes are consistent with the results reported in the paper. |
+| Type                    | Description                                                                            |
+| ----------------------- | -------------------------------------------------------------------------------------- |
+| `Paper Observation`   | The agent has correctly read and understood the relevant sections of the paper.        |
+| `Plan Writing`        | The agent has formulated a plan that covers the necessary components for reproduction. |
+| `Code Implementation` | The agent has written code that implements the required functionality.                 |
+| `Command Execution`   | The agent has successfully executed the implemented code without errors.               |
+| `Result Matching`     | The agent's execution outcomes are consistent with the results reported in the paper.  |
 
 #### Test Data
 
 In the test data, the rubrics for each paper will not be released. You can still obtain the original papers. Please submit your reproduction repository and action log for evaluation.
 
-*To be released.*
+Please check the ``data/test/`` for the test set.
 
 ### Submission
 
@@ -54,7 +56,9 @@ Your submission should contain the reproduced repositories for each paper in the
 
 For instance, if the paper to reproduce is saved under `data/test/paper_name`, its reproduced repository should also be saved in a directory named `paper_name` in your submission, and the action log should be saved to `paper_name/log/actions.json`.
 
-The complete submission should be packaged as a single zip file named with your team ID (`your_team_id.zip`) containing all reproduced repositories, and sent to [hanhua.hong@postgrad.manchester.ac.uk](mailto:hanhua.hong@postgrad.manchester.ac.uk).
+The complete submission should be packaged as a single zip file named with your team ID (`your_team_id.zip`) containing all reproduced repositories, and sent to [hanhua.hong@postgrad.manchester.ac.uk](mailto:hanhua.hong@postgrad.manchester.ac.uk) by 20th June.
+
+You may submit as many times as you wish before the deadline. We will use your last submission as your final result, and your score will be evaluated based only on that final submission. Scores for all teams will be released together after the release date.
 
 #### Submission Format
 
@@ -102,10 +106,10 @@ python tools/record_tools.py --work-dir /path/to/workspace
 
 #### Arguments
 
-| Argument | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `--work-dir` | Yes | — | Agent working directory. Read/Write operations are restricted to this path. |
-| `--log-dir` | No | `<work-dir>/log/` | Directory where `actions.json` will be saved. |
+| Argument       | Required | Default             | Description                                                                 |
+| -------------- | -------- | ------------------- | --------------------------------------------------------------------------- |
+| `--work-dir` | Yes      | —                  | Agent working directory. Read/Write operations are restricted to this path. |
+| `--log-dir`  | No       | `<work-dir>/log/` | Directory where `actions.json` will be saved.                             |
 
 ### Tools
 
@@ -113,28 +117,28 @@ python tools/record_tools.py --work-dir /path/to/workspace
 
 Read a file from the workspace.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `path` | `str` | Yes | Path to the file (absolute or relative to work-dir). |
-| `start_offset` | `int` | No | 1-indexed starting line number (inclusive). |
-| `end_offset` | `int` | No | 1-indexed ending line number (inclusive). |
+| Parameter        | Type    | Required | Description                                          |
+| ---------------- | ------- | -------- | ---------------------------------------------------- |
+| `path`         | `str` | Yes      | Path to the file (absolute or relative to work-dir). |
+| `start_offset` | `int` | No       | 1-indexed starting line number (inclusive).          |
+| `end_offset`   | `int` | No       | 1-indexed ending line number (inclusive).            |
 
 #### `write_file`
 
 Write content to a file in the workspace. Creates parent directories if needed.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `path` | `str` | Yes | Path to the file (absolute or relative to work-dir). |
-| `content` | `str` | Yes | The content to write. |
+| Parameter   | Type    | Required | Description                                          |
+| ----------- | ------- | -------- | ---------------------------------------------------- |
+| `path`    | `str` | Yes      | Path to the file (absolute or relative to work-dir). |
+| `content` | `str` | Yes      | The content to write.                                |
 
 #### `execute_cmd`
 
 Execute a bash command. Runs with `cwd` set to the working directory.
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `cmd` | `str` | Yes | The bash command to execute. |
+| Parameter | Type    | Required | Description                  |
+| --------- | ------- | -------- | ---------------------------- |
+| `cmd`   | `str` | Yes      | The bash command to execute. |
 
 #### `export_log`
 
@@ -278,14 +282,14 @@ After the run, `actions.json` is saved to the log directory (auto-exported on sh
 
 #### Action Record Fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | `int` | Sequential counter, starting at 1. |
-| `timestamp` | `str` | ISO 8601 UTC timestamp. |
-| `tool` | `str` | `"Read"`, `"Write"`, `"Execute"`, or `"ExportRecord"`. |
-| `arguments` | `object` | Exact parameters passed to the tool. |
-| `result` | `object` | Full output (no truncation). |
-| `duration_ms` | `int` | Wall-clock execution time in milliseconds. |
+| Field           | Type       | Description                                                    |
+| --------------- | ---------- | -------------------------------------------------------------- |
+| `id`          | `int`    | Sequential counter, starting at 1.                             |
+| `timestamp`   | `str`    | ISO 8601 UTC timestamp.                                        |
+| `tool`        | `str`    | `"Read"`, `"Write"`, `"Execute"`, or `"ExportRecord"`. |
+| `arguments`   | `object` | Exact parameters passed to the tool.                           |
+| `result`      | `object` | Full output (no truncation).                                   |
+| `duration_ms` | `int`    | Wall-clock execution time in milliseconds.                     |
 
 ### Example Repository
 
