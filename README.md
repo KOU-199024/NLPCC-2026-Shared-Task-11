@@ -56,7 +56,9 @@ Your submission should contain the reproduced repositories for each paper in the
 
 For instance, if the paper to reproduce is saved under `data/test/paper_name`, its reproduced repository should also be saved in a directory named `paper_name` in your submission, and the action log should be saved to `paper_name/log/actions.json`.
 
-The complete submission should be packaged as a single zip file named with your team ID (`your_team_id.zip`) containing all reproduced repositories, and sent to [hanhua.hong@postgrad.manchester.ac.uk](mailto:hanhua.hong@postgrad.manchester.ac.uk) by 20th June.
+In addition, your submission should include a brief description of your system in a `README.md` file.
+
+The complete submission should be packaged as a single zip file named with your team ID (`your_team_id.zip`). The zip file should contain all reproduced repositories, along with **the system description**, and be sent to [hanhua.hong@postgrad.manchester.ac.uk](mailto:hanhua.hong@postgrad.manchester.ac.uk) by 25th June.
 
 You may submit as many times as you wish before the deadline. We will use your last submission as your final result, and your score will be evaluated based only on that final submission. Scores for all teams will be released together after the release date.
 
