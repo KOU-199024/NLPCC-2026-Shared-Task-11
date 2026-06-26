@@ -8,8 +8,8 @@ NLPCC 2026 Shared Task 11: Agent-Based Experiment Reproduction from Scientific P
 
 ## Repository Structure
 
-- `data/train_valid/<paper_name>/` — Training/validation papers, each containing `paper.pdf`, `paper.md`, `images/`, and `rubrics.json` (ground-truth evaluation criteria with scores and types like "Paper Observation", "Plan Writing", etc.)
-- `data/test/<paper_name>/` — Test papers (no rubrics provided)
+- `data/train_valid/<domain>/<paper_name>/` — Training/validation papers, each containing `paper.pdf`, `paper.md`, `images/`, and `rubrics.json` (ground-truth evaluation criteria with scores and types like "Paper Observation", "Plan Writing", etc.)
+- `data/test/<domain>/<paper_name>/` — Test papers (no rubrics provided)
 - `tools/record_tools.py` — MCP Action Recorder server (the core tool for this task)
 - `example_repo/` — Reference example showing correct MCP setup (`.mcp.json`, `.claude/settings.local.json`) and expected log format (`log/actions.json`)
 
@@ -32,6 +32,7 @@ Requires `mcp` Python package. The `--work-dir` argument is required; `--log-dir
 ### MCP configuration for Claude Code
 
 Place `.mcp.json` in the reproduction workspace:
+
 ```json
 {
     "mcpServers": {
@@ -47,13 +48,15 @@ When running reproduction, Claude Code should use `.claude/settings.local.json` 
 
 ## Submission Format
 
-Each reproduced paper directory must match its `data/` subdirectory name and include `log/actions.json`:
+The submission should follow the two-layer `domain/paper_name` structure from `data/test/` and must include `log/actions.json` under each paper directory:
+
 ```
 your_team_id.zip
-|- paper_name/
-   |- log/
-      |- actions.json
-   |- <reproduced code files>
+|- domain/
+   |- paper_name/
+      |- log/
+         |- actions.json
+      |- <reproduced code files>
 ```
 
 ## Evaluation

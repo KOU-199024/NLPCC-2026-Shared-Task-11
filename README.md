@@ -52,9 +52,9 @@ Please check the ``data/test/`` for the test set.
 
 ### Submission
 
-Your submission should contain the reproduced repositories for each paper in the test data along with their action logs. The name for each repository must exactly match the subdirectory name provided in the `data/` directory, and the action log file must be saved to `log/actions.json` under that repository.
+Your submission should contain the reproduced repositories for each paper in the test data along with their action logs. The directory structure must exactly match the two-layer `domain/paper_name` layout provided in the `data/test/` directory, and the action log file must be saved to `log/actions.json` under each paper repository.
 
-For instance, if the paper to reproduce is saved under `data/test/paper_name`, its reproduced repository should also be saved in a directory named `paper_name` in your submission, and the action log should be saved to `paper_name/log/actions.json`.
+For instance, if the paper to reproduce is saved under `data/test/ML/paper_name`, its reproduced repository should be saved under `ML/paper_name/` in your submission, and the action log should be saved to `ML/paper_name/log/actions.json`.
 
 In addition, your submission should include a brief description of your system in a `README.md` file.
 
@@ -67,15 +67,26 @@ You may submit as many times as you wish before the deadline. We will use your l
 ```
 your_team_id.zip
 |
-|- paper_1/
-|  |- log/
-|  |  |- actions.json
-|  |- <reproduced source files>
+|- domain_1/
+|  |- paper_1/
+|  |  |- log/
+|  |  |  |- actions.json
+|  |  |- <reproduced source files>
+|  |
+|  |- paper_2/
+|  |  |- log/
+|  |  |  |- actions.json
+|  |  |- <reproduced source files>
+|  |
+|  |- ...
 |
-|- paper_2/
-|  |- log/
-|  |  |- actions.json
-|  |- <reproduced source files>
+|- domain_2/
+|  |- paper_3/
+|  |  |- log/
+|  |  |  |- actions.json
+|  |  |- <reproduced source files>
+|  |
+|  |- ...
 |
 |- ...
 ```
