@@ -1,0 +1,512 @@
+[
+  {
+    "criteria": "The agent has read Section 2 (Methodology) completely to understand the LARA framework, including partition strategy, logit-arithmetic decoding, reweighting, and binary constraints.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 2.1 to understand the partition strategy: N-shot examples are divided into k disjoint subsets each containing L = N/k examples, concatenated as C_i = d_{(i-1)L+1} ⊕ ... ⊕ d_{iL}, with test query appended to each subgroup.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 to understand logit-arithmetic decoding: combined generation probability is computed as softmax(sum_i w_i * f_theta(S_i, x_test)) where f_theta(S_i, x_test) = log p(y | S_i, x_test), as defined in Equation 1.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2, Equation 1"
+  },
+  {
+    "criteria": "The agent has read Section 2.3 to understand the reweighting strategy: CMA-ES is used to minimize cross-entropy loss L(w) = -sum_{(x_val, y_val) in D} sum_{t=1}^{T} log p(y_t | x_val, w) over validation examples.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The agent has read Section 2.3 to understand the cross-validation strategy: demonstrations are split into S_A = S_1 ∪ ... ∪ S_{floor(k/2)} and S_B = S_{floor(k/2)+1} ∪ ... ∪ S_k, with one group serving as validation when optimizing the other.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The agent has read Section 2.4 to understand B-LARA: weights are constrained to binary values {0, 1}, using (1+1)-ES (Rechenberg, 1973) as the optimization algorithm, as described in Algorithm 1.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.4, Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 2.5 to understand memory complexity: standard ICL is O(n^2), LARA with k groups reduces to O(n^2/k), and B-LARA with m non-zero weighted groups further reduces to O(mn^2/k^2).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 2.5"
+  },
+  {
+    "criteria": "The agent has read Appendix F to understand the experimental setup: N=32 in-context examples, temperature=0 (greedy decoding), single A100 80GB GPU, exact match (EM) evaluation on BBH and MMLU.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The agent has read Appendix F.2 to understand the three backbone models: Llama3.1-8B, Mistral-7B, and Gemma-7B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix F.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand the baseline methods: Direct ICL, KATE (KNN-based retrieval with k=2,4,8), RAE (majority voting across groups with k=2,4,8), ICV (lambda=0.1, all 32 examples), and StructICL (k=2,4,8).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the main results: B-LARA achieves the highest BBH accuracy (47.69 on Llama3.1-8B, 42.75 on Gemma-7B, 45.03 on Mistral-7B) and MMLU accuracy (67.80 on Llama3.1-8B, 65.56 on Gemma-7B, 64.12 on Mistral-7B).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the many-shot experiments on GoEmotion (224 examples, 8 rounds) and TacRED (164 examples, 4 rounds) with LARA/B-LARA groups of 4, 8, 16.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2, Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Figure 3 and Table 3 to understand the GPU memory efficiency analysis with group sizes k=1,2,4,8 and sequence lengths 5k-25k tokens on an A100 80GB GPU.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 3, Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the black-box LLM experiment: GPT-4o-mini evaluated on BBH, with LARA achieving 56.06 and B-LARA achieving 57.41 vs ICL's 53.17.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3, Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Table 4 (ablation study) to understand the 'w/o reweight' baseline that uses uniform logit averaging without CMA-ES optimization, comparing group sizes L=2,4,8 of Llama3.1-8B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 4, Section 4.4"
+  },
+  {
+    "criteria": "The agent has read Table 5 to understand the generation task experiments on GSM8K with 80 examples split into 10 groups, compared to ICL, EarlyStop, StructICL, and FocusICL across Llama-3, LongChat, and Vicuna.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 5, Section 4.5"
+  },
+  {
+    "criteria": "The agent has read Table 6 and Section 4.6 to understand the MoICL comparison on Hate, RTE, QNLI and other classification tasks from Table 11.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 6, Section 4.6"
+  },
+  {
+    "criteria": "The agent has read Figure 4 (Appendix A.1) to understand the limited-examples analysis on BBH with Mistral-7B, varying N in {2, 4, 8, 16, 32} and k=2 subgroups.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4, Appendix A.1"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand dataset prompts (BBH: 'Question: {q} Answer: {a}', MMLU: multiple-choice with subject prefix, GoEmotion: emotion category from comment, TacRED: relation extraction) and statistics (BBH: 55 tokens/shot, MMLU: 65 tokens/shot).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 (B-LARA Optimization) to understand the (1+1)-ES procedure: initialize random binary w, flip each bit with probability 1/dim(w), accept if new loss is lower, repeat for J iterations, run for both halves S_A and S_B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1 (Appendix G)"
+  },
+  {
+    "criteria": "The plan includes implementing the partition strategy to divide N examples into k disjoint subsets of size L = N/k, with each subset concatenated as input to the LLM.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes implementing logit-arithmetic decoding via a weighted sum of log-probability outputs from k subgroups as in Equation 1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.2, Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing CMA-ES non-gradient optimization to find optimal weights w for LARA.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The plan includes implementing the cross-validation split (S_A and S_B) so that each half serves as the validation set when optimizing weights for the other half.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The plan includes implementing B-LARA with binary weight constraints {0, 1} using (1+1)-ES as described in Algorithm 1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.4, Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes loading and evaluating on BBH and MMLU benchmarks with exact match evaluation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix F.1"
+  },
+  {
+    "criteria": "The plan includes implementing the three backbone models: Llama3.1-8B, Mistral-7B, and Gemma-7B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix F.2"
+  },
+  {
+    "criteria": "The plan includes implementing baseline methods: direct ICL, KATE (top-k retrieval), RAE (majority voting), ICV, and StructICL.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing the 'w/o reweight' ablation baseline that averages logits uniformly across groups.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The plan includes running many-shot experiments on GoEmotion (224 examples) and TacRED (164 examples) using the LongICLBench setup.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes measuring GPU memory usage across different input sequence lengths (5k-25k tokens) and group sizes (k=1,2,4,8).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes running GSM8K generation task experiments with 80 examples split into 10 groups, comparing against ICL, EarlyStop, StructICL, and FocusICL.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The plan includes the limited-examples analysis varying N in {2, 4, 8, 16, 32} on BBH with Mistral-7B and k=2 groups.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The code implements the partition strategy that splits N in-context examples into k disjoint subsets of equal size L = N/k, where each subset is concatenated to form an input sequence C_i appended with the test query.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code implements logit-arithmetic decoding (Equation 1): for each subgroup i, the log-probability outputs f_theta(S_i, x_test) = log p(y | S_i, x_test) are computed and combined as softmax(sum_i w_i * f_theta(S_i, x_test)).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.2, Equation 1"
+  },
+  {
+    "criteria": "The code computes the cross-entropy loss L(w) = -sum_{(x_val, y_val)} sum_{t=1}^{T} log p(y_t | x_val, w) over the validation set for a given weight vector w.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The code implements CMA-ES (from a library such as pycma or nevergrad) to optimize the weight vector w by minimizing the cross-entropy validation loss without gradient updates.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The code implements the cross-validation split: demonstrations are divided into S_A and S_B; when optimizing weights for S_A, S_B is used as validation, and vice versa, and the final weight vector w* concatenates w*_A and w*_B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The code uses the validation loss to determine the optimal hyperparameter L (group size) by comparing minimum validation losses across different L settings.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The code implements B-LARA with binary weight constraints: weights are initialized as random binary vectors of length |S_r|, and the (1+1)-ES mutation flips each bit with probability 1/dim(w), accepting the mutation only if the new loss is lower.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.4, Algorithm 1"
+  },
+  {
+    "criteria": "The code correctly prunes subgroups with zero weight in B-LARA during inference, reducing computational cost.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The code loads BBH and MMLU benchmarks and evaluates using exact match (EM) accuracy.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F.1"
+  },
+  {
+    "criteria": "The code uses the correct prompt format for each dataset: BBH ('Question: {q} Answer: {a} Question: {q} Answer:'), MMLU (multiple-choice with subject), GoEmotion (emotion category from comment), TacRED (relation extraction with entity pair).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B, Table 7"
+  },
+  {
+    "criteria": "The code uses N=32 in-context examples for LARA and all baselines, and temperature=0 (greedy decoding) for all experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F.3"
+  },
+  {
+    "criteria": "The code integrates Llama3.1-8B, Gemma-7B, and Mistral-7B models for evaluation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F.2"
+  },
+  {
+    "criteria": "The code implements the KATE baseline using a smaller model (e.g., sentence-transformers) for KNN retrieval with k=2, 4, and 8 demonstrations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements the RAE baseline by dividing examples into groups, generating individual outputs, and applying majority voting across groups, with k=2, 4, 8.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements the ICV baseline with lambda=0.1 by averaging in-context vectors from all 32 examples to steer model behavior in latent space.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements the StructICL baseline with k=2, 4, 8 groups using rescaled attention mechanisms.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements the 'w/o reweight' ablation by setting uniform weights w_i = 1/k across all k groups (logit averaging without optimization).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The code loads GoEmotion (224 examples, 8 rounds) and TacRED (164 examples, 4 rounds) from LongICLBench and runs LARA/B-LARA with candidate group sizes of 4, 8, and 16.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code runs GSM8K experiments with 80 training examples split into 10 groups for B-LARA, evaluated against Llama-3-8B-Instruct, LongChat-7B-V1.5-32K, and Vicuna-7B-V1.5-16K.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The code measures GPU memory usage as a function of input sequence length (5k to 25k tokens) and number of subgroups (k=1,2,4,8) with batch size 4 on an A100 80GB GPU.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Figure 3"
+  },
+  {
+    "criteria": "The code applies B-LARA to the GPT-4o-mini API using only the top-20 output logits per token for the BBH benchmark.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code runs limited-examples experiments varying N in {4, 8, 16, 32} on BBH with Mistral-7B and k=2 groups, comparing ICL, LARA, B-LARA, and logit-averaging.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1, Figure 4"
+  },
+  {
+    "criteria": "The code runs NL2Bash experiments (BLEU evaluation) and CNN/DailyMail summarization experiments (ROUGE-L evaluation) for LARA and B-LARA against ICL and IRE_4 baselines.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Table 10"
+  },
+  {
+    "criteria": "The code runs MoICL comparison experiments on seven classification tasks (Offensive, Hate, SST2, RTE, FEVER, PAWS, QNLI) for LARA and B-LARA.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix E, Table 11"
+  },
+  {
+    "criteria": "The main LARA pipeline (partition → logit inference per subgroup → CMA-ES reweighting → weighted decoding) runs successfully end-to-end on BBH with all three backbone models.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The B-LARA pipeline (partition → (1+1)-ES binary weight optimization → pruned inference) runs successfully end-to-end on BBH with all three backbone models.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "All baseline methods (direct ICL, KATE_2/4/8, RAE_2/4/8, ICV, StructICL_2/4/8) run successfully on BBH and MMLU with all three models.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "LARA and B-LARA run successfully on MMLU with all three backbone models.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "LARA and B-LARA run successfully on GoEmotion and TacRED with all three backbone models.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The GPU memory measurement script runs successfully for sequence lengths 5k-25k tokens and group sizes k=1,2,4,8.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The ablation 'w/o reweight' experiments run successfully on BBH and MMLU with Llama3.1-8B for group sizes L=2,4,8.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.4, Table 4"
+  },
+  {
+    "criteria": "The GSM8K generation task experiments run successfully for B-LARA with all three models (Llama-3-8B-Instruct, LongChat-7B, Vicuna-7B).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The GPT-4o-mini BBH experiment runs successfully using the OpenAI API with top-20 logits.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.3, Table 3"
+  },
+  {
+    "criteria": "The limited-examples BBH experiments run successfully for N in {4, 8, 16, 32} with Mistral-7B.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The NL2Bash and CNN/DailyMail summarization generation task experiments run successfully for LARA and B-LARA with all three models.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The output matches Table 1: B-LARA achieves BBH accuracy of approximately 47.69 on Llama3.1-8B, 42.75 on Gemma-7B, and 45.03 on Mistral-7B, outperforming all baselines including white-box methods ICV and StructICL.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The output matches Table 1: LARA achieves BBH accuracy of approximately 47.46 on Llama3.1-8B, 41.77 on Gemma-7B, and 44.77 on Mistral-7B.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The output matches Table 1: MMLU average accuracy for B-LARA is approximately 67.80 on Llama3.1-8B, 65.56 on Gemma-7B, and 64.12 on Mistral-7B.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The output matches Table 1: B-LARA consistently outperforms LARA on BBH, and both outperform direct ICL (45.64 on Llama3.1-8B, 37.08 on Gemma-7B, 42.91 on Mistral-7B) by margins of at least 2 points on BBH.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The output matches Table 2: B-LARA achieves the highest accuracy on GoEmotion (24.00 on Llama3.1-8B, 22.80 on Gemma-7B, 23.80 on Mistral-7B) and outperforms ICL and RAE baselines on both GoEmotion and TacRED.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The output matches Table 2: B-LARA achieves TacRED accuracy of approximately 48.60 on Llama3.1-8B, 49.00 on Gemma-7B, and 59.00 on Mistral-7B.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The output matches Figure 3: with k=2 subgroups, LARA handles sequences up to 20k tokens; with k=8, up to at least 25k tokens, while standard ICL (k=1) runs OOM beyond 10k tokens on a single A100 80GB GPU with batch size 4.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 4.2"
+  },
+  {
+    "criteria": "The output matches Table 3: on the BBH benchmark with GPT-4o-mini, LARA achieves ~56.06 and B-LARA achieves ~57.41, both outperforming direct ICL's ~53.17.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The output matches Table 4: the 'w/o reweight' ablation (uniform logit averaging) with Llama3.1-8B achieves MMLU accuracy of ~67.23 (L=2), ~67.58 (L=4), ~67.43 (L=8), demonstrating that even logit averaging outperforms direct ICL (65.63).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The output matches Table 4: LARA (47.46) and B-LARA (47.69) outperform the 'w/o reweight' baselines on BBH (Llama3.1-8B), confirming the value of the reweighting step.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The output matches Table 5: B-LARA achieves GSM8K accuracy of approximately 73.86 on Llama-3-8B-Instruct, 12.23 on LongChat, and 18.12 on Vicuna, outperforming or matching FocusICL on 2 out of 3 models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The output matches Table 6: LARA achieves approximately 67.20 on Hate and 78.20 on PAWS, and B-LARA achieves 90.66 on QNLI, with LARA/B-LARA being competitive with or outperforming MoICL variants on most tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6, Table 11"
+  },
+  {
+    "criteria": "The output matches Figure 4 (Appendix A.1): both LARA and B-LARA outperform direct ICL across all N values in {4, 8, 16, 32} on BBH with Mistral-7B, with the performance gap increasing with more examples; the non-reweight version outperforms ICL but falls below B-LARA.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4, Appendix A.1"
+  },
+  {
+    "criteria": "The output matches Table 10: LARA achieves NL2Bash BLEU scores of approximately 29.20 (Llama), 26.00 (Gemma), 28.80 (Mistral), and B-LARA achieves approximately 29.80, 26.60, 29.40, both outperforming ICL.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 10, Appendix D"
+  },
+  {
+    "criteria": "The output matches Table 12: the full ablation study results for all three models (Llama3.1-8B, Gemma-7B, Mistral-7B) on BBH and MMLU for LARA, B-LARA, and w/o reweight variants match the reported numbers.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 12, Appendix H.1"
+  },
+  {
+    "criteria": "The per-task breakdown results in the appendix tables (BBH tasks: TempSeq, DisambQA, DateUnd, etc.; MMLU tasks: abstract_algebra, anatomy, etc.) for all three models approximately match the reported values in Tables H.2.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix H.2"
+  },
+  {
+    "criteria": "In the 32-shot setting, approximately 45% or fewer of B-LARA subgroups are assigned non-zero weights during inference, confirming the computational efficiency claim.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix A.1"
+  }
+]

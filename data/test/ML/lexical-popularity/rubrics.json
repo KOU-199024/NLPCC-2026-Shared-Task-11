@@ -1,0 +1,362 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the task selection criteria, the distinction between formal and functional linguistic knowledge, and the models and pre-training data used.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand the Instance Popularity Score (IPS) metric, including its formula and how it is used to measure lexical overlap with pre-training data.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 5 completely to understand the lexical invariance test, including the perturbation strategy and how it is validated.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Section 6 completely to understand the memorization experiments (TDE and MIA) and how they differ from the IPS metric.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The agent has read Appendix A.2 to understand the full perturbation pipeline, including POS tagging, WSD model usage, synonym selection, and inflection restoration.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The plan includes loading the four formal benchmark tasks from BLiMP: Determiner-Noun Agreement, Anaphor Agreement, Subject-Verb Agreement, and Argument Structure.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes loading the four functional benchmark tasks: LAMBADA, PIQA, COPA, and WinoGrande.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes setting up the four models: OLMo 1B, OLMo 7B, Pythia 2.8B, and Pythia 6.9B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes accessing the infini-gram index and API (Liu et al., 2024) for counting n-gram occurrences in Dolma (for OLMo) and Pile (for Pythia).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes computing the Instance Popularity Score (IPS) using 7-token n-grams, decile-based popularity assignment, and averaging across n-grams in a test instance.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes evaluating model performance on original and lexically perturbed versions of all eight benchmarks and reporting the delta as a percentage change.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes implementing all four memorization metrics: TDE Accuracy, TDE Likelihood, MIA Loss, and MIA Neighbors.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The plan includes training a Logistic Regression classifier to predict model correctness from memorization scores and comparing it against a dummy majority-class baseline.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code for loading and evaluating all four formal BLiMP tasks (Determiner-Noun Agreement, Anaphor Agreement, Subject-Verb Agreement, Argument Structure) in zero-shot setting has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for loading and evaluating all four functional benchmark tasks (LAMBADA, PIQA, COPA, WinoGrande) in zero-shot setting has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for loading OLMo 1B and OLMo 7B models (trained on Dolma) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for loading Pythia 2.8B and Pythia 6.9B models (trained on the Pile) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for querying the infini-gram index API to retrieve count(g) — the number of pre-training documents containing each n-gram g — has been implemented for both Dolma and Pile.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for extracting all n-grams of length 7 (G_x^n, n=7) from a test instance x has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for computing the decile-based popularity score popularity(g) ∈ [1, 10] by situating count(g) within the overall distribution of occurrence counts across the test set has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for computing IPS(x) as the average popularity of all n-grams of the test instance has been implemented as Equation 1: IPS(x) = (1/|G_x^n|) * sum_{g in G_x^n} popularity(g).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4, Equation 1"
+  },
+  {
+    "criteria": "For tasks with two options (all except LAMBADA), the code computes the relative IPS difference (IPS(x_correct) - IPS(x_wrong)) / IPS(x_correct) to quantify how much more popular the correct option is.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4, Equation 2"
+  },
+  {
+    "criteria": "For LAMBADA, the code uses only the IPS of the full test instance (not a relative difference between two options) since it is a generation task.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code groups test instances into low-IPS and high-IPS categories based on the median IPS value, and computes per-group model accuracy for each task and model.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for the perturbation pipeline POS-tags each sentence and identifies nouns and verbs (excluding auxiliaries, modal verbs, and proper nouns) as substitution targets.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code uses a LLaMA-3.1 8B model finetuned on WSD (Basile et al., 2025) in a multiple-choice format to identify the correct WordNet synset for each target word in its sentence context.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code selects a synonym from the WordNet synset uniformly at random and substitutes the original word, restoring the correct inflection based on its part-of-speech.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code measures BERTscore (Zhang et al., 2020) between original and perturbed sentences to verify that high semantic similarity is preserved.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code measures ROUGE-L between original and perturbed sentences to confirm that lexical surface forms have changed (lower ROUGE-L is expected).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code implements the LLM-as-judge validation using LLaMA 3.1 8B with the exact system prompt ('You are a strict semantic evaluator...') and user prompt format on 50 examples per subtask.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The code evaluates each of the four models on both the original and lexically perturbed versions of all 8 tasks and computes the delta as a percentage change relative to the original score.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code computes IPS for original and perturbed instances and identifies the subset of test instances where the model flips from correct to incorrect under perturbation, then computes mean IPS for that subset.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5, Table 3"
+  },
+  {
+    "criteria": "The code applies a Wilcoxon signed-rank test to verify that the mean IPS of instances that flip from correct to incorrect is significantly lower in the perturbed set than in the original (p < 0.01).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code for noun-only perturbation (substituting only nouns) and verb-only perturbation (substituting only verbs) as ablation variants has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "The code for TDE Accuracy — feeding the first half of each test instance to the LLM and measuring verbatim exact-match reconstruction of the second half — has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code for TDE Likelihood — computing the log-likelihood that the model assigns to the second half of each test instance when prompted with the first half — has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code for MIA Loss — using the model's cross-entropy loss over the full test instance as a memorization signal — has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code for MIA Neighbors — computing the difference between the model loss on the original test instance and the average loss over lexically perturbed neighbors generated with RoBERTa (Zhuang et al., 2021) — has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "For two-option tasks, the code computes the memorization scores for both the correct and incorrect options, then uses both as features in the Logistic Regression classifier.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code trains a Logistic Regression classifier using each memorization metric as feature(s) to predict whether the model's choice is correct, and computes F1 macro and AUC.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code trains an SVM classifier with a polynomial kernel of degree 3 as an additional verification that memorization metrics do not correlate with model performance on formal tasks.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.5"
+  },
+  {
+    "criteria": "The code bins test instances by TDE Likelihood score and MIA Neighbors score (analogous to IPS binning) and computes per-bin accuracy to compare predictive power against IPS.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6, Table 4"
+  },
+  {
+    "criteria": "All four models (OLMo 1B, OLMo 7B, Pythia 2.8B, Pythia 6.9B) have been evaluated on all 8 original benchmarks in zero-shot setting and the IPS scores have been computed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The perturbation pipeline has been executed successfully on all 8 benchmark tasks to generate lexically perturbed datasets, and all four models have been evaluated on the perturbed datasets without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The noun-only and verb-only perturbation ablation experiments have been executed successfully on all four models for all 8 tasks.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "All memorization experiments (TDE Accuracy, TDE Likelihood, MIA Loss, MIA Neighbors) have been executed on all four models for all 8 tasks without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "Logistic Regression and SVM classifiers for the memorization correlation analysis have been trained and evaluated on all four models across all tasks.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 6, Appendix A.5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 1: Pythia 6.9B achieves higher accuracy on high-IPS instances compared to low-IPS instances for functional tasks (e.g., ~18-point gap for PIQA: 85.7 vs 67.0), while the gap is much smaller or absent for formal tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 1"
+  },
+  {
+    "criteria": "The execution outcomes confirm the finding in Section 4: WinoGrande does not show the typical functional-task trend (similar performance across IPS bins), consistent with its formal linguistic knowledge component.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: all four models show performance drops on functional tasks under lexical perturbation, with the largest drops on LAMBADA (~26%), PIQA (~17-18%), and COPA (~20-28%), and perplexity on LAMBADA roughly quadrupling.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: all four models show smaller but statistically significant performance drops on formal tasks under lexical perturbation, ranging from approximately 6.95% to 15.64%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: instances that flip from correct to incorrect under perturbation have significantly lower mean IPS in the perturbed set than in the original, with the effect being stronger for functional tasks than formal tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: the synonym distribution in Pile and Dolma shows greater variance and is more skewed toward zero (lower frequency) compared to the original word distribution.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: perturbed sentences maintain high BERTscore (high semantic similarity) while exhibiting lower ROUGE-L scores (confirming lexical changes), for both formal and functional tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: the IPS distribution of LAMBADA test instances shifts toward lower values after perturbation, confirming that lexical perturbations reduce instance popularity.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The LLM-as-judge results match Table B: LLaMA 3.1 8B judges original and perturbed sentences as conveying the same meaning in at least 92% of cases across all tasks (overall ~94.67%).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table B, Appendix A.3"
+  },
+  {
+    "criteria": "The execution outcomes match Tables C and D: noun-only and verb-only perturbations each independently lead to significant performance drops on functional tasks, with functional tasks dropping more than formal tasks under both conditions.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables C and D, Appendix A.4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5 and Tables E-H: Logistic Regression trained on TDE and MIA memorization scores performs no better than a dummy majority-class classifier (F1 macro around 41-50) across all models and tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5, Tables E-H"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: TDE Likelihood score shows no meaningful accuracy gap between low-bin and high-bin instances for functional tasks, and MIA Neighbors shows limited predictive power (unlike IPS which shows a clear gap for functional tasks).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Appendix Tables I-J: SVM with polynomial kernel of degree 3 also shows no meaningful correlation between memorization scores and model accuracy, confirming the Logistic Regression findings.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix A.5, Tables I-J"
+  }
+]

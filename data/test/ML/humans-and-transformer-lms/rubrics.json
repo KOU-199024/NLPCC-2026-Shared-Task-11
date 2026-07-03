@@ -1,0 +1,482 @@
+[
+  {
+    "criteria": "The agent has read the abstract and introduction to understand the core research question: whether GPT-2 learns linguistic categories via abstraction-first or exemplar-first mechanisms over the course of pretraining.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 1"
+  },
+  {
+    "criteria": "The agent has read Section 2.1 to understand the theoretical distinction between the abstraction-first account (early abstract featural representations) and the exemplar-first account (early memorization of observed instances) of child language acquisition.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand the four argument structure verb classes used in Experiment 1 and the WikiText-103-based dataset construction procedure using regular expressions and Stanza dependency parses.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the four verb classes (to-Dative n=35, Motion n=36, Reciprocal n=16, spray-load n=16), example verbs, example sentences, and total sentence counts (1841, 1942, 465, 404).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand that GPT-2 small models (12 layers, 12 attention heads, batch size 32) with 450 checkpoints over 400K training steps from Karamcheti et al. (2021) are used.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the paradigm: collecting next-token distributions at the target post-preposition slot, then deriving a single per-verb estimate across all sentence prefixes.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Equation 1 to understand the per-verb next-token distribution P_v(x) as an arithmetic mean over the set S_v of N sentence prefixes containing verb v.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the item learning metric as mean intra-class DJS for each verb, and the class learning metric as a one-tailed Mann-Whitney U-test comparing intra-class vs inter-class DJS with p < 0.001.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Figure 2 to understand that at early training step 300, pairwise DJS heatmaps already show clear between-class vs within-class block separation, confirming class-level distinctions emerge at the very onset of learning.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The agent has read Figure 3 and Section 3.3 to understand that for to-Dative and Motion classes, class-based distinctions (pink line) emerge ~50 steps before in-class differences (green/orange lines) begin, while for Reciprocal and spray-load the onset is concurrent.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 3, Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 to understand the targeted behavioral evaluation tracking four prototype nouns (public, family for to-Dative; airport, scene for Motion) and using Spearman correlations across probability trajectories.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The agent has read Figure 4 to check that within-class Spearman correlations for prototype noun trajectories remain higher than between-class correlations at earlier training steps.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The agent has read Section 3.5 to understand the exemplar-first baseline design: count-based co-occurrence vectors from OpenWebText using GPT-2 tokenization, a unidirectional 10-token context window, stop word removal, and add-k smoothing (k=0.5).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The agent has read Figure 5 to understand the comparison: the exemplar-first baseline shows verb-specific divergence before class distinctions, contrasting with GPT-2's early and consistent class-level separation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the three structures for Experiment 2: TRANSITIVITY (n=1000 from BLiMP) and RELATIVE CLAUSE (to-Dative n=824, Reciprocal n=288) with their syntactic frames.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the RELATIVE CLAUSE data design: comparing relative clause frame (3) 'The person that ...VERB_GAP...__' versus matrix frame (4) 'The person thinks that ...VERB_NO_GAP...__'.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 to understand the Experiment 2 class learning metric: for RELATIVE CLAUSE, the two categories contain the same verbs in gap vs no-gap contexts (e.g., give_gap vs give_nogap).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Figure 6 to check that for the TRANSITIVITY dataset, class-level behaviour and item-based DJS increases always emerge simultaneously.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The agent has read Figure 7 to check that for RELATIVE CLAUSE, DJS increases for Reciprocal verbs begin earlier than for to-Dative verbs, with median breakpoints ~950 vs ~1900 respectively.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 7, Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Figure 8 to understand the sequential emergence of abstractions confirmed across three random seeds: TRANSITIVITY (t < 100), VERB CLASSES (t > 100), RELATIVE CLAUSE (t > 1000).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The agent has read Appendix A to check the complete verb lists for all four argument structure classes with per-verb sentence counts used for dataset construction.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the RELATIVE CLAUSE dataset generation procedure using Stanza dependency parses to extract subjects and objects, and the four syntactic templates (5)-(8).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Appendix B.1 to understand the varied embedding verbs experiment using nine verbs (thinks, believes, knows, says, claims, announces, states, reports, reveals) to confirm the early spike in Figure 7 is a lexical artifact of the word 'thinks'.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The agent has read Appendix C to check the required package versions: NLTK (3.6.4), lemminflect (0.2.3), Stanza (1.8.2), transformers (4.40.1), scipy (1.3.1), numpy (1.18.2), SpaCy (2.1.8), and GPU requirements (NVIDIA RTX or RTX A6000).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes loading GPT-2 small training checkpoints released by Karamcheti et al. (2021), trained on the OpenWebText corpus, with 450 checkpoints spanning 400K training steps.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes constructing the argument structure dataset by filtering natural sentences from WikiText-103 using regular expressions and Stanza dependency parses to identify target verbs in the syntactic frame '...VERB...PREPOSITION the ___'.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the four argument structure verb classes: to-Dative (n=35 verbs, 1841 sentences), Motion (n=36 verbs, 1942 sentences), Reciprocal (n=16 verbs, 465 sentences), and spray-load (n=16 verbs, 404 sentences).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1, Appendix A"
+  },
+  {
+    "criteria": "The plan includes implementing Equation 1 to compute per-verb next-token distributions as arithmetic means over all N sentence prefixes containing that verb.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes computing pairwise Jensen-Shannon divergence (DJS) between per-verb distributions across all verb pairs at each of the 450 training checkpoints.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes comparing only verb class pairs sharing the same preposition: to-Dative & Motion (preposition 'to') and Reciprocal & spray-load (preposition 'with').",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing the item learning metric as mean intra-class DJS for each verb v across all other verbs in the same class.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing the class learning metric using a one-tailed Mann-Whitney U-test comparing intra-class DJS (U_A) vs inter-class DJS (U_B) distributions, with p < 0.001 as the significance threshold.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing the targeted behavioral evaluation from Section 3.4: tracking probability trajectories for four prototype nouns (public, family for to-Dative; airport, scene for Motion) and computing pairwise Spearman correlations within and between verb classes.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes implementing the exemplar-first baseline using co-occurrence count vectors from OpenWebText, with GPT-2 tokenization, a unidirectional 10-token context window, determiners removed, and add-k smoothing (k=0.5).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The plan includes loading the BLiMP TRANSITIVITY test set (n=1000) and using the syntactic frame '...VERB...__' for computing next-token distributions in Experiment 2.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The plan includes constructing the RELATIVE CLAUSE dataset from Experiment 1 naturalistic sentences using Stanza dependency parses to extract subjects and objects, converting verbs to simple past tense with lemminflect, and applying the four templates (5)-(8) from Appendix B.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes the breakpoint heuristic for Experiment 2: the step after which the average DJS for a verb across minimal pairs is consistently at least 0.01 greater than the average of the first 30 training steps.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes running all experiments on three GPT-2 small models trained with different random seeds to verify the sequential emergence pattern in Figure 8.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The plan includes the Appendix B.1 control experiment varying the embedding verb across nine options (thinks, believes, knows, says, claims, announces, states, reports, reveals) to isolate the effect of the word 'thinks' on early RELATIVE CLAUSE DJS.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for loading GPT-2 small training checkpoints from Karamcheti et al. (2021) has been implemented to iterate over 450 checkpoints spanning 400K steps of autoregressive pretraining on OpenWebText.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for filtering WikiText-103 sentences using regular expressions to identify the target syntactic frame '...VERB...PREPOSITION the ___' and Stanza dependency parses to confirm verb-preposition-argument structure has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for the four verb argument structure datasets has been implemented with the correct verb sets from Appendix A (to-Dative: 1841 sentences across 35 verbs, Motion: 1942 across 36, Reciprocal: 465 across 16, spray-load: 404 across 16).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1, Appendix A"
+  },
+  {
+    "criteria": "The code for Equation 1 to compute per-verb next-token distributions P_v(x) as arithmetic means over the set S_v of N sentence prefixes containing verb v has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for computing Jensen-Shannon divergence (DJS) between two next-token probability distributions has been implemented, following Lin (1991), enabling pairwise comparison between any two verbs.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for the item learning metric as mean pairwise DJS between verb v and all other verbs within the same class has been implemented to track idiosyncratic verb learning independent of class effects.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for the class learning metric using a one-tailed Mann-Whitney U-test between the intra-class DJS set U_A and the inter-class DJS set U_B has been implemented with p < 0.001 as the significance threshold.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Figure 3"
+  },
+  {
+    "criteria": "The code for aggregating class learning results across training steps and reporting the proportion of verbs with statistically significant between-class vs within-class differences for each verb class pair has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The code for generating pairwise DJS heatmaps (Figure 2 style) at selected early training steps, displaying within-class and between-class quadrant structure across all verb pairs in two classes, has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The code for the targeted behavioral evaluation tracking probability trajectories for four prototype nouns (public, family for to-Dative class; airport, scene for Motion class) across all 450 training checkpoints has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The code for computing pairwise Spearman correlations between prototype noun probability trajectories across verbs, reporting within-class and between-class means with 95% confidence intervals, has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The exemplar-first baseline has been implemented with co-occurrence count vectors over the OpenWebText corpus using GPT-2 tokenization, a unidirectional 10-token context window, removal of stop word tokens (determiners), and add-k smoothing with k=0.5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The code for the exemplar-first baseline computing pairwise DJS with incrementally observed token counts as a proxy for training steps, evaluated on 6.0×10^7 tokens (90% of tokens containing target verbs), has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The code for loading the BLiMP TRANSITIVITY test set (n=1000 minimal pairs) and computing next-token distributions at the target position using GPT-2 checkpoints has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The code for constructing the RELATIVE CLAUSE dataset from Experiment 1 sentences has been implemented: Stanza parses extract subjects and direct objects, verbs are converted to simple past form using lemminflect, and sentences are placed in the four syntactic templates (5)-(8) from Appendix B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code for generating the to-Dative RELATIVE CLAUSE dataset (n=824 minimal pairs) and Reciprocal RELATIVE CLAUSE dataset (n=288 minimal pairs) using templates (5)-(8) has been implemented, with sentences discarded when subject/object extraction fails or produces non-contiguous spans.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B, Table 2"
+  },
+  {
+    "criteria": "The code for the Experiment 2 class learning metric treating gap and no-gap syntactic contexts as the two categories for the same set of verbs (e.g., give_gap vs give_nogap) and computing a Mann-Whitney U-test per verb has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for computing breakpoints heuristically for each verb as the step after which mean DJS across minimal pairs is consistently at least 0.01 greater than the average DJS of the first 30 training steps has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for the unpaired t-test comparing median breakpoints between Reciprocal class verbs and to-Dative class verbs across all three random seeds has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for running all Experiment 1 and Experiment 2 analyses across three GPT-2 small models trained with different random seeds and plotting the learning curves in Figure 8 has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The code for the Appendix B.1 control experiment varying the embedding verb over nine options (thinks, believes, knows, says, claims, announces, states, reports, reveals) in the no-gap RELATIVE CLAUSE template has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The codebase uses the correct library versions for preprocessing and computation: NLTK (3.6.4), lemminflect (0.2.3), Stanza (1.8.2), transformers (4.40.1), scipy (1.3.1), numpy (1.18.2), SpaCy (2.1.8).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code for Experiment 1 argument structure analysis has been executed successfully, computing per-verb next-token distributions and pairwise DJS at all 450 training checkpoints for both verb class comparison pairs.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code for generating pairwise DJS heatmaps at early training steps (as in Figure 2) has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The code for the Section 3.4 targeted behavioral evaluation, computing Spearman correlations of prototype noun probability trajectories within and between verb classes across all checkpoints, has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The code for the exemplar-first baseline experiment has been executed successfully without errors, computing co-occurrence-based DJS across increasing token counts for the to-Dative and Motion verb classes.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The code for Experiment 2 TRANSITIVITY has been executed successfully without errors, computing class-level and item-based DJS metrics across all 450 checkpoints for 1000 BLiMP minimal pairs.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The code for Experiment 2 RELATIVE CLAUSE has been executed successfully without errors, computing class-level and item-based DJS metrics across all 450 checkpoints for both to-Dative (n=824) and Reciprocal (n=288) minimal pair datasets.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The code for breakpoint computation and the unpaired t-test comparing Reciprocal vs to-Dative verb onset times has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for the multi-seed comparison (Figure 8) has been executed for all three random seed models, producing learning curves for all five experimental conditions.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The code for the Appendix B.1 varied embedding verb experiment has been executed successfully without errors, producing the control result in Figure 9.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Figure 9, Appendix B.1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: pairwise DJS heatmaps at early training steps show clear block structure with higher DJS in between-class quadrants and lower DJS in within-class quadrants as soon as any change from zero occurs.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: for to-Dative and Motion classes, the proportion of verbs with statistically significant between-class DJS exceeding within-class DJS emerges approximately 50 steps before any intra-class differences appear.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: between-class divergence for to-Dative & Motion peaks around training step 3000, while Reciprocal & spray-load peaks around step 1000, and within-class DJS continues to increase until the end of training.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 3.3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: within-class Spearman correlations for prototype noun probability trajectories remain higher than between-class correlations at earlier training steps, and between-class correlations decrease earlier in training.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: the exemplar-first baseline shows to-Dative verbs diverging from one another before converging (verb-specific idiosyncratic patterns), and between-class distances are not consistently greater than within-class distances until this convergence, contrasting sharply with GPT-2's behavior.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6: for the TRANSITIVITY dataset, increases in mean pairwise DJS between minimal pairs (item learning) co-occur with increases in the proportion of verbs significantly more similar within-category (class learning), confirming simultaneous onset.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 7: for the RELATIVE CLAUSE dataset, pairwise DJS increases for Reciprocal verbs begin earlier than for to-Dative verbs, demonstrating verb-class-specific sequential learning of filler-gap dependencies.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The execution outcomes confirm that the median breakpoint for Reciprocal class verbs (~950) is significantly earlier than for to-Dative class verbs (~1900), with the unpaired t-test yielding p < 10^-8.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 8: across all three random seeds, abstractions emerge in a consistent sequential order: TRANSITIVITY onset (t < 100), argument structure VERB CLASSES onset (t > 100), and RELATIVE CLAUSE onset (t > 1000), with near-zero DJS before each respective onset.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 9: varying the embedding verb across nine options eliminates the early spike in RELATIVE CLAUSE DJS that appeared in Figure 7, confirming the spike was caused by the specific word 'thinks' and not early syntactic learning of filler-gap dependencies.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 9, Appendix B.1"
+  }
+]

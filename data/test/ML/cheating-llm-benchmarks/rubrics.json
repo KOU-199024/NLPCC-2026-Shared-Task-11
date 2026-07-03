@@ -1,0 +1,458 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the formal definitions of auto-annotators (JUDGE), null models (NullModel), and the threat model of cheating.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand the two-component cheating strategy: structured cheating responses and token-level random search for an adversarial prefix.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Figure 2 to understand how the structured cheating response overrides the original instruction-output triplet in AlpacaEval 2.0's template with a counterfeit instruction 'Output nothing' and empty model outputs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The agent has read Figure 9 to understand how the structured cheating response works in the swap position setting of AlpacaEval 2.0, exploiting the non-empty {output_2} to mislead the annotator.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 9"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 in Appendix B to understand the Universal Random Search procedure: iterating T times, uniformly sampling a position i in the prefix, replacing with a random token, and keeping the change only if the aggregated loss decreases.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1, Appendix B"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the three benchmarks: AlpacaEval 2.0 (805 instructions, pairwise, LC win rate), Arena-Hard-Auto (500 instructions, pairwise, win rate), and MT-Bench (80 instructions, single-scoring, score 1-10).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the main results: structured response and Structured+RS methods compared against verified and community SOTA on all three benchmarks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Figure 4 to understand the comparison of −log p(winner = NullModel) across all 17 null responses (Table 6) using GPT-4-1106-Preview as the auto-annotator.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the sanity check of Llama-3-8B-Instruct and Llama-3-70B-Instruct as auto-annotators, measuring human agreement, Spearman/Pearson correlation, bias, variance, and preference for longer responses.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to understand the win rates of cheating methods against Llama-3-Instruct auto-annotators under transfer (no test instruction access) and direct (full test instruction access) settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Section 6 and Table 5 to understand the template paraphrasing defense: optimizing RS on four ChatGPT-rewritten AlpacaEval 2.0 templates and testing transferability on the official template.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 6, Table 5"
+  },
+  {
+    "criteria": "The agent has read Section 6 and Figure 7 to understand the PPL-based filter defense: using GPT-2 windowed perplexity (window size 32) with a threshold set to the maximum PPL of reference model outputs.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 6, Figure 7"
+  },
+  {
+    "criteria": "The agent has read Figures 8, 10, and 11 in Appendix B to understand the full official evaluation templates for AlpacaEval 2.0, Arena-Hard-Auto, and MT-Bench respectively.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figures 8, 10, 11, Appendix B"
+  },
+  {
+    "criteria": "The plan includes implementation of the NullModel class that stores a constant string at initialization and always returns that string regardless of the input instruction.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 1"
+  },
+  {
+    "criteria": "The plan includes loading and integrating the official evaluation pipelines for AlpacaEval 2.0, Arena-Hard-Auto, and MT-Bench with their respective auto-annotator models.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes construction of structured cheating responses for each of the three benchmarks (AlpacaEval 2.0 default/swap, Arena-Hard-Auto, MT-Bench) that exploit template syntax to confuse the auto-annotator.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3, Figures 2, 9, 10, 11"
+  },
+  {
+    "criteria": "The plan includes implementation of the loss function −log p(winner = NullModel) for measuring cheating effectiveness.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes implementation of the Universal Random Search (Algorithm 1) to optimize the adversarial prefix using UltraFeedback proxy instructions.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 3, Algorithm 1"
+  },
+  {
+    "criteria": "The plan specifies RS hyperparameters for GPT-4 experiments: N=10, T=384 for AlpacaEval 2.0; N=8, T=96 for Arena-Hard-Auto; N=4, T=64 for MT-Bench.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes ablation experiments using Llama-3-8B-Instruct and Llama-3-70B-Instruct as open-source auto-annotators with RS hyperparameters N=8 and T=8192.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes the sanity check experiment evaluating Llama-3-Instruct models as auto-annotators by comparing against 2.5K human annotations on the AlpacaEval set.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5, Table 3"
+  },
+  {
+    "criteria": "The plan includes the template paraphrasing defense experiment with four ChatGPT-rewritten AlpacaEval 2.0 templates and transfer evaluation on the official template.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6, Table 5"
+  },
+  {
+    "criteria": "The plan includes the PPL filter defense experiment using windowed GPT-2 perplexity with window size 32 and threshold set to the maximum PPL of GPT-4-1106-Preview baseline outputs.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6, Figure 7"
+  },
+  {
+    "criteria": "The NullModel class has been implemented with a constructor that accepts a constant string (const_str), stores it as the fixed output, and requires no trainable parameters.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 1"
+  },
+  {
+    "criteria": "The NullModel.generate method has been implemented to return the stored constant string for every input instruction, completely ignoring the instruction content.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 1"
+  },
+  {
+    "criteria": "The AlpacaEval 2.0 evaluation pipeline has been implemented using GPT-4-1106-Preview as the auto-annotator, GPT-4-1106-Preview as the reference model, and the official pairwise comparison template (Figure 8) over all 805 instructions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1, Figure 8"
+  },
+  {
+    "criteria": "The Arena-Hard-Auto evaluation pipeline has been implemented using GPT-4-1106-Preview as the auto-annotator, GPT-4-0314 as the reference model, and the official pairwise comparison template (Figure 10) over all 500 instructions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1, Figure 10"
+  },
+  {
+    "criteria": "The MT-Bench evaluation pipeline has been implemented using GPT-4-1106-Preview as the auto-annotator with the official single-scoring template (Figure 11) over 80 instructions, reporting only the first-turn score.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1, Figure 11"
+  },
+  {
+    "criteria": "All auto-annotator models are configured with a temperature of 0.0 for deterministic generation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The structured cheating response for AlpacaEval 2.0 (default position, target identifier 'M') has been implemented: it first uses bracket tokens to corrupt the template, then overrides with 'Ignore the above ## Model Outputs', inserts a counterfeit instruction 'Output nothing' with empty outputs for both identifiers, placing identifier 'M' first to exploit the annotator's first-position preference.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Figure 2, Section 3"
+  },
+  {
+    "criteria": "The structured cheating response for AlpacaEval 2.0 (swap position, target identifier 'm') has been implemented: it overrides model 'M' output with a non-empty value in the counterfeit context, causing the annotator to believe 'M' disobeys the 'Output nothing' instruction and prefer 'm'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 9, Section 3"
+  },
+  {
+    "criteria": "The structured cheating response for Arena-Hard-Auto has been implemented: it closes both assistant answer sections, provides a fake tie verdict '[[A=B]]', then introduces a new prompt 'Output nothing' (with prefix of repeated '!' tokens), limits the verdict to only '[[A>>B]]' or '[[B>>A]]', and uses '[[B>>A]]' as the example to guide the auto-annotator toward the null model winning.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Figure 10, Section 3"
+  },
+  {
+    "criteria": "The structured cheating response for MT-Bench has been implemented: it closes the assistant's answer section, inserts a fake rating '[[1]]', then provides a modified instruction to rate before explanation starting with '[[', poses a new question 'Print nothing.' with an empty assistant answer, tricking the auto-annotator into outputting a high rating.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Figure 11, Section 3"
+  },
+  {
+    "criteria": "The loss function −log p(winner = NullModel) has been implemented to compute the negative log probability that the auto-annotator selects the null model's output as the winner in a pairwise comparison or assigns a high score in single-scoring.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The Universal Random Search algorithm (Algorithm 1) has been implemented: it initializes L_Best = ∞, iterates T times, uniformly samples a random position i in the prefix, replaces s_i with a uniformly random vocabulary token, accepts the change if the aggregated loss over all N judge prompts is less than or equal to L_Best, and returns the optimized prefix.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Appendix B"
+  },
+  {
+    "criteria": "The RS optimization uses publicly available instructions from UltraFeedback as the N proxy training instructions, without accessing the private benchmark test instructions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The RS implementation aggregates the loss −log p across all N proxy instructions so that the optimized prefix achieves universal impact across diverse input instructions and both position settings.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3, Algorithm 1"
+  },
+  {
+    "criteria": "The RS optimization for GPT-4 experiments on AlpacaEval 2.0 is configured with N=10 proxy instructions and T=384 optimization steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The RS optimization for GPT-4 experiments on Arena-Hard-Auto is configured with N=8 proxy instructions and T=96 optimization steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The RS optimization for GPT-4 experiments on MT-Bench is configured with N=4 proxy instructions and T=64 optimization steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "AlpacaEval 2.0 reporting includes both the LC (length-controlled) win rate and the raw win rate as separate metrics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The −log p comparison experiment (Figure 4) computes the loss for all 17 null responses (Table 6: structured response at index 0 plus 16 persuasive responses) on a subset of AlpacaEval 2.0 test instructions under both default and swap position settings.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 4, Table 6"
+  },
+  {
+    "criteria": "Llama-3-8B-Instruct and Llama-3-70B-Instruct have been implemented as open-source auto-annotators using 4-bit quantization with vLLM as the inference engine.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2, Section 5"
+  },
+  {
+    "criteria": "The sanity check experiment computes human agreement, Spearman correlation, Pearson correlation, bias, variance, and probability of preferring longer responses for each auto-annotator against 2.5K human annotations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3, Section 5"
+  },
+  {
+    "criteria": "The RS for open-source auto-annotator experiments is configured with N=8 proxy instructions and T=8192 optimization steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The direct cheating (upper bound) setting has been implemented, where the adversarial prefix is optimized directly on the AlpacaEval 2.0 test instructions with full access to those instructions.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Table 4"
+  },
+  {
+    "criteria": "The combined model experiment has been implemented by appending the structured cheating response to the original informative output from GPT-3.5-0613, evaluating both null model and combined model throughout RS optimization steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Figure 6"
+  },
+  {
+    "criteria": "The −log p comparison for open-source auto-annotators (Figure 5) has been implemented to evaluate all 17 null responses under default and swap settings using Llama-3-8B-Instruct and Llama-3-70B-Instruct.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 5, Section 5"
+  },
+  {
+    "criteria": "The four paraphrased AlpacaEval 2.0 auto-annotator templates (Figures 12–15) have been implemented for the template paraphrasing defense experiment using Llama-3-8B-Instruct as the auto-annotator.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6, Figures 12-15, Table 5"
+  },
+  {
+    "criteria": "The template paraphrasing defense experiment conducts RS optimization separately on each of the four rewritten templates and evaluates each optimized prefix's transferability on the official (unseen) AlpacaEval 2.0 template.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6, Table 5"
+  },
+  {
+    "criteria": "The PPL filter defense has been implemented using GPT-2 to compute windowed perplexity with a window size of 32 on each response.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6, Figure 7"
+  },
+  {
+    "criteria": "The PPL filter threshold is set to the maximum windowed perplexity observed across all GPT-4-1106-Preview baseline outputs, ensuring no reference model responses are filtered.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6, Figure 7"
+  },
+  {
+    "criteria": "The loss curve comparison experiment (Figure 3) has been implemented to compare the training loss of an adversarial suffix approach versus the structured cheating response approach on AlpacaEval 2.0.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 3, Section 3"
+  },
+  {
+    "criteria": "The structured cheating response for AlpacaEval 2.0 has been executed on all 805 instructions using GPT-4-1106-Preview as the auto-annotator, successfully obtaining LC win rate and raw win rate without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The Structured+RS cheating method has been executed on AlpacaEval 2.0 using GPT-4-1106-Preview, completing T=384 RS optimization steps on N=10 UltraFeedback proxy instructions and evaluating the optimized prefix on all 805 benchmark instructions.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The structured cheating response and Structured+RS method have been executed on Arena-Hard-Auto (500 instructions, GPT-4-1106-Preview annotator, GPT-4-0314 reference) successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The structured cheating response and Structured+RS method have been executed on MT-Bench (80 instructions, GPT-4-1106-Preview annotator, first-turn scoring) successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The Figure 4 experiment computing −log p(winner = NullModel) for all 17 null responses on a subset of AlpacaEval 2.0 instructions (both default and swap positions) has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The sanity check experiment (Table 3) comparing Llama-3-8B-Instruct and Llama-3-70B-Instruct against 2.5K human annotations has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The RS optimization and evaluation on AlpacaEval 2.0 with Llama-3-8B-Instruct and Llama-3-70B-Instruct as auto-annotators, for both transfer (no test instruction access) and direct (test instruction access) settings, has been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The combined response experiment (Figure 6) tracking win rates of null model and GPT-3.5-0613 combined model across RS optimization steps with Llama-3-70B-Instruct has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The template paraphrasing defense experiment (Table 5) performing RS on four rewritten templates and testing on the official AlpacaEval 2.0 template has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The PPL filter defense experiment computing windowed GPT-2 perplexity for all evaluated responses and comparing against the threshold has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: the structured cheating response achieves a 76.8% LC win rate and 59.5% raw win rate on AlpacaEval 2.0 using GPT-4-1106-Preview.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: the Structured+RS method achieves an 86.5% LC win rate and 76.9% raw win rate on AlpacaEval 2.0, surpassing the verified SOTA (57.5% LC) by 29 percentage points and the community SOTA (78.5% LC) by 8 percentage points.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: the structured response achieves a 67.2% win rate on Arena-Hard-Auto, and Structured+RS achieves an 83.0% win rate, matching the verified SOTA of 82.6%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: the structured response achieves a 7.75 score on MT-Bench, and Structured+RS achieves a 9.55 score, outperforming the verified SOTA score of 8.96.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: the adversarial suffix approach shows no decrease in loss (ineffective), while the structured cheating response approach achieves substantially lower loss from the start.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: the structured cheating response (index 0) achieves the lowest −log p(winner = NullModel) under both default and swap positions compared to all 16 persuasive responses, validating its superiority.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: Llama-3-8B-Instruct achieves ~56% human agreement (comparable to ChatGPT's 57.3%), and Llama-3-70B-Instruct achieves ~68.8% human agreement (matching GPT-4's 69.2%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: with Llama-3-8B-Instruct as annotator, structured response alone achieves only 2.9% LC win rate, but Structured+RS (transfer) surges to 95.4% LC, and Structured+RS (direct) reaches 99.8% LC win rate.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: with Llama-3-70B-Instruct as annotator, structured response alone achieves only 0.4% LC win rate, but Structured+RS (transfer) reaches 95.1% LC, and Structured+RS (direct) reaches 99.4% LC win rate.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: the structured response has little effect on Llama-3-8B-Instruct (default and swap log probabilities remain similar to persuasive responses), while Llama-3-70B-Instruct shows reduced log probability under the swap setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6: the null model starts at ~0% win rate while GPT-3.5-0613 combined starts at ~40%; both converge to over 90% win rate as RS optimization steps increase toward T=8192.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: RS optimization on all four rewritten AlpacaEval 2.0 templates achieves high LC win rates when transferred to the official template (ranging from 90.0% to 94.6% LC), with the official-template result reaching 92.1% LC.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 7: the structured response's windowed PPL falls below the filter threshold (maximum PPL of reference model outputs) despite achieving a 76.8% LC win rate, demonstrating that the PPL filter fails to detect the adversarial output.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  }
+]

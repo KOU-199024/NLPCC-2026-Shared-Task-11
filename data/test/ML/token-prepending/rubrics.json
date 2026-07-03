@@ -1,0 +1,500 @@
+[
+  {
+    "criteria": "The agent has read Section 4 (Proposed Method) completely to understand the Token Prepending technique: prepending each layer's decoded sentence embedding to the beginning of the sentence in the next layer's input.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 4.2.1 to understand Initial Token Prepending: a custom <PST> token (not in LLM vocabulary) is randomly initialized and prepended to the input text in the embedding layer output.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2.2 to understand Intermediate Token Prepending: at each layer l in [2, k], the <PST> token embedding is replaced by the hidden state of the last token (SET) from the previous layer before feeding into the next Transformer layer.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.2.3 to understand the layer scope for TP: after layer k, TP stops and standard forward propagation resumes through layer M (the exit layer).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the early-exit strategy: embeddings from an intermediate layer M (determined using STS-B validation set) are used as sentence embeddings instead of the final layer.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to check the default hyperparameters: TP stops after the 8th layer (k=8), exit at the 27th layer for PromptEOL/MetaEOL/Pretended CoT, and penultimate layer for Knowledge Enhancement; <PST> is placed before [Text] in all prompts.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the main STS results using LLaMA2-7B: PromptEOL+TP achieves 77.19 avg (up 7.16), MetaEOL+TP achieves 77.91 avg (up 1.95), and the inference time column showing TP adds at most 1.04x overhead.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the backbone comparison: Pretended CoT+TP is evaluated on LLaMA2-7B, LLaMA2-13B, LLaMA3-8B, Qwen2-7B, and Gemma2-9B, showing consistent improvements.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the <PST> token position analysis: placing <PST> after the text is worst, placing before the text yields stable performance, and the default is placing it after the colon.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Figure 3 to understand the ablation of <PST> token before and after intermediate TP: removing <PST> after intermediate TP has a more pronounced negative impact than removing it before.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The agent has read Figure 4 to understand the layer scope analysis: (a) start layer should be 2, (b) end layer k=8 is optimal for LLaMA2-7B, (c) k=7 is optimal for Qwen2-7B and Gemma2-9B, and (d) the last layer is consistently suboptimal for exit.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The agent has read Table 5 to understand the transfer learning evaluation: PromptEOL+TP achieves 91.42 avg accuracy on 7 SentEval tasks (MR, CR, SUBJ, MPQA, SST-2, TREC, MRPC), outperforming baseline in 20/21 cases.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The agent has read Figure 5 and Section 5.9 to understand the dependency-capturing analysis: Spearman correlation between the last (pivot) token and all other tokens is computed per sentence, with LLaMA2+TP scoring 25.11 vs 23.97 for vanilla LLaMA2.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 5, Section 5.9"
+  },
+  {
+    "criteria": "The agent has read Appendix A.1 to understand the bidirectional attention comparison: both bidirectional attention mask variants (last token only and full input sentence) substantially decrease STS performance compared to TP.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix A.1, Table 6"
+  },
+  {
+    "criteria": "The agent has read Appendix A.2 to understand the multi-task MTEB evaluation: PromptEOL+TP is evaluated on 12 classification, 3 pair classification, 4 reranking, 11 clustering, and 1 summarization datasets.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The agent has read Appendix A.3 to understand the additional prompt evaluation: Prompts A and B (simple prompts similar to PromptEOL) benefit more from TP (+10.64 and +9.26), while Prompts C and D with explicit PST semantics do not further improve TP.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix A.3, Table 13"
+  },
+  {
+    "criteria": "The agent has read Appendix A.4 through A.7 to understand the ablation studies on number of <PST> tokens, masking the <PST> in the first layer, resuming TP at deeper layers, and TP without any prompt.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix A.4-A.7"
+  },
+  {
+    "criteria": "The plan includes the overall Token Prepending mechanism: a layer-level intervention that prepends sentence embeddings to the beginning of each layer's input within a specified layer range.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes adding a new custom <PST> token to the LLM's tokenizer and embedding layer with random initialization.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.1"
+  },
+  {
+    "criteria": "The plan includes the intermediate TP hook: at each layer l in [2, k], replace the <PST> token position in the hidden states with the hidden state of the last token (the SET) from that same layer.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.2"
+  },
+  {
+    "criteria": "The plan includes two tunable hyperparameters: k (the layer at which TP stops) and M (the exit layer from which sentence embeddings are extracted), both determined via STS-B dev set.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.3, Section 4.3"
+  },
+  {
+    "criteria": "The plan includes the default TP configuration: k=8 for LLaMA2-7B (k=7 for Qwen2-7B and Gemma2-9B), exit at layer 27 for PromptEOL/MetaEOL/Pretended CoT, and penultimate layer for Knowledge Enhancement.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes evaluation on 7 STS datasets (STS12, STS13, STS14, STS15, STS16, STS-B, SICK-R) using cosine similarity to compute predicted similarity and Spearman correlation as the metric.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementation of all four prompt-based baselines: PromptEOL, MetaEOL, Pretended CoT, and Knowledge Enhancement.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The plan includes evaluating TP across multiple backbone models: LLaMA2-7B, LLaMA2-13B, LLaMA3-8B, Qwen2-7B, and Gemma2-9B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The plan includes the transfer learning evaluation using SentEval: extracting sentence embeddings and training logistic regression classifiers on MR, CR, SUBJ, MPQA, SST-2, TREC, and MRPC tasks.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.8"
+  },
+  {
+    "criteria": "The plan includes the layer scope analysis experiments: varying the start layer, end layer k, and exit layer M for intermediate TP across multiple prompt methods.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.6, Section 5.7"
+  },
+  {
+    "criteria": "The plan includes the <PST> token position ablation: testing different positions in the prompt (before text, after text, at different spots before the colon).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 5.5, Table 3"
+  },
+  {
+    "criteria": "The plan includes the <PST> token initialization experiment: comparing all-0, all-1, uniform, Gaussian, and existing token (space character) initialization methods.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 5.5, Table 4"
+  },
+  {
+    "criteria": "The plan includes the multi-task MTEB evaluation across classification, pair classification, reranking, clustering, and summarization datasets using PromptEOL and PromptEOL+TP.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code for adding a new special <PST> token to the LLM's tokenizer vocabulary has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.1"
+  },
+  {
+    "criteria": "The code for randomly initializing the embedding vector for the <PST> token and incorporating it into the model's embedding layer has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.1"
+  },
+  {
+    "criteria": "The code for inserting the <PST> token at the correct position in the prompt template (placed before [Text], after the colon by default) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for Initial Token Prepending has been implemented: the embedding layer output is modified to h^0 = [h_1^0, ..., h_{i-1}^0, h_{i*}^0, h_i^0, ..., h_n^0] where h_{i*}^0 is the randomly initialized <PST> embedding.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.1"
+  },
+  {
+    "criteria": "The code for the Intermediate Token Prepending function f(h) has been implemented: within layers [2, k], the hidden state at the <PST> position is replaced by the hidden state h_n^{l-1} of the last token (SET) from the previous layer.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.2, Equations 2-3"
+  },
+  {
+    "criteria": "The code correctly applies TP only in the layer range [2, k] and reverts to standard Transformer forward propagation h^{l+1} = LLM^l(h^l) for layers l in [k, M] as specified in Equation 4.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.3, Equation 4"
+  },
+  {
+    "criteria": "The code for the early-exit strategy has been implemented: extracting the hidden state of the SET (last token) at layer M rather than the final layer L as the output sentence embedding.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for the PromptEOL prompt template has been implemented: 'This sentence: \"[Text]\" means in one word: \"' with the last token used to decode the sentence embedding.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for the MetaEOL baseline using diverse meta-task prompts generated by ChatGPT-4 has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code for the Pretended CoT and Knowledge Enhancement prompt-based baselines has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code for the Echo Embeddings baseline (LLaMA2 echo) has been implemented: repeating the input sentence twice and extracting embeddings from the second occurrence.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code for loading and evaluating all 7 STS datasets (STS12, STS13, STS14, STS15, STS16, STS-B, SICK-R) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for computing cosine similarity between sentence embedding pairs and Spearman correlation against annotated similarity scores (0-5 scale) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for evaluating TP across multiple backbone models (LLaMA2-7B, LLaMA2-13B, LLaMA3-8B, Qwen2-7B, Gemma2-9B) has been implemented, correctly configuring optimal k and M for each model.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The code for using KV cache during inference to mitigate the overhead of repeatedly loading the prompt prefix has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The code for inference time measurement (batch size=1 on STS-B test dataset with the same output layer across methods) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The code for the transfer learning evaluation has been implemented: extracting sentence embeddings using LLaMA2-7B and training logistic regression classifiers on SentEval tasks (MR, CR, SUBJ, MPQA, SST-2, TREC, MRPC).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.8"
+  },
+  {
+    "criteria": "The code for the dependency-capturing analysis has been implemented: computing per-sentence Spearman correlation between the last (pivot) token's hidden state and all other tokens' hidden states on the STS-B test set.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.9"
+  },
+  {
+    "criteria": "The code for the <PST> token position experiment has been implemented: testing multiple positions of the <PST> token in the prompt template (before text at colon, before text with space, after text) for both PromptEOL and Pretended CoT.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.5, Table 3"
+  },
+  {
+    "criteria": "The code for the <PST> token initialization experiment has been implemented: testing all-0, all-1, uniform distribution in [0,1], Gaussian distribution, and existing token (space character embedding) initialization.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 5.5, Table 4"
+  },
+  {
+    "criteria": "The code for the layer scope analysis experiments has been implemented: sweeping over different start layers (Figure 4a), end layers k (Figure 4b), and exit layers M (Figure 4d) with multiple prompt methods on LLaMA2-7B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.6, Section 5.7, Figure 4"
+  },
+  {
+    "criteria": "The code for the <PST> token ablation experiment (Figure 3) has been implemented: comparing full TP versus removing <PST> before intermediate TP versus removing <PST> after intermediate TP.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.5, Figure 3"
+  },
+  {
+    "criteria": "The code for the bidirectional attention comparison (Appendix A.1) has been implemented: testing two bidirectional attention mask variants (last token only, full input sentence) using Pretended CoT on LLaMA2-7B.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1, Table 6"
+  },
+  {
+    "criteria": "The code for the multi-task MTEB evaluation (Appendix A.2) has been implemented: running PromptEOL and PromptEOL+TP across 12 classification, 3 pair classification, 4 reranking, 11 clustering, and 1 summarization datasets from MTEB benchmark.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code for the additional prompt baseline experiments (Appendix A.3) has been implemented: evaluating TP with Prompt A ('The representative word for sentence <PST> \"[TEXT]\" is:') and Prompt B ('Summarize sentence <PST> \"[TEXT]\" in one word:').",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The code for the number of <PST> tokens experiment (Appendix A.4) has been implemented: testing 1, 2, 3, and 4 <PST> tokens prepended in the PromptEOL setting.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4, Table 14"
+  },
+  {
+    "criteria": "The code for masking the <PST> token in the first layer (Appendix A.5) has been implemented to test whether the <PST> token's role as a placeholder for input length matters.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.5, Table 15"
+  },
+  {
+    "criteria": "The code for the TP resumption experiment (Appendix A.6) has been implemented: applying TP for the first 8 layers, pausing, then resuming at later layers (9, 10, 11, 16, 26) until exit.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.6, Table 16"
+  },
+  {
+    "criteria": "The code for TP without any prompt (Appendix A.7) has been implemented: testing TP's standalone contribution without prompt engineering on LLaMA2-7B.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.7, Table 17"
+  },
+  {
+    "criteria": "The main STS experiments using LLaMA2-7B with all four prompt methods (PromptEOL, MetaEOL, Pretended CoT, Knowledge Enhancement) both with and without TP have been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The backbone comparison experiments using Pretended CoT across LLaMA2-7B, LLaMA2-13B, LLaMA3-8B, Qwen2-7B, and Gemma2-9B have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The transfer learning evaluation on 7 SentEval tasks (MR, CR, SUBJ, MPQA, SST-2, TREC, MRPC) using LLaMA2-7B with and without TP has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The layer scope analysis experiments (varying start layer, end layer k across prompts, end layer k across backbones, and exit layer M) have been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The dependency-capturing analysis on the STS-B test set with LLaMA2-7B using Pretended CoT (both with and without TP) has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 5, Section 5.9"
+  },
+  {
+    "criteria": "The multi-task MTEB evaluation (Appendix A.2) with PromptEOL and PromptEOL+TP on LLaMA2-7B has been executed successfully without errors across all 32 datasets.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix A.2, Tables 7-12"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: PromptEOL+TP achieves an average STS Spearman score of 77.19 (PromptEOL baseline: 70.03, improvement of 7.16) on LLaMA2-7B.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: MetaEOL+TP achieves an average STS Spearman score of 77.91 (MetaEOL baseline: 75.96, improvement of 1.95) on LLaMA2-7B.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: Pretended CoT+TP achieves 77.54 (up 0.68) and Knowledge+TP achieves 77.54 (up 0.40) on LLaMA2-7B, showing consistent but smaller gains for knowledge-enhanced prompts.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the Time column of Table 1: TP adds at most 1.04x inference time relative to PromptEOL (batch size 1, same output layer, with KV cache).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Pretended CoT+TP outperforms Pretended CoT on all five backbone models, with the largest improvement of 2.17 on Qwen2-7B and smallest improvement of 0.50 on Gemma2-9B.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: PromptEOL+TP achieves 91.42 average accuracy on transfer tasks (up 0.48 from 90.94) and improves in 20 out of 21 cases across all 7 SentEval datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4(a): for PromptEOL, performance degrades notably when intermediate TP starts at layer 5 or later (score drops to ~66), confirming the necessity of starting TP from layer 2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4(a)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4(b): ending TP at the 8th layer yields the best performance for all four prompt methods on LLaMA2-7B, with scores peaking at k=8.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4(b)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4(c): LLaMA2-7B and LLaMA2-13B peak at k=8 while Qwen2-7B and Gemma2-9B peak at k=7, confirming that the optimal end layer is typically in the 7th-8th range for ~7B parameter LLMs.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4(c)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4(d): the last layer (layer 32) consistently yields the worst STS performance for both Pretended CoT and Knowledge Enhancement, confirming the benefit of early-exit; Pretended CoT peaks at layer 27 and Knowledge Enhancement at layer 31 (penultimate).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4(d)"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: placing <PST> after the input text (e.g., 'This sentence: \"[Text]\" <PST> means in one word:') yields the worst performance, while placing it before the text at the default position yields the best results.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: the initialization method of the <PST> token has minimal impact on STS performance, with maximum difference of only 0.01 across all-0, all-1, uniform, Gaussian, and existing token methods.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: ablating <PST> after intermediate TP has a larger performance drop than ablating it before intermediate TP across all prompt methods.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: LLaMA2-7B+TP achieves a higher average sentence-level Spearman correlation of 25.11 versus 23.97 for vanilla LLaMA2-7B, confirming improved backward dependency capturing.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5, Section 5.9"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: both bidirectional attention variants substantially decrease STS performance (53.06 and 43.70) compared to TP (77.54) and even the vanilla baseline (76.86), confirming TP's advantage over attention mask modifications.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 6, Appendix A.1"
+  },
+  {
+    "criteria": "The execution outcomes match Tables 7-12 (Appendix A.2): PromptEOL+TP improves PromptEOL in 40 out of 44 cases across MTEB tasks, with the largest gains in clustering (+4.51 avg) and pair classification (+4.21 avg).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables 7-12, Appendix A.2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 13 (Appendix A.3): Prompt A+TP improves Prompt A by 10.64 points (53.86 to 64.50) and Prompt B+TP improves Prompt B by 9.26 points (65.52 to 74.78), confirming that simpler prompts benefit more from TP.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 13, Appendix A.3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 14 (Appendix A.4): using 2 <PST> tokens yields a slight improvement of 0.08 over 1 <PST> token (77.27 vs 77.19), while 3 and 4 tokens lead to performance decline.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 14, Appendix A.4"
+  }
+]

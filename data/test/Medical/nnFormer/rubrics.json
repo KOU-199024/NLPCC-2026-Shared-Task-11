@@ -1,0 +1,506 @@
+[
+  {
+    "criteria": "The agent has read Section III.A to understand the overall U-Net-like architecture of nnFormer consisting of encoder (embedding + two local transformer blocks + two down-sampling layers), bottleneck (three global transformer blocks), and decoder (two transformer blocks + two up-sampling layers + patch expanding layer).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section III.A"
+  },
+  {
+    "criteria": "The agent has read Section III.B to understand the encoder's convolutional embedding block with four successive convolutional layers of kernel size 3 followed by GELU and layer normalization.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section III.B"
+  },
+  {
+    "criteria": "The agent has read Equation 1 to understand the two-layer LV-MSA transformer block computation with residual connections and MLP.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The agent has read Equation 3 to understand the QKV attention formulation with relative position encoding B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The agent has read Equations 2 and 4 to understand the computational complexity differences between LV-MSA and GV-MSA, motivating their placement in the encoder vs. bottleneck.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Equations 2, 4"
+  },
+  {
+    "criteria": "The agent has read Section III.C to understand the bottleneck design using GV-MSA (global volume-based multi-head self-attention) with three global transformer blocks providing large receptive fields.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section III.C"
+  },
+  {
+    "criteria": "The agent has read Section III.D and Equations 5-6 to understand the skip attention mechanism that replaces concatenation/summation in skip connections.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section III.D, Equations 5-6"
+  },
+  {
+    "criteria": "The agent has read Section IV.A completely to understand all implementation details: initial LR=0.01, poly decay with exponent 0.9, SGD momentum=0.99, weight decay=3e-5, 1000 epochs of 250 iterations each, and attention head configurations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The agent has read Equation 7 to understand the polynomial learning rate decay schedule.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The agent has read Equation 8 to understand the deep supervision loss formulation at three resolutions with halved magnitude factors.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The agent has read Table I to understand the dataset-specific network configurations: spacing, median shape, crop size, batch size, and down-sampling strides for Tumor, Synapse, and ACDC.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table I"
+  },
+  {
+    "criteria": "The agent has read Table II to understand the brain tumor segmentation comparison against transformer-based baselines using HD95 and DSC on WT, ET, and TC sub-regions.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table II"
+  },
+  {
+    "criteria": "The agent has read Table III to understand the Synapse multi-organ segmentation comparison against transformer-based methods with per-organ DSC scores for 8 abdominal organs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table III"
+  },
+  {
+    "criteria": "The agent has read Table IV to understand the ACDC automated cardiac diagnosis comparison using DSC for RV, Myo, and LV.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table IV"
+  },
+  {
+    "criteria": "The agent has read Table V to understand the detailed comparison between nnFormer and nnUNet on all three datasets, including per-class results and the nnAvg model ensemble.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table V"
+  },
+  {
+    "criteria": "The agent has read Table VI to understand the six-variant ablation study investigating the contribution of Conv. Embed., Conv. Down., GV-MSA, Skip Attention, and SLV-MSA on ACDC.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table VI"
+  },
+  {
+    "criteria": "The plan includes the overall nnFormer U-Net-like architecture: encoder with one embedding layer, two local transformer blocks, and two down-sampling layers; bottleneck with one down-sampling, three global transformer blocks, and one up-sampling; decoder with two transformer blocks, two up-sampling layers, and one patch expanding layer.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section III.A"
+  },
+  {
+    "criteria": "The plan includes implementing the convolutional embedding block with four successive convolutional layers of kernel size 3, GELU activation, and layer normalization after each layer except the last.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section III.B"
+  },
+  {
+    "criteria": "The plan includes implementing LV-MSA and SLV-MSA as specified in Equation 1, with two successive transformer layers per block and shifted volumes in SLV-MSA.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing QKV attention with relative position encoding B as specified in Equation 3, including initialization of smaller position matrix B̂.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The plan includes implementing GV-MSA for the bottleneck with three global transformer blocks (six GV-MSA layers total) to provide large receptive fields.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section III.C"
+  },
+  {
+    "criteria": "The plan includes implementing the skip attention mechanism (Equations 5 and 6) to replace traditional concatenation/summation in skip connections.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 5-6"
+  },
+  {
+    "criteria": "The plan includes implementing convolutional down-sampling with dataset-specific strides and strided deconvolution for up-sampling.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section III.B, III.D"
+  },
+  {
+    "criteria": "The plan includes implementing deep supervision at three resolutions as per Equation 8 with magnitude factors α₁, α₂=α₁/2, α₃=α₁/4 normalized to 1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The plan includes all training hyperparameters: initial LR=0.01, poly decay with exponent 0.9 (Equation 7), SGD with momentum=0.99 and weight decay=3e-5, 1000 epochs of 250 iterations each.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The plan includes using combined cross entropy and dice loss by simple summation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The plan includes data preprocessing (resampling to target spacing per dataset) and the augmentation pipeline of rotation, scaling, gaussian noise, gaussian blur, brightness, contrast, low resolution simulation, gamma augmentation, and mirroring.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The plan includes experiments on all three datasets: Brain Tumor MSD (484 MRI, 4-channel, 80/15/5 split), Synapse (30 CT, 18/12 split, 8 organs), and ACDC (100 patients, 70/10/20 split, 3 structures).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section IV"
+  },
+  {
+    "criteria": "The plan includes all six ablation study variants from Table VI, progressively adding Conv. Embed., Conv. Down., GV-MSA, Skip Attention, and SLV-MSA.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table VI"
+  },
+  {
+    "criteria": "The plan includes repeating each experiment 10 times and averaging results for statistical significance testing with p-values.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section IV"
+  },
+  {
+    "criteria": "The plan includes model ensembling by averaging predictions of nnFormer and nnUNet (nnAvg) on all three datasets.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Table V, Section IV.C"
+  },
+  {
+    "criteria": "The code for the overall nnFormer U-Net-like architecture has been implemented with encoder, bottleneck, and decoder as three distinct modules with skip connections.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.A, Figure 2a"
+  },
+  {
+    "criteria": "The code for the convolutional embedding block has been implemented with four successive convolutional layers of kernel size 3, GELU activation, and layer normalization after each layer except the last.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.B, Figure 2b"
+  },
+  {
+    "criteria": "The code for LV-MSA has been implemented as Equation 1: input X_LV ∈ R^{L×C} is reshaped to R^{N_LV × N_T × C} where N_T = S_H × S_W × S_D, followed by local volume self-attention and MLP with residual connections.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for SLV-MSA has been implemented as the shifted version of LV-MSA, displacing local volumes by (⌊S_H/2⌋, ⌊S_W/2⌋, ⌊S_D/2⌋) to enable interactions between different local volumes.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section III.B"
+  },
+  {
+    "criteria": "The code for the local transformer block has been implemented with two successive transformer layers: first applying LV-MSA then SLV-MSA, each followed by MLP with residual connections as in Equation 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1, Figure 3a"
+  },
+  {
+    "criteria": "The code for QKV attention has been implemented as Equation 3: Attention(Q, K, V) = softmax(QK^T / √d_k + B)V, using Q, K, V ∈ R^{N_T × d_k}.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for relative position encoding has been implemented by initializing a smaller position matrix B̂ ∈ R^{(2S_H-1)×(2S_W-1)×(2S_D-1)} and taking corresponding values to build the larger position matrix B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.B"
+  },
+  {
+    "criteria": "The code for GV-MSA has been implemented as the 3D global multi-head self-attention operating on the entire feature volume (without local window partitioning) in the bottleneck.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section III.C, Figure 3b, Equation 4"
+  },
+  {
+    "criteria": "The code for the bottleneck has been implemented with three global transformer blocks each containing two GV-MSA layers (six GV-MSA layers total), providing sufficient large receptive field for the decoder.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.C"
+  },
+  {
+    "criteria": "The code for Skip Attention linear projection has been implemented as Equation 5: LP(X_{LV,GV}^l) produces key matrix K^{l*} and value matrix V^{l*} from encoder features.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for Skip Attention attention computation has been implemented as Equation 6: using decoder up-sampled output X_UP^{l*} as query Q^{l*}, and encoder-projected K^{l*} and V^{l*} for cross-attention.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for convolutional down-sampling has been implemented using strided convolution with dataset-specific strides per dimension as specified in Table I (e.g., stride=1 in dimensions where the number of slices is limited).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.B, Table I"
+  },
+  {
+    "criteria": "The code for strided deconvolution up-sampling has been implemented in the decoder, symmetrically to the down-sampling layers.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.D, Figure 2d, 2e"
+  },
+  {
+    "criteria": "The code for the final patch expanding layer has been implemented using deconvolution to produce final mask predictions from the decoder.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.D, Figure 2e"
+  },
+  {
+    "criteria": "The code for multi-head self-attention has been implemented with the correct number of heads per encoder stage: [6, 12, 24, 48] for Synapse and [3, 6, 12, 24] for Brain Tumor and ACDC.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The code for MLP in transformer blocks has been implemented as a two-layer neural network (as noted in Figure 3 caption).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The code for layer normalization has been implemented before both attention and MLP operations in each transformer layer.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for deep supervision has been implemented as Equation 8: summing losses at three resolutions {H,W,D}, {H/4,W/4,D/2}, {H/8,W/8,D/4} weighted by α₁, α₂, α₃.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The code for deep supervision magnitude factors has been implemented with α₂ = α₁/2 and α₃ = α₁/4, with all factors normalized to sum to 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section IV.A, Equation 8"
+  },
+  {
+    "criteria": "The code for the combined training loss has been implemented by simply summing cross entropy loss and dice loss.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The code for polynomial learning rate decay has been implemented as Equation 7: lr = initial_lr × (1 - epoch_id / max_epoch)^0.9 with initial_lr=0.01 and max_epoch=1000.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code for the SGD optimizer has been implemented with momentum=0.99 and weight decay=3e-5.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The code for training duration has been implemented with 1000 epochs of 250 iterations each.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The code for data preprocessing has been implemented to resample all images to the target spacing: [1.0,1.0,1.0] for Tumor, [0.76,0.76,3] for Synapse, and [1.52,1.52,6.35] for ACDC.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table I"
+  },
+  {
+    "criteria": "The code for data augmentation has been implemented with all nine specified strategies applied in order: rotation, scaling, gaussian noise, gaussian blur, brightness adjustment, contrast adjustment, low resolution simulation, gamma augmentation, and mirroring.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section IV.A"
+  },
+  {
+    "criteria": "The code for loading the Brain Tumor (MSD) dataset has been implemented, handling 484 MRI images with 4 channels (FLAIR, T1w, T1gd, T2w) and segmentation labels for three sub-regions (ED, ET, NET) with 80%/15%/5% train/val/test split.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section IV"
+  },
+  {
+    "criteria": "The code for loading the Synapse multi-organ segmentation dataset has been implemented with 18 training cases and 12 test cases for segmenting 8 abdominal organs (aorta, gallbladder, spleen, left kidney, right kidney, liver, pancreas, stomach).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section IV"
+  },
+  {
+    "criteria": "The code for loading the ACDC cardiac segmentation dataset has been implemented with 70 training, 10 validation, and 20 test patients segmenting three structures (LV, RV, MYO).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section IV"
+  },
+  {
+    "criteria": "The network configuration for the Brain Tumor dataset has been implemented with crop size 128×128×128, batch size 2, and down-sampling strides [2,2,2]×5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table I(a)"
+  },
+  {
+    "criteria": "The network configuration for the Synapse dataset has been implemented with crop size 128×128×64, batch size 2, and down-sampling strides [2,2,2],[2,2,1],[2,2,2],[2,2,2],[2,2,2].",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table I(b)"
+  },
+  {
+    "criteria": "The network configuration for the ACDC dataset has been implemented with crop size 160×160×14, batch size 4, and down-sampling strides [2,2,1],[2,2,1],[2,2,1],[2,2,2],[2,2,2],[2,2,2].",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table I(c)"
+  },
+  {
+    "criteria": "The code for two local transformer blocks in the encoder has been implemented, each containing two successive transformer layers (LV-MSA and SLV-MSA), with two convolutional down-sampling layers between and after them.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.A, III.B"
+  },
+  {
+    "criteria": "The code for two transformer blocks in the decoder has been implemented symmetrically to the encoder, with skip attention connections from corresponding encoder stages.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section III.D"
+  },
+  {
+    "criteria": "The code for evaluation metrics has been implemented: 95th percentile Hausdorff Distance (HD95) and Dice Similarity Coefficient (DSC).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section IV"
+  },
+  {
+    "criteria": "The code for the ablation study baseline (Table VI line 0) has been implemented with 1×LV-MSA (without SLV-MSA), patch merging (PM) and patch embedding (PE) from Swin Transformer.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table VI"
+  },
+  {
+    "criteria": "The code for all six ablation variants in Table VI has been implemented, progressively substituting and adding Conv. Embed. (line 1), Conv. Down. (line 2), GV-MSA (line 3), Skip Attention (line 4), and SLV-MSA with doubled GV-MSA (line 5).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table VI"
+  },
+  {
+    "criteria": "The code for model ensembling (nnAvg) has been implemented by averaging output predictions from nnFormer and nnUNet.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table V, Section IV.C"
+  },
+  {
+    "criteria": "The code for nnFormer training and inference on the Brain Tumor (MSD) dataset has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table II"
+  },
+  {
+    "criteria": "The code for nnFormer training and inference on the Synapse multi-organ segmentation dataset has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table III"
+  },
+  {
+    "criteria": "The code for nnFormer training and inference on the ACDC cardiac segmentation dataset has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table IV"
+  },
+  {
+    "criteria": "The code for all six ablation study variants on the ACDC dataset has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table VI"
+  },
+  {
+    "criteria": "Each experiment has been repeated 10 times with average results computed for reporting.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section IV"
+  },
+  {
+    "criteria": "The model ensemble (nnAvg) combining predictions from nnFormer and nnUNet has been executed on all three datasets.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table V, Section IV.C"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table II: nnFormer achieves average HD95=4.05 mm and DSC=86.4% on brain tumor segmentation, surpassing all transformer-based baselines including UNETR (HD95=8.82, DSC=71.1%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table II"
+  },
+  {
+    "criteria": "The execution outcomes match the per-class results in Table II: WT (HD95=3.80, DSC=91.3%), ET (HD95=3.87, DSC=81.8%), TC (HD95=4.49, DSC=86.0%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table II"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table III: nnFormer achieves average HD95=10.63 mm and DSC=86.57% on Synapse multi-organ segmentation, outperforming all transformer baselines.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table III"
+  },
+  {
+    "criteria": "The execution outcomes match the per-organ DSC results in Table III: aorta=92.04%, gallbladder=70.17%, kidney (left)=86.57%, kidney (right)=86.25%, liver=96.84%, pancreas=83.35%, spleen=90.51%, stomach=86.83%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table III"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table IV: nnFormer achieves average DSC=92.06% on ACDC (RV=90.94%, Myo=89.58%, LV=95.65%), outperforming all transformer-based baselines including LeViT-UNet-384s (DSC=90.32%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table IV"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table V: nnFormer achieves lower average HD95 than nnUNet on all three datasets (Tumor: 4.42 vs 4.60, Synapse: 10.63 vs 10.78, ACDC: 1.12 vs 1.15).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table V"
+  },
+  {
+    "criteria": "The execution outcomes match the nnAvg results in Table V: model ensembling improves over both individual models, especially on Synapse HD95 (nnAvg=7.70 vs nnFormer=10.63 vs nnUNet=10.78).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table V"
+  },
+  {
+    "criteria": "The execution outcomes match the ablation results in Table VI: the baseline (line 0) achieves DSC=90.55% and the full nnFormer (line 5) achieves DSC=92.06% on ACDC.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table VI"
+  },
+  {
+    "criteria": "The execution outcomes match the progressive improvements in Table VI: Conv. Embed. (+0.4%), Conv. Down. (+0.3%), GV-MSA (+0.2%), Skip Att. (+0.4%), SLV-MSA (+0.2%), each contributing incrementally to the final DSC.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table VI"
+  },
+  {
+    "criteria": "The execution outcomes confirm p-values less than 1e-2 for HD95 comparisons between nnFormer and the best transformer-based baseline on all three datasets.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Tables II, III, IV"
+  }
+]

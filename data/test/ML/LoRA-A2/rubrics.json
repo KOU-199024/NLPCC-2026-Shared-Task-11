@@ -1,0 +1,506 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the LoRA decomposition (Equation 1) and the discordance problem that arises when aggregating B and A matrices separately in federated learning.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Equation 2 to understand why naive FedAvg aggregation of separate B and A matrices introduces discordance: (Σ w_k B_k)(Σ w_k A_k) ≠ Σ w_k B_k A_k.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the alternating freeze strategy for resolving discordance while preserving the optimization space.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand the adaptive rank selection method including importance score computation, rank mask definition, and sparse upload mechanism.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to understand the server-side LoRA-A2 FL loop structure with alternating freeze of B (odd rounds) and A (even rounds) and FedAvg aggregation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Algorithm 2 to understand the LocalTraining procedure: rank selection via importance scores, mask computation, and per-epoch masked gradient update.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to understand the experimental setup including base models (RoBERTa-base, RoBERTa-large, DistilBERT), datasets (BANKING77, 20 Newsgroups), baselines, and FL configuration (30 clients, 50 rounds, 5 local epochs).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Appendix B to extract hyperparameters: AdamW optimizer with η = 0.0005, learning rates η_A = η and η_B = 5·η_A, HetLoRA decaying factor γ = 0.99, and evaluation scaling factor W_ft = W0 + (16/r)·ΔW.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the main results comparing LoRA-A2 with baselines on RoBERTa-base across BANKING77 and 20 Newsgroups datasets under Dir(0.5), Dir(0.1), Dir(0.01) and ranks 1, 2, 4, 8.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Tables 2 and 3 to understand scalability experiments on RoBERTa-large and DistilBERT at Dir(0.01).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 2, Table 3"
+  },
+  {
+    "criteria": "The plan includes implementing the LoRA decomposition W = W0 + BA with B ∈ R^{d1×r} and A ∈ R^{r×d2} as in Equation 1, applied to the pre-trained model weights.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing the alternating freeze strategy where module A is frozen and module B is trained during odd rounds, and vice versa during even rounds.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes using different learning rates for B and A modules, specifically η_B = 5 × η_A, inspired by LoRA+.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes computing importance scores S_{m,i} per rank i and module m using the Frobenius norm of rank contribution as in Equation 4.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The plan includes implementing the LoRA module mask M_k^(m) and applying it element-wise to gradient updates before each backpropagation step as in Equations 5 and 6.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 5, Equation 6"
+  },
+  {
+    "criteria": "The plan includes setting up the federated learning simulation using Flower with 30 clients, 50 communication rounds, full client participation, and 5 local epochs.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1, Appendix B"
+  },
+  {
+    "criteria": "The plan includes loading BANKING77 and 20 Newsgroups datasets and partitioning them across 30 clients using Dirichlet distribution with α ∈ {0.5, 0.1, 0.01}.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing four baselines: FL+LoRA (naive FedAvg with LoRA), FFA-LoRA (freeze A permanently), FlexLoRA (SVD decomposition of ΔW), and HetLoRA (zero-padding with decaying factor).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes running main experiments across ranks {1, 2, 4, 8} and heterogeneity levels {Dir(0.5), Dir(0.1), Dir(0.01)} for Table 1.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes the differential privacy experiment using the Laplace mechanism with ε ∈ {1, 3, 6, ∞} at rank 2 and Dir(0.01) on BANKING77.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The plan includes the ablation study on alternating freeze and learning rate adjustment comparing FFA-LoRA alone, FFA-LoRA + alternating, and FFA-LoRA + η_B > η_A.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The plan includes the ablation study comparing three rank scoring functions: Importance-based, Magnitude-based, and the proposed Frobenius norm of contribution criterion.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The plan includes resource heterogeneity experiments using three client rank distributions (Uniform, Heavy Tail, Normal) as in Figure 9 and Table 8.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The code for LoRA decomposition has been implemented as Equation 1, initializing B ∈ R^{d1×rG} and A ∈ R^{rG×d2} with B=0 and A drawn from N(0, σ²).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for the alternating freeze mechanism has been implemented: module A is frozen (not updated) during odd rounds t%2==1, and module B is frozen during even rounds t%2==0.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Algorithm 1"
+  },
+  {
+    "criteria": "The alternating freeze correctly resolves discordance as in Equation 3: when A is frozen and shared, Σw_k (B_k A) = (Σw_k B_k) A = Σw_k ΔW_k, so FedAvg aggregation of B is exact.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code sets different learning rates for LoRA modules B and A: η_A = 0.0005 (base learning rate) and η_B = 5 × η_A = 0.0025.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code for the importance score S_{m,i}^{B_k} = ||ΔB_k[:,i] · A[i,:]||_F has been implemented as the Frobenius norm of the rank-i contribution to ΔW when training B.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code for the importance score S_{m,i}^{A_k} = ||B[:,i] · ΔA_k[i,:]||_F has been implemented as the Frobenius norm of the rank-i contribution to ΔW when training A.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code selects top-(r_i × N) LoRA ranks from a total of r_G × N ranks across all N target modules based on the computed importance scores S_{m,i}.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for LoRA module mask M_k^(m) has been implemented as per Equation 5: setting column (or row) vectors to 1_{d1} (or 1_{d2}) for selected ranks in R_k, and 0 otherwise.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code applies the Hadamard product mask as in Equation 6: ΔB_k^(m) ← ΔB_k^(m) ⊙ M_k^(m) (or ΔA_k^(m) ← ΔA_k^(m) ⊙ M_k^(m)) before each backpropagation step.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code runs 1 epoch of local training to compute ΔW (i.e., ΔB or ΔA) for calculating contribution C_{m,i} and importance scores before applying the mask for the remaining epochs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "After local training, each client uploads B_k ⊙ M_k (or A_k ⊙ M_k), and the server aggregates the sparse updates and adds them to the parameters saved two rounds before.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The full LoRA-A2 server-side algorithm (Algorithm 1) has been implemented, including participant sampling, odd/even round alternation, FedAvg aggregation with weights w_k = |D_k| / Σ|D_k|, and global model update.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The LocalTraining procedure (Algorithm 2) has been implemented, including rank selection, mask computation, and the per-epoch loop applying masked gradient updates before backpropagation.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The code loads BANKING77 (10,003 training / 3,080 test samples, 77 intent classes) and partitions it among 30 clients using Dirichlet distribution.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The code loads 20 Newsgroups (11,314 training / 7,532 test samples, 20 classes) and partitions it among 30 clients using Dirichlet distribution.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The Dirichlet distribution data partitioning is implemented with concentration parameter α ∈ {0.5, 0.1, 0.01} to simulate varying levels of non-IID data heterogeneity across clients.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code uses the Flower (flwr) framework to orchestrate the federated learning simulation with multiple clients.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code uses the HuggingFace PEFT library to apply LoRA adapters to the base models (RoBERTa-base, RoBERTa-large, DistilBERT) and HuggingFace Transformers to load them.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The AdamW optimizer is used with base learning rate η = 0.0005 for local training across all methods.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The FL simulation uses 30 local clients with full participation (K(t) = [K] for all rounds t), 50 communication rounds, and 5 local training epochs per round.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "A frozen classifier head is added on top of the pre-trained model following Sun et al. (2024) / FFA-LoRA, and the base model weights are all frozen during fine-tuning.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "Model evaluation correctly merges the LoRA adapter using scaling: W_ft = W0 + (16/r) × ΔW, where r is the local rank.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The FL+LoRA baseline (naive FedAvg separately aggregating B and A matrices) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The FFA-LoRA baseline (A matrix permanently frozen throughout training, only B is trained and aggregated) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The FlexLoRA baseline (aggregating the product ΔW = BA on the server side and decomposing back via SVD) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The HetLoRA baseline (zero-padding rank-heterogeneous adapters for alignment during aggregation, decaying factor γ = 0.99) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "Experiments with RoBERTa-large (~355M parameters) have been implemented for Table 2, comparing FL+LoRA, FFA-LoRA, FlexLoRA, and LoRA-A2 at ranks {1, 2, 4, 8} under Dir(0.01).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "Experiments with DistilBERT (~82M parameters) have been implemented for Table 3, comparing all four methods at ranks {1, 2, 4, 8} under Dir(0.01).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The Laplace mechanism for differential privacy has been implemented with clipping constant C ∈ {2, 5} (best per method) for experiments in Table 4.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The pathological data distribution setup has been implemented with K=20 clients where client (2k-1) and (2k) exclusively hold classes (2k-1) and (2k) of 20 Newsgroups dataset respectively.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Figure 3"
+  },
+  {
+    "criteria": "The rank selection heatmap visualization (number of selected ranks per module type per layer) has been implemented for generating Figure 3.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The ablation experiment on module/layer importance has been implemented: fine-tuning only selected layers (Figure 4a) or only selected module types (Figure 4b) while freezing others.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The client rank selection similarity heatmap (Figure 5a) has been implemented to measure overlap in selected ranks between pairs of clients with different data distributions.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The resource heterogeneity simulation has been implemented with three client rank distributions: Uniform (all clients same rank), Heavy Tail (most clients low rank), and Normal (bell-shaped distribution) as in Figure 9.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 8, Figure 9"
+  },
+  {
+    "criteria": "The ablation study comparing three rank scoring functions has been implemented: Importance-based (gradient magnitude of individual parameters), Magnitude-based (parameter magnitude), and the proposed criterion (Frobenius norm of rank contribution C_{m,i}).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The average gradient similarity metric has been implemented as in Equation 7: (1/n²) Σ_i Σ_j cosine_similarity(ΔW_i^t − ΔW_i^{t-1}, ΔW_j^t − ΔW_j^{t-1}).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The main experiments comparing LoRA-A2 with FL+LoRA, FFA-LoRA, FlexLoRA, and HetLoRA on BANKING77 and 20 Newsgroups (RoBERTa-base) across all rank and heterogeneity combinations for Table 1 have been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "Experiments on RoBERTa-large across ranks {1, 2, 4, 8} at Dir(0.01) have been executed successfully without errors for Table 2.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "Experiments on DistilBERT across ranks {1, 2, 4, 8} at Dir(0.01) have been executed successfully without errors for Table 3.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The differential privacy experiments on BANKING77 with Laplace mechanism, ε ∈ {1, 3, 6, ∞}, rank 2, and Dir(0.01) heterogeneity have been executed successfully for Table 4.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The ablation study on alternating freeze and learning rate (FFA-LoRA vs. FFA-LoRA+Alternating vs. FFA-LoRA+η_B>η_A) has been executed successfully and Figure 6 results are generated.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The adaptive rank selection visualization experiments on pathological 20 Newsgroups distribution have been executed and heatmaps for Figure 3 have been generated.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The resource heterogeneity experiments comparing LoRA-A2 with HetLoRA and FlexLoRA under Uniform, Heavy Tail, and Normal rank distributions have been executed successfully for Table 8.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The ablation study on scoring functions (Table 9) comparing Importance, Magnitude, and the proposed criterion on BANKING77 at rank 2 with Dir(0.1) and Dir(0.01) has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The convergence curve experiment on BANKING77 with rank 2 at Dir(0.5), Dir(0.1), and Dir(0.01) has been executed and Figure 8 convergence curves are generated.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The average gradient similarity experiment on 20 Newsgroups with rank 2 across IID and Dir(α) ∈ {1, 0.5, 0.1, 0.01} levels has been executed and Figure 10 is generated.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Figure 10"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: LoRA-A2 at rank 1 substantially outperforms all baselines at Dir(0.01) on BANKING77 (approximately 68.88% vs. 45.78% for FL+LoRA, 33.68% for FFA-LoRA, 42.75% for FlexLoRA).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: LoRA-A2 maintains stable accuracy across all ranks (1–8) under high heterogeneity Dir(0.01) on BANKING77, while all baselines show significant accuracy decline at lower ranks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: LoRA-A2 at rank 1 achieves performance comparable to or better than FL without LoRA (full parameter fine-tuning) on both datasets, while uploading far fewer parameters (approximately 0.270B vs. 186B).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: The communicated parameters column shows LoRA-A2 uses fewer parameters than FL+LoRA and FlexLoRA at the same global rank due to adaptive sparse upload.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: LoRA-A2 on RoBERTa-large substantially outperforms FL+LoRA and FFA-LoRA at all ranks under Dir(0.01); FlexLoRA results are absent due to ill-conditioned SVD decomposition.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: LoRA-A2 on DistilBERT consistently outperforms all four baselines at ranks 1–8 under Dir(0.01) heterogeneity.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: LoRA-A2 achieves the highest robustness under differential privacy with severe noise (ε=1 and ε=3), outperforming FL+LoRA, FFA-LoRA, and FlexLoRA, and even performs similarly or better with DP vs. without DP.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6: Adding alternating freeze to FFA-LoRA significantly improves accuracy especially at Dir(0.01); additionally incorporating η_B > η_A further boosts performance on both datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: The rank selection heatmap shows that most modules receive zero ranks in each client, with selected ranks concentrated in later transformer layers and in intermediate/output dense modules.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: Fine-tuning only the last layers (9–11) and only intermediate/output module types achieves the best accuracy, confirming that adaptive rank selection automatically prioritizes these components.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5a: Clients sharing the same data classes exhibit higher rank selection similarity (overlap in selected ranks), while clients with different class distributions show low overlap.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5b: Cosine similarity of local model updates approaches 1 for clients with the same class distribution and approaches 0 for clients with non-overlapping data.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8: LoRA-A2 outperforms HetLoRA and FlexLoRA in accuracy under all three resource heterogeneity distributions (Uniform, Heavy Tail, Normal) while using fewer communicated parameters.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Table 9: The proposed Frobenius norm criterion for rank importance scoring outperforms both the Importance-based and Magnitude-based criteria on BANKING77 while using moderate communication cost.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 10: LoRA-A2 maintains higher average gradient similarity than FFA-LoRA as heterogeneity increases (Dir(0.01)), demonstrating lower client drift in constrained parameter spaces.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 10"
+  }
+]

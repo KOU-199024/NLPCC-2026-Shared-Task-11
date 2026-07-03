@@ -1,0 +1,524 @@
+[
+  {
+    "criteria": "The agent has read Section 4 completely to understand the MDP formulation of dialog tutoring as a multi-turn RL problem, including state, action, and transition dynamics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the reward design: post-dialog solve rate (r_sol), pedagogical reward (r_ped), and combined reward (r) with penalty λ.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to understand the RL environment, including the two interaction scenarios (student-initiated and tutor-initiated) and the use of thinking tags.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Section 5.2 to understand the BigMath dataset, filtering criteria (1–60% solve rate, numerical answers only), and train/test splits.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The agent has read Section 5.3 to understand the GRPO implementation details, including group size (8 rollouts), advantage normalization, student turn masking, max turns, and the template reward.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The agent has read Section 5.4 to identify all models: Qwen2.5-7B-Instruct (tutor), Llama-3.1-8B-Instruct (student), Qwen2.5-14B-Instruct (judge during training), and Gemma3-27B (independent judge for evaluation).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the main in-domain results across RL model variants, specialized tutoring models, open-weights models, and closed-source baselines.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the reasoning benchmark results (MMLU, GSM8K, MATH500) comparing RL, SFT, MDPO, and SocraticLM baselines.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to check the MathTutorBench out-of-domain evaluation results across nine tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Figure 4 to understand the trade-off between Δ Solve rate, Leak Solution rate, and Pedagogical Reward as λ varies.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand all template reward components: r_think, p_misuse, r_end, p_len, and r_templ.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Appendix C (Figures 10–15) to understand all prompt templates used for student pre-dialog, post-dialog, system prompts for student and tutor, answer leakage judge, and helpfulness judge.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes implementing a multi-turn dialog simulation environment where a student LLM and a tutor LLM alternate utterances.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes the GRPO training pipeline using the TRL library's GRPOTrainer adapted for multi-agent student-tutor interaction.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The plan includes the post-dialog solve rate reward (r_sol) computed by sampling K=8 student solutions and averaging correctness.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The plan includes the pedagogical reward (r_ped) computed as the product of M=2 independent judge acceptances.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The plan includes the combined reward (r) that adds r_sol and a penalty term (r_ped − 1) × λ with configurable λ.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The plan includes loading and filtering the BigMath dataset to keep only problems with a numerical answer and a pre-dialog solve rate between 1% and 60%.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The plan includes a 10,000 training and 500 test split of the filtered BigMath dataset.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes the two interaction scenarios: student-initiated (student provides attempted solution first) and tutor-initiated (tutor elicits solution), sampled uniformly.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes setting up two LLM judges for pedagogical evaluation: the answer leakage judge (Figure 14) and the helpfulness judge (Figure 15).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes implementing thinking tags that allow the tutor to internally reason before generating a response, hidden from the student.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes the template reward components from Appendix B (thinking tag reward, misuse penalty, end-of-conversation reward, length penalty).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes the SFT baseline: filtering accepted conversations from rollouts to obtain ~14k samples and fine-tuning for 1 epoch.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The plan includes the MDPO baseline: constructing 36k within-group preference pairs from rollouts and training with multi-turn DPO.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The plan includes training RL models across multiple λ values (e.g., 0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5) to trace the Pareto frontier.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes evaluation metrics: Δ Solve rate (post-dialog minus pre-dialog solve rate) and Leaked Solution (%) judged by an LLM.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The plan includes evaluation on the reasoning benchmarks MMLU (5-shot), GSM8K (4-shot), and MATH500 (0-shot).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The plan includes vLLM for serving tutor, student, and judge models with FP8 quantization for student and AWQ 4-bit quantization for judge.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "The code for the MDP environment has been implemented with state defined as the full conversation history (u_<t) and action as the next utterance (u_t).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The tutor model (Qwen2.5-7B-Instruct) is implemented with autoregressive sampling from the policy distribution as defined in Equation 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The student model (Llama-3.1-8B-Instruct) is implemented with a fixed (non-updated) policy that generates responses conditioned on the conversation history.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The post-dialog solve rate reward r_sol has been implemented as Equation 2: sampling K=8 student final answers, comparing each to the ground truth, and averaging the binary correctness indicators.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The pedagogical reward r_ped has been implemented as Equation 3: the product of M=2 independent judge binary acceptances (answer leakage judge and helpfulness judge), with two samples per judge.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The combined reward r has been implemented as Equation 4: r_sol + (r_ped − 1) × λ, where λ is a configurable non-negative penalty weight.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The hard mode reward variant has been implemented: if r_ped = 0, the overall reward is set to a fixed penalty λ regardless of r_sol.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The ablation variant removing r_sol (-r_sol) has been implemented so that only pedagogical reward matters during training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The dialog simulation loop has been implemented with 8 rollouts per problem, a maximum of 16 total turns, and uniform sampling between student-initiated and tutor-initiated scenarios.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Section 5.3"
+  },
+  {
+    "criteria": "The code masks student turns during the GRPO loss computation so that only tutor response tokens contribute to the policy gradient update.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The GRPO training has been implemented using TRL's GRPOTrainer adapted for multi-agent settings, with dialog-level rewards normalized within each group of 8 rollouts.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "Dialog-level advantages are propagated uniformly to all tokens in each tutor utterance with no discount factor applied across turns.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "Thinking tags (<think>...</think>) for the tutor have been implemented, with their content hidden from the student model during dialog simulation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The thinking tag usage reward r_think has been implemented per Appendix B.1: (number of tutor turns with correct tags / total tutor turns) × 0.5.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The penalty for incorrect thinking tag formatting p_misuse has been implemented per Appendix B.2: 0.5 × (number of wrongly formatted or unclosed thinking tags in the dialog).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The end-of-conversation reward r_end has been implemented per Appendix B.3: rewarding 0.1 when the tutor generates the <end_of_conversation> token to terminate the dialog.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The length penalty p_len has been implemented per Appendix B.4: applying a fixed penalty of 0.5 if any tutor turn fails to generate an EOS token within the maximum token limit.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The combined template reward r_templ has been implemented per Appendix B.5 as: r_think + r_end − p_misuse − p_len.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.5"
+  },
+  {
+    "criteria": "The BigMath dataset loading has been implemented, filtering to keep only problems with a single numerical answer and a pre-computed Llama-3.1-8B-Instruct solve rate between 1% and 60%.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The dataset has been partitioned into 10,000 training samples and 500 test samples matching Table 1 source composition (Big_math, Cn_k12, Math, Aops_forum, Omnimath, Openmath, Gsm8k).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The pre-dialog solve rate computation has been implemented using the prompt in Figure 10 (chain-of-thought, boxed answer format) with the student model Llama-3.1-8B-Instruct.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 10"
+  },
+  {
+    "criteria": "The post-dialog solve rate computation has been implemented using the prompt in Figure 11 (full step-by-step solution after conversation), sampling K=8 student answers and comparing to ground truth.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Figure 11"
+  },
+  {
+    "criteria": "The student system prompt (Figure 12) has been implemented exactly: instructing the student to act naturally, be collaborative, and be guided by the teacher toward solving the math problem.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 12"
+  },
+  {
+    "criteria": "The tutor system prompt (Figure 13) has been implemented exactly: instructing the tutor not to reveal the answer, to guide the student, to keep responses concise, and to use <end_of_conversation> to terminate.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 13"
+  },
+  {
+    "criteria": "The answer leakage judge prompt (Figure 14) has been implemented exactly, including the few-shot examples showing OK and REJECT decisions, and the structured JSON output format.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 14"
+  },
+  {
+    "criteria": "The helpfulness judge prompt (Figure 15) has been implemented exactly, including the criteria for acceptable teacher style and the conditions for REJECT (overly long messages, teacher dominance, language mixing, unnatural interaction, incomplete messages).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 15"
+  },
+  {
+    "criteria": "The judge model (Qwen2.5-14B-Instruct) has been integrated for training-time evaluation, with each judge prompt sampled twice (2 samples per judge × 2 judges = 4 total judge calls).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The independent evaluation judge (Gemma3-27B) has been implemented for test-time leakage evaluation to avoid overoptimization on the training judge.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The GRPO training hyperparameters have been implemented: learning rate 5×10^-7, KL coefficient β=0.001, gradient steps per batch μ=2, batch size 16 problems × 8 rollouts, sampling temperature T=1.0.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The paged_adamw_8bit optimizer has been used for GRPO training to reduce memory usage.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "vLLM has been integrated to serve the tutor, student, and judge models with batched decoding and KV-caching for efficient simulation at scale.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "The student model is quantized using FP8 for fast inference, and the judge model is quantized using AWQ 4-bit quantization.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "The SFT baseline has been implemented by generating 8 rollouts on 30% of the training data, filtering to accepted conversations (~14k samples), removing duplicates, and fine-tuning Qwen2.5-7B-Instruct for 1 epoch with batch size 16 and learning rate 2×10^-5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The MDPO baseline has been implemented by constructing 36k within-group preference pairs (D_acc, D_rej) where r(D_acc) > r(D_rej), and training Qwen2.5-7B-Instruct for 1 epoch with batch size 32 and learning rate 2×10^-7.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The Δ Solve rate evaluation metric has been implemented as the difference between post-dialog solve rate and pre-dialog solve rate across the test set.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The Leaked Solution evaluation metric has been implemented by applying the answer leakage judge (Gemma3-27B) to test conversations and computing the fraction flagged as leaking.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The MathTutorBench evaluation pipeline has been implemented, computing Ped-RM micro and macro scores across the benchmark's nine tasks.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Table 4"
+  },
+  {
+    "criteria": "Evaluation on MMLU (5-shot), GSM8K (4-shot), and MATH500 (0-shot) benchmarks has been implemented to measure reasoning capability preservation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Table 3"
+  },
+  {
+    "criteria": "The RL training with λ=0.0 (pure r_sol) has been executed successfully without errors on the BigMath training set.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "RL models with multiple λ values (0.25, 0.5, 0.75, 1.0, 1.25, 1.5) have been trained successfully to completion.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The hard mode RL variant (Qwen2.5-7B-RL-hard-λ=1.0) has been trained with and without thinking tags (+think) successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The -r_sol ablation has been trained successfully (tutor only optimized for pedagogy, no solution correctness reward).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The SFT baseline has been trained and executed successfully on the filtered accepted conversations.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The MDPO baseline has been trained and executed successfully on the 36k within-group preference pairs.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "All trained models have been evaluated on the 500 held-out BigMath test problems to compute Δ Solve rate and Leaked Solution (%) metrics.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "All RL and baseline models have been evaluated on MathTutorBench to compute the nine-task benchmark results including Ped-RM scores.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The RL model (Qwen2.5-7B-RL-hard-λ=1.0) and baselines have been evaluated on MMLU (5-shot), GSM8K (4-shot), and MATH500 (0-shot).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Qwen2.5-7B-RL-λ=0.0 achieves the highest Δ Solve rate (36.2%) but also the highest solution leakage (89.5%) among RL models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Qwen2.5-7B-RL-λ=1.5 achieves low solution leakage (5.4%) with a Δ Solve rate of 21.2% and positive Ped-RM score (4.4 micro).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: the RL models with λ > 0 achieve lower solution leakage and better Ped-RM scores than SFT and MDPO baselines while maintaining competitive Δ Solve rates.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: the +think variant of the hard λ=1.0 model achieves a higher Ped-RM micro score (4.3 vs 4.2) and higher Δ Solve rate (20.5% vs 12.6%) compared to the hard variant without thinking tags.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: the -r_sol ablation achieves the lowest Δ Solve rate (7.6%) and lowest solution leakage (3.4%) among RL variants.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: LearnLM 2.0 Flash Experimental achieves the highest Ped-RM scores (6.8 micro / 6.4 macro) but the lowest Δ Solve rate (4.3%) among all models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: as λ increases from 0 to 2.0, the Leak Solution rate decreases monotonically and the Ped-RM micro score increases, while the Δ Solve rate decreases.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: Qwen2.5-7B-RL preserves reasoning capability with minimal degradation from the base model (≤1.8% drop across MMLU, GSM8K, MATH500), unlike SFT (–7.5% GSM8K, –9.4% MATH500).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: the +think variant of RL-hard-λ=1.0 achieves slightly better MATH500 performance (+1.4%) compared to the variant without thinking tags.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: RL models with higher λ values (0.75, 1.25) improve the scaffolding win rate over human teachers compared to the base Qwen2.5-7B-Instruct model on MathTutorBench.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes confirm that RL-trained 7B models trace a Pareto frontier between Δ Solve rate and solution leakage, matching or exceeding proprietary LearnLM models on this frontier as shown in Figure 1.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 1"
+  }
+]

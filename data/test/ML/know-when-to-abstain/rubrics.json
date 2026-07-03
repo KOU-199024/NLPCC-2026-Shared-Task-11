@@ -1,0 +1,512 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the formal definitions of selective classification, selector function, coverage, and selective risk.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Section 3 to understand the Neyman-Pearson lemma and how it motivates likelihood ratio-based selector scores for selective classification.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": null
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand how MSP and RLog are interpreted as monotonic transformations of the likelihood ratio p_c(x)/p_w(x).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the proposed Delta-MDS and Delta-KNN scoring methods, including their NP-optimality arguments.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand the linear combination strategy (Delta-MDS-RLog and Delta-KNN-RLog) and the role of lambda in combining scores.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 5 completely to understand the experimental setup, including all datasets, classifiers, baseline methods, and evaluation metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Appendix A to understand the precise formula and implementation details of each baseline: MSP, MaxLogit, Energy (T=1), MDS, KNN, RLog, and SIRC.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Appendix D to understand the full pseudocode for Algorithm 1 (Delta-MDS) and Algorithm 2 (Delta-KNN) including linear combination variants.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The agent has read Appendix E to understand the complete experimental settings including model variants, feature extraction layer choices, dataset download sources, and ImageNet-C evaluation protocol.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The agent has read Table 6 to check the hyperparameter values of lambda and k for each method and model combination (DFN CLIP, EVA, DistilBERT).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the DFN CLIP results on ImageNet-1K and all covariate-shifted variants (Im-R, Im-A, ObjectNet, Im-V2, Im-S, Im-C).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the EVA supervised learning results on Im-1K, Im-V2, Im-S, and Im-C.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the Amazon Reviews language experiment results for all selector methods under in-distribution and covariate shift conditions.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 4 to check the ablation experiments on Delta-KNN averaging and linear combination variants using DFN CLIP.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Table 5 to check the sample efficiency ablation results varying the fraction of labeled data from 0.1% to 100%.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The plan includes implementing the selective classifier framework with threshold-based selector g_{s,gamma}(x) = 1[s(x) > gamma] (Equations 1 and 2).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equations 1, 2"
+  },
+  {
+    "criteria": "The plan includes implementing the coverage and selective risk metrics (Equations 3 and 4) for evaluation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equations 3, 4"
+  },
+  {
+    "criteria": "The plan includes implementing the AURC and NAURC evaluation metrics, including the oracle AURC computation (Equation 7).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The plan includes implementing all seven baseline selector scores: MSP, MaxLogit, Energy, MDS, KNN, RLog, and SIRC.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The plan includes implementing the proposed Delta-MDS method by splitting training features into per-class correct and incorrect sets and computing separate Gaussian statistics.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Equation 5"
+  },
+  {
+    "criteria": "The plan includes implementing the proposed Delta-KNN method using the average log-distance to the k nearest neighbors in the correct and incorrect feature sets (modified formulation from Section 3.2).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Equation 6"
+  },
+  {
+    "criteria": "The plan includes implementing the linear combination s(x) = s_distance(x) + lambda * s_logit(x) with hyperparameter lambda as specified in Table 6.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Table 6"
+  },
+  {
+    "criteria": "The plan includes loading the DFN CLIP model using the ViT-H/14 variant from the OpenCLIP library for vision experiments.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The plan includes loading the EVA 'Giant' model (patch size 14) from the timm library for supervised vision experiments.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The plan includes fine-tuning DistilBERT on the Amazon Reviews dataset using the official LISA training pipeline with default hyperparameters.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The plan includes loading all seven vision datasets: ImageNet-1K, Im-R, Im-A, ObjectNet, Im-V2 (MatchedFrequency), Im-S, and Im-C (corruption level 5) from their open-source repositories.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The plan includes constructing mixed test sets by combining in-distribution samples (Im-1K) with each covariate-shifted dataset to simulate realistic deployment scenarios.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes using the CLIP text template 'a real, high-quality, clear and clean photo of a {y}' when computing logit-based selector scores for CLIP.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The code for the threshold-based selector function g_{s,gamma}(x) = 1[s(x) > gamma] has been implemented as formalized in Equation 2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for computing coverage (Equation 3) and selective risk (Equation 4) with 0/1 loss has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equations 3, 4"
+  },
+  {
+    "criteria": "The AURC metric has been implemented as the area under the risk-coverage curve across all coverage thresholds.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The NAURC metric has been implemented according to Equation 7, including oracle AURC computation g* using ground-truth labels and normalization by the classifier's total error R(f).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The MSP baseline has been implemented as the maximum softmax probability s_MSP(x) = max_k p_theta(y=k|x).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The MaxLogit baseline has been implemented as the maximum raw logit value s_MaxLogit(x) = max_k l^(k).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The Energy baseline has been implemented as s_Energy(x) = log sum_k exp(l^(k)) with temperature T=1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The MDS (Mahalanobis Distance Score) baseline has been implemented with per-class mean features mu_i and a shared tied covariance matrix Sigma estimated from all training features.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The KNN baseline has been implemented using the negative Euclidean distance to the k-th nearest neighbor in the normalized training feature set.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The RLog baseline has been implemented as the difference between the top two logits: s_RLog(x) = l^(1) - l^(2).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The SIRC baseline has been implemented with MSP as S_1 and L1 norm as S_2, with a = mu_{S2} - 3*sigma_{S2} and b = 1/sigma_{S2}.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The code for splitting training samples into per-class correct feature sets A_c^(i) and per-class incorrect feature sets A_w^(i) based on classifier predictions has been implemented as in Algorithm 1, Step 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Appendix D"
+  },
+  {
+    "criteria": "The code for computing per-class correct means mu_i^c, incorrect means mu_i^w, shared correct covariance Sigma^c, and shared incorrect covariance Sigma^w from the split feature sets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Section 3.2"
+  },
+  {
+    "criteria": "The Delta-MDS score has been implemented as D_MDS(x; mu_i^c, Sigma^c) - D_MDS(x; mu_i^w, Sigma^w) according to Equation 5 and Algorithm 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5, Algorithm 1"
+  },
+  {
+    "criteria": "The code for splitting training samples into a global correct feature set A_c and a global incorrect feature set A_w (not per-class) has been implemented for Delta-KNN as in Algorithm 2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2, Appendix D"
+  },
+  {
+    "criteria": "The Delta-KNN average log-distance formulation has been implemented as D_KNN(x; A_c) = -1/k * sum_{i=1}^k log(u_i(phi(x))) and similarly for A_w, using the average over k nearest neighbors rather than the k-th neighbor alone.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Algorithm 2"
+  },
+  {
+    "criteria": "The Delta-KNN score has been implemented as D_KNN(x; A_c) - D_KNN(x; A_w) according to Equation 6 and Algorithm 2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6, Algorithm 2"
+  },
+  {
+    "criteria": "Feature normalization has been applied for all KNN-based methods (KNN and Delta-KNN).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The linear combination selector s(x) = s_Delta-MDS(x) + lambda * s_logit(x) has been implemented for Delta-MDS-RLog as in Algorithm 1 step 17-18.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Algorithm 1"
+  },
+  {
+    "criteria": "The linear combination selector s(x) = s_Delta-KNN(x) + lambda * s_logit(x) has been implemented for Delta-KNN-RLog as in Algorithm 2 step 18-19.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Algorithm 2"
+  },
+  {
+    "criteria": "The DFN CLIP model (ViT-H/14 variant) has been loaded from the OpenCLIP library with pretrained weights.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The EVA 'Giant' model with patch size 14 has been loaded from the timm library with pretrained weights.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "DistilBERT has been fine-tuned on the Amazon Reviews training set using the official LISA repository pipeline with default hyperparameters.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The CLIP text template 'a real, high-quality, clear and clean photo of a {y}' has been used for constructing class concept embeddings T_theta(c) when computing logit-based selector scores.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "CLIP logits have been computed as the dot product between the text embedding T_theta(c) for each class concept c and the image embedding phi(x).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "Feature extraction for CLIP uses the final layer output of the vision encoder, while feature extraction for EVA and DistilBERT uses the penultimate layer output.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The code for loading ImageNet-1K and all six covariate-shifted variants (Im-R, Im-A, ObjectNet, Im-V2, Im-S, Im-C) from their open-source repositories has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The ImageNetV2 MatchedFrequency test set has been used for evaluation.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The ImageNet-C evaluation has been implemented using corruption level 5, averaging results within each of the 4 corruption categories (blur, digital, noise, weather) before averaging across categories.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "Mixed test sets combining Im-1K and each covariate-shifted dataset have been constructed for evaluation, following Liang et al. (2024).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The k hyperparameters for KNN-based methods have been set correctly: k=50 for KNN and k=25 for Delta-KNN across all models, as specified in Table 6.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6, Appendix E"
+  },
+  {
+    "criteria": "The lambda hyperparameters for linear combination methods have been set per model as specified in Table 6 (e.g., lambda=10 for Delta-KNN-RLog on DFN CLIP, lambda=0.5 for EVA, lambda=0.05 for DistilBERT).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The Delta-MDS-MSP and Delta-KNN-MSP combinations have been implemented for the language experiments on Amazon Reviews (Table 2).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The ablation comparing Delta-KNN with and without averaging (k-th only vs. average of top-k log-distances) has been implemented for DFN CLIP.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 4, Section 5.3"
+  },
+  {
+    "criteria": "The sample efficiency ablation has been implemented by subsampling the training feature set to 0.1%, 1%, 10%, 50%, and 100% of labeled data for Delta-MDS-RLog and Delta-KNN-RLog.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 5, Section 5.3"
+  },
+  {
+    "criteria": "The code for running experiments with ResNet50 (from the official PyTorch repository) trained on ImageNet-1K has been implemented for additional results.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix F"
+  },
+  {
+    "criteria": "The semantic shift experiments on ImageNet-O, iNaturalist, SUN, and Places datasets with DFN CLIP and EVA have been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Table 8, Appendix F"
+  },
+  {
+    "criteria": "All baseline selector scores and proposed methods have been executed successfully on all vision datasets (Im-1K and covariate-shifted variants) with DFN CLIP without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "All selector scores have been executed successfully on Im-1K, Im-V2, Im-S, and Im-C with the EVA model without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "All selector scores have been executed successfully on the Amazon Reviews dataset (in-distribution and covariate shift) with the DistilBERT model without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The ablation experiments on Delta-KNN averaging and linear combination variants have been executed on DFN CLIP without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The sample efficiency ablation experiments (varying fraction of labeled data) have been executed for Delta-MDS-RLog and Delta-KNN-RLog on DFN CLIP without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The ResNet50 covariate shift experiments on Im-1K, Im-V2, Im-S, and Im-C have been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The semantic shift experiments on ImageNet-O, iNaturalist, SUN, and Places have been executed successfully without errors.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 (DFN CLIP): Delta-KNN-RLog and Delta-MDS-RLog achieve the best Avg (all) AURC and NAURC, with Delta-KNN-RLog leading overall (AURC 5.01, NAURC 0.163).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: Delta-KNN and Delta-MDS individually achieve roughly 50% lower average AURC/NAURC compared to their standard KNN and MDS counterparts.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: RLog ranks as the third best method on average NAURC, outperforming MSP, MaxLogit, Energy, MDS, KNN, and SIRC as a standalone score.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3 (EVA): Delta-MDS-RLog achieves the best average AURC (3.86) and NAURC (0.157) across Im-1K, Im-V2, Im-S, and Im-C.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3 (EVA): for supervised models, Delta-MDS-RLog outperforms Delta-KNN-RLog, consistent with the Gaussian Discriminant Analysis argument for MDS-based methods.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2 (Amazon Reviews): Delta-MDS-MSP achieves the best in-distribution and covariate shift performance, followed closely by Delta-MDS-RLog and Delta-KNN-MSP.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4 (ablation): using the average top-k log-distances in Delta-KNN improves performance over using only the k-th distance (average AURC: 6.03 vs 5.89, NAURC: 0.233 vs 0.225).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4 (ablation): Delta-KNN-RLog is the best linear combination for CLIP, outperforming Delta-MDS-Delta-KNN, MSP-RLog, and Delta-KNN-MSP.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5 (sample efficiency): Delta-KNN-RLog maintains strong performance with as little as 0.1% of labeled data, while Delta-MDS-RLog degrades significantly at 1% and is not applicable at 0.1%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7 (ResNet50): proposed methods (Delta-MDS-RLog and Delta-KNN-RLog) outperform all baselines on Im-1K, Im-V2, Im-S, and Im-C, consistent with findings on larger models.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8 (semantic shift): proposed methods Delta-KNN and Delta-KNN-RLog achieve the best average AURC and NAURC on semantic shift datasets for DFN CLIP.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: the hyperparameter sensitivity analysis shows that Delta-KNN-RLog results are not highly sensitive to lambda, and k performance plateaus at around k=25.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 2, Appendix F"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: risk-coverage curves show that proposed methods (Delta-MDS-RLog and Delta-KNN-RLog) consistently achieve the most favorable risk-coverage tradeoff across all coverage levels for both CLIP and EVA.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Appendix F"
+  }
+]

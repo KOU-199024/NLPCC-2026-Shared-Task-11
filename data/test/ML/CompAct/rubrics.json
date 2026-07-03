@@ -1,0 +1,308 @@
+[
+  {
+    "criteria": "The agent has read Section 3 (Method) completely to understand the CompAct methodology, including the forward pass activation compression, backward pass compressed gradient computation, and Adam optimizer update with low-rank moments.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to understand that during the forward pass a Gaussian random projection matrix P is sampled using a per-layer seed, the compressed activation z = xP ∈ R^{b·l×r} is saved for the backward pass (not x), and the full output o = xW_t is computed and returned.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Algorithm 2 to understand that during the backward pass the compressed weight gradient Ĝ_t = z^T · (∂L/∂o) ∈ R^{r×m} is computed, while the input gradient ∂L/∂x = (∂L/∂o) · W_t^T ∈ R^{b·l×n} is computed in full rank.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The agent has read Algorithm 3 to understand that Adam first and second moment estimates M_t and V_t are maintained in the compressed subspace R^{r×m}, and the decompressed gradient is G̃_t = α·P·N_t where P is resampled with the same seed as the forward pass.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand that the projection matrix P is a Gaussian random matrix with μ=0 and σ=1/r, sampled independently per layer, and that using the same random seed in both forward and backward passes eliminates the need to store P in memory.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 and Appendix B to understand the pretraining setup: LLaMA-based models (60M, 130M, 350M, 1B) trained on C4, sequence length 256, batch size 512, cosine LR scheduler with 10% warmup to 0.1 of initial LR, scaling factor α=0.25, and projection update period T=50 for 60M–350M and T=200 for 1B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1, Appendix B"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 and Appendix C to understand the finetuning setup: RoBERTa-Base finetuned on all 8 GLUE tasks, 30 epochs, batch size 16 (32 for CoLA), max sequence length 512, α=2 for r=8 and α=4 for r=4, T=500, and results averaged over 3 seeds.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2, Appendix C"
+  },
+  {
+    "criteria": "The agent has read Appendix B.2 to understand that CompAct is applied to all linear modules except the attention output-projection layer (due to shared FlashAttention memory), and that for 60M–350M models the output-projection gradient is scaled by a separate α_out = 0.5α.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes implementing a custom linear layer (or autograd Function / hook) that computes and saves the compressed activation z = xP during the forward pass instead of x, while still computing and returning the full output o = xW_t.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan specifies that the random projection matrix P will be sampled on-the-fly from N(0, 1/r) using a per-layer integer seed, and that the same seed will be reused during the backward pass and Adam update to resample the identical P without storing it.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes modifying the Adam optimizer so that first and second moment estimates M_t and V_t are stored and updated in the compressed subspace R^{r×m} rather than R^{n×m}.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The plan specifies implementing the decompression step G̃_t = α·P·N_t, where P is resampled using the same per-layer seed as the forward pass to project optimizer output back to the full weight space.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 11, Algorithm 3"
+  },
+  {
+    "criteria": "The plan specifies that r is defined as a fraction of each layer's input dimensionality n (e.g., r = n/2, n/4, n/8) rather than as a single fixed integer shared across all layers.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes applying CompAct to all attention and MLP linear layers (Q, K, V, gate, up, down projections) but explicitly excluding the attention output-projection layer.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes running pretraining experiments on LLaMA-60M, 130M, 350M, and 1B with Full-Rank, GaLore, and CompAct at r=n/2, n/4, n/8, measuring perplexity and peak GPU memory.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The plan includes finetuning RoBERTa-Base on all 8 GLUE tasks (CoLA, STS-B, MRPC, RTE, SST2, MNLI, QNLI, QQP) with CompAct r=4 and r=8, compared against Full Fine-Tuning and GaLore r=4 and r=8.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Table 4"
+  },
+  {
+    "criteria": "The plan includes ablation studies for: (a) projection matrix type comparison on LLaMA-60M, (b) projection update period T on LLaMA-130M, (c) rank vs. training steps on LLaMA-130M, and (d) batch size effect on peak GPU memory for LLaMA-350M.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "A custom linear forward function is implemented such that the compressed activation z = xP ∈ R^{b·l×r} is computed and saved for the backward pass instead of the full input x, while the full output o = xW_t ∈ R^{b·l×m} is still computed and returned.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Equation 8"
+  },
+  {
+    "criteria": "The random projection matrix P is sampled from N(0, 1/r) (variance 1/r, not 1) independently per layer using a per-layer seed, and the seed-based resampling mechanism allows P to be identically reproduced during the backward pass and Adam update step without ever storing P in memory.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Algorithm 1"
+  },
+  {
+    "criteria": "The backward pass correctly computes the compressed weight gradient Ĝ_t = z^T · (∂L/∂o) ∈ R^{r×m} using the saved compressed activation z rather than the full input x.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2, Equation 8"
+  },
+  {
+    "criteria": "The backward pass correctly computes the full input gradient ∂L/∂x = (∂L/∂o) · W_t^T ∈ R^{b·l×n} using the original uncompressed weight matrix, ensuring the backward signal through the network is unaffected by the compression.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2, Equation 9"
+  },
+  {
+    "criteria": "The Adam optimizer maintains first and second moment estimates M_t ∈ R^{r×m} and V_t ∈ R^{r×m} (initialized to zero) in the compressed subspace, updated as M_t = β1·M_{t-1} + (1-β1)·Ĝ_t and V_t = β2·V_{t-1} + (1-β2)·Ĝ_t^2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The Adam update step includes bias correction, dividing M_t by (1-β1^t) and V_t by (1-β2^t), before computing the normalized update N_t = M_t / (√V_t + ε).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The decompression step G̃_t = α·P·N_t is implemented using the same per-layer seed as the forward pass to resample an identical P ∈ R^{n×r}, projecting the low-rank optimizer output back to the full weight space R^{n×m} for the weight update.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 3, Equation 11"
+  },
+  {
+    "criteria": "The projection update period T is correctly implemented: the per-layer seed is incremented by 1 every T optimizer steps (i.e., when step t mod T == 0), causing the projection matrix P to rotate to a new random matrix at that frequency.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The rank r is computed as a fraction of each layer's input dimensionality n (e.g., r = n // 2 for ratio 1/2, r = n // 4 for ratio 1/4, r = n // 8 for ratio 1/8), not as a single fixed integer applied uniformly across layers.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "CompAct is applied to all linear layers in the attention mechanism (Q, K, V projections) and MLP blocks (gate, up, down projections) of each Transformer layer, but the attention output-projection layer is explicitly excluded and trained without activation compression.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "For pretraining LLaMA-60M to 350M, the attention output-projection layer's gradient scale is set to α_out = 0.5α (half of the main scaling factor) to mitigate instability caused by inconsistent effective learning rates across layers with and without compression.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The pretraining implementation uses a LLaMA-based architecture with RMSNorm and SwiGLU activations, trains on the C4 dataset without data repetition, with maximum sequence length 256 and batch size 512.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix B.1"
+  },
+  {
+    "criteria": "The pretraining uses a cosine learning rate scheduler that decays to 0.1 of the initial learning rate, with a warmup period for the first 10% of training steps, and a global scaling factor α=0.25 applied to all CompAct weight updates.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "Training steps per model size match Table 5: 10K steps for 60M, 20K for 130M, 60K for 350M, and 100K for 1B, with the optimal learning rate selected per model size from the range [1e-3, 1e-2], and projection update period T=50 for 60M–350M and T=200 for 1B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1, Table 5"
+  },
+  {
+    "criteria": "The finetuning setup correctly configures RoBERTa-Base on all 8 GLUE tasks for 30 epochs with batch size 16 (32 for CoLA), maximum sequence length 512, T=500, α=2 for r=8 and α=4 for r=4, and reports mean performance over 3 random seeds.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Finetuning evaluation metrics follow the GLUE conventions: F1 score for QQP and MRPC, Matthews Correlation for CoLA, Pearson Correlation for STS-B, and classification accuracy for SST2, MNLI, QNLI, and RTE.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "For the projection matrix ablation study, all four projection types are implemented: (1) independent Gaussian per layer, (2) shared-seed Gaussian across layers, (3) Sparse Johnson-Lindenstrauss matrix, and (4) VeLoRA projection matrix.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "For the batch size ablation on LLaMA-350M, training is run without gradient accumulation across batch sizes 16, 32, 64, 128, and 256, measuring peak GPU memory for CompAct (r=n/4), GaLore (rank=256), and the full-rank baseline.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Figure 7"
+  },
+  {
+    "criteria": "Pretraining experiments are successfully executed without errors for all four LLaMA model sizes (60M, 130M, 350M, 1B) under all conditions: Full-Rank, GaLore, and CompAct with r=n/2, r=n/4, r=n/8.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "Finetuning experiments are successfully executed without errors for CompAct (r=4, r=8) and GaLore (r=4, r=8) on all 8 GLUE tasks using RoBERTa-Base.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "Throughput and peak memory comparison experiments are successfully executed for LLaMA-350M with all configurations: CompAct r=n/2, n/4, n/8, GaLore, CompAct r=n/8 + CKPT, GaLore + CKPT, and baseline.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Ablation experiments on projection matrix types (Gaussian, shared-seed Gaussian, Sparse JL, VeLoRA) are successfully executed on LLaMA-60M with r=n/4 using learning rates from {1e-2, 5e-3, 1e-3}.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5, Figure 4"
+  },
+  {
+    "criteria": "Ablation experiments on projection update period T are successfully executed on LLaMA-130M across multiple T values (1, 10, 20, 50, 100, 200, 500, 5K, 10K, 20K) for rank ratios 0.5 and 0.25.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5, Figure 5"
+  },
+  {
+    "criteria": "Ablation experiments on rank and training steps are successfully executed on LLaMA-130M with T=200 for ranks 0.125, 0.25, 0.5, 0.75, 0.9 at 20K, 30K, and 40K training steps.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5, Figure 6"
+  },
+  {
+    "criteria": "Batch size ablation experiments are successfully executed on LLaMA-350M for batch sizes 16, 32, 64, 128, and 256 without gradient accumulation, measuring peak GPU memory for CompAct, GaLore, and baseline.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5, Figure 7"
+  },
+  {
+    "criteria": "Pretraining results in Table 2 are reproduced: CompAct r=n/8 achieves a peak GPU memory of approximately 33.03 GB for LLaMA-350M (vs. baseline 39.97 GB), a ~17% reduction, while maintaining perplexity under 22; for LLaMA-1B, CompAct r=n/8 fits within ~81 GB where baseline does not.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "Memory breakdown results in Table 3 are reproduced for LLaMA-350M at r=n/4: activations reduced from ~7.0 GB to ~2.87 GB, gradients from ~0.65 GB to ~0.26 GB, optimizer states from ~1.3 GB to ~0.52 GB, and peak memory from ~39.97 GB to ~34.71 GB.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "Finetuning results in Table 4 are reproduced: CompAct r=4 achieves approximately 50% peak memory reduction (~3092 MB vs. Full Fine-Tuning ~6298 MB) with an average GLUE score around 85.03, and CompAct r=8 around 85.56, both comparable to GaLore.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "Throughput results in Figure 3(a) are reproduced: CompAct r=n/8 achieves approximately 47.30 tokens/sec (above GaLore at ~44.51), and CompAct r=n/8 + CKPT achieves ~35.50 tokens/sec vs. GaLore + CKPT at ~34.50 tokens/sec.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3(a)"
+  },
+  {
+    "criteria": "Peak device memory results in Figure 3(b) are reproduced: CompAct r=n/8 uses ~33 GB vs. GaLore ~39.25 GB vs. baseline ~39.97 GB; with CKPT, CompAct uses ~8.90 GB vs. GaLore CKPT ~9.60 GB.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3(b)"
+  },
+  {
+    "criteria": "Projection matrix ablation results in Figure 4 are reproduced: Gaussian (CompAct) achieves perplexity ~34.41, JL ~34.80, shared-seed Gaussian ~36.06, and VeLoRA ~66.86 on LLaMA-60M with r=n/4.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "Projection update period T ablation results in Figure 5 are reproduced for LLaMA-130M: an optimal T range emerges around 50–500 for both rank 0.5 and 0.25, with very low T (e.g., T=1) or very high T (e.g., T=20K) both leading to worse perplexity.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "Rank vs. training steps ablation results in Figure 6 are reproduced for LLaMA-130M: at 40K steps, rank 0.5 achieves perplexity ~23.5 and rank 0.25 achieves ~24.8, with lower ranks requiring more training steps to approach the performance of higher ranks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "Batch size ablation results in Figure 7 are reproduced: at batch size 256, CompAct (r=n/4) uses ~68 GB vs. GaLore ~75 GB vs. baseline ~76 GB; at small batch sizes (≤32), all three methods converge to similar memory usage, confirming that CompAct's benefit scales with batch size.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  }
+]

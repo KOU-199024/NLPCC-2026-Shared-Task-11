@@ -1,0 +1,260 @@
+[
+  {
+    "criteria": "The agent has read Section 4 (Method) completely to understand the two core components of MARINE: visual guidance from image-grounded features and guided text generation via classifier-free guidance.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand that MARINE uses DETR and RAM++ as additional image-grounded models, aggregates their detected objects via intersection, and prepends the guidance prompt 'focusing on the visible objects in this image:' to the aggregated object list.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 and Algorithm 1 to understand the logit-space guided generation formula: log p̂(y_t | v, c, x, y<t) = γ * log p(y_t | v, c, x, y<t) + (1-γ) * log p(y_t | v, x, y<t), where γ is the guidance strength.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2, Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to understand the five LVLM models evaluated (LLaVA, LLaVA-v1.5, MiniGPT-v2, mPLUG-Owl2, InstructBLIP) and the hyperparameter settings (γ=0.7, DETR score threshold=0.95, RAM++ detection threshold=0.68, greedy sampling, random seed=242, max token length=64).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1, Table 13"
+  },
+  {
+    "criteria": "The plan includes loading DETR and RAM++ as external vision models for object detection guidance, and combining their outputs using intersection of detected objects.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing the logit-space guided generation as described in Algorithm 1, performing two forward passes per token (one with and one without the guidance prompt c) and combining their log-probabilities.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes setting the MARINE hyperparameters: guidance strength γ=0.7, DETR score threshold=0.95, RAM++ detection threshold=0.68, greedy sampling, random seed=242, and max token length=64.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 13"
+  },
+  {
+    "criteria": "The plan includes evaluating MARINE across all five LVLM architectures (LLaVA, LLaVA-v1.5, MiniGPT-v2, mPLUG-Owl2, InstructBLIP) on CHAIR, POPE, and GPT-4V-aided evaluation metrics.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing all baselines: Greedy-Decoding, LURE, Woodpecker, VCD (with α=1, adaptive plausibility threshold=0.1, noise step=500), and OPERA (with scale factor θ=50, retrospection threshold=25, beam size=5).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1, Tables 10-12"
+  },
+  {
+    "criteria": "The DETR model is loaded and used for object detection with a score confidence threshold of 0.95 to filter detected objects.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Table 13"
+  },
+  {
+    "criteria": "The RAM++ model is loaded and used for object recognition with a detection threshold of 0.68 to filter recognized object tags.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Table 13"
+  },
+  {
+    "criteria": "The intersection of detected objects from DETR and RAM++ is computed (using synonym matching via NLTK) and formatted as a guidance prompt by prepending 'focusing on the visible objects in this image:' to the aggregated object list.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 9"
+  },
+  {
+    "criteria": "The guided generation at each decoding step performs two separate forward passes through the LVLM: one with the guidance prompt c (conditional) and one without c (unconditional), producing two sets of logits.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The final logit at each decoding step is computed as the linear combination: ℓ(t) = γ * ℓ_cond(t) + (1-γ) * ℓ_uncond(t), where γ=0.7, and the next token is sampled from this combined logit space using greedy decoding.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Algorithm 1"
+  },
+  {
+    "criteria": "The prompt templates for MARINE-intersection guidance (Table 9) are implemented, with a randomly selected template from the available list used per query to format the detected objects into the guidance context.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 9, Appendix A.3"
+  },
+  {
+    "criteria": "The CHAIR metric is implemented to evaluate hallucination: CHAIRI = |hallucinated objects| / |all mentioned objects| and CHAIRS = |captions with hallucinated objects| / |all captions|, using the 80 MSCOCO object categories and the synonym list from Lu et al. (2018).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The Recall metric is implemented as Recall = |non-hallucinated objects| / |all existing objects| alongside the CHAIR metrics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The POPE evaluation is implemented as a binary yes/no VQA task across 3000 questions (500 images each from MSCOCO, A-OKVQA, and GQA datasets) in adversarial, popular, and random settings, reporting accuracy, F1 score, and yes ratio.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Table 2"
+  },
+  {
+    "criteria": "Prompt templates specific to the POPE task (Table 9) are implemented with restrictions instructing the model to answer based only on detected objects in the list.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The CHAIR evaluation is run on 500 randomly sampled MSCOCO images using the prompt 'Generate a short caption of the image.' with batch sizes per model (LLaVA=16, LLaVA-v1.5=4, MiniGPTv2=32, mPLUG-Owl2=16, InstructBLIP=16) and left padding for batched generation.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 14, Appendix A.5"
+  },
+  {
+    "criteria": "The CHAIR evaluation has been executed successfully for all five LVLMs (LLaVA, LLaVA-v1.5, MiniGPT-v2, mPLUG-Owl2, InstructBLIP) with all baselines (Greedy, LURE, Woodpecker, VCD, OPERA) and MARINE without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The POPE evaluation has been executed successfully for all five LVLMs in the adversarial setting across MSCOCO, A-OKVQA, and GQA datasets without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The GPT-4V-aided evaluation has been run using the LLaVA-QA90 task (90 questions) and image captioning task (50 MSCOCO images), scoring accuracy and detailedness on a 10-point scale for LLaVA and mPLUG-Owl2.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 3, Appendix A.5"
+  },
+  {
+    "criteria": "The CHAIR results match Table 1: MARINE achieves the best or near-best average CHAIRS and CHAIRI scores among all baselines, with average CHAIRS=8.4 and CHAIRI=3.7 across five LVLMs.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The CHAIR results for MARINE on LLaVA match Table 1: CHAIRS=17.8, CHAIRI=7.2, Recall=50.8, which is lower than Greedy (CHAIRS=26.6) and all other baselines.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The POPE adversarial results match Table 2: MARINE achieves average accuracy=79.9% and F1=80.4% across five LVLMs, with a yes ratio closer to 50% (51.1%) than the baselines.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The POPE results for MARINE on LLaVA-v1.5 match Table 2: accuracy=85.0%, F1=84.3%, yes ratio=45.7%, which outperforms Woodpecker (80.5%, 80.6%, 50.5%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The GPT-4V-aided evaluation results match Table 3: MARINE-enhanced models receive consistently higher accuracy scores (e.g., LLaVA image captioning 5.27→6.11, mPLUG-Owl2 image captioning 7.97→8.63).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read the ablation study in Section 5.3 to understand the comparison between using DETR only, RAM++ only, and both models combined (intersection) for guidance.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 5.3, Table 6"
+  },
+  {
+    "criteria": "The ablation experiment comparing DETR-only, RAM++-only, and their intersection is planned and implemented, evaluating CHAIRS and CHAIRI on LLaVA, LLaVA-v1.5, and mPLUG-Owl2.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The ablation for single vs. combined vision models has been executed and results match Table 6: MARINE (combined) outperforms MARINE-DETR only (CHAIRS=27.6 on LLaVA) and MARINE-RAM only (CHAIRS=29.0 on LLaVA) with CHAIRS=17.8.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The agent has read the integration method ablation in Section 5.3 (Table 7) to understand that intersection-based aggregation consistently outperforms union-based aggregation.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 5.3, Table 7"
+  },
+  {
+    "criteria": "The ablation comparing intersection vs. union aggregation of DETR and RAM++ outputs has been implemented and executed on LLaVA, LLaVA-v1.5, and mPLUG-Owl2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The union-based aggregation results match Table 7: MARINE-union has higher hallucination than MARINE-intersection (e.g., LLaVA: union CHAIRS=30.4 vs. intersection CHAIRS=17.8).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The guidance strength ablation has been implemented by varying γ from 0 to 1 and evaluating CHAIR metrics (CHAIRS, CHAIRI) on LLaVA, LLaVA-v1.5, and mPLUG-Owl2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The guidance strength ablation results match Figure 3: increasing γ from 0 to 1 leads to a consistent decrease in CHAIR scores, indicating higher guidance strength reduces hallucination.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The latency comparison has been implemented by measuring inference latency (ms/token) for MARINE and all baselines on LLaVA-7B using 500 MSCOCO images with batch size=1 and max token length=64.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Table 5, Appendix A.6"
+  },
+  {
+    "criteria": "The latency results match Table 5: MARINE achieves 52.2 ms/token (×1.98 vs. greedy's 26.3 ms/token), the lowest overhead among all non-greedy baselines (OPERA=185.1 ms, LURE=179.9 ms, Woodpecker=94.5 ms, VCD=53.4 ms).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The POPE evaluation across three datasets (MSCOCO, A-OKVQA, GQA) in all three settings (random, popular, adversarial) is run and results match Table 4: MARINE consistently improves accuracy and F1 while reducing yes ratio across datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The text quality evaluation (BLEU, ROUGE-L, CIDEr, SPICE) is implemented for the image captioning task on 500 MSCOCO images and LLaVA-QA90 task (90 questions), using GPT-4 text-only responses as references for LLaVA-QA90 and MSCOCO captions for image captioning.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix A.6, Tables 17-18"
+  },
+  {
+    "criteria": "The text quality results for MARINE match Tables 17-18: MARINE improves or maintains BLEU/ROUGE/CIDEr/SPICE scores for LLaVA on MSCOCO captioning (e.g., BLEU_1: 14.06→18.59) while mPLUG-Owl2 scores remain comparable.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Tables 17-18"
+  },
+  {
+    "criteria": "The MARINE-Truth variant (using ground-truth MSCOCO object annotations as oracle guidance instead of DETR/RAM++) is implemented and evaluated on CHAIR and POPE metrics to show the upper bound of MARINE's performance.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Tables 1-2"
+  },
+  {
+    "criteria": "The MARINE-Truth results match Tables 1-2: MARINE-Truth achieves the lowest CHAIRI scores (e.g., 5.1 on LLaVA, 2.5 on LLaVA-v1.5) and highest POPE accuracy (e.g., 92.0% on LLaVA-v1.5, 93.4% on mPLUG-Owl2), demonstrating the potential upper bound.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables 1-2"
+  }
+]

@@ -1,0 +1,302 @@
+[
+  {
+    "criteria": "The agent has read section 3 completely to understand the three-step ECHO methodology: question clustering, demonstration sampling, and demonstration unification.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read section 3.1 to understand that questions are encoded with Sentence-BERT into fixed-size vectors and clustered with k-means into k clusters, then sorted by distance to cluster centroid.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read section 3.2 to understand the demonstration sampling selection criteria: question length must not exceed 60 tokens and rationale must be limited to no more than 5 steps (steps demarcated by newlines).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read section 3.3 to understand that demonstration unification iteratively re-generates each demonstration's rationale by using the remaining shuffled demonstrations as Few-shot-CoT in-context examples, updating the rationale in-place (online approach).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Appendix B (Algorithm 1) to understand the full ECHO algorithm: Sentence-BERT encoding, k clustering, per-cluster sorting, Zero-shot-CoT sampling with selection criteria, T iterations of unification, and keeping only the first m demonstrations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B, Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read section 5 to understand the experimental setup: 10 datasets across arithmetic, commonsense, and symbolic reasoning; GPT-3.5-Turbo-0301 as the primary model with temperature=0; primary configuration T=1, k=m.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the main experiment results comparing Zero-Shot, Zero-Shot-CoT, Few-Shot, Few-Shot-CoT, Auto-CoT, and three ECHO variants (k=m T=1, k=max T=1, k=max T=4) across all 10 datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes encoding all questions with Sentence-BERT to obtain fixed-size vector representations for clustering.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes applying k-means clustering to the encoded question vectors and sorting questions within each cluster by ascending distance to the cluster centroid.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the demonstration sampling step: for each cluster, iterating through questions in centroid-distance order, generating a Zero-shot-CoT rationale using 'Let's think step by step', and selecting the first question that satisfies both selection criteria (≤60 tokens question, ≤5 steps rationale).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the demonstration unification step: for T iterations, randomly selecting each demonstration in turn, using the remaining shuffled demonstrations as Few-shot-CoT context, regenerating the rationale, and updating the demonstration in-place.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the oversampling configuration where k can exceed m (number of output demonstrations), with the final step keeping only the first m demonstrations.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Algorithm 1 line 22"
+  },
+  {
+    "criteria": "The plan includes loading and evaluating on all 10 benchmark datasets: SingleEq, AddSub, MultiArith, GSM8K, AQUA-RAT, SVAMP, CommonsenseQA, StrategyQA, Last Letter, and Coin Flip.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes all five baseline methods to compare against: Zero-Shot, Zero-Shot-CoT, Few-Shot, Few-Shot-CoT, and Auto-CoT.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The plan includes implementing the question clustering module using Sentence-BERT embeddings followed by k-means with k clusters.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code encodes questions using Sentence-BERT (e.g., the 'sentence-transformers' library) to produce fixed-size vector embeddings.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code applies k-means clustering to question embeddings and sorts questions within each cluster by ascending Euclidean distance to the cluster centroid.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements the demonstration sampling loop: for each cluster, it iterates through questions in centroid-distance order and selects the first question meeting both criteria (question token count ≤ 60 and rationale step count ≤ 5, where steps are counted by newline separators).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code generates Zero-shot-CoT rationales by appending 'Let's think step by step' to each question during the demonstration sampling phase.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code implements the demonstration unification loop: for each of T iterations, for each demonstration d^(i), it constructs a prompt using all other demonstrations D\\{d^(i)} in shuffled random order, calls Few-shot-CoT to regenerate the rationale r^(i), and immediately updates d^(i) in the demonstration set (online/sequential update within the same iteration).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Algorithm 1"
+  },
+  {
+    "criteria": "The code supports the k > m configuration where k clusters are used during the unification process, but only the first m demonstrations are kept in the final output for inference.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Algorithm 1 line 22"
+  },
+  {
+    "criteria": "The code implements the Auto-CoT baseline: clustering questions into m clusters, selecting one representative question per cluster via Zero-shot-CoT, and using these as fixed few-shot demonstrations for inference (without any unification).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3, Section 6.1"
+  },
+  {
+    "criteria": "The code implements the Zero-shot-CoT baseline using the universal prompt 'Let's think step by step' without any demonstrations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code implements the Few-shot-CoT baseline using human-crafted demonstrations paired with reasoning chains.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code loads and preprocesses all 6 arithmetic datasets (SingleEq, AddSub, MultiArith, GSM8K, AQUA-RAT, SVAMP) with their correct dataset sizes (508, 395, 600, 1319, 254, 1000 respectively).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Table 8"
+  },
+  {
+    "criteria": "The code loads and preprocesses both commonsense reasoning datasets (CommonsenseQA with 1221 samples, StrategyQA with 2290 samples) and both symbolic reasoning datasets (Coin Flip with 1000 samples, Last Letter with 254 samples).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Table 8"
+  },
+  {
+    "criteria": "The code interfaces with the OpenAI API using GPT-3.5-Turbo-0301 as the primary model with temperature set to 0 for reproducibility.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code evaluates accuracy by extracting the final answer from the model's output and comparing it against ground truth for each dataset type (numeral extraction for arithmetic, yes/no for symbolic, multiple choice matching for AQUA and CommonsenseQA).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The main experiment has been executed for all three ECHO variants (k=m T=1, k=max T=1, k=max T=4), Auto-CoT, Zero-Shot-CoT, Few-Shot-CoT, Zero-Shot, and Few-Shot on all 10 datasets using GPT-3.5-Turbo-0301.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 6.1, Table 1"
+  },
+  {
+    "criteria": "The execution results for ECHO (k=m, T=1) match Table 1: MultiArith 98.0, GSM8K 78.4, SingleEq 91.3, AddSub 87.3, AQuA 52.8, SVAMP 81.1, CSQA 77.2, Strategy 59.9, Letter 83.6, Coin 99.4, Overall 80.9.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution results for ECHO (k=max, T=4) match Table 1 and demonstrate improvement over Auto-CoT (79.2%) with an overall score of 82.0%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution results show ECHO (k=m, T=1) outperforms Auto-CoT (76.2 vs. 80.8 on arithmetic average, 65.7 vs. 68.6 on commonsense, 87.8 vs. 91.5 on symbolic), confirming ECHO outperforms Auto-CoT by an average of 1.7% in the main experiment.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 6.1, Table 1"
+  },
+  {
+    "criteria": "The code implements the ECHO vs Manual Prompts comparison experiment (Section 6.2): initializing ECHO with both Zero-shot-CoT generated prompts and human-written manual prompts, then running 0, 1, 2, 3 iterations and computing average accuracy on six arithmetic benchmarks.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.2, Figure 3"
+  },
+  {
+    "criteria": "The ECHO vs Manual Prompts experiment has been executed and results match Figure 3: at 0 iterations manual prompts (82.1) outperform generated prompts (80.8), but after 3 iterations generated prompts (83.0) exceed manual prompts (81.2).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 6.2, Figure 3"
+  },
+  {
+    "criteria": "The code implements the divergence measurement for Section 6.2: computing pairwise cosine similarity between rationale embeddings using sentence encoders (e.g., roberta-large-nli-stsb-mean-tokens, sentence-t5-large, sentence-t5-xxl) and computing average divergence as 1 minus average similarity.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 6.2, Table 3"
+  },
+  {
+    "criteria": "The divergence results match Table 3: generated rationales (after 3 iterations) have lower divergence than manual rationales (0 iterations), with reductions of 12.9%, 18.0%, and 11.6% for the three encoders respectively.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The code implements the hyperparameter sweep over iteration counts T ∈ {0, 1, 2, 4, 8, 16, 32} with k=max on all three reasoning domains to generate Figure 4.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.3, Figure 4"
+  },
+  {
+    "criteria": "The hyperparameter sweep has been executed and results match Figure 4: T=4 yields the best overall performance, with performance declining after T=4 due to overfitting; ECHO consistently outperforms Auto-CoT across all T values.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 6.3, Figure 4"
+  },
+  {
+    "criteria": "The code implements the three demonstration diversity settings for Section 6.4 (Misleading by Similarity): Diverse (one from each cluster centroid), Random (randomly sampled from dataset), and Uniform (all from the same cluster as the target question), with m=8 demonstrations and T=1,2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.4, Figure 5"
+  },
+  {
+    "criteria": "The diversity experiment has been executed and results match Figure 5: ECHO improved as demonstrations become more uniform (unlike Auto-CoT); ECHO with two iterations outperforms ECHO with one iteration in the diverse setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 6.4, Figure 5"
+  },
+  {
+    "criteria": "The code implements Mixtral-8x7B-Instruct as a second backbone model, running all 10 benchmark experiments with Few-shot-CoT, Auto-CoT, and ECHO (k=max, T=4).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.5, Table 4"
+  },
+  {
+    "criteria": "The Mixtral-8x7B experiments have been executed and results match Table 4: ECHO (k=max, T=4) achieves 74.0 overall, outperforming Auto-CoT (71.7) by +2.3% average margin.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 6.5, Table 4"
+  },
+  {
+    "criteria": "The code implements the half-demonstrations ablation (Section 6.6): running Few-shot-CoT, Auto-CoT, and ECHO (k=max, T=4) with half the normal number of demonstrations on all 10 datasets.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 6.6, Table 5"
+  },
+  {
+    "criteria": "The half-demonstrations ablation results match Table 5: ECHO's performance drops by only 0.8% (82.0 to 81.2) with half demonstrations, compared to a 1.3% drop for Few-shot-CoT (80.9 to 79.6).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Section 6.6, Table 5"
+  },
+  {
+    "criteria": "The code implements the combined dataset experiment (Section 6.7): randomly sampling 500 examples each from GSM8K and StrategyQA, applying ECHO to this mixed dataset, and evaluating performance on each dataset separately.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 6.7, Table 6"
+  },
+  {
+    "criteria": "The combined dataset results match Table 6: ECHO (combined) achieves 74.2 on GSM8K and 58.0 on StrategyQA, both lower than ECHO (original) scores of 78.1 and 59.7 respectively, demonstrating performance degradation on heterogeneous data.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Section 6.7, Table 6"
+  },
+  {
+    "criteria": "The code supports using GPT-4o as a backbone model and runs the GSM8K experiment comparing Few-shot-CoT, Auto-CoT, ECHO (k=m, T=1), and Zero-shot-CoT.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 6.8, Table 7"
+  },
+  {
+    "criteria": "The GPT-4o GSM8K results match Table 7: ECHO (92.4) outperforms Few-shot-CoT (90.9) and Auto-CoT (91.9), while Zero-shot-CoT (92.3) achieves comparable performance to ECHO.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Section 6.8, Table 7"
+  },
+  {
+    "criteria": "The code implements the more-demonstrations-for-commonsense experiment (Appendix E): running ECHO with k=8 and k=max for T=4 iterations on CommonsenseQA and StrategyQA datasets.",
+    "score": 1,
+    "type": "Code Implementation",
+    "comment": "Appendix E, Table 9"
+  },
+  {
+    "criteria": "The Appendix E experiment results match Table 9: ECHO (k=max) achieves 77.5 on CommonsenseQA and 63.4 on StrategyQA (avg 70.5), compared to ECHO (k=8) achieving 74.9 and 59.9 (avg 67.4), showing a +3.0% improvement from more demonstrations.",
+    "score": 1,
+    "type": "Result Matching",
+    "comment": "Appendix E, Table 9"
+  }
+]

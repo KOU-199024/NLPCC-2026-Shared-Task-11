@@ -1,0 +1,242 @@
+[
+  {
+    "criteria": "The agent has read Section 3.2 to understand the Deficit Disorder Attention (DDA) problem, including how attention scores are biased toward the language modality and how cross-modal attention decays exponentially layer-by-layer, formulated as E_DDA = Π_l γ^l ε_l.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2, Equation 4"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand the MODA mechanism including the correct-after-align strategy, the Duplex Attention Alignment (V-Aligner and T-Aligner), and the Modular Attention Mask (MDM) components.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 to understand all experiment settings: CLIP ViT-L/14 as visual encoder, Llama-3-Instruct-8B for 8B and Hermes2-Yi-34B for 34B as LLM backbones, AdamW optimizer, cosine LR schedule, LR 2e-5 for LLM and 2e-6 for visual encoder, warmup rate 0.03, batch size 2048, 1 epoch training.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 and Table 1 to understand the component-wise ablation design: (a) individual vs. joint use of MDM and DAA, (b) attention alignment variants (MLP, +2xMLP, +GeLU, +CoV), (c) fusion variants (X_p, X_a, Con, Add), and (d) mask variants (Inf, Fix, Attn., [M]).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3, Table 1"
+  },
+  {
+    "criteria": "The plan includes implementing the MODA attention module that splits multimodal attention into self-modal and cross-modal computation paths, each with its own modulated attention mask, replacing standard self-attention in each transformer block.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Figure 3"
+  },
+  {
+    "criteria": "The plan includes implementing Duplex Attention Alignment (DAA) with V-Aligner and T-Aligner, using Gram matrices of key states to map tokens across modalities and fuse the aligned tokens with original tokens via concatenation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Equations 5-6"
+  },
+  {
+    "criteria": "The plan includes implementing the Modular Attention Mask (MDM) with separate masks for self-modal and cross-modal attention, incorporating pseudo-attention scores with decay rate β and modality location priors derived from the normed Gram matrix.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Equations 7-10"
+  },
+  {
+    "criteria": "The plan specifies training MODA with LoRA-based tuning and token merging for the cross-modal fuser, using AdamW with cosine LR schedule, differential learning rates (2e-5 for LLM, 2e-6 for visual encoder), batch size 2048, warmup 0.03, and 1 epoch.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes running the ablation study with 700K data samples at 8B scale to verify contributions of MDM and DAA individually and jointly, across general QA, knowledge QA, OCR&Chart QA, and vision-centric QA tasks.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Table 1"
+  },
+  {
+    "criteria": "The plan includes running perception benchmark experiments on the 16 benchmarks across four categories (general, knowledge, OCR&Chart, vision-centric) comparing MODA against LLaVA-NeXT, Mini-Gemini-HD, and Cambrian-1 at both 8B and 34B scales.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The plan includes running cognition experiments on MMRole benchmark covering 8 evaluation aspects, and emotion experiments on MVSA-S, MVSA-M, TumEmo, and HFM benchmarks reporting both ACC and F1 metrics.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Tables 3-4"
+  },
+  {
+    "criteria": "The Gram matrix for each modality m is computed as G^m = K^{m⊤} K^m (inner product of key states), then normalized as ||G^m||, where K^m are the key states of the m-th modality tokens and N_m is the number of tokens in modality m (Equation 5).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The cross-modal token transfer is implemented as K^{m̄→m} = K^{m̄} ||G^m|| (Equation 6), which maps the key representations from other modality m̄ into the space of modality m using the normed Gram matrix as a kernelized mapping function.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The V-Aligner maps visual tokens to text modality space using the normed Gram matrix of text key states, and the T-Aligner maps text tokens to visual modality space using the normed Gram matrix of visual key states, forming the duplex (bidirectional) alignment.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Duplex Attention Alignment"
+  },
+  {
+    "criteria": "The aligned cross-modal tokens K^{m̄→m} are fused with the original tokens using concatenation (Con), as selected by the ablation study in Table 1(c) as the best-performing fusion strategy over additive fusion (Add), X_p, and X_a.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1(c)"
+  },
+  {
+    "criteria": "The Duplex Attention Alignment uses the covariance (CoV) variant as the final alignment design, where the Gram matrix serves as covariance-like basis representation, maintaining linear complexity to token number by performing matrix sum only in the first round.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1(b), Section 3.3"
+  },
+  {
+    "criteria": "The self-modal attention is computed as O_self = Softmax(Q^m K^{m⊤}/τ + M^m) V^m with modality-specific mask M^m, and cross-modal attention as O_cross = Softmax(Q^m K^{m̄⊤}/τ + M^{m̄}) V^{m̄} with cross-modal mask M^{m̄} (Equations 7-8).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 7-8"
+  },
+  {
+    "criteria": "The Modular Attention Mask assigns pseudo-attention scores to excess positions in each row: p_base = 0, p_ij = p_base - (j-1)β (Equation 10), where each row i has n-i pseudo-attention scores allocated to positions beyond the attended sequence length n (Equation 9).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equations 9-10"
+  },
+  {
+    "criteria": "The modular attention mask uses the normed Gram matrix as an indicator to identify which tokens should carry modality location priors, enabling separate control of intra-modal and inter-modal token flow through the mask split into M^m (self) and M^{m̄} (cross).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Modular Attention Mask"
+  },
+  {
+    "criteria": "The final MODA attention mask uses the adaptive attention-based (Attn.) masking variant selected from ablation Table 1(d), as opposed to infinity masking (Inf), fixed-value masking (Fix), or [M]-token masking.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1(d)"
+  },
+  {
+    "criteria": "CLIP (ViT-L/14) is configured as the visual encoder to extract visual token representations, consistent with the experiment settings used in Cambrian-1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The model is implemented at two scales: 8B using Llama-3-Instruct-8B as the LLM backbone, and 34B using Hermes2-Yi-34B as the LLM backbone, with MODA integrated into each.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "LoRA-based tuning is applied to develop the cross-modal token fuser, together with token merging to reduce computational cost and maintain linear complexity during the duplex alignment stage.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "Training is configured with AdamW optimizer, cosine learning rate schedule, learning rate 2e-5 for the LLM parameters and 2e-6 for the visual encoder, warmup rate 0.03, batch size 2048, and 1 training epoch.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The MODA attention block is integrated into each transformer layer of the MLLM (as shown in Figure 3(b)), with the token flow following the correct-after-align strategy: alignment via DAA first, then attention score correction via MDM.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Figure 3, Section 3.3"
+  },
+  {
+    "criteria": "An analysis module is implemented to visualize and compute the attention score distribution across modalities and layers, measuring the average difference between self-modal and cross-modal attention scores (as in Figure 2 and Figure 4).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Figure 2, Figure 4"
+  },
+  {
+    "criteria": "The ablation study is executed successfully at 8B scale with 700K training samples across all four variant groups in Table 1 (module, alignment, fusion, mask), evaluating on general QA, knowledge QA, OCR&Chart QA, and vision-centric QA tasks.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.3, Table 1"
+  },
+  {
+    "criteria": "The main perception experiments are executed successfully on the 16 benchmarks (MME, MMBench, SEED, GQA, ScienceQA, MMMU, MathVista, AI2D, ChartQA, OCRBench, TextVQA, DocVQA, MMVP, RealworldQA, CV-Bench-2D, CV-Bench-3D) at both 8B and 34B scales.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The cognition experiments are executed successfully on the MMRole benchmark evaluating all 8 aspects: instruction adherence, fluency, coherency, image-text relevance, response accuracy, personality consistency, knowledge consistency, and tone consistency.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 3"
+  },
+  {
+    "criteria": "The emotion experiments are executed successfully on MVSA-S, MVSA-M, TumEmo, and HFM benchmarks reporting both ACC and F1 metrics, covering both general MLLM setting and emotion-specialized tuning setting.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 4"
+  },
+  {
+    "criteria": "The attention distribution analysis experiment is executed comparing baseline multimodal attention vs. MODA, measuring and reporting the average difference between self-modal and cross-modal attention across all layers (Figure 4).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.4, Figure 4"
+  },
+  {
+    "criteria": "The ablation results match Table 1(a): jointly using MDM and DAA achieves best performance (69.3/48.3/67.0/54.3) on G/K/O/V tasks, outperforming DAA alone (67.8/47.6/63.3/48.1), MDM alone (69.2/45.4/60.9/42.6), and baseline (63.6/44.0/60.8/38.0).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1(a)"
+  },
+  {
+    "criteria": "The ablation results match Table 1(b): the CoV alignment variant achieves comparable best performance on vision-centric (54.3) while GeLU achieves slightly better on knowledge (49.1), confirming CoV is selected as the final design balancing all tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1(b)"
+  },
+  {
+    "criteria": "The ablation results match Table 1(c): concatenation fusion (Con: 69.3/48.3/67.0/54.3) outperforms additive fusion (Add: 62.2/47.6/67.2/52.2) and both single-stream alternatives (X_p, X_a) on G/K/O/V tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1(c)"
+  },
+  {
+    "criteria": "The ablation results match Table 1(d): the attention-based mask (Attn.) achieves best vision-centric score (54.3) among all mask variants (Inf: 48.1, Fix: 52.3, [M]: 46.0), confirming it as the optimal mask design.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1(d)"
+  },
+  {
+    "criteria": "The perception results match Table 2 for MODA-8B: knowledge avg 61.5, OCR avg 72.0, vision avg 66.0, outperforming Cambrian-1-8B (61.3/71.3/65.0) and LLaVA-NeXT-8B (55.6/63.9/56.6) on knowledge, OCR, and vision-centric categories.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The perception results match Table 2 for MODA-34B: knowledge avg 69.5, OCR avg 74.7, vision avg 69.9, surpassing LLaVA-NeXT-34B (62.5/67.7/64.0) and comparable to Cambrian-1-34B (67.0/71.9/68.5).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The cognition results match Table 3: MODA-8B achieves avg 0.972 in the general setting, outperforming LLaVA-NeXT-8B (0.968) and Cambrian-1-8B (0.895); with cognition-specific tuning MODA-8B achieves avg 0.995, surpassing MMRole-9B (0.994).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The emotion results match Table 4: MODA-8B (general) achieves avg 0.588 outperforming Cambrian-1-8B (0.547) and LLaVA-NeXT-8B (0.576); with emotion-specific tuning MODA-8B achieves avg 0.841, surpassing SPFVTE on MVSA-S (0.810 vs 0.806) and MULSER on TumEmo (0.778 vs 0.775).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The attention analysis matches Figure 4: baseline multimodal attention shows average difference of 56.97% for text and 62.44% for visual between self- and cross-modal attention; MODA reduces this disparity to 50.31% for text and 41.01% for visual.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  }
+]

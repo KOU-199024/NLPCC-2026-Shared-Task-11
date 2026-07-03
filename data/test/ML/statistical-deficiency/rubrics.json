@@ -1,0 +1,476 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the theoretical framework, including the task definition (Definition 1), lenient-inclusion (Definition 2), and statistical deficiency (Definition 3).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Theorem 1 and Theorem 2 to understand the link between 0-deficiency and task inclusion and the ε-deficiency bound on statistical risk across bounded loss functions.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand Information Sufficiency (IS) as a tractable proxy for deficiency, including Equation 1 and its relationship to mutual information.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3, Equation 1"
+  },
+  {
+    "criteria": "The agent has read Section 4 on the synthetic experiment to understand the HMM-based data generation, the three task definitions (First, Last, First_or_Last), and the use of attention-layer outputs as representations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 4 on the NLP pipeline experiment to understand the five tasks (SYN, SRL, NER, COR, SUM), the OntoNotes dataset split, the four model variants, and the LoRA fine-tuning configuration.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Appendix D.1 to extract all hyperparameters for the synthetic experiment, including pre-training and fine-tuning settings shown in Table 6.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D.1, Table 6"
+  },
+  {
+    "criteria": "The agent has read Appendix D.2 to extract the KNIFE estimator hyperparameters shown in Table 8, including the number of marginal/conditional epochs, learning rates, number of feed-forward layers, number of Gaussian mixture modes, and covariance type.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D.2, Table 8"
+  },
+  {
+    "criteria": "The agent has read Appendix H to understand the task vector approach, including the LoRA-based task vector definition (Equation 9) and the cosine, L2, and Grassmann distance metrics (Equations 10-11).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The plan includes generating synthetic training data from Hidden Markov Models with a vocabulary of size 10, sequences up to length 30, and producing 11 distinct datasets by varying emission probabilities while keeping the automaton structure fixed.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4, Appendix D.1"
+  },
+  {
+    "criteria": "The plan includes implementing and pre-training a 1-layer transformer language model on HMM-generated sequences in a next-token prediction fashion.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4, Appendix D.1"
+  },
+  {
+    "criteria": "The plan includes fine-tuning the pre-trained transformer on the three classification tasks: First (F), Last (L), and First_or_Last (F∨L).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes implementing the KNIFE entropy estimator using Gaussian Mixture Models to compute Information Sufficiency between embeddings.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Appendix A.4, D.2"
+  },
+  {
+    "criteria": "The plan includes computing the 3×3 IS matrix for all pairs of synthetic tasks and averaging results over the 11 HMM datasets.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes loading the OntoNotes dataset from the broadcast news and newswire subsets with the standard train/validation/test split of 1297/98/97 documents.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes reformulating all five NLP tasks (SYN, SRL, NER, COR, SUM) as generative tasks as described in Table 1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 1, Section 4"
+  },
+  {
+    "criteria": "The plan includes generating summaries for OntoNotes documents using GPT-3.5 as the annotation source for the SUM task.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes LoRA fine-tuning of Mistral 7B and Llama 3 8B (both Base and Instruct versions) on each of the five NLP tasks with rank 8 and regularization coefficient α=16.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes extracting intermediate layer embeddings from layers 10 to 15 of fine-tuned models and computing IS across all task pairs for each of the four model variants.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes computing Predictive Power (PP) for each task as the sum of directed IS differences relative to all other tasks.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes a layer ablation study testing different layer ranges (all layers, 10-33, 1-20, 10-15) to validate the layer selection strategy.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The plan includes implementing task vector analysis by computing cosine, L2, and Grassmann distances between LoRA task vectors for each task pair.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The plan includes evaluating cross-task performance using ROUGE and BERTScore and computing Kendall-τ correlation with IS matrices.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix F.3, Table 9"
+  },
+  {
+    "criteria": "The code implements a 6-state Hidden Markov Model with a vocabulary of size 10, generating sequences of up to 30 symbols, with configurable emission probabilities for each state.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4, Appendix D.1, Figure 4"
+  },
+  {
+    "criteria": "The code generates 11 distinct synthetic datasets from 11 different HMMs by varying only the emission probabilities while keeping the underlying automaton (transition structure) fixed.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The code implements the First (F) task: given input (S, C1, C2), return label 0 if C1 equals the first character of S, else label 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code implements the Last (L) task: given input (S, C1, C2), return label 0 if C2 equals the last character of S, else label 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code implements the First_or_Last (F∨L) task: a 4-class classification returning 0 if both C1=first and C2=last, 1 if only C1=first, 2 if only C2=last, and 3 otherwise.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code implements a 1-layer transformer language model with input size 50, hidden size 100, 1 attention head, and 1 transformer layer for pre-training on HMM-generated sequences.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1, Table 6"
+  },
+  {
+    "criteria": "The code pre-trains the transformer in a next-token prediction fashion with learning rate 2e-3, cosine learning rate scheduler, 100 epochs, and batch size 200.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1, Table 6"
+  },
+  {
+    "criteria": "The code fine-tunes the pre-trained transformer on each of the three classification tasks (F, L, F∨L) with learning rate 2e-4, cosine learning rate scheduler, 100 epochs, and batch size 200.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1, Table 6"
+  },
+  {
+    "criteria": "The code extracts representations exclusively from the output of the attention layer (not the final classification layer) as the task embeddings used for IS computation in the synthetic experiment.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code implements the KNIFE entropy estimator with the following hyperparameters: 100 marginal training epochs, 100 conditional training epochs, marginal learning rate 1e-4, conditional learning rate 1e-3, 2 feed-forward layers, 8 Gaussian mixture modes for the marginal, 8 Gaussian mixture modes for the conditional, and diagonal covariance.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2, Table 8"
+  },
+  {
+    "criteria": "The code implements Information Sufficiency as defined in Equation 5: IS(Z_U → Z_V) = H_hat(Z_V) - H_hat(Z_V | Z_U), using the KNIFE estimator for entropy and conditional entropy estimation over Gaussian Mixture parametric families.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Appendix A.4, Equation 5"
+  },
+  {
+    "criteria": "The code computes the 3×3 IS matrix for all ordered pairs of synthetic tasks (F, L, F∨L) and averages the results across all 11 HMM datasets.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The code verifies pre-training quality by comparing the forward likelihood of the HMM to the empirical likelihood estimated by the transformer, as shown in Figure 5.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1, Figure 5"
+  },
+  {
+    "criteria": "The code loads the OntoNotes dataset from the broadcast news and newswire subsets, producing 1297 training documents, 98 validation documents, and 97 test documents.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code formats the SYN task as a generative task that lists all NP-SBJ (noun phrase subject) syntagms present in the input document.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 4"
+  },
+  {
+    "criteria": "The code formats the SRL task as a generative task that lists all predicates in the structured form PRED(ARG0, ARG1) from the input document.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 4"
+  },
+  {
+    "criteria": "The code formats the NER task as a generative task that lists all named entities organized by the eight OntoNotes named entity categories (e.g., event, organization, person, etc.).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 4"
+  },
+  {
+    "criteria": "The code formats the COR task as a generative task that lists all coreference chains present in the input document.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 4"
+  },
+  {
+    "criteria": "The code generates document-level summaries using GPT-3.5 for the OntoNotes documents and stores them as the SUM task annotations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code loads Mistral 7B (Jiang et al., 2023) in both its Base and Instruct versions for LoRA fine-tuning on the five NLP tasks.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code loads Llama 3 8B (Dubey et al., 2024) in both its Base and Instruct versions for LoRA fine-tuning on the five NLP tasks.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code applies LoRA fine-tuning with rank r=8 and regularization coefficient α=16 to each model-task combination, using the HuggingFace peft library.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code trains each LoRA-adapted model with learning rate 4e-5, a constant learning rate scheduler, for 6 epochs, applying a best-validation-loss model selection strategy at the end of training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code extracts hidden state representations from layers 10 to 15 of each fine-tuned LLM to form embeddings Z_U for IS computation.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code computes the 5×5 IS matrix by averaging IS values over layers 10-15 for all ordered task pairs (SYN, SRL, NER, COR, SUM), repeated for all four model variants (Mistral Base, Mistral Instruct, Llama 3 Base, Llama 3 Instruct), and then averages across models.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5, Figure 3"
+  },
+  {
+    "criteria": "The code computes IS between the fine-tuned model and the pre-trained (base) model at each transformer layer in order to identify which layers encode the most task-specific information.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Figure 2"
+  },
+  {
+    "criteria": "The code implements Predictive Power (PP) as PP(U) = Σ_V [IS(Z_U → Z_V) − IS(Z_V → Z_U)] and ranks tasks by their PP values.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code evaluates generative task performance using RougeL from the HuggingFace evaluate library for all task-model combinations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Table 3"
+  },
+  {
+    "criteria": "The code applies LoRA specifically to the query (Q) and value (V) projection matrices in each transformer layer of the LLMs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix H.2"
+  },
+  {
+    "criteria": "The code computes task vectors as τ_U = B_U * A_U (the product of the LoRA low-rank matrices), as defined in Equation 9.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix H, Equation 9"
+  },
+  {
+    "criteria": "The code computes cosine distance between task vectors by flattening and comparing the LoRA weight products flatten(B_U * A_U) and flatten(B_V * A_V).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The code computes L2 distance between task vectors as the Euclidean distance between the flattened LoRA weight products of tasks U and V.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The code computes Grassmann distance between task vectors using the principal angles between the column spaces (image spaces) of the LoRA B matrices, as defined in Equation 10.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix H, Equation 10"
+  },
+  {
+    "criteria": "The code computes the average task vector distance across all layers separately for the Query and Value projections, as specified in Equation 11.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix H.2, Equation 11"
+  },
+  {
+    "criteria": "The code implements cross-task evaluation by applying each fine-tuned model to the other tasks (changing only the output format prompt) and evaluating with both ROUGE and BERTScore metrics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F.3"
+  },
+  {
+    "criteria": "The code computes Kendall-τ rank correlation between the IS matrix and the cross-task performance matrices (ROUGE and BERTScore) for each of the four model variants.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F.3, Table 9"
+  },
+  {
+    "criteria": "The code implements the layer ablation study by recomputing IS and PP rankings using at least three alternative layer range configurations: all layers, layers 10-33, and layers 1-20.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix G, Tables 10-12"
+  },
+  {
+    "criteria": "The code for the synthetic HMM data generation pipeline and the fine-tuning of the transformer on all three tasks (F, L, F∨L) has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4, Appendix D.1"
+  },
+  {
+    "criteria": "The KNIFE IS estimator has been executed successfully on the synthetic experiment embeddings to produce IS values for all task pairs.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "All 20 model-task fine-tuning runs (4 model variants × 5 NLP tasks) have been executed successfully with LoRA and no runtime errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The IS computation across all 5×5 task pairs and layers 10-15 has been executed successfully for all four model variants to produce the IS matrices.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5, Figure 3"
+  },
+  {
+    "criteria": "The task vector distance analysis (cosine, L2, Grassmann) for all task pairs and all four model variants has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix H, Figures 11-14"
+  },
+  {
+    "criteria": "The cross-task evaluation using ROUGE and BERTScore has been executed successfully for all model-task combinations.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix F.3"
+  },
+  {
+    "criteria": "The layer ablation study has been executed successfully with all specified layer range configurations to produce Tables 10-12.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The IS matrix results for synthetic tasks (Table 2) match the paper: diagonal values are the highest in each row (~0.7-0.8), and IS(F∨L→F) > IS(F→F) and IS(F∨L→L) > IS(L→L), confirming that F∨L includes both F and L.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The IS symmetry property in the synthetic experiment matches the paper: IS(F→F∨L) ≈ IS(L→F∨L) and IS(F∨L→F) ≈ IS(F∨L→L), showing that F and L each carry the same amount of information about F∨L.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2, Section 5"
+  },
+  {
+    "criteria": "The entropy results (Table 5) match the paper: entropy H of F∨L (~0.76) is higher than H of F (~0.66) and H of L (~0.63), explaining why IS values in the F∨L column are elevated.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5, Section 6"
+  },
+  {
+    "criteria": "The RougeL scores (Table 3) match the paper approximately: SYN achieves ~97.3-97.6, SRL ~80-82, NER ~85-88, COR ~54-62, SUM ~49 across Llama 3 Base, Llama 3 Instruct, Mistral Base, and Mistral Instruct.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The layerwise IS comparison (Figure 2) confirms that fine-tuned models diverge most from the pre-trained model in layers 10-15, with the gap IS(pt→ft) − IS(ft→pt) being largest in that range, justifying the layer selection.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2, Section 5"
+  },
+  {
+    "criteria": "The average IS heatmap (Figure 3) matches the paper: the SUM column has the lowest non-diagonal values, the COR column shows low values from all non-COR tasks, and the SYN row exhibits relatively high IS toward other tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 5"
+  },
+  {
+    "criteria": "The IS ordering property holds as reported in the paper: IS(SYN→SRL) ≤ IS(SRL→SYN) and IS(SRL→NER) ≤ IS(NER→SRL), establishing the lenient inclusion order SYN ⊂ SRL ⊂ NER.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The COR task IS properties match the paper: IS values in the COR column are low (no other task contains information about COR), while IS values in the COR row are high (COR contains information about all other tasks).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The Predictive Power ranking (Table 4) matches the paper: the average PP ranking order across all four models is SUM (4.0) > COR (3.0) > NER (1.5) > SRL (0.75) ≈ SYN (0.75), reflecting the NLP pipeline ordering.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The Kendall-τ correlation results (Table 9) confirm low correlation between IS and naive cross-task evaluation: BERTScore Kendall-τ values are near 0, and ROUGE Kendall-τ values are in the range 0.29-0.43 for all model variants.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 9, Appendix F.3"
+  },
+  {
+    "criteria": "The layer ablation results confirm that using all layers (Table 10) or only deep layers (10-33, Table 11) degrades the pipeline ordering by swapping the positions of NER and SRL, while using layers 1-20 (Table 12) restores the correct ordering.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Appendix G, Tables 10-12"
+  },
+  {
+    "criteria": "The task vector distance figures (Figures 11-14) show that Grassmann and cosine distances reveal closeness between SYN and SRL task vectors, and the SUM task vector is the most distant from all other tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Appendix H, Figures 11-14"
+  },
+  {
+    "criteria": "The per-model IS matrices (Figure 7) are consistent with the averaged heatmap in Figure 3, showing the same structural patterns across all four model variants.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix F.2, Figure 7"
+  }
+]

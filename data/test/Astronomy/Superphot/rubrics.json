@@ -1,0 +1,356 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the data collection, preprocessing, pruning, and class selection methodology for ZTF light curves.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand the parametric model, its 14 parameters, correlated g-band priors, and the Bayesian fitting procedure.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand the class balancing strategy, classification metrics, feature selection, and GBM architecture.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Appendix A to understand the light curve tail-clipping algorithm for removing spurious template-subtraction artifacts.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the sampler comparison (nested sampling, NUTS, SVI, MIGRAD, CERES) and the joint parameter constraints (Equations B2 and B3).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Appendix C to understand the Bayesian oversampling strategy and why it outperforms SMOTE for balancing the training set.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Appendix D to understand the comparison between MLP and GBM classifiers, and the final choice of LightGBM with specific hyperparameters.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The plan includes downloading g- and r-band ZTF light curves from ALeRCE's Python API and converting them from magnitudes to flux using f = 10^(-0.4*(m - zp)) with a constant zeropoint zp = 26.3.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes applying Milky Way extinction correction using E(B-V) from Schlegel et al. (1998)/Schlafly & Finkbeiner (2011) dust maps and a Fitzpatrick & Massa (2007) extinction model with R_V = 3.1.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes data quality cuts: requiring at least 5 datapoints with SNR >= 3 in each of the g- and r-bands, and a variability cut removing transients whose maximum amplitude in either band is less than three times that band's mean flux uncertainty.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The plan includes the light curve tail-clipping step: computing the maximum slope from peak flux to last observation, and removing trailing datapoints whose absolute slope is less than 0.2 times this maximum slope.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The plan specifies the five training classes: SN Ia (including 91T-like, CSM, 91bg-like subtypes), SN Ib/c (including Ic-BL and Ib-Ca-rich), SN II (including IIL and IIP), SN IIn (including SLSN-II), and SLSN-I.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The plan includes fitting each light curve to the 7-parameter piecewise parametric model (Equation 1) with parameters A, t_0, tau_rise, tau_fall, beta, gamma, and sigma_extra, fit simultaneously for both g- and r-bands in a 14-dimensional space with g-band parameters expressed as log-ratios to r-band parameters.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes using importance nested sampling (via dynesty) as the primary sampler for archival data, and SVI (via NumPyro/JAX) as the default for real-time fitting with fallback to nested sampling if SVI quality is poor.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes a chi-squared quality cut of chi_red^2 <= 1.2 (using the modified reduced chi-squared formula in Equation 2 with sigma_eff^2 = sigma^2 + sigma_extra^2) to filter poor light curve fits from both spectroscopic and photometric datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes training a LightGBM gradient-boosted machine on 12 fit parameters (excluding r-band A_r and t_0,r) with stratified K=10 fold cross-validation and Bayesian oversampling to 22,730 feature sets per class.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Sections 4.1, 4.3, Appendix C, D"
+  },
+  {
+    "criteria": "The plan includes training a second redshift-inclusive GBM variant that additionally uses z, k-corrected r-band absolute magnitude M_r, and r-band amplitude A_r as input features, trained on the subset with available redshifts.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes an early-phase GBM variant that excludes gamma, tau_fall, and their g-band ratios as input features, for classifying light curves without post-peak information.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The plan includes applying the trained classifier to 3,558 photometric ZTF light curves (filtered by ALeRCE stamp classifier) to assign new class probability vectors.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 7.1"
+  },
+  {
+    "criteria": "The code correctly implements the piecewise parametric flux model (Equation 1): F(t) = A / (1 + exp(-(t-t_0)/tau_rise)) * {1 - beta*(t-t_0) if t-t_0 < gamma, else (1 - beta*gamma) * exp((gamma - (t-t_0))/tau_fall)}.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code parameterizes g-band parameters as log-ratios to r-band (e.g., A_g = log(A_g_actual / A_r), beta_g = log(beta_g_actual / beta_r)), with the exception of t_0,g which is parameterized as a time delay (t_0,g - t_0,r), and combines sampled g-band ratios with sampled r-band parameters before passing to the model.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code implements all 14 prior distributions from Table 2 as truncated Gaussians or truncated log-Gaussians with the exact mean, standard deviation, and truncation limits specified (e.g., A: log-Gaussian mean=0.096, std=0.058, min=-0.3, max=0.5; tau_rise: log-Gaussian mean=0.67, std=0.43, min=-2, max=4).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The code implements the two joint constraints on the piecewise model parameters: (1) Equation B2 ensuring the first piece has non-positive derivative at t-t_0=gamma, and (2) Equation B3 ensuring gamma <= (1 - beta*tau_fall)/beta, enforced for both bands independently in all Bayesian samplers.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equations B2, B3"
+  },
+  {
+    "criteria": "The code implements importance nested sampling with 50 live points, 5,000 maximum iterations, a stopping criterion of delta_log_Z <= 0.5, random walk sampling from previous points, and unimodal assumption using a single constraining ellipsoid (via dynesty).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code implements stochastic variational inference (SVI) using NumPyro/JAX with a multivariate Gaussian approximate posterior, minimizing the negative evidence lower bound (ELBO) as the loss function.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code implements magnitude-to-flux conversion using f = 10^(-0.4*(m - zp)) with zp = 26.3 (fixed constant zeropoint), and applies Milky Way extinction corrections using E(B-V) from Schlegel/Schlafly & Finkbeiner dust maps and Fitzpatrick & Massa (2007) extinction model with R_V = 3.1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code implements the light curve tail-clipping algorithm: computing max absolute slope from peak to last observation, starting from the last observation and finding the earliest observation with absolute slope < 0.2 * max_slope, then removing all data points from that observation onward, done independently for g- and r-bands.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The code implements both data quality cuts: (1) N-obs cut requiring >= 5 datapoints with SNR >= 3 per band after clipping, and (2) variability cut removing transients where maximum amplitude in either band < 3x mean flux uncertainty OR standard deviation of all fluxes in any band < mean flux uncertainty.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The code implements the modified reduced chi-squared metric from Equation 2: chi_red^2 = (1/N) * sum(|f_obs - f_model|^2 / sigma_eff^2) where sigma_eff^2 = sigma^2 + sigma_extra^2 (not dividing by degrees of freedom), using the median across all posterior samples per light curve.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2, Section 3.1"
+  },
+  {
+    "criteria": "The code applies a chi_red^2 <= 1.2 cut to remove 62 spectroscopic light curves and 415 photometric light curves with poor fits, leaving 6,061 spectroscopic and 3,558 photometric events for classification.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements stratified K=10 fold cross-validation where each fold has equal class fractions, the remaining 90% is further split 90-10 into training and validation sets, and oversampling is applied to training and validation sets independently.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code implements Bayesian oversampling by drawing multiple posterior parameter sets per minority-class light curve, using 22,730 oversampled feature sets per class per training/validation split, with the number of draws per light curve equal to round(22730/n) where n is class count in that split (minimum 5 sets for SN Ia).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code trains the LightGBM GBM classifier with the following hyperparameters: DART boosting strategy, GOSS sampling strategy, max tree depth of 5, max number of leaves of 20, regularization of 5, and 250 estimators.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The redshift-independent classifier uses exactly 12 input features: all 14 fit parameters excluding A_r (r-band amplitude) and t_0,r (r-band peak time), since these are not intrinsic SN properties.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The redshift-inclusive classifier uses 15 input features: the 12 redshift-independent features plus A_r, redshift z, and k-corrected r-band absolute magnitude M_r (calculated from brightest measured r-band flux), and is trained only on the 6,045 light curves with available host galaxy redshifts.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code implements the four classification metrics as defined in Equations 3-6: Accuracy = TP/N, Completeness = TP/(TP+FN), Purity = TP/(TP+FP), and F1 = 2*Purity*Completeness/(Purity+Completeness), reported as 80% confidence intervals across K-folds (median bounded by 2nd highest and 2nd lowest values).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equations 3-6, Section 4.2"
+  },
+  {
+    "criteria": "The code implements the five-class SN training set with the correct class groupings: SN Ia (including 91T-like, Ia-CSM, 91bg-like), SN Ib/c (including Ic-BL, Ib-Ca-rich), SN II (including IIP, IIL), SN IIn (including SLSN-II), and SLSN-I, resulting in 6,061 training events after quality cuts.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The code implements the early-phase GBM variant that excludes gamma, tau_fall,r, gamma_g, and tau_fall,g (4 parameters) from the input feature vector, for improved classification accuracy on light curves truncated before phase ~20 days.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code implements binary SN Ia vs CC SN classification by re-using the multiclass GBM and compressing non-Ia probabilities, with confidence threshold optimization via purity-completeness curves, finding optimal threshold at p ~ 0.175.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The code implements the expected agreement matrix calculation following Equation 7: A = P_Superphot+^T * C_ALeRCE-SN, where P is the purity matrix and C is the completeness matrix, to predict classification consistency between independent classifiers.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Equation 7, Section 7.2"
+  },
+  {
+    "criteria": "The code implements the corrected class fraction calculation per Equation 8: frac_{i,corr} = sum_j (frac_j * P_{i,j}), applying purity matrix corrections to adjust raw photometric class fractions for known classifier biases.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Equation 8, Section 7.3"
+  },
+  {
+    "criteria": "The code for fitting and multi-class classification of the spectroscopic dataset with K=10 cross-validation (without redshift) executes successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for fitting and classifying the photometric dataset of 3,558 SN-like ZTF transients executes successfully without errors, producing class probability vectors for each light curve.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 7.1"
+  },
+  {
+    "criteria": "The code for the redshift-inclusive classifier training and evaluation executes successfully without errors on the 6,045 spectroscopic events with available redshifts.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.5"
+  },
+  {
+    "criteria": "The code for partial light curve evaluation (truncating at increasing phases and re-fitting/re-classifying) executes successfully for both early-phase and full-phase GBM variants.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code for binary SN Ia vs CC SN classification executes successfully, producing purity-completeness curves and identifying the optimal confidence threshold.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The code for classifying excluded transient types (SN Iax, Ibn, IIb, TDE, LBV) executes successfully, applying the five-class GBM to 144 events after removing those with chi_red^2 > 1.2.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The multi-class classifier (without redshift) achieves a class-averaged F1-score of 0.61 ± 0.02 and total accuracy of 0.83 ± 0.01 on the 6,061 spectroscopic events via K=10 cross-validation.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The redshift-inclusive multi-class classifier achieves F1-score of 0.71 ± 0.02 and accuracy of 0.88 ± 0.01, with SLSN-I purity improving from 0.27 ± 0.06 to 0.58 ± 0.14 compared to the redshift-independent classifier.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 5.5, Figure 15"
+  },
+  {
+    "criteria": "The binary SN Ia vs CC SN classifier (without redshift) achieves F1-score of 0.90 ± 0.01 at the optimal confidence threshold of p = 0.175 with SN Ia purity of 0.94 ± 0.01.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 5.3, Figure 13"
+  },
+  {
+    "criteria": "Per-class completeness results match: SN Ia at 0.87 ± 0.01 (highest), SN IIn at 0.52 ± 0.07 (lowest), SLSNe-I at 0.75 ± 0.17, SN II at 0.72 ± 0.04, SN Ib/c at 0.80 ± 0.14 for the redshift-independent multi-class classifier.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.1, Figure 6"
+  },
+  {
+    "criteria": "At confidence >= 0.7 cutoff (3,200 events, 52.7% of dataset), the redshift-independent classifier improves to F1 = 0.86 ± 0.05 and accuracy = 0.95 ± 0.02, with SLSN-I completeness reaching 1.00 ± 0.20.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.1, Figure 9"
+  },
+  {
+    "criteria": "The early-phase classifier outperforms the full-phase classifier for phases before ~20 days post-peak, with notably better SN IIn purity at phase=0 (0.50 ± 0.25 vs 0.03 ± 0.02) and SN Ia completeness at phase=0 (0.79 ± 0.09 vs 0.45 ± 0.13).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.2, Figure 10"
+  },
+  {
+    "criteria": "The comparison experiment shows Superphot+ (without redshift, four-class condensed) achieves F1 = 0.66 ± 0.03 versus ALeRCE-SN's F1 = 0.62 ± 0.04 on the shared 5,525-event spectroscopic dataset.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 6.1, Figure 18"
+  },
+  {
+    "criteria": "Comparison with other redshift-dependent classifiers (Table 4) shows: Superphot achieves F1=0.55±0.02, SuperRAENN achieves F1=0.71±0.03, and ParSNIP achieves F1=0.71±0.03, all retrained on identical ZTF datasets with identical LightGBM classifiers.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 6, Table 4"
+  },
+  {
+    "criteria": "The photometric dataset classification results in 58.6% SN Ia, 13.3% SN II, 7.4% SN IIn, 8.0% SLSN-I, and 12.7% SN Ib/c class fractions, with corrected fractions of 68.5% SN Ia, 17.7% SN II, 6.5% SN IIn, 2.7% SLSN-I, and 4.7% SN Ib/c.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 7.1, 7.3"
+  },
+  {
+    "criteria": "The classifier agreement between Superphot+ and ALeRCE-SN shows expected agreement of 0.69 ± 0.03, true agreement of 0.82 ± 0.02 on the spectroscopic dataset, and 0.72 on the photometric dataset.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 7.2, Figure 19"
+  },
+  {
+    "criteria": "Excluded transient classification matches Table 3: 75% of SN Iax classified as SN Ib/c, 59.6% of SN IIb classified as SN Ib/c, 54.9% of TDEs classified as SLSN-I, and 50% of LBVs classified as SN II.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Section 5.4, Table 3"
+  },
+  {
+    "criteria": "The sampler comparison (Appendix B) shows nested sampling and NUTS yield near-zero poor fits but take longest; SVI is much faster with still acceptable fit quality; MIGRAD and CERES fail on > 50% of light curves due to joint parameter constraints.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix B, Figure 23"
+  }
+]

@@ -1,0 +1,368 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the linear regression setting, linear self-attention model definition (Equation 1), ICL risk formulation (Equation 2), and the block-diagonal parameter constraint (Equation 6).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand the theoretical framework for task vector emergence, including the pairwise demonstration setup (Equation 7) and triplet demonstration setup (Equation 9).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 to understand how task vector injection reconstructs a 1-shot prompt (Equation 10) and why task vectors are limited to rank-one mappings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 6.1 to check the synthetic experiment settings: d=4, P_x = P_w = N(0, I_d), training with AdamW, batch size 1000, l1 regularization, 40 models per setting, varying L in [1,2,3] and n in [5,30].",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.1, Appendix B.1"
+  },
+  {
+    "criteria": "The agent has read Section 6.2 and Appendix B.2 to check the practical LLM experiment settings: 33 tasks in 5 categories, prompt template (Equation 13), n=10 for task vector extraction, 50 prompts per task, injection at the best-performing layer.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.2, Appendix B.2"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the bijection task failure results for Llama-7B with n=10, covering tasks across domains X→Y, Y→X, and X↔Y.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the TaskV-M enhancement results on Llama-13B across 5 task categories (Knowledge, Algorithmic, Translation, Linguistic, Bijection) with n=10.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes implementing the linear-attention model (Equation 1) with trainable parameters V_l and Q_l under block-diagonal structure (Equation 6).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 1, Equation 6"
+  },
+  {
+    "criteria": "The plan includes training linear-attention models on random linear regression instances with single-token, pairwise, and triplet demonstration formats.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The plan includes the synthetic experiment hyperparameters: d=4, Gaussian distributions N(0, I_d), AdamW optimizer, batch size 1000, l1 regularization, 40 random seeds per setting, L in [1,2,3], n in [5,30].",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes building the bijection tasks experiment with practical LLMs (GPT-J, Pythia variants, Llama-7B, Llama-13B), including both standard ICL and task vector injection.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4, Table 1"
+  },
+  {
+    "criteria": "The plan includes the prompt template format (Equation 13): 'Example: {x_i} → {y_i}\\n' concatenated for each demonstration, with the query missing the response.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 13, Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes the TaskV-M multi-vector injection strategy: generating N+1 distinct task vectors from N+1 different ICL prompts and injecting into all N+1 arrow tokens of a few-shot prompt.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 6.2"
+  },
+  {
+    "criteria": "The plan includes the saliency map computation and visualization for Llama-7B, computing S(A_l) = sum_h |A_{l,h} * dL/dA_{l,h}| to observe embedding concatenation and task vector formation patterns.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4, Figure 3"
+  },
+  {
+    "criteria": "The plan includes replicating the task vector mechanism in linear-attention models: extracting hidden states of the last arrow token after the first layer, normalizing, and injecting into zero-shot prompts.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 6.1, Appendix B.1"
+  },
+  {
+    "criteria": "The code for the linear-attention model (Equation 1) has been implemented, including the attention function Attn_{V,Q}(Z) = VZM(Z^T QZ) with masking matrix M = diag(I_{d_p-1}, 0) and skip connections.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for the ICL risk loss function (Equation 2) has been implemented as the expected squared norm between model output and -Wx_test over random linear regression instances.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for the input prompt format with single-token demonstrations (Equation 3) has been implemented, constructing Z_0 as a 2d x (n+1) matrix with X and Y interleaved.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for the input prompt format with pairwise demonstrations (Equation 7) has been implemented, constructing Z_0 as a 2d x (2n+2) matrix with separate x_i and y_i tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code for the input prompt format with triplet demonstrations (Equation 9) has been implemented, constructing Z_0 as a 2d x (3n+3) matrix with x_i, zero (arrow), and y_i as separate tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The code for the attention layer with position encodings (Equation 5) has been implemented using one-hot position encodings P = I_{d_p} and the reformulated attention Attn_{V,Q}(Z) = VZM[Z^T P^T]Q[Z; P].",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for the block-diagonal parameter structure (Equation 6) has been implemented: V_l = diag(A_l, B_l) and Q_l = diag(C_l, 0_{d x d}, D_l) for the linear-attention transformer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for generating random linear regression instances has been implemented: sampling x_i ~ N(0, I_d), w_j ~ N(0, I_d), and computing y_i = Wx_i for the in-context training data.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2, Appendix B.1"
+  },
+  {
+    "criteria": "The code for training linear-attention models with AdamW optimizer, batch size 1000, l1 regularization, and restricting A_l, B_l, C_l to S_I (scalar multiples of identity) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for training 40 models per configuration with different random seeds and reporting the minimum achieved ICL risk has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for the task vector extraction in linear-attention models has been implemented: extracting the hidden state of the last arrow token after the first attention layer from triplet-formatted ICL prompts.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 6.1, Appendix B.1"
+  },
+  {
+    "criteria": "The code for task vector injection into zero-shot prompts in linear-attention models has been implemented: normalizing the task vector and injecting into zero-shot prompts consisting of x_test only.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 6.1, Appendix B.1"
+  },
+  {
+    "criteria": "The code for computing the evaluation risk for task vectors in linear-attention models as ||y_hat/||y_hat|| + y_test/||y_test||||_2 (to simulate layer normalization) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for loading and using practical LLMs (at minimum Llama-7B and Llama-13B) for ICL experiments has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4, Section 6.2"
+  },
+  {
+    "criteria": "The code for constructing ICL prompts using the exact template (Equation 13) has been implemented: 'Example: {x_i} → {y_i}\\n' for each demonstration, with the query token having the arrow but no response.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 13"
+  },
+  {
+    "criteria": "The code for the 33 ICL tasks across 5 categories (Knowledge, Algorithmic, Translation, Linguistic, Bijection) has been implemented with proper input-output pair generation as described in Table 5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 5, Appendix B.2"
+  },
+  {
+    "criteria": "The code for the bijection tasks (combining a mapping with its inverse) has been implemented, including tasks such as 'To Upper & Lower', 'English & French', 'Present & Gerund', 'Singular & Plural', etc.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4, Table 1"
+  },
+  {
+    "criteria": "The code for task vector extraction from practical LLMs has been implemented: generating 50*(N+1) ICL prompts with n=10 demonstrations and recording hidden states of the last arrow token at every layer.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for task vector injection into practical LLMs has been implemented: replacing hidden states of arrow tokens at a specified layer l with the extracted task vectors.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for the multi-vector injection strategy (TaskV-M) has been implemented: generating N+1 distinct task vectors from N+1 different ICL prompts and injecting each into the corresponding arrow token position in a few-shot prompt.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 6.2"
+  },
+  {
+    "criteria": "The code for the evaluation protocol for practical LLM experiments has been implemented: measuring accuracy as whether the next predicted word matches the expected answer, averaged over 5 independent trials, with mean and standard deviation reported.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for the layer selection for task vector injection has been implemented: evaluating performance at each layer l in L and selecting the best-performing layer for reporting.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for saliency map computation has been implemented: computing S(A_l) = sum_h |A_{l,h} * dL/dA_{l,h}| where A_{l,h} is the attention matrix of the h-th head at layer l and L is the ICL cross-entropy loss.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4, Figure 3"
+  },
+  {
+    "criteria": "The code for the single-prompt multi-vector variant (TaskV-MS) has been implemented: extracting multiple task vectors from each arrow token in a single few-shot prompt and injecting them simultaneously.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The code for the D_l weight visualization has been implemented to produce heatmaps showing the block-diagonal structure for pairwise demonstrations (aligned with Theorem 1) and the richer structure for triplet demonstrations (aligned with Theorem 2).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The synthetic linear-attention model training experiments across single-token, pairwise, and triplet formats with L in [1,2,3] and n in [5,30] have been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 6.1, Figure 4"
+  },
+  {
+    "criteria": "The task vector mechanism reproduction in linear-attention models has been executed successfully: extracting task vectors from triplet-formatted ICL prompts, normalizing, injecting into zero-shot prompts, and computing the final ICL risk.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 6.1, Figure 4c"
+  },
+  {
+    "criteria": "The bijection task experiments on practical LLMs (at minimum Llama-7B with n=10) comparing many-shot ICL and task vector injection across all bijection tasks and their X→Y, Y→X, X↔Y splits have been executed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The TaskV-M enhancement experiments on Llama-13B across all 5 task categories with 0-shot through 4-shot settings (Baseline, TaskV, TaskV-M) with 5 independent trials have been executed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The bijection task experiments across all 7 LLMs (GPT-J, Pythia-6.9B, Pythia-12B, Llama-7B, Llama-13B, Qwen3-8B, Llama3-8B) with n=10 and n=20 have been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Tables 8, 9"
+  },
+  {
+    "criteria": "The saliency map experiments on Llama-7B with n=10 demonstrations have been executed successfully to produce bipartite graph visualizations of information flow.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3, Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes for Figures 4a and 4b match the paper: pairwise and triplet formatted models achieve similar ICL risk, both falling between L-layer and (L-1)-layer single-token baselines.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4a, Figure 4b"
+  },
+  {
+    "criteria": "The execution outcomes for Figure 4c match the paper: the performance of task vectors in linear-attention models is highly correlated with standard 1-shot ICL risk, validating the conjecture.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4c"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: on bijection tasks (X↔Y), task vector accuracy is near or below 60% (near-random 50%) while many-shot ICL maintains substantially higher accuracy on Llama-7B with n=10.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: on non-bijection tasks (X→Y and Y→X), both ICL and task vectors perform well (above 60%), while bijection tasks show consistent task vector failure.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: Copy and Antonym are exceptions where task vectors do not fail on bijection tasks (consistent with Proposition 4's special cases x=y and x=-y).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1, Proposition 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: TaskV-M consistently outperforms TaskV across all task categories and shot counts (1-shot through 4-shot) on Llama-13B, especially on bijection tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: TaskV outperforms Baseline (standard few-shot ICL) across Knowledge, Algorithmic, Translation, and Linguistic tasks on Llama-13B.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Tables 8 and 9: task vector failure on bijection tasks is consistent across multiple LLM architectures (GPT-J, Pythia-6.9B, Pythia-12B, Llama-7B, Llama-13B, Qwen3-8B, Llama3-8B) with both n=10 and n=20 demonstrations.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Tables 8, 9"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3 (saliency maps): at an earlier layer (l=10), y_i tokens primarily attend to their corresponding (x_i, y_i) pair, reflecting the embedding concatenation mechanism.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3a"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3 (saliency maps): at a later layer (l=12, just before the optimal injection layer l=13), the final arrow token attends broadly to all y_i tokens, reflecting the task vector formation mechanism.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3b"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: the learned D_l matrices for pairwise demonstrations exhibit a block-diagonal structure aligned with the S_P set in Theorem 1.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2a"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: the learned D_l matrices for triplet demonstrations exhibit a richer, non-block-diagonal structure aligned with the more complex S_P set in Theorem 2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2b"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2c: the learned Lambda_4 matrix has nearly orthonormal rows (Lambda_4 * Lambda_4^T is approximately proportional to diag(I_n, 0)), consistent with Proposition 3.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 2c, Proposition 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: TaskV-M consistently improves over TaskV on Pythia-12B across all task categories, demonstrating generalization of the multi-vector method beyond Llama-13B.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7: TaskV-MS (single-prompt multi-vector variant) achieves comparable but slightly lower performance than TaskV-M (multi-prompt variant) on Llama-13B.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  }
+]

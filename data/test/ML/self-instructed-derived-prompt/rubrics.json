@@ -1,0 +1,476 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the SFT and RLHF background, including the SFT loss (Eq. 1), the reward modeling loss, and the RLHF PPO objective with KL regularization (Eq. 2).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the task formulation: a derived prompt x' is a transformation of the original prompt x that maintains close relevance and improved expression without necessarily being a rewritten prompt.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand the self-instructed RL objective, including the design of the DPG instruction x_DPG and the training objective in Eq. 5.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to understand the full training loop: initialization of pi_theta and pi_ref, sampling from D, obtaining X = Concat([x_DPG, x]), generating x', querying M for y', computing reward and KL penalty, and updating pi_theta.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the ICL query framework: using (x, x', y') to fill an in-context query template that instructs the LLM to emulate the quality and style of y' when responding to x.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Algorithm 2 to understand the full inference pipeline: generating x' from trained pi, querying LLM with x' to get y', filling the ICL template with (x, x', y'), and querying LLM for the final response.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to check the experimental setup: training dataset (BPO 14K), evaluation datasets (Dolly, Vicuna, Self-Instruct, BPO-test), derived prompt generation models (Llama3, Llama2, Qwen2), reward model, query models, baselines, and evaluation metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the comprehensive main experiment results comparing OURS against OP, BPO, PAS, and SR across four evaluation datasets and multiple model configurations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Appendix B.3 to check all training hyperparameters: ReMax optimizer, DeepSpeed ZeRO-2, temperature tau=0.0, top_p=0.9, max_length=1024, 4 A100 GPUs, LR=1e-6, 2 epochs with decay, KL penalty beta=0.05, batch_size=1.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The agent has read Appendix B.1 to check the dataset descriptions: Dolly Eval (200 samples, 8 categories), Vicuna Eval (80 questions, 8 categories), Self-Instruct Eval (252 user-centered instructions), BPO-test Eval (200 samples).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes implementing the DPG instruction template x_DPG, which manually instructs the model to generate a more comprehensive, easily understandable, and answerable version of the original question without limiting the response scope.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing the self-instructed RL training objective (Eq. 5) that maximizes R(x', y') minus the KL penalty beta * log(pi_theta(x'|x) / pi_ref(x'|x)) without requiring any pre-collected (x, x') pairs.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Eq. 5"
+  },
+  {
+    "criteria": "The plan includes implementing Algorithm 1: the complete training loop with initialization of both pi_theta and pi_ref from the same base LLM, sampling original prompts from D, generating derived prompts, querying the frozen response model, and performing gradient updates.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes implementing Algorithm 2 for inference: generating x' via the trained DPG model, querying LLM with x' to obtain y', and constructing an ICL demonstration using the (x, x', y') triple.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The plan includes implementing the in-context query template that presents (x', y') as an example and instructs the LLM to emulate the same response quality, style, and detail when answering the original prompt x.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes loading the BPO training dataset of 14K diverse samples as the training data D for optimizing pi_theta.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes loading all four evaluation datasets: Dolly Eval (200 samples), Vicuna Eval (80 questions), Self-Instruct Eval (252 instructions), and BPO-test Eval (200 samples).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes training pi_theta on three base models: Llama3-8B-Instruct (Llama3), Llama2-7B-chat (Llama2), and Qwen2-7B-Instruct (Qwen2).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes using both black-box query models (GPT4, GPT3.5) and white-box query models (Llama3-8B, Llama2-7B, Qwen2-7B) as the frozen response model M during training and inference.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing a reward model trained on the hh-rlhf helpful dataset to evaluate the quality of (x', y') pairs during RL training.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing all three baseline methods: BPO (SFT-based prompt refinement), PAS (plug-and-play prompt augmentation), and Self-Refine (iterative self-feedback).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes the ablation experiments: OD alone (without ICL), ICL applied to BPO and PAS, and the w/o training vs SFT vs RL comparison.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.3, Figure 2"
+  },
+  {
+    "criteria": "The plan includes using GPT4 as an LLM-judge with MT-bench evaluation prompts, implementing random shuffling for each evaluation round to mitigate position bias, and computing Win Rate (WR) as (A Win - B Win)%.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes all training hyperparameters from Appendix B.3: ReMax optimizer, LR=1e-6, 2 epochs with decay, beta=0.05, batch_size=1, tau=0.0, top_p=0.9, max_length=1024, 4 NVIDIA A100 GPUs with DeepSpeed ZeRO-2.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The DPG instruction string x_DPG has been implemented exactly as specified: instructing the model to provide a more comprehensive, easily understandable, and answerable version of the question, adding contextual information, avoiding limiting understanding to a few aspects, allowing multi-angle thinking, and returning only the refined question.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The concatenation operation X = Concat([x_DPG, x]) has been implemented as Eq. 4, prepending the DPG instruction to the original prompt before feeding it to pi_theta.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Eq. 4"
+  },
+  {
+    "criteria": "The self-instructed RL training objective (Eq. 3 / Eq. 5) has been implemented: maximizing the expected reward R(x', y') minus the KL divergence penalty beta * log(pi_theta(x'|x) / pi_ref(x'|x)) over sampled x ~ D, x' ~ pi_theta(x'|x), y' ~ M(y'|x').",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 3, Eq. 5"
+  },
+  {
+    "criteria": "Algorithm 1 has been implemented: initialization of both pi_theta and pi_ref identically from the same base LLM pi before training begins.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "Algorithm 1 has been implemented: random sampling of original prompt x from training dataset D, constructing X = Concat([x_DPG, x]), and sampling the derived prompt x' ~ pi_theta(x'|X).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "Algorithm 1 has been implemented: querying the frozen response model M with the derived prompt x' to generate response y' ~ M(y'|x').",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The KL penalty term beta * log(pi_theta(x'|X) / pi_ref(x'|X)) has been correctly implemented as a regularization term to prevent pi_theta from diverging too far from pi_ref during RL training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Eq. 5"
+  },
+  {
+    "criteria": "The reward computation R(x', y') has been implemented using the reward model to evaluate the quality of the derived prompt x' and response y' pair.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The gradient update step of Algorithm 1 has been implemented: maximizing [R(x', y') - beta * log(pi_theta(x'|X) / pi_ref(x'|X))] with respect to pi_theta parameters.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The response model M has been properly frozen (no gradient updates) during the training of pi_theta, as specified in Section 4.2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "Algorithm 2 has been implemented for inference: generating derived prompt x' ~ pi(x'|X) using the trained DPG model and the DPG instruction.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "Algorithm 2 has been implemented for inference: querying the LLM with derived prompt x' to obtain y' ~ LLM(y'|x'), then filling the in-context query template with (x, x', y').",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The in-context query template has been implemented exactly as specified: presenting (x', y') as a demonstration example and instructing the LLM to emulate the response quality, style, and detail level when answering the original prompt x.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The BPO training dataset of 14K diverse samples has been loaded as the training set D for pi_theta, covering single-turn response generation tasks.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.1"
+  },
+  {
+    "criteria": "All four evaluation datasets have been loaded: Dolly Eval (200 samples), Vicuna Eval (80 questions), Self-Instruct Eval (252 instructions), BPO-test Eval (200 samples).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The Llama3-8B-Instruct model has been implemented and loaded as the primary derived prompt generation model pi_theta (abbreviated as Llama3).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "Llama2-7B-chat (Llama2) and Qwen2-7B-Instruct (Qwen2) have been implemented and loaded as additional pi_theta variants for training and evaluation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The reward model trained on the hh-rlhf helpful dataset has been implemented and integrated into the RL training loop to compute R(x', y').",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "GPT4 (GPT-4o) and GPT3.5-turbo have been integrated as frozen black-box query models that respond to derived prompts x' during both training and inference.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "White-box query models (Llama2-7B-chat, Llama3-8B-Instruct, Qwen2-7B-Instruct) have been implemented as frozen response models M for training and cross-model transferability experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The BPO baseline has been implemented: a prompt refinement model trained via SFT on (original, refined) pairs collected from ChatGPT, which directly replaces the original prompt with the refined one.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The PAS (Plug-and-Play Prompt Augmentation System) baseline has been implemented as a competing prompt refinement method.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The Self-Refine baseline has been implemented: an iterative refinement method that uses the LLM's own feedback to improve response quality.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The ReMax algorithm has been implemented as the RL optimizer for training pi_theta, as specified in Appendix B.3.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "Training hyperparameters have been implemented as specified in Appendix B.3: learning rate 1e-6, 2 training epochs with learning rate decay, KL penalty beta=0.05, and batch size 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "Generation hyperparameters have been implemented as specified in Appendix B.3: temperature tau=0.0, nucleus sampling top_p=0.9, and maximum generation length of 1024 tokens for both derived prompt generation and response model.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "DeepSpeed ZeRO-2 has been configured for distributed training on 4 NVIDIA A100 GPUs, as specified in Appendix B.3.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The GPT4-as-judge evaluation pipeline has been implemented using the MT-bench pairwise comparison prompt from Appendix C, where GPT4 evaluates two responses and outputs [[A]], [[B]], or [[C]] for tie.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix C"
+  },
+  {
+    "criteria": "The Win Rate (WR) metric has been implemented as (A Win - B Win)%, and random shuffling of response order has been implemented for each evaluation round to mitigate position bias.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The OD (Our Derived prompt without ICL) condition has been implemented for ablation: generating x' and using x' directly as input to the LLM without constructing an ICL demonstration.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "BPO+ICL and PAS+ICL ablation conditions have been implemented: applying the ICL query framework using BPO/PAS refined prompts as x' instead of OD-generated derived prompts.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The w/o training baseline has been implemented: directly using the pre-trained LLM as the DPG model without any RL or SFT fine-tuning, generating derived prompts via the DPG instruction.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The SFT-based training variant has been implemented for comparison in Figure 2: fine-tuning pi_theta via supervised learning instead of RL to compare against the RL objective.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The reward score evaluation has been implemented using the reward model to assign quantitative scores to responses generated by OURS, OP, and BPO when querying GPT4 (Table 8).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4, Table 8"
+  },
+  {
+    "criteria": "The experiments to run two repeated runs for all main experiments, as stated in Section 5, have been implemented for reliability assessment.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The main experiments in Table 2 have been executed successfully for all combinations of pi_theta (Llama3, Llama2, Qwen2) x query models (GPT4, GPT3.5, Llama3-8B, Llama2-7B, Qwen2-7B) x 4 evaluation datasets, comparing OURS against OP, BPO, PAS, and SR.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The RL training for all three pi_theta models (Llama3, Llama2, Qwen2) has been executed successfully on 4 A100 GPUs with DeepSpeed ZeRO-2 using the BPO training dataset.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1, Appendix B.3"
+  },
+  {
+    "criteria": "The ablation experiments have been executed successfully: OD vs OP/BPO/PAS (Table 3), BPO+ICL and PAS+ICL comparisons vs OP and their base methods (Table 4), and OURS vs BPO+ICL and PAS+ICL (Table 5) on Vicuna Eval and Self-Instruct using Llama3 with GPT4 as query.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Tables 3, 4, 5"
+  },
+  {
+    "criteria": "The w/o training vs SFT vs RL comparison in Figure 2 has been executed successfully on Vicuna Eval, reporting WR for both OD vs OP and OD+ICL vs OP conditions.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The efficiency analysis has been executed successfully: measuring data-collection requirement, average generation length, and inference time in seconds for OP, BPO, PAS, and OURS (Table 6).",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The reward score evaluation (Table 8) has been executed successfully: querying GPT4 with Llama3-based OURS, OP, and BPO, then scoring responses with the reward model on all four evaluation datasets.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: OURS consistently outperforms OP across all four evaluation datasets (Vicuna, BPO-test, Dolly, Self-Instruct) for all pi_theta models and query model combinations.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: OURS consistently outperforms BPO across all four evaluation datasets for all pi_theta and query model combinations.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: when using Llama3 as pi_theta and GPT4 as query, OURS achieves average WRs of approximately 67.1% vs OP and 56.1% vs BPO across the four datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: when using Llama3 as pi_theta and GPT3.5 as query, OURS achieves average WRs of approximately 74.3% vs OP and 69.9% vs BPO across the four datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: OURS demonstrates cross-model transferability, where pi_theta trained on Llama3 improves query quality for Llama2-7B, Llama3-8B, and Qwen2-7B query models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: the OD method (without ICL) achieves approximately 51.2% WR vs BPO and 33.4% vs PAS on Vicuna Eval, and 33.4% WR vs BPO on Self-Instruct, demonstrating RL objective effectiveness without ICL.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: BPO+ICL achieves higher WR vs OP compared to BPO alone (approximately 7.15% average gain), and BPO+ICL achieves ~59.0% WR vs BPO, demonstrating ICL as a general plug-and-play enhancement.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: PAS+ICL achieves higher WR vs OP compared to PAS alone across both Vicuna Eval and Self-Instruct evaluation datasets.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5: OURS (OD+ICL) outperforms BPO+ICL with average WRs of approximately 63.9% on Vicuna and 47.5% on Self-Instruct, and outperforms PAS+ICL with approximately 33.9% on Vicuna and 29.2% on Self-Instruct.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 2: RL achieves 67.6% WR (OD vs OP) compared to SFT's 53.8% and no training's 17.6%, and RL achieves 86.2% WR (OD+ICL vs OP) compared to SFT's 65.0% and no training's 39.1% on Vicuna Eval.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 6: OURS is data-collection-free (unlike BPO and PAS), has the longest average generation length (521.6 tokens), and the highest inference time (16.18 seconds).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 8: OURS achieves higher reward scores than OP and BPO on Vicuna Eval (3.97 vs 3.72 and 3.83), BPO-test Eval (3.19 vs 1.89 and 2.42), and Self-Instruct Eval (2.79 vs 0.72 and 1.78).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match the human evaluation results in Table 9: OURS achieves 86.3% in maintaining original intent, 16.4% in predefined response angle, and 17.9% in introduced bias, outperforming BPO and PAS on all three Q1 metrics.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The execution outcomes match the human evaluation results in Table 10: OURS achieves the highest average scores across coherence (3.8), relevance (3.9), and satisfaction (4.0) compared to OP, Self-Refine, BPO, and PAS.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 10"
+  }
+]

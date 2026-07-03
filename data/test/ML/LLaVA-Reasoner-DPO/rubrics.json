@@ -1,0 +1,488 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the CoT data distillation pipeline from GPT-4o using short-annotated VQA datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Appendix B completely to understand the exact GPT-4o system prompt and distillation prompt format used for CoT generation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the per-dataset statistics of the SHAREGPT-4O-REASONING dataset (193k total CoT instances across 9 datasets).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the two prompt types (direct and CoT) used during SFT training.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 and the DPO objective equation to understand how preference pairs are constructed and optimized.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 and Figure 4 to check the SFT data composition and hyperparameter settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1, Figure 4"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the four SFT model variants and their performance under direct and CoT inference.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Section 5 to understand the DPO preference dataset sizes (24.5k ChartQA, 18.3k A-OKVQA, 22.0k math) and training hyperparameters.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the DPO experiment results comparing RLAIF-V data (model ⑤) and the proposed reasoning preference data (model ⑥).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Section 5.2 to understand the DPO reward score formula and the two re-ranking strategies (Best-of-N and Weighted Voting).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The agent has read Figure 5 to check the verifier re-ranking performance curves on ChartQA, A-OKVQA, and MathVista.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The agent has read Appendix I (Table I.1) to understand how truncating DPO responses to 90 tokens empirically yields the best results.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix I, Table I.1"
+  },
+  {
+    "criteria": "The agent has read Appendix E (Table E.1) to understand the rejection sampling fine-tuning (RFT/STaR) experiments using minimal CoT data.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix E, Table E.1"
+  },
+  {
+    "criteria": "The plan includes collecting and loading the 9 source VQA datasets (A-OKVQA, ChartQA, DocVQA, InfoVQA, TextVQA, MathVision, G-LLaVA, SQA, AI2D) for GPT-4o CoT distillation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementation of the GPT-4o distillation pipeline with the system prompt from Figure B.1 and the user prompt from Figure B.2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes filtering out distilled examples where the GPT-4o-generated answer does not match the annotated ground truth.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1, Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes initializing LLaMA3-LLaVA-NeXT-8B with Open-LLaVA-NeXT weights as the base model for both SFT and DPO.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing both direct prediction and CoT prediction prompt templates for training and inference.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the full SFT data composition: 193k CoT distillation, 193k direct short answers, 16k G-LLaVA math examples, 2k LLaVA pretraining samples, and 450 format-aligned examples (50 per dataset).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Figure 4"
+  },
+  {
+    "criteria": "The plan includes SFT training for 1 epoch with learning rate 5e-6 and batch size 32.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the four SFT ablation variants: ① format alignment only, ② direct responses only, ③ CoT responses only, ④ both direct and CoT responses.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Figure 4"
+  },
+  {
+    "criteria": "The plan includes construction of DPO preference pairs by sampling 32 candidates per question from the SFT model, filtering by per-question accuracy between 0.25 and 0.85, and creating up to 3 positive/negative pairs per question.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes DPO training on 64.8k preference pairs from three domains (24.5k ChartQA, 18.3k A-OKVQA, 22.0k math) with learning rate 5e-7, batch size 32, 1 epoch, and response truncation at 90 tokens.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5, Appendix I"
+  },
+  {
+    "criteria": "The plan includes evaluation on all benchmark datasets (A-OKVQA, ChartQA, DocVQA, InfoVQA, TextVQA, AI2D, SQA, MathVista, OCRBench, MMStar, MMMU) using both direct and CoT inference prompts.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes the DPO verifier re-ranking experiments with Best-of-N and Weighted Voting strategies on ChartQA, A-OKVQA, MathVista, and MMMU.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.2, Figure 5, Figure 6"
+  },
+  {
+    "criteria": "The plan includes the rejection sampling fine-tuning (RFT/STaR) experiment using only 450 format-aligned examples alongside direct prediction data from LLAVA-NEXT-DIRECT.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The code for loading all 9 VQA datasets (A-OKVQA, ChartQA, DocVQA, InfoVQA, TextVQA, MathVision, G-LLaVA, SQA, AI2D) for GPT-4o CoT distillation has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The GPT-4o system prompt 'When provided with an image, a question, and a reference answer, generate a chain-of-thought step that helps derive your own answer. Your rationale should include detailed visual elements in order to derive the answer.' has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B, Figure B.1"
+  },
+  {
+    "criteria": "The GPT-4o distillation user prompt has been implemented with the structure: Objective, Question, Reference Answer, Rationale Requirements (do not state answer first, do not validate reference, conclude with '### Answer: <your answer>'), as specified in Figure B.2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B, Figure B.2"
+  },
+  {
+    "criteria": "The code for filtering distilled examples where the GPT-4o-generated answer differs from the annotated ground truth answer has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix B.2"
+  },
+  {
+    "criteria": "The SHAREGPT-4O-REASONING dataset containing approximately 193k CoT instances with the '### Answer:' extraction marker has been generated and saved.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for loading LLaMA3-LLaVA-NeXT-8B and initializing it with Open-LLaVA-NeXT pretrained weights has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The direct prediction prompt 'Answer the question with a short answer' for short-answer questions has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The direct prediction prompt 'Answer with the option's letter from the given choices directly' for multiple-choice questions has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The CoT prediction prompt 'Generate a reason first and then output a letter answer' for multiple-choice questions has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The CoT prediction prompt 'Generate a reason first and then output a short answer' for short-answer questions has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The answer extraction rule for CoT predictions using the '### Answer: ' pattern has been implemented in both model response formatting and evaluation pipeline.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Section 4.2"
+  },
+  {
+    "criteria": "The SFT training data pipeline has been implemented combining 193k CoT distillation examples, 193k corresponding direct short-answer examples, 16k G-LLaVA visual math examples, 2k LLaVA pretraining samples, and 450 format-aligned examples.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Figure 4"
+  },
+  {
+    "criteria": "The 450 format-aligned examples dataset has been constructed by sampling exactly 50 examples from each of the 9 datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The SFT training configuration has been implemented with 1 epoch, learning rate 5e-6, and batch size 32 on 8 H100 GPUs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The four SFT model variants have been implemented: ① LLAVA-NEXT-FORMAT (format-only), ② LLaVA-Next+Direct (direct-only), ③ LLaVA-Next+CoT (CoT-only), ④ LLAVA-REASONER-SFT (both direct and CoT).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The code for sampling 32 candidate CoT predictions per question from the SFT policy model has been implemented, using temperature 1.0 for short-answer questions and temperature 1.2 for multiple-choice questions.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code for computing per-question accuracy from 32 candidate predictions and filtering instances with accuracy in the range [0.25, 0.85] has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code for randomly pairing positive (correct) and negative (incorrect) candidate predictions and selecting up to 3 pairs per question for the DPO dataset has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The DPO objective has been implemented as specified in Equation 1: L_DPO(π_θ; π_ref) = -E[log σ(β log(π_θ(y_w|x,V)/π_ref(y_w|x,V)) - β log(π_θ(y_l|x,V)/π_ref(y_l|x,V)))], where V is the image, x is the question, y_w and y_l are positive and negative responses.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Equation 1"
+  },
+  {
+    "criteria": "The DPO training has been configured with β=0.1, and both π_θ (policy model) and π_ref (reference model) are initialized from LLAVA-REASONER-SFT weights.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The DPO training preference dataset of 64.8k total pairs has been constructed: 24.5k from ChartQA, 18.3k from A-OKVQA, and 22.0k from math domain (MathVision and G-LLaVA).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The DPO response truncation at 90 tokens has been implemented and applied during training to improve performance.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5, Appendix I, Table I.1"
+  },
+  {
+    "criteria": "The DPO training configuration has been implemented with learning rate 5e-7, batch size 32, and 1 epoch.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The evaluation pipeline for benchmark datasets (A-OKVQA, ChartQA, DocVQA, InfoVQA, TextVQA, AI2D, SQA, MathVista) has been implemented following VLMEval evaluation protocols for all datasets except A-OKVQA.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The evaluation pipeline for generalization benchmarks OCRBench, MMStar, and MMMU has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3, Table 4"
+  },
+  {
+    "criteria": "The DPO verifier reward score computation has been implemented as log(π_dpo(y|x,V) / π_sft(y|x,V)) for candidate re-ranking.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The Best-of-N re-ranking strategy using the DPO verifier reward score has been implemented to select the highest-scoring candidate from N samples.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Figure 5"
+  },
+  {
+    "criteria": "The Weighted Voting re-ranking strategy using the DPO verifier reward scores has been implemented as an alternative to majority voting.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Figure 5"
+  },
+  {
+    "criteria": "The token-level DPO reward computation has been implemented as log(π_dpo(y_i|x,V) / π_sft(y_i|x,V)) for credit assignment analysis.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The ChatGPT answer extraction prompt for multiple-choice questions (Figure D.2) has been implemented to extract letter choices from long-form model outputs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Figure D.2"
+  },
+  {
+    "criteria": "The ChatGPT answer extraction prompt for short-answer questions (Figure D.3) has been implemented to extract short answers from chain-of-thought predictions.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Figure D.3"
+  },
+  {
+    "criteria": "The rejection sampling fine-tuning (RFT) pipeline has been implemented: sampling 32 CoT candidates per training instance from LLAVA-NEXT-DIRECT, selecting up to 3 correct candidates, resulting in 260k RFT examples.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The per-dataset SFT ablation experiments (direct-only, CoT-only, direct+CoT) for all 9 source datasets have been implemented as shown in Table F.1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F, Table F.1"
+  },
+  {
+    "criteria": "The data composition ablation for math reasoning has been implemented, evaluating combinations of MathVision, G-LLaVA, ChartQA, AI2D, SQA, MathPlus, and MathInstruct.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix G, Table G.1"
+  },
+  {
+    "criteria": "The data composition ablation for science tasks has been implemented, evaluating combinations of AI2D, SQA, and ChartQA CoT data.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix G, Table G.2"
+  },
+  {
+    "criteria": "The GPT-4o CoT distillation pipeline has been executed successfully across all 9 VQA datasets, generating the full 193k SHAREGPT-4O-REASONING dataset.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "All four SFT model variants (① LLAVA-NEXT-FORMAT, ② LLaVA-Next+Direct, ③ LLaVA-Next+CoT, ④ LLAVA-REASONER-SFT) have been trained and executed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The DPO preference dataset construction pipeline (32-sample generation, accuracy filtering, pair creation) has been executed successfully on the SFT model.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.3, Section 5"
+  },
+  {
+    "criteria": "DPO training for LLAVA-REASONER-DPO (⑥, our data) and LLAVA-REASONER-RLAIF (⑤, RLAIF-V data) has been executed successfully on top of LLAVA-REASONER-SFT.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "Evaluation of all models on all benchmark datasets using both direct and CoT prompts has been executed successfully and results have been recorded.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2, Table 3"
+  },
+  {
+    "criteria": "The DPO verifier re-ranking experiments (Best-of-N and Weighted Voting) with varying numbers of candidate answers have been executed successfully on ChartQA, A-OKVQA, MathVista, and MMMU.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 5, Figure 6"
+  },
+  {
+    "criteria": "The DPO response truncation ablation (70, 90, 110, no-truncation) has been executed successfully on ChartQA and A-OKVQA.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix I, Table I.1"
+  },
+  {
+    "criteria": "The RFT/STaR training for LLaVA-Next-STaR has been executed successfully on LLAVA-NEXT-DIRECT with the 260k rejection-sampled dataset.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix E, Table E.1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: LLAVA-REASONER-SFT (④) achieves average CoT accuracy of 74.4 and average direct accuracy of 72.8 across 8 benchmark datasets (A-OK, ChartQA, DocVQA, InfoVQA, TextVQA, AI2D, SQA, MathVista).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: training on direct-only data (②) yields average direct accuracy 71.1 and CoT accuracy 65.6, demonstrating that CoT cannot be implicitly learned from direct prediction (CoT lags direct by 5.5 points).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: training on CoT-only data (③) achieves average CoT accuracy 73.2, surpassing its own direct accuracy of 69.7, with significant gains on ChartQA (+11.0 CoT) and MathVista (+8.9 CoT) vs the format-only baseline.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: LLAVA-REASONER-DPO (⑥, our data) achieves average CoT accuracy 75.3, outperforming both LLAVA-REASONER-SFT (74.4) and LLAVA-REASONER-RLAIF (74.6).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: LLAVA-REASONER-DPO (⑥) shows +1.1 average CoT improvement over SFT (74.4 to 75.3), compared to only +0.2 for RLAIF-V (⑤), and gains are observed on 7 out of 8 datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: LLAVA-REASONER-DPO achieves an average of 53.5% on OCRBench/MMStar/MMMU, outperforming the SFT baseline (52.0%) and RLAIF-DPO (53.2%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes confirm Figure 5: LLAVA-REASONER-DPO (⑥) shows consistent improvements in both Best-of-N re-ranking and Weighted Voting on ChartQA and A-OKVQA, while RLAIF-DPO (⑤) does not improve in Weighted Voting on ChartQA.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes confirm Figure 6: LLAVA-REASONER-DPO trained on reasoning pairs excels in both Weighted Voting and Best-of-N re-ranking on MMMU, while RLAIF-DPO fails to show gains in re-ranking on MMMU.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table I.1: truncating DPO training responses to 90 tokens achieves the best ChartQA CoT performance of 84.2, compared to 83.9 at 70 tokens, 81.8 at 110 tokens, and 80.6 with no truncation.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table I.1, Appendix I"
+  },
+  {
+    "criteria": "The execution outcomes match Table E.1: LLaVA-Next-STaR trained with RFT using only 450 format-aligned examples achieves CoT accuracy of 77.9 on ChartQA, significantly outperforming the direct-only model (71.8), with direct accuracy improving to 74.6.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table E.1, Appendix E"
+  },
+  {
+    "criteria": "The execution outcomes match Table G.3: LLAVA-REASONER-SFT achieves an average best performance of 68.8 across 11 benchmarks, outperforming Cambrian-7B (64.5) despite using fewer than 400k instruction examples.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table G.3, Appendix H"
+  },
+  {
+    "criteria": "The execution outcomes confirm Table G.1: ChartQA CoT data provides the largest boost to MathVista CoT performance (+5.5) among auxiliary datasets, while text-only math datasets (MathPlus, MathInstruct) provide minimal gains.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table G.1, Appendix G"
+  }
+]

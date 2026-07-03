@@ -1,0 +1,308 @@
+[
+  {
+    "criteria": "The agent has read Section 4 (Approach) completely to understand the three-stage Preference Vector framework: (1) training DPO models on positive and negative preference datasets, (2) extracting preference vectors via parameter-wise subtraction, and (3) aggregating vectors at test time with scaling coefficients.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to understand the experimental setup: PKU-SafeRLHF dataset, three backbone models (LLAMA-3.2-3B, LLAMA-3.1-8B, MISTRAL-7B-V0.1), SFT on Alpaca, DPO hyperparameters from Table 11, and default η=1 for both preference scaling coefficients.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes constructing four datasets: DHelpful+ (original helpfulness labels), DHelpful- (swapped labels), DHarmless+ (original harmlessness labels), and DHarmless- (swapped labels) by switching yw and yl in the PKU-SafeRLHF dataset as defined in Equations 1 and 2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Equations 1-2"
+  },
+  {
+    "criteria": "The plan includes supervised fine-tuning (SFT) of the base model θBase on the Alpaca dataset before DPO training, using the SFT hyperparameters from Table 11 (3 epochs, max_length=512, lr=2e-5, cosine scheduler, lr_warmup_ratio=0.03, weight_decay=0.0, FP16).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1, Table 11, Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes training four separate DPO models from θBase using the four datasets (Helpful+, Helpful-, Harmless+, Harmless-) with DPO hyperparameters from Table 11 (2 epochs, batch_size=4, gradient_accumulation=4, lr=1e-6, cosine scheduler, lr_warmup_ratio=0.03, weight_decay=0.05, FP16).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Equation 3, Table 11"
+  },
+  {
+    "criteria": "The plan includes extracting two preference vectors by parameter-wise subtraction: φHelpful = θHelpful+ - θHelpful- and φHarmless = θHarmless+ - θHarmless-, as defined in Equation 4.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Equation 4"
+  },
+  {
+    "criteria": "The plan includes the aggregation step to produce θAggregated = θBase + ηHelpful * φHelpful + ηHarmless * φHarmless with default η=1.0 for both, as defined in Equation 5.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Equation 5"
+  },
+  {
+    "criteria": "The code loads the PKU-SafeRLHF dataset and constructs all four preference datasets (Helpful+, Helpful-, Harmless+, Harmless-) by correctly swapping yw and yl labels for the negative variants.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Equations 1-2"
+  },
+  {
+    "criteria": "The code implements SFT training on the Alpaca dataset with correct hyperparameters: 3 epochs, max_length=512, per_device_train_batch_size=4, gradient_accumulation_steps=8, lr=2e-5, cosine scheduler, lr_warmup_ratio=0.03, weight_decay=0.0, FP16.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2, Table 11"
+  },
+  {
+    "criteria": "The DPO training code implements the DPO objective from Equation 3: L = -E[log σ(τ log(πθ(yw|x)/πref(yw|x)) - τ log(πθ(yl|x)/πref(yl|x)))] with πref frozen at θBase.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Equation 3"
+  },
+  {
+    "criteria": "The code trains four separate DPO models (θHelpful+, θHelpful-, θHarmless+, θHarmless-) from the shared SFT checkpoint θBase with correct hyperparameters: 2 epochs, per_device_train_batch_size=4, gradient_accumulation_steps=4, lr=1e-6, cosine scheduler, lr_warmup_ratio=0.03, weight_decay=0.05, FP16.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 11"
+  },
+  {
+    "criteria": "The code extracts preference vectors by performing parameter-wise subtraction: φHelpful = θHelpful+ - θHelpful- and φHarmless = θHarmless+ - θHarmless-, applied to the full model weight tensors.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Equation 4"
+  },
+  {
+    "criteria": "The code implements the aggregation step θAggregated = θBase + ηHelpful * φHelpful + ηHarmless * φHarmless with controllable scaling coefficients η, defaulting to ηHelpful = ηHarmless = 1.0.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Equation 5"
+  },
+  {
+    "criteria": "The code supports running on all three backbone models: LLAMA-3.2-3B, LLAMA-3.1-8B, and MISTRAL-7B-V0.1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementation of all four baselines: Reward Soup (PPO with model soup interpolation), Safe-RLHF (PPO-Lag with constrained MDP), BFPO (DPO with safety-conditioned global ranking), and DPO-safe-first (harmlessness-priority label construction).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1, Appendix B.3"
+  },
+  {
+    "criteria": "The code implements the DPO-safe-first baseline by constructing a single-preference dataset where harmlessness is prioritized: yw = yw,R if both responses are harmless, otherwise yw = yw,C (the harmless one), as defined in Appendix B.3.4.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3.4"
+  },
+  {
+    "criteria": "The code implements the BFPO baseline using the safety-conditioned DPO loss in Equation 7, where the effective temperature τ' = (1.5*Isafe(yhw) - 0.5*Isafe(yhl) - α)^(-1) * τ/2 dynamically modulates training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3.3, Equation 7"
+  },
+  {
+    "criteria": "The code implements the Reward Soup baseline by training two PPO models (one for helpfulness, one for harmlessness) and merging them via equal-weight model soup: θsoup = 0.5*θ1 + 0.5*θ2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3.1"
+  },
+  {
+    "criteria": "The evaluation code implements the preference model evaluation using beaver-7b-unified-reward (for helpfulness) and beaver-7b-unified-cost (for harmlessness) from Dai et al. (2024) on the PKU-SafeRLHF test split.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The evaluation code implements GPT-4o-based helpfulness and harmlessness scoring using the two-step process: (1) generate standard answers using GPT-4o with the system prompt in Appendix B.4.1, then (2) rate model responses on a 1-10 scale per dimension.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.4.1"
+  },
+  {
+    "criteria": "The evaluation datasets are correctly constructed: harmlessness dataset with 300 prompts each from PKU-SafeRLHF, HarmfulQA, and ToxicChat (900 total); helpfulness dataset with 300 prompts each from PKU-SafeRLHF, TruthfulQA, and UltraFeedback (900 total).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.4.1"
+  },
+  {
+    "criteria": "The refusal rate evaluation code uses 817 normal prompts from TruthfulQA and queries GPT-4o to assign a 0-1 refusal score with the prompt template from Appendix B.4.2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Appendix B.4.2"
+  },
+  {
+    "criteria": "The Perspective API evaluation is implemented to measure harmful content scores on model outputs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Table 1"
+  },
+  {
+    "criteria": "The main effectiveness experiment (Table 1) is executed for all five methods (Reward Soup, Safe-RLHF, BFPO, DPO-safe-first, Preference Vector) across all three models (LLAMA-3.2-3B, LLAMA-3.1-8B, MISTRAL-7B) on all three evaluation metrics (Preference Model, GPT-4o, Perspective API).",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution results match Table 1: Preference Vector achieves the highest Helpful score via Preference Model among all methods for LLAMA-3.2-3B (1.385), LLAMA-3.1-8B (2.003), and MISTRAL-7B (1.342).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution results match Table 1: Preference Vector achieves the highest GPT-4o Helpfulness score (or near-best) for all three backbone models (5.637, 6.092, 4.968 for 3B, 8B, Mistral respectively).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The refusal rate and efficiency results (Table 2) are reproduced: Preference Vector (DPO-based, ~4h on LLaMA-3.1-8B) has a lower refusal rate (0.101) than RLHF baselines (Reward Soup: 0.189, Safe-RLHF: 0.212).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The controllability experiment (Section 5.4) is executed on LLAMA-3.1-8B by varying ηHelpful and ηHarmless across {-1.0, -0.5, 0.0, +0.5, +1.0} and evaluating all 25 combinations with preference models, producing the heatmap shown in Figure 2.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.4, Figure 2"
+  },
+  {
+    "criteria": "The execution results of the controllability experiment match Figure 2: increasing ηHelpful monotonically improves helpfulness scores (e.g., from -1.07 at η=(-1,-1) to 1.99 at η=(+1,+1)), and increasing ηHarmless monotonically improves harmlessness scores.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The extendability experiment (Section 5.5) is implemented: two new preference vectors (Psychocounsel using Zhang et al. 2025a dataset, Honesty using UltraFeedback Honesty subset) are trained and their corresponding preference models are fitted to evaluate alignment.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.5, Table 4"
+  },
+  {
+    "criteria": "The extendability experiment is executed by incrementally composing preference vectors (+Help+Safe, +Help+Safe+Psy, +Help+Safe+Hon, +Help+Safe+Psy+Hon) on LLAMA-3.2-3B and evaluating all four preference dimensions.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.5, Table 4"
+  },
+  {
+    "criteria": "The results of the extendability experiment match Table 4: composing all four preferences (+Help+Safe+Psy+Hon) achieves scores of approximately (1.01, 2.67, 6.10, -0.07) for (Helpfulness, Harmlessness, Psychocounsel, Honesty) on LLAMA-3.2-3B, all outperforming the Base model.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The ablation study on opposing preference vectors (Section 5.6) is implemented by computing cosine similarity between opposing vector pairs (φHelpful+ vs φHelpful-, φHarmless+ vs φHarmless-) averaged over 3 random seeds for all three models.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.6, Table 5"
+  },
+  {
+    "criteria": "The cosine similarity results match Table 5: opposing preference vectors show consistent negative similarity values ranging from approximately -0.47 to -0.71 (not exactly -1), confirming they are not perfectly inverse.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The positive-only vs. full preference vector ablation (Table 6) is executed by comparing θBase + φHelpful+ + φHarmless+ against θBase + φHelpful + φHarmless for all three models using preference model evaluation.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.6, Table 6"
+  },
+  {
+    "criteria": "The ablation results match Table 6: the full Preference Vector (using both positive and negative components) consistently outperforms the positive-only variant in both helpfulness and harmlessness across all three models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The DPO vs PPO comparison (Table 7) is implemented by training PPO-based preference vectors (requiring reward/cost model training per Appendix B.6 and PPO training per Appendix B.7) and comparing them to DPO-based vectors.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.6, Table 7, Appendix B.6-B.7"
+  },
+  {
+    "criteria": "The PPO training uses the hyperparameters from Table 13: 1 epoch, actor_lr=1e-5, critic_lr=5e-6, kl_coeff=0.02, clip_range_ratio=0.2, ptx_coeff=16.0, gradient_accumulation_steps=4, FP16.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.7, Table 13"
+  },
+  {
+    "criteria": "The reward and cost models are trained per Appendix B.6 with hyperparameters from Table 12: 2 epochs, per_device_train_batch_size=16, gradient_accumulation_steps=1, regularization=0.001, lr=2e-5, weight_decay=0.1, FP16.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.6, Table 12"
+  },
+  {
+    "criteria": "The DPO vs PPO comparison results match Table 7: PPO-based vectors achieve higher helpfulness and harmlessness scores but significantly higher refusal rates (e.g., LLAMA-3.1-8B: DPO refusal=0.101 vs PPO refusal=0.698).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The robustness analysis (Table 8 / Appendix G) is executed by computing average pairwise cosine similarity of preference vectors across 3 random seeds, showing DPO vectors have cosine similarity >0.98 while PPO vectors (especially φHelpful and φHarmless combined) show much lower similarity around 0.208-0.257.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.6, Table 8, Appendix G"
+  },
+  {
+    "criteria": "The robustness results match Table 8: DPO-based vectors show very high similarity (≥0.998) while PPO-based full preference vectors show substantially lower consistency (φHelpful: 0.257, φHarmless: 0.208 for combined vectors on LLAMA-3.1-8B).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The scaling effect on commonsense experiment (Appendix E) is implemented by evaluating CommonsenseQA via LM-evaluation-harness for different η values (0 to 8.0) on LLAMA-3.1-8B, alongside normalized helpfulness and harmlessness preference model scores.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix E, Figure 5"
+  },
+  {
+    "criteria": "The scaling effect results match Figure 5: commonsense performance remains stable (around 0.65) for η ≤ 1.5 but degrades significantly for η ≥ 2.0 (dropping to 0.20-0.25 at η=8.0), while helpfulness and harmlessness peak around η=1.0.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix E, Figure 5"
+  },
+  {
+    "criteria": "The Subspace Task Interference (STI) analysis (Appendix F) is implemented using truncated SVD with rank k=8 on preference vectors, aggregating interference scores over the top-32 parameter matrices by Frobenius norm, following Gargiulo et al. (2025).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix F, Table 16"
+  },
+  {
+    "criteria": "The STI results match Table 16: STI increases monotonically with more preferences composed (Help+Safe: 0.4056, +Psy: 1.0759, +Hon: 1.1587, all four: 2.3281).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix F, Table 16"
+  },
+  {
+    "criteria": "The cosine similarity between helpfulness and harmlessness preference vectors (Appendix D, Table 15) is computed and confirms positive but moderate values: LLAMA-3.2-3B: 0.382, LLAMA-3.1-8B: 0.396, MISTRAL-7B: 0.339.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix D, Table 15"
+  },
+  {
+    "criteria": "The human evaluation (Section 5.3) is set up with 10 question sets (5 helpfulness + 5 harmlessness prompts each), with at least 3 participants per question ranking all four model responses, converting rankings to pairwise win rates.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 5.3, Appendix B.5"
+  },
+  {
+    "criteria": "The human evaluation results match Table 3: Preference Vector achieves the highest helpfulness win rate (0.775) compared to Reward Soup (0.384), Safe-RLHF (0.318), and BFPO (0.523), while achieving a competitive harmlessness win rate (0.522).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The eigenvalue analysis (Appendix G, Figure 6) is implemented by performing SVD on matrices whose columns are preference vectors from 3 different seeds, and confirming that λ1 dominates λ2 and λ3 by several orders of magnitude across all models.",
+    "score": 1,
+    "type": "Code Implementation",
+    "comment": "Appendix G, Figure 6"
+  },
+  {
+    "criteria": "The fine-grained controllability heatmap (Appendix D, Figure 4) is executed by varying η from {0.5, 0.75, 1.0, 1.25, 1.5} for both ηHelpful and ηHarmless on LLAMA-3.1-8B and evaluating with preference models.",
+    "score": 1,
+    "type": "Command Execution",
+    "comment": "Appendix D, Figure 4"
+  }
+]

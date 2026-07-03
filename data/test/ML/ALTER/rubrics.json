@@ -1,0 +1,302 @@
+[
+  {
+    "criteria": "The agent has read Section 4 (Methodology) completely to understand the three core components of ALTER: Query Augmentor, Table Organizer, and Joint Reasoner.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 (Table Organizer) to understand the augment-filter-execute procedure with one preparatory stage and three reasoning stages.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to understand the two benchmark datasets (WikiTQ and TabFact) and their evaluation metrics (denotation accuracy and binary classification accuracy).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Appendix A to note that GPT-3.5-turbo is the LLM backbone, self-consistency uses 5 sampling times, K=3 rows are sampled, the bge-large-en model is used for embeddings, and FAISS is used for similarity search.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Appendix F to understand all prompt templates for each module (query augmentor, table augmentor, column filter, SQL generation, joint reasoner).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The plan outlines the overall ALTER framework pipeline: Query Augmentor generates sub-queries in parallel, Table Organizer applies augment-filter-execute on each sub-query and the primary query, and Joint Reasoner aggregates results for the final answer.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Algorithm 1"
+  },
+  {
+    "criteria": "The plan specifies loading and preprocessing WikiTQ (4344 test samples, 421 tables) and TabFact (1998 small-test statements, 298 tables) datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan specifies using GPT-3.5-turbo as the LLM backbone, applying self-consistency with 5 sampling times, and using K=3 sampled rows throughout the framework.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The plan covers the Table Augmentor pre-stage: generating schema information (Numerical/Char/Date type annotations per column), semantic information (global table summary + per-column descriptions), and literal information (data representation format per column).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.1"
+  },
+  {
+    "criteria": "The plan covers row sampling using embedding-based semantic similarity (bge-large-en embeddings + FAISS index) to select K=3 rows most relevant to the query.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.2"
+  },
+  {
+    "criteria": "The plan covers the column filter module: using LLM with global semantic info and per-column descriptions to select only query-relevant columns from the sampled sub-table.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.2"
+  },
+  {
+    "criteria": "The plan covers the augmented SQL generation module (zero-shot) that uses the filtered sub-table plus augmented information (literal and semantic) to generate an SQLite3 SELECT query.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Appendix F"
+  },
+  {
+    "criteria": "The plan covers the Query Augmentor generating sub-queries via two methods: step-back augmentation (rewriting query to a more abstract form) and sub-query augmentation (decomposing into 2-3 sub-queries), each using 3 in-context examples.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Appendix F"
+  },
+  {
+    "criteria": "The plan covers the Joint Reasoner: discarding unanswerable sub-query results, converting valid sub-query answers into auxiliary descriptions, and combining them with the primary sub-table for step-by-step final reasoning.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.4, Appendix F"
+  },
+  {
+    "criteria": "Tables are serialized into HTML format throughout the framework (including the K sampled rows), consistent with the sub-table format shown in Appendix F (Figure 10).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F, Figure 10"
+  },
+  {
+    "criteria": "The bge-large-en embedding model is used to encode each table row's content into vector representations, and FAISS is used to build an index and retrieve the top-K=3 most semantically similar rows to the query.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.2, Appendix A"
+  },
+  {
+    "criteria": "The Table Augmentor generates schema information by prompting the LLM with the sampled sub-table to annotate each column with one of three types: Numerical (digits/numerical symbols), Char (phrase or description), or Date (time or date content), outputting in the format 'column_name<Type>'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1, Figure 12"
+  },
+  {
+    "criteria": "The Table Augmentor generates semantic information by prompting the LLM to output a table-level summary ('table summary: ...') and per-column descriptions ('column description: col<description>') based on the sampled sub-table.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1, Figure 12"
+  },
+  {
+    "criteria": "The Table Augmentor generates literal information by prompting the LLM to infer data representation commonalities per column from the sampled rows (e.g., format patterns, special symbols, abbreviations).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1, Figure 12"
+  },
+  {
+    "criteria": "The schema information is used to preprocess and normalize table data: special symbols are handled for Numerical and Char types, and different date representations are unified for the Date type before SQL manipulation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1"
+  },
+  {
+    "criteria": "The column filter module is implemented using 3 in-context few-shot examples, prompting the LLM to perform column linking (query term to column mapping) and output all relevant columns from the sub-table given the query and augmented information.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.2, Figure 13"
+  },
+  {
+    "criteria": "The augmented SQL generation module is implemented in a zero-shot manner, prompting the LLM with the filtered sub-table and full augmentation information (semantic + literal) to generate a valid SQLite3 SELECT statement on table 'DF'.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Figure 13"
+  },
+  {
+    "criteria": "An SQL executor is implemented to execute the generated SQL query against the filtered sub-table (treated as 'DF'), returning the resulting sub-table for use in the Joint Reasoner.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Algorithm 1"
+  },
+  {
+    "criteria": "The step-back query augmentation is implemented: the LLM is prompted with a sampled sub-table and the original query using 3 in-context examples to generate a more generic, abstract reformulation of the query.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Figure 11"
+  },
+  {
+    "criteria": "The sub-query augmentation is implemented: the LLM is prompted with a sampled sub-table and original query using 3 in-context examples to decompose it into 2-3 complete, answerable sub-queries.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Figure 11"
+  },
+  {
+    "criteria": "Sub-queries from the Query Augmentor are processed in parallel by the Table Organizer (each sub-query independently goes through row sampling, table augmentation, column filtering, augmented SQL generation, and SQL execution).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Algorithm 1 lines 17-21"
+  },
+  {
+    "criteria": "Each sub-query result is evaluated by calling the LLM with the sub-query's executed sub-table; responses that cannot be answered ('Cannot get answer from sub-table') are filtered out, and valid answers are converted into natural language descriptions for the Joint Reasoner.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.4, Figure 14"
+  },
+  {
+    "criteria": "The Joint Reasoner is implemented: it receives the primary workflow's executed sub-table (SQL result) plus valid sub-query answer descriptions as extra information, and prompts the LLM to reason step-by-step, outputting 'Thought: ...' and 'Answer: ...'.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.4, Figure 14"
+  },
+  {
+    "criteria": "Self-consistency (SC) is implemented with 5 independent sampling runs per query, with majority voting over the final answers to select the most consistent prediction.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "Duplicate sub-queries generated by the Query Augmentor are filtered out before processing through the Table Organizer.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The full ALTER pipeline (Algorithm 1) is coded end-to-end: RowSample → QueryAug → parallel TabOrg for sub-queries → TabOrg for primary query → JointReasoner → final answer.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The WikiTQ test set (4344 samples) and TabFact small-test set (1998 samples) are loaded and the framework is executed on both datasets using GPT-3.5-turbo as the backbone.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1, Appendix A"
+  },
+  {
+    "criteria": "ALTER without self-consistency (w/o SC) achieves 67.4% denotation accuracy on WikiTQ test set.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "ALTER with self-consistency (w SC, 5 samples) achieves 70.7% denotation accuracy on WikiTQ test set.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "ALTER without self-consistency achieves 84.3% binary classification accuracy on TabFact small-test set.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "ALTER with self-consistency achieves 87.2% binary classification accuracy on TabFact small-test set.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The ablation experiments for the Query Augmentor are executed: removing step-back augmentation (w/o step-back) and removing sub-query augmentation (w/o sub-query) are evaluated separately on WikiTQ and TabFact with further split into Simple and Hard question categories.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.4, Table 2"
+  },
+  {
+    "criteria": "The ablation results match Table 2: removing step-back augmentation drops WikiTQ accuracy from 67.4% to 64.5% (↓2.9%) and TabFact accuracy from 84.3% to 82.3% (↓2.0%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The ablation results match Table 2: removing sub-query augmentation drops WikiTQ accuracy from 67.4% to 65.4% (↓2.0%) and TabFact accuracy from 84.3% to 82.4% (↓1.9%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The ablation experiments for K value and augmentation are executed: K∈{0,1,3} combined with w/ augmentation and w/o augmentation conditions, evaluated on both WikiTQ and TabFact.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.4, Table 3"
+  },
+  {
+    "criteria": "The ablation results match Table 3: K=0 with augmentation achieves 62.2% on WikiTQ and 77.2% on TabFact; K=3 without augmentation achieves 63.3% on WikiTQ and 81.9% on TabFact.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The ablation results match Table 3: K=0 without augmentation causes a catastrophic drop to 45.5% on WikiTQ and 67.1% on TabFact, demonstrating that both data and augmentation together are necessary.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "Table augmentor ablation experiments are executed: removing semantic information and removing literal information separately on WikiTQ and TabFact (Table 6 in Appendix D).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix D, Table 6"
+  },
+  {
+    "criteria": "The table augmentor ablation results match Table 6: removing semantic information drops WikiTQ from 67.4% to 64.8% (↓2.6%) and TabFact from 84.3% to 83.4% (↓0.9%); removing literal information drops WikiTQ to 63.9% (↓3.5%) and TabFact to 82.2% (↓2.1%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The large table analysis is executed: WikiTQ test tables are partitioned by token count into Small (<2k), Medium (2k–4k), and Large (>4k) subsets, and ALTER is compared with Binder, Dater, and Chain-of-Table.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.5, Table 4"
+  },
+  {
+    "criteria": "The large table results match Table 4: ALTER achieves 71.7% on small tables (+3.6% over Chain-of-Table), 65.2% on medium tables (+12.9%), and 65.9% on large tables (+21.0%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The robustness perturbation experiment is implemented: random rows are inserted into WikiTQ tables according to the perturbation scheme (n=1 if N≤150, n=2 if 150<N≤300, n=4 if 300<N≤450, n=8 if N≥450) with perturbation factors ×1, ×2, ×4, generating rows based on augmented schema type (Date, Numerical, Char).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E, Section 5.5"
+  },
+  {
+    "criteria": "The robustness results match Figure 4: as the perturbation factor increases from x0 to x4, ALTER's performance drop is approximately -1.0%, -10.0%, -11.5%, and -12.5% relative to baseline; token ratio used drops from ~0.27 to ~0.20.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "At perturbation factor ×1, ALTER's accuracy drop is 9.8% versus CABINET's 11.4%, demonstrating ALTER's superior robustness in the large-table perturbation setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.5, Figure 4"
+  },
+  {
+    "criteria": "The large table comparison with pre-LLM methods (CABINET and OmniTab) partitioned by cell count is conducted, showing ALTER's regression curve has a significantly slower decline rate and outperforms both by at least 15%, 19%, and 25% in the 300-400, 400-500, and 500+ cell categories respectively.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.5, Figure 3"
+  }
+]

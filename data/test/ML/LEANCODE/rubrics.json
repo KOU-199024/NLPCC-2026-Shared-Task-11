@@ -1,0 +1,290 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the preliminary empirical study on CLS and encoder-decoder attention scores, covering all three research questions (RQ-1, RQ-2, RQ-3).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand the LEANCODE problem formulation (Equation 1) and the category-local attention average algorithm (Equations 2-3, Algorithm 1).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand the experiment setup including models (CodeBERT, CodeT5, GPT-4o), tasks (code search, code summarization), datasets, metrics (MRR, BLEU-4, Precision), and simplification ratios (10%-50%).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Tables 2 and 3 to understand the expected numerical results for code search (MRR) and code summarization (BLEU-4) across all simplification ratios for DIETCODE, SlimCode, and LEANCODE with CodeBERT and CodeT5.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2, Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 10 to understand the replacement study design, which uses LeanCode's category-local attention weights combined with DietCode's removal algorithm to isolate contributions of token weights vs. removal algorithm.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 10, Appendix E"
+  },
+  {
+    "criteria": "The plan includes loading the Java subset of the CodeSearchNet dataset for both code search (training: 908,886 snippets, validation: 30,655, test: 26,909) and code summarization (training: 164,923, validation: 5,183, test: 10,955).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The plan includes setting up statement category classification using 21 statement categories (e.g., Method Signature, Return, Function Invocation, Variable Declaration, Annotation, Arithmetic, If Condition, For, While, Throw, Try, Catch, etc.) as defined in DietCode to represent the context of each token.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2.1, Appendix C"
+  },
+  {
+    "criteria": "The plan includes computing CLS attention scores from the final encoder layer of CodeBERT and CodeT5 using Equation 5, as opposed to the accumulated self-attention scores used by DietCode.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2.1, Equation 5"
+  },
+  {
+    "criteria": "The plan includes computing encoder-decoder attention scores from the final decoder layer for code summarization tasks using Equation 6, selecting the maximum attention score across all decoder generation steps for each input token.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2.1, Equation 6"
+  },
+  {
+    "criteria": "The plan includes computing the category-local attention average (Equation 3) for each token per statement category, as opposed to the global attention average (Equation 2) used by DietCode.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2.1, Equation 3"
+  },
+  {
+    "criteria": "The plan includes implementing Algorithm 1: token-level removal that iteratively selects tokens with the lowest category-local attention score without first removing entire statements, using a token score dictionary S = {t, c, μ_t^c}.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1, Section 3.2.2"
+  },
+  {
+    "criteria": "The plan includes setting up CodeBERT for code search by adding a fully connected layer on top of the encoder for binary classification.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes setting up CodeBERT for code summarization by adding a Transformer decoder on top of the CodeBERT encoder.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes setting up CodeT5 for code search by extracting the encoder separately and joining it with a fully connected layer for classification.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes setting up GPT-4o via API with the specific prompts: 'Please check whether the incomplete code snippet is semantically consistent with the given text. Please analyze step-by-step first, and then answer in the following format.' for code search, and 'Write a short sentence to describe the function of the incomplete code snippet. Answer in the following format.' for code summarization.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes implementing DIETCODE and SlimCode as baselines alongside LEANCODE for fair comparison.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The Java subset of the CodeSearchNet dataset is correctly loaded and split into training, validation, and test sets for both code search and code summarization tasks.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4, Table 9"
+  },
+  {
+    "criteria": "The code correctly classifies each statement in a code snippet into one of the 21 statement categories (Method Signature, Return, Function Invocation, Variable Declaration, Annotation, Arithmetic, If Condition, For, While, Throw, Try, Catch, Switch, Break, Continue, Case, Setter, Getter, Synchronized, Finally, Logging) used as context labels.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2.1, Appendix C"
+  },
+  {
+    "criteria": "The CLS attention score extraction is implemented correctly: for each input token, the attention score is computed as the dot product of the CLS token's query vector with the token's key vector, divided by sqrt(d), as specified in Equation 5, using only the final encoder layer.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5, Section 3.2.1"
+  },
+  {
+    "criteria": "The encoder-decoder attention score extraction is implemented correctly: for each input token, the maximum attention score across all decoder generation steps is selected, computed using the decoder query at each position t with the encoder key vector, divided by sqrt(d), as specified in Equation 6, using only the final decoder layer.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6, Appendix B"
+  },
+  {
+    "criteria": "The global attention average computation (DietCode's Equation 2) is implemented correctly: for each token t, the sum of its attention scores across all occurrences in the training dataset is divided by the total number of occurrences n_t.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The category-local attention average computation (LEANCODE's Equation 3) is implemented correctly: for each token t in each statement category c, the average attention score is computed over all occurrences of t in statements of category c in the training dataset (using n_t^c as denominator).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3, Section 3.2.1"
+  },
+  {
+    "criteria": "Algorithm 1 is implemented correctly: for each code snippet, tokens are removed one-by-one in ascending order of their category-local attention score (from the dictionary S = {t, c, μ_t^c}), until the number of removed tokens equals SimplifiedRatio × n_j, operating purely at the token level without first discarding entire statements.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Section 3.2.2"
+  },
+  {
+    "criteria": "CodeBERT is correctly set up for code search as an encoder-only model with an additional fully connected layer for binary classification, using Adam optimizer with learning rate 1×10^-5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "CodeBERT is correctly set up for code summarization with a Transformer decoder added on top of the encoder, using Adam optimizer with learning rate 5×10^-5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "CodeT5 is correctly set up for code search by extracting its encoder and appending a fully connected layer for binary classification, using Adam optimizer with learning rate 1×10^-5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "CodeT5 is correctly used end-to-end (full encoder-decoder model) for code summarization with Adam optimizer and learning rate 5×10^-5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The GPT-4o API interface is implemented with the exact prompts specified in the paper for code search (semantic consistency check with step-by-step analysis) and code summarization (short sentence description), and the output is parsed to compute Precision and BLEU-4.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "DietCode baseline is implemented using token-level importance from global self-attention scores (Equation 2), with its two-step removal process: first selecting high-quality statements then removing tokens from remaining ones (knapsack optimization).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2.2, Section 4"
+  },
+  {
+    "criteria": "SlimCode baseline is implemented using 8 priority levels based on the nature of code tokens (e.g., method signatures at highest priority, symbol tokens at lowest priority).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 1, Section 4"
+  },
+  {
+    "criteria": "The replacement study is implemented: LEANCODE's category-local attention token weights are combined with DIETCODE's removal algorithm to isolate the contribution of token weights from the removal algorithm.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E, Table 10"
+  },
+  {
+    "criteria": "The MRR (Mean Reciprocal Rank) metric is correctly implemented for code search evaluation, and BLEU-4 is correctly implemented for code summarization evaluation; Precision is used for GPT-4o code search (with 400 sample pairs of matching/non-matching code-description pairs).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The simplified ratio metric is correctly computed as (|Code| - |Scode|) / |Code| × 100, and simplification is applied at ratios of 10%, 20%, 30%, 40%, and 50%.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The training and inference pipeline is run correctly for code search with CodeBERT and CodeT5: first training on complete code snippets, then running inference on the test set using simplified code at each simplification ratio (10%-50%) for DIETCODE, SlimCode, and LEANCODE.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The training and inference pipeline is run correctly for code summarization with CodeBERT and CodeT5: first training on complete code snippets, then running inference on the test set using simplified code at each simplification ratio (10%-50%) for DIETCODE, SlimCode, and LEANCODE.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The GPT-4o experiments are run correctly via API for both code search and code summarization at simplification ratios 10%-50% for DIETCODE, SlimCode, and LEANCODE, measuring input/output/total tokens, Precision, and BLEU-4.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.3, Tables 5, 6"
+  },
+  {
+    "criteria": "The pruning time experiments are run and measured for LEANCODE and SlimCode across all simplification ratios (10%-50%) on both code search and code summarization training datasets.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.2, Table 4"
+  },
+  {
+    "criteria": "The replacement study experiments are executed: LEANCODE weights + DietCode removal algorithm are run on both code search and summarization tasks at all simplification ratios.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix E, Table 10"
+  },
+  {
+    "criteria": "The execution outcomes for code search (Table 2) match the expected results: LEANCODE achieves MRR of 0.728/0.726/0.719/0.716/0.697/0.688 (Base/10%/20%/30%/40%/50%) for CodeBERT and 0.747/0.743/0.736/0.724/0.714/0.706 for CodeT5, with LEANCODE outperforming DIETCODE by up to 60.37% and SlimCode by up to 15.82%.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes for code summarization (Table 3) match the expected results: LEANCODE achieves BLEU scores of 18.25/18.08/17.73/17.23/16.71/16.24 (Base/10%/20%/30%/40%/50%) for CodeBERT, and 20.55/20.32/20.18/19.82/19.27/18.46 for CodeT5, outperforming DIETCODE by up to 29.36% and SlimCode by up to 27.04%.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes confirm that LEANCODE maintains a performance decline of at most 5.48% (MRR) for code search and 11.01% (BLEU) for code summarization even at 50% token removal.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The inference time reduction results (Table 2 and 3) approximately match the paper: for code search, reduced time ratio relative to SimplifiedRatio is ~0.7; for code summarization, ~0.5 for CodeBERT and ~0.75 for CodeT5, showing near-linear relationship.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.2, Table 2, Table 3"
+  },
+  {
+    "criteria": "The pruning time results (Table 4) confirm that LeanCode's pruning time is approximately 2-4x longer than SlimCode's but significantly shorter than DietCode's, and both are within comparable range.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4, Section 4.2"
+  },
+  {
+    "criteria": "The GPT-4o code search results (Table 5) show that as simplified ratio increases, total tokens decrease for all methods, and LEANCODE maintains a slight edge in Precision over DIETCODE and SlimCode, with base Precision of 0.82.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5, Section 4.3"
+  },
+  {
+    "criteria": "The GPT-4o code summarization results (Table 6) show LEANCODE slightly outperforming baselines in BLEU-4, with all methods showing approximately half the BLEU scores compared to CodeT5 results in Table 3 (base BLEU ~10.59).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6, Section 4.3"
+  },
+  {
+    "criteria": "The replacement study results (Table 10) confirm that using LeanCode's token weights with DietCode's removal algorithm outperforms vanilla DietCode (by up to 37.1% for code search and 19.05% for code summarization), while LEANCODE's own removal algorithm further improves by up to 3.7% and 9.9% respectively.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 10, Appendix E"
+  },
+  {
+    "criteria": "The empirical study results confirm (RQ-1) that method signature tokens have significantly higher category-local CLS attention averages (1.745) than other categories, and that category-local attention reduces variance compared to global attention across the 21 statement categories (Table 7).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7, Section C.1"
+  },
+  {
+    "criteria": "The empirical study results confirm (RQ-3) that global self-attention averages (used by DietCode) cannot substitute for CLS or encoder-decoder attention scores, as the heatmap distributions of accumulated self-attention differ significantly from CLS and encoder-decoder attentions.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section C.3, Figure 8"
+  }
+]

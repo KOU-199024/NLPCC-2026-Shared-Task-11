@@ -1,0 +1,302 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 to understand the formal problem formulation: KG G=(V,E), triplets t=(e_h, r, e_t), the objective to extract novel triplets from publications P and integrate them into augmented graph G_new as defined by Equation 1.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1, Equation 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the system overview of the KARMA multi-agent architecture with nine specialized agents (IA, RA, SA, EEA, REA, SAA, CRA, EA) operating under a Central Controller.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Sections 3.3–3.10 to understand the mathematical formulations and roles of each agent, including Equations 2–15.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Sections 3.3–3.10"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand data collection: 1,200 PubMed articles split into Genomics (720 papers), Proteomics (360 papers), and Metabolomics (120 papers) corpora.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 to understand the three LLM backbones used: GLM-4 (9B parameters), GPT-4o (proprietary multimodal), and DeepSeek-v3 (37B activated MoE), all accessed via APIs, with DeepSeek-v3 used for all LLM-based evaluations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand all evaluation metrics: Core Metrics (M_Con, M_Cla, M_Rel), Graph Statistics (Delta_Cov, Delta_Con), and Quality Indicators (R_CR, R_LC, C_QA, R_HE).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the main evaluation results across domains and models, including DeepSeek-v3 achieving Delta_Cov=38,230 and R_LC=0.831 in genomics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the ablation study results, evaluating KARMA-Full against w/o Summarizer Agent, w/o Conflict Resolution Agent, and w/o Evaluator Agent configurations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the detailed prompt templates for each KARMA agent (IA, RA, SA, EEA, REA, SAA, CRA, EA for confidence/clarity/relevance).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes implementing a KG data structure with entity set V, edge set E, and triplet representation t=(e_h, r, e_t) compatible with the augmented graph G_new formulation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes a Central Controller to orchestrate the nine KARMA agents in a hierarchical multi-agent pipeline.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing all nine specialized agents: Ingestion (IA), Reader (RA), Summarizer (SA), Entity Extraction (EEA), Relationship Extraction (REA), Schema Alignment (SAA), Conflict Resolution (CRA), and three Evaluator Agents (EA for confidence, clarity, relevance).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes using three LLM backbones (GLM-4, GPT-4o, DeepSeek-v3) via their respective APIs, with each experiment sharing the same backbone across all agents.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes a single-agent baseline that extracts all triples in a single LLM generation without the multi-agent pipeline.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementation of all nine evaluation metrics: M_Con, M_Cla, M_Rel, Delta_Cov, Delta_Con, R_CR, R_LC, C_QA, and R_HE.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes an ablation study with four configurations: KARMA-Full, w/o Summarizer Agent, w/o Conflict Resolution Agent, and w/o Evaluator Agent, all using DeepSeek-v3.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.5"
+  },
+  {
+    "criteria": "The code implements the KG data structure as G=(V, E) with entities V and directed edges E, supporting triplets t=(e_h, r, e_t) and augmented graph G_new via Equation 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Equation 1"
+  },
+  {
+    "criteria": "The Ingestion Agent (IA) is implemented to normalize raw publications (handling OCR errors, structural inconsistencies) and extract metadata (journal, date, authors), outputting a standardized text plus metadata as defined by Equation 2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Equation 2"
+  },
+  {
+    "criteria": "The Reader Agent (RA) is implemented to segment normalized documents into sections and assign a relevance score R(s_j) = LLM_reader(s_j, G) per Equation 3, filtering out segments below domain-calibrated threshold delta.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4, Equation 3"
+  },
+  {
+    "criteria": "The Summarizer Agent (SA) is implemented to condense each segment s_j into a concise summary u_j = LLM_summ(s_j, P_summ) per Equation 4, retaining critical entities, relations, and domain-specific terms.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.5, Equation 4"
+  },
+  {
+    "criteria": "The Entity Extraction Agent (EEA) is implemented with LLM-based NER E(u_j) = LLM_E(u_j, P_E) ⊙ D_E per Equation 5, applying dictionary/ontology-based filtering to reduce false positives and normalize entity mentions.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.6, Equation 5"
+  },
+  {
+    "criteria": "Entity normalization is implemented via Equation 6: mapping raw entity e to normalized entity ê = argmin_{v in V} d(phi(e), psi(v)) in a joint embedding space, with entities exceeding threshold rho flagged as new candidates V+.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.6, Equation 6"
+  },
+  {
+    "criteria": "The Relationship Extraction Agent (REA) is implemented using LLM-based multi-label classification p(r | ê_i, ê_j, u_j) = LLM_R(ê_i, ê_j, u_j, P_R) per Equations 7-8, selecting relationships with probability >= threshold theta_r.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.7, Equations 7–8"
+  },
+  {
+    "criteria": "The Schema Alignment Agent (SAA) is implemented via Equation 9 to classify new entities v into valid types tau* = argmax_{tau in T} LLM_SAA(v, tau, P_align) and map new relations to KG relation types, flagging unmatched entities/relations as candidate additions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.8, Equation 9"
+  },
+  {
+    "criteria": "The Conflict Resolution Agent (CRA) is implemented with LLM-based debate per Equations 10-11: detecting conflicting triplets in G and outputting {Agree, Contradict}, discarding or queuing contradicting triplets for expert review.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.9, Equations 10–11"
+  },
+  {
+    "criteria": "The Evaluator Agent (EA) is implemented to compute confidence C(t) = sigma(sum alpha_i v_i(t)) per Equation 12 using weighted verification signals with logistic activation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.10, Equation 12"
+  },
+  {
+    "criteria": "The Evaluator Agent computes clarity Cl(t) = sigma(sum beta_j c_j(t)) per Equation 13 and relevance R(t) = sigma(sum gamma_k r_k(t)) per Equation 14.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.10, Equations 13–14"
+  },
+  {
+    "criteria": "The final integration decision is implemented as Equation 15: integrate(t)=1 if (C(t)+Cl(t)+R(t))/3 >= Theta, otherwise 0, controlling which triplets enter the KG.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.10, Equation 15"
+  },
+  {
+    "criteria": "The Central Controller is implemented to orchestrate all nine agents in the correct pipeline order: IA → RA → SA → EEA/REA → SAA → CRA → EA → KG integration.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The data collection pipeline is implemented to ingest 1,200 PubMed articles split across Genomics (720), Proteomics (360), and Metabolomics (120) corpora from PDF format.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "LLM backbone integrations are implemented for GLM-4, GPT-4o, and DeepSeek-v3 via their respective APIs, with each agent using the same backbone per experiment run.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The single-agent baseline is implemented to extract all triples from each document in a single LLM generation without the multi-agent pipeline stages.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "Coverage Gain (Delta_Cov) is implemented as the count of newly introduced entities not previously in the KG, and Connectivity Gain (Delta_Con) is computed as the net increase in node degrees over existing entities.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Conflict Ratio (R_CR) is implemented as the fraction of newly extracted edges removed by the Conflict Resolution Agent due to contradictions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "LLM-based Correctness (R_LC) is implemented: a hold-out LLM judges each new triple as likely correct, uncertain, or likely incorrect, with R_LC = #(likely correct) / #(all new triples).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "QA Coherence (C_QA) is implemented to evaluate the fraction of plausible KG-derived answers for a curated set of domain-specific questions answerable via KG traversal.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Human Evaluation Score (R_HE) collection is implemented, with assessments from two human experts rating the quality of triple extractions on a 0-to-1 scale.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Ablation configurations are implemented: w/o Summarizer (bypass SA, pass raw RA output to EEA/REA), w/o Conflict Resolution (skip CRA), and w/o Evaluator (skip EA, integrate all triplets without filtering).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.5"
+  },
+  {
+    "criteria": "The agent-specific prompt templates from Appendix B are implemented for each of the nine agents (IA_Prompt, RA_Prompt, SA_Prompt, EEA_Prompt, REA_Prompt, SAA_Prompt, CRA_Prompt, EA_Prompt_confidence, EA_Prompt_clarity, EA_Prompt_relevance).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The main experiments are executed with all three LLM backbones (GLM-4, GPT-4o, DeepSeek-v3) and the single-agent baseline across all three domains (Genomics, Proteomics, Metabolomics), producing all metrics in Table 1.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The ablation study is executed using DeepSeek-v3 across all three domains with all four configurations (KARMA-Full, w/o Summarizer, w/o Conflict Resolution, w/o Evaluator), producing results for Table 2.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The cost analysis is executed to measure prompt tokens, completion tokens, and processing time per domain, producing the distributions shown in Figure 3.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3, Section 5.4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: KARMA with DeepSeek-v3 achieves Delta_Cov=38,230 new entities in genomics, representing 3.9× higher coverage gain than GPT-4o in the same domain.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1, Section 5.1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: DeepSeek-v3 achieves R_LC=0.831 in genomics while GLM-4 achieves R_LC=0.623 and GPT-4o achieves R_LC=0.880.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: KARMA multi-agent framework consistently outperforms the single-agent baseline across all three domains on R_LC and C_QA metrics.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1, Section 5.1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: DeepSeek-v3 achieves superior performance on 17 out of 24 metrics across all three domains.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1, Section 5.1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: In proteomics, DeepSeek-v3 achieves M_Con=0.845, Delta_Con=1.468, and R_LC=0.772; in metabolomics, DeepSeek-v3 achieves Delta_Cov=1,752 which is 127% higher than GPT-4o.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1, Section 5.2"
+  },
+  {
+    "criteria": "The ablation study outcomes match Table 2: removing the Summarizer Agent causes C_QA to drop by 22.9% (0.612→0.472) in genomics and R_LC to drop by 18.2% (0.772→0.632) in proteomics.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2, Section 5.5"
+  },
+  {
+    "criteria": "The ablation study outcomes match Table 2: removing the Conflict Resolution Agent reduces R_LC from 0.831 to 0.790 (-4.9%) in genomics, and removing the Evaluator Agent reduces R_LC from 0.668 to 0.603 (-9.7%) in metabolomics.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2, Section 5.5"
+  },
+  {
+    "criteria": "The cost analysis outcomes match Figure 3: genomics shows higher completion token distributions (mean=550.64, std=232.92) and proteomics shows broader processing time distributions (mean=96.58, std=46.90).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 5.4"
+  }
+]

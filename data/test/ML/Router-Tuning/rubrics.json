@@ -1,0 +1,482 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the motivation behind Router-Tuning, including the two main challenges: high training costs from full-model training and performance degradation from skipping important layers.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the Router-Tuning mechanism, including token-level and sequence-level granularities, the GATE function, binary mask, and straight-through estimator.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the extension of Router-Tuning to Mixture of Experts layers using per-expert token-level routing.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 completely to understand the dual training objectives: task performance loss L_task and MoD capacity regularization loss L_MoD controlled by a scaling factor λ.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand experiment setup, including models (Llama, Mistral, Qwen, OLMoE, DeepSeek-MoE), training dataset (Llama-Pro), evaluation framework (LM-Harness), and hyperparameter settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the evaluation task settings, including shot numbers and metrics for all 9 benchmark tasks (BoolQ 0-shot, RTE 0-shot, OBQA 0-shot Norm, PIQA 0-shot Norm, MMLU 5-shot, WinoGrande 5-shot, GSM8K 5-shot EM, HellaSwag 10-shot Norm, ARC-C 25-shot Norm).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the performance of Router-Tuning across all 6 granularity configurations (Block_token, Block_seq, MLP_token, MLP_seq, Attn_token, Attn_seq) on Llama-3-8B and Llama-3-8B-Instruct.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the comparison results between Router-Tuning, DLO, and Skip Transformer baselines on ARC-C, HellaSwag, MMLU, and WinoGrande.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 5 to understand the ablation study of Router-Tuning across multiple model architectures and scales (Llama-2-13B, Qwen-2.5-14B, Qwen-2.5-7B, Mistral-7B).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The agent has read Table 7 to understand the MoE experiment comparing Router-Tuning with Expert Drop on DeepSeek-MoE and OLMoE under a fixed 25% skipping ratio.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The agent has read Table 8 to understand the LoRA integration experiment comparing baseline, Router-Tuning alone, LoRA alone, and LoRA + Router-Tuning on Llama-3-8B and Mistral-7B.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The plan includes implementation of the GATE function as GATE(x) = Sigmoid(W·x), where W is a d×1 learnable weight matrix making the router account for fewer than 0.01% of total model parameters.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes two deployment granularities for the router: token-level (applying GATE to each token x_i) and sequence-level (applying GATE to the mean of all tokens 1/L·Σx_i).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing the binary mask M with threshold τ=0.5 and using the straight-through estimator (STE) for differentiable training through the binary decision.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 2-4"
+  },
+  {
+    "criteria": "The plan includes implementing the dual training objective combining task loss L_task with MoD capacity regularization loss L_MoD (L0-norm of mask minus target sparsity) scaled by λ.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 9-10"
+  },
+  {
+    "criteria": "The plan includes initializing router weights W to zero so that Sigmoid(0·x) = 0.5 = τ, ensuring training starts from a fully dense model where all inputs are retained.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes freezing all backbone model parameters during Router-Tuning and only allowing gradient updates for the router network parameters.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes deploying Router-Tuning only to the deepest layers (except the last layer) and applying it to at most half of the attention layers as the default configuration.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes setting up the Llama-Pro training dataset, which spans general instruction, math, and code domains for SFT-style router training.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes setting up the LM-Harness evaluation framework with all 9 benchmark tasks with correct shot numbers and normalization settings as specified in Table 1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes a hyperparameter grid search over learning rate from {1e-5, 2e-5, 5e-5, 1e-4, 2e-4} and scaling factor λ from {0, 0.1, 0.01, 0.001}.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes extending Router-Tuning to MoE layers by equipping each expert network with a token-level router, applied to OLMoE and DeepSeek-MoE.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the main granularity comparison experiment on Llama-3-8B with 16 skippable layers and 50% MoD capacity across Block, MLP, and Attention at both token and sequence level.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes joint Router-Tuning with LoRA finetuning as a complementary strategy to improve both efficiency and downstream task performance.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 7"
+  },
+  {
+    "criteria": "The GATE function is implemented as GATE(x) = Sigmoid(W·x), where W is a learnable linear projection from hidden dimension d to scalar output 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The router scoring function R(x) is implemented as Equation 1, supporting token-level computation (R(x)_i = GATE(x_i) per token) and sequence-level computation (R(x) = GATE(1/L · Σx_i) over mean pooling).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The binary mask M is implemented as Equation 2: M=1 if R(x) >= τ and M=0 otherwise, with τ=0.5 as a fixed threshold.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The straight-through estimator (STE) is implemented allowing gradients to propagate through the binarization step via dM/dR = 1 during the backward pass.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The MoD forward pass is implemented as Equation 3: y = M ⊙ F(x) + x, combining the masked layer output with a residual connection, where M is the binary mask and F is the target layer function.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The inference-time computation bypass is implemented as Equation 5: y = F(x) + x if R(x) >= τ, else y = x, completely skipping the layer computation for inputs below the threshold.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The MoE per-expert routing is implemented as Equation 6: E_hat_i(x) = E_i(x) if R(x) >= τ, else 0, skipping computation within each expert for tokens that do not meet the threshold.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The MoE layer output combining TopK expert selection and per-expert routing is implemented as Equations 7-8: K = TopK(Softmax(G(x)), k) and y = Σ_{i∈K} G(x)_i · E_hat_i(x).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equations 7-8"
+  },
+  {
+    "criteria": "The combined training loss is implemented as Equation 9: L = L_task + λ · L_MoD, where L_task is the standard cross-entropy loss and λ is the user-specified scaling coefficient.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The MoD capacity regularization loss is implemented as Equation 10: L_MoD = ReLU(||M||_0 - s), an L0-norm penalty that reduces the number of non-skipped inputs below target sparsity s.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 10"
+  },
+  {
+    "criteria": "Router weights W are initialized to zero so that Sigmoid(0) = 0.5 = τ, ensuring all inputs pass through the layer at the start of training (fully dense initialization).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code correctly freezes all backbone model parameters and marks only the router network parameters as trainable, resulting in fewer than 0.01% of total parameters being updated.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The router is implemented as a lightweight module (single linear layer of shape d×1) attachable to Attention, MLP, or Block layers of any target pretrained language model.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the Llama-Pro dataset for SFT-style router training has been implemented, covering general instruction, math, and code subsets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The LM-Harness evaluation pipeline is set up to evaluate models on all 9 tasks with correct shot numbers: ARC-C (25-shot, Norm), BoolQ (0-shot), HellaSwag (10-shot, Norm), MMLU (5-shot), OBQA (0-shot, Norm), PIQA (0-shot, Norm), RTE (0-shot), WinoGrande (5-shot), GSM8K (5-shot, EM).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for loading Llama-3-8B and Llama-3-8B-Instruct and attaching router modules to the specified attention layers has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The token-level Router-Tuning on attention layers (Attn_token) is implemented, handling variable token lengths within a batch via padding to standardize sequence lengths.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2, Section 5.2"
+  },
+  {
+    "criteria": "The sequence-level Router-Tuning on attention layers (Attn_seq) is implemented, routing entire sequences based on the mean-pooled importance score and achieving higher speedup than token-level.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2, Section 5.2"
+  },
+  {
+    "criteria": "The token-level and sequence-level Router-Tuning on Block layers (Block_token, Block_seq) is implemented for comparative experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The token-level and sequence-level Router-Tuning on MLP layers (MLP_token, MLP_seq) is implemented for comparative experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The inference speedup measurement is implemented to benchmark the full generation process (prefilling + generation) on a single Nvidia RTX A6000 Ada GPU with maximum sequence length 2048 and increasing batch sizes.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The comparison with DLO and Skip Transformer baselines is implemented at token level on MLP layers, following the exact setup of those baselines.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The Router-Tuning applied to DeepSeek-MoE and OLMoE models with token-level per-expert routing has been implemented, applying Equations 6-8 within each MoE layer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 7, Section 3.3"
+  },
+  {
+    "criteria": "The Expert Drop baseline for MoE is implemented by statically identifying and dropping the bottom 25% of experts globally by importance score.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The joint LoRA + Router-Tuning training is implemented, simultaneously updating LoRA adapter parameters alongside router parameters while keeping the backbone frozen.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The ablation study code for varying the number of MoD layers (0, 4, 8, 12, 16, 20, 24) on Qwen2.5-7B and Mistral-7B has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The training dataset ablation code is implemented to compare performance when using Alpaca, Evol-Instruct, ShareGPT, and Llama-Pro as training datasets for router fine-tuning.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The training sample size ablation code is implemented to evaluate performance when training with 0, 1K, 2K, 5K, and 10K samples from the training dataset.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The layer-wise skipping ratio visualization code is implemented to compare static Layer Drop versus Router-Tuning attention layer utilization patterns across layers 16-31 of Llama-3-8B.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The expert load visualization is implemented, tracking 'Assigned Tokens' (before per-expert routing) and 'Executed Tokens' (after routing) per expert, normalized by the mean assigned token count.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The comparison between Router-Tuning and Attention Drop at identical computation budgets (12.5% and 25% skipping ratios) on GSM8K is implemented, where Attention Drop drops 4 layers and Router-Tuning deploys MoD to 8 layers with 50% capacity.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The Router-Tuning evaluation on small models (Qwen-2.5-1.5B with R.T.-10 and R.T.-14, Qwen-2.5-3B with R.T.-12 and R.T.-16) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The main Router-Tuning training on Llama-3-8B with attention sequence-level routing has been executed successfully, completing training within approximately 15 minutes on a single GPU.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The LM-Harness evaluation has been executed successfully for all 6 Router-Tuning granularity variants (Block_token, Block_seq, MLP_token, MLP_seq, Attn_token, Attn_seq) on both Llama-3-8B and Llama-3-8B-Instruct.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The comparison experiments against DLO and Skip Transformer baselines have been executed successfully on Llama-3-8B reporting ARC-C, HellaSwag, MMLU, and WinoGrande results.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The Router-Tuning training and LM-Harness evaluation across multiple architectures (Llama-2-13B, Qwen-2.5-14B, Qwen-2.5-7B, Mistral-7B) have been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The MoE Router-Tuning training and evaluation on DeepSeek-MoE and OLMoE with 25% skipping ratio have been executed successfully, alongside the Expert Drop baseline.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The joint LoRA + Router-Tuning training and evaluation on Llama-3-8B and Mistral-7B have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The ablation experiments for varying number of MoD layers (0 to 24) on Qwen2.5-7B and Mistral-7B have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The training dataset ablation experiments for all four datasets (Alpaca, Evol-Instruct, ShareGPT, Llama-Pro) on Llama-3-8B have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The training sample size ablation experiments for 0, 1K, 2K, 5K, and 10K samples have been executed successfully, reporting results on HellaSwag, MMLU, OBQA, and WinoGrande.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The Attention Drop vs Router-Tuning comparison experiments at 12.5% and 25% skipping ratios on GSM8K have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Attn_seq achieves approximately 69.4 average accuracy with 1.21× speedup on Llama-3-8B (baseline 69.7), while Attn_token achieves approximately 68.7 with 1.18× speedup.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Block and MLP granularities show significant performance degradation (averages in the range 61-62) compared to the Attention granularity (69.4) on Llama-3-8B with 50% MoD capacity.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Sequence-level attention routing (1.21×) achieves higher speedup than token-level attention routing (1.18×) due to avoiding padding overhead from variable token lengths.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: Router-Tuning outperforms DLO (Avg 61.4 vs 60.5) and Skip Transformer (Avg 61.4 vs 60.8) on ARC-C, HellaSwag, MMLU, and WinoGrande tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes confirm Table 4: Router-Tuning completes in approximately 15 minutes on a single Nvidia A6000 GPU, compared to DLO requiring 36 hours on NVIDIA A100 GPUs.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: Router-Tuning on half the attention layers with 50% MoD capacity preserves near-original performance within approximately 1% average accuracy across Llama-2-13B, Qwen-2.5-14B, Qwen-2.5-7B, and Mistral-7B while achieving 1.18-1.24× speedup.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: Performance remains stable when applying MoD to up to half of the attention layers, but starts to degrade when the number of MoD layers exceeds half (e.g., beyond 16 layers for Qwen2.5-7B and Mistral-7B).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: Llama-Pro achieves the best or competitive average performance (67.0) among all training datasets, while all datasets maintain performance within approximately 1.2% of each other.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 7: Approximately 5K training samples are sufficient to effectively train the routers with performance converging without significant gains from more data.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7: Router-Tuning on MoE significantly outperforms Expert Drop on OLMoE (Avg 61.4 vs 50.2) and moderately outperforms on DeepSeek-MoE (Avg 62.4 vs 61.1).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8: LoRA + Router-Tuning preserves the 1.21× speedup from Router-Tuning while maintaining performance comparable to LoRA alone (within ~0.1% average) on Llama-3-8B.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: Router-Tuning outperforms Attention Drop by approximately 4.8% and 5.1% on GSM8K at 12.5% and 25.0% skipping ratios respectively.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes confirm the paper's key claim: the attention sequence-level Router-Tuning configuration achieves approximately 21% inference speedup with only approximately 0.2% performance degradation.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Abstract"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 8: After applying Router-Tuning to MoE layers, executed tokens are significantly fewer than assigned tokens for overloaded experts, demonstrating more balanced expert utilization.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 8"
+  }
+]

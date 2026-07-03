@@ -1,0 +1,350 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand KL-Regularized Reward Maximization and its closed-form solution.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand the formulation of Emulated Fine-Tuning (EFT) and its scale decoupling variant.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand the full Portable Reward Tuning (PRT) framework including training and inference.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to understand the pseudocode for PRT training.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Algorithm 2 to understand the pseudocode for PRT inference.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The agent has read Appendix B completely to check detailed experimental hyperparameters for both vision and language tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes implementing the KL-regularized reward maximization objective (Equation 1) and its closed-form solution (Equation 2).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 1, Equation 2"
+  },
+  {
+    "criteria": "The plan includes implementing the PRT training procedure where the reward model is trained using cross-entropy loss applied to the PRT model output.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes implementing the PRT inference procedure that combines the trained reward model with a new pretrained model.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The plan includes implementing the Entropy Maximization (EM) regularization for PRT training.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 12"
+  },
+  {
+    "criteria": "The plan includes setting up vision experiments with CLIP models on image classification tasks (Aircraft, Caltech101, Cars, CIFAR-100, Country211, CUB, Flowers, RESISC45).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes setting up language experiments with instruction tuning on the Tulu v2 dataset evaluated on GSM8k and IFEval.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes implementing the EFT baseline using the implicit reward log(π_ft(y|x)/π_pt(y|x)) as in Equation 3 and Equation 4.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 3, Equation 4"
+  },
+  {
+    "criteria": "The plan includes memory and speed benchmarking comparing PRT and EFT at both training and inference time.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code for the closed-form solution of KL-regularized reward maximization (Equation 2) has been implemented as π(a|s) = (1/Z(s)) * π_ref(a|s) * exp(r(s,a)/λ).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for the PRT model (Equation 6) has been implemented as π_θ(y|x) = (1/Z_θ(x)) * π_pt(y|x) * exp(r_θ(x,y)/λ) with λ=1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for computing the PRT model in the logit space (line 6 of Algorithm 1) has been implemented as v_θ = log softmax(f(x; θ_pt)) + r(x; θ) to avoid numerical instability.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The code for the PRT training loss (Equation 7/8) has been implemented as minimizing the cross-entropy loss CE(p_θ, y*) = -log π_θ(y*|x) over the dataset.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The reward model r(x; θ) is initialized with the pretrained model weights θ_pt and shares the same network architecture as f(x; θ_pt).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for PRT inference (Algorithm 2) has been implemented as ṽ = log softmax(f̃(x; θ̃_pt)) + r(x; θ), followed by softmax to get the output probability.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The code for EFT inference (Equation 4) has been implemented to compute the output using the implicit reward log(π_ft/π_pt) with the new pretrained model π̃_pt as the KL reference.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code for the Entropy Maximization (EM) regularization (Equation 12) has been implemented as L̃(θ) = L(θ) - α * (1/|S|) * Σ H(ρ_θ(-|x)), where ρ_θ(y|x) = exp(r_θ(x,y)) / Σ_y exp(r_θ(x,y)).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 12"
+  },
+  {
+    "criteria": "The code for loading and fine-tuning CLIP models on image classification datasets (Aircraft, Caltech101, Cars, CIFAR-100, Country211, CUB, Flowers, RESISC45) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The vision training setup uses the correct hyperparameters: learning rate = 1e-5, batch size = 128, number of iterations = 2000, Adam optimizer, and cosine annealing with 500 warmup iterations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for constructing the zero-shot classification layer of CLIP models (using label text embeddings) and then fine-tuning only the feature extractor has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for loading and instruction-tuning language models with the Tulu v2 dataset has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The language training setup uses the correct hyperparameters: learning rate = 2e-5, batch size = 128, number of epochs = 2, Adam optimizer, warmup ratio = 0.03, and linear learning rate scheduler.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for evaluating language models on GSM8k benchmark using exact match metric has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for evaluating language models on IFEval benchmark using the average of four scores (instruction-level strict, instruction-level relaxed, prompt-level strict, prompt-level relaxed accuracy) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The vision experiments use the correct CLIP backbone architectures: ResNet-50, ResNet-101, ConvNext, ViT-B-16, and ViT-L-14, pretrained on OpenAI, LAION-400M, LAION-2B, and DataComp-1B datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The language experiments use the correct pretrained models from the Llama 2, Llama 3/3.1/3.2, Qwen 2/2.5, and Falcon 3 series.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for measuring peak GPU memory usage and average time per batch during training (Table 1) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for measuring peak GPU memory usage and average time per batch during inference (Tables 2 and 3) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Tables 2, 3"
+  },
+  {
+    "criteria": "The code for the ablation study on EM regularization with various α values (0.0, 1e-5, 1e-4, 1e-3, 1e-2, 0.1) has been implemented for both vision (Figure 6) and language tasks (Figure 7).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 6, Figure 7"
+  },
+  {
+    "criteria": "The code for the PRT+LoRA variant (Appendix H) has been implemented for instruction tuning experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The code for the robustness to distribution shifts ablation (Appendix G) using CIFAR-100 with Gaussian noise has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The code for the multi-random-seed stability ablation (Appendix F) using Qwen 2.5-0.5B as source has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The code for evaluating PRT on various additional NLP tasks (ARC, HumanEval, HellaSwag, TruthfulQA, MMLU, GPQA, MMLU-Pro) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix K, L"
+  },
+  {
+    "criteria": "The vision inference-time tuning experiments (Figure 2) for PRT and EFT have been executed successfully across source and target CLIP model pairs.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The language inference-time instruction-tuning experiments (Figure 3) for PRT and EFT on GSM8k and IFEval have been executed successfully across source/target model pairs from Llama2, Llama3, Qwen2.5, and Falcon3 series.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The Qwen2-to-Qwen2.5 knowledge update experiments (Figure 4) for PRT and EFT have been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The EM regularization ablation experiments (Figures 6 and 7) have been executed successfully with various α values.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 6, Figure 7"
+  },
+  {
+    "criteria": "The memory and speed benchmark experiments (Tables 1, 2, 3) have been executed successfully for both training and inference.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Tables 1, 2, 3"
+  },
+  {
+    "criteria": "The source model ablation experiments (Figures 10, 11 in Appendix E) comparing different source models have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: PRT achieves accuracy comparable to EFT for inference-time tuning on vision tasks across both model upscaling and knowledge update scenarios.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: PRT achieves accuracy comparable to or better than EFT on GSM8k and IFEval for instruction-tuned language models, across different source/target pairs.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: PRT outperforms EFT when transferring from Qwen2-0.5B to larger Qwen2.5 models in both GSM8k and IFEval tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: PRT training results in only a small increase in peak GPU memory (e.g., 12.84 GB vs. 13.08 GB for ResNet-50) and a moderate increase in average time per batch compared to standard fine-tuning.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: PRT inference requires less peak GPU memory and lower average time per batch than EFT for vision models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: PRT achieves higher token generation speed relative to the pretrained model baseline compared to EFT (e.g., ×0.93 vs. ×0.65 for Llama2-7B to Llama2-13B).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6: EM regularization with moderate α (e.g., 1e-3) can improve or maintain PRT performance on vision tasks even as reward-only accuracy decreases.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 7: EM regularization has little or no degrading effect on PRT GSM8k performance across Qwen2.5 target model sizes.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4 (Appendix F): PRT training variance across random seeds is comparable to standard fine-tuning, confirming stability.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5 (Appendix G): PRT performance degrades on noisy CIFAR-100 input data but recovers after additional PRT tuning on noisy data.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6 (Appendix H): PRT+LoRA achieves comparable GSM8k performance to EFT+LoRA, confirming compatibility with LoRA-based training.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7 (Appendix I): KL divergences between similar pretrained models are small, and constant C is finitely bounded, empirically supporting Proposition 3.2.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 12 (Appendix J): PRT achieves performance comparable to EFT across various vision datasets beyond the main experiments.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Appendix J"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 13 (Appendix K): PRT is effective for code generation on Llama2, Llama3, and Qwen2.5 models on HumanEval, but may degrade for Falcon3 on larger target models due to weak source model capability in code.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix K"
+  }
+]

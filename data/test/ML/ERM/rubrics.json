@@ -1,0 +1,434 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the problem formulation: given a training set, test set, score function, and black-box task model, the goal is to find the optimal prompt that maximizes the expected score on the test set.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the Exemplar-Guided Reflection mechanism: an instructive meta-prompt guides the prompt optimizer to first select diverse, representative wrong samples as exemplars with detailed solution processes (chain-of-thought), and then generate feedbacks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the Feedback Memory mechanism: feedbacks are stored with priority scores, retrieved via softmax probability, and removed via a selective forgetting update rule.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 completely to understand the Exemplar Factory mechanism: exemplars are stored with priority scores, retrieved using a combined priority-and-semantic-similarity score, and updated with a selective forgetting rule.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The agent has read Section 4 and Appendix A.1 to understand the seven evaluation datasets (WSC, ETHOS, ArSarcasm, LIAR, BBH-navigate, GSM8K, WebNLG) and their splits.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4, Table 7"
+  },
+  {
+    "criteria": "The agent has read Appendix A.2 to understand the implementation details: Doubao-Pro as the task model (temperature=0), GPT-4o-2024-05-13 as the prompt optimizer (temperature=1.0), 8 candidate prompts generated per step, and best-performing one selected for next iteration.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The agent has read Appendix E (Figures 4, 5, 6) to understand the three meta-prompts used: the instructive reflection meta-prompt, the optimization meta-prompt, and the retrieval optimization meta-prompt.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix E, Figures 4, 5, 6"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the main zero-shot comparison results across all seven datasets and eight methods.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Tables 4, 5, and 6 to understand the ablation study results for each component of ERM (Exemplar-Guided Reflection, Feedback Memory, Exemplar Factory).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Tables 4, 5, 6"
+  },
+  {
+    "criteria": "The plan includes the three-component architecture of ERM: Exemplar-Guided Reflection, Feedback Memory, and Exemplar Factory.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes implementing the instructive reflection meta-prompt that guides the optimizer to select exemplars with detailed chain-of-thought solutions from wrong samples before generating feedbacks.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Figure 4"
+  },
+  {
+    "criteria": "The plan includes implementing Feedback Memory with storage, filtering, retrieval by priority score, and selective forgetting (priority score update and removal below threshold).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes implementing Exemplar Factory with storage, filtering (verify solution correctness and handle duplicates), retrieval by combined priority-semantic score, and selective forgetting.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes loading and splitting all seven datasets (LIAR, BBH-Navigate, ETHOS, ArSarcasm, WebNLG, GSM8K, WSC) with the correct train/test sizes as specified in Table 7.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The plan includes setting up Doubao-Pro as the task model and GPT-4o-2024-05-13 as the prompt optimizer with the specified temperatures.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The plan includes the beam search strategy for prompt selection: generating 8 candidate prompts per step and selecting the best-performing one on the validation set.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1, Appendix A.2"
+  },
+  {
+    "criteria": "The plan includes implementing the six baseline methods for comparison: APE, ProTeGi, OPRO, Promptbreeder, EvoPrompt, and GPO.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes the evaluation metrics: F1 score for LIAR, BBH, ETHOS, ArSarcasm; Accuracy for WSC and GSM8K; ROUGE-L for WebNLG.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes running experiments under both zero-shot and few-shot settings, with five exemplars retrieved via kNN for the few-shot condition.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Table 3"
+  },
+  {
+    "criteria": "The plan includes ablation experiments testing each component of ERM independently (Exemplar-Guided Reflection only, with Exemplar Factory only, with Feedback Memory only, and all combined).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The plan includes running all experiments three times and reporting average results.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code implements the prompt optimization objective as Equation (1): finding the optimal prompt p* that maximizes the expected score of the task model over the test set.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code implements the instructive reflection meta-prompt (Figure 4) that instructs the prompt optimizer to identify N diverse typical wrong examples with step-by-step chain-of-thought solutions in JSON format wrapped in <key_example> tags, followed by N feedback reasons wrapped in <feedback> tags.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The code implements Equation (2): exemplar generation via the instructive meta-prompt, where the prompt optimizer selects n_e diverse and representative wrong samples from the wrong sample batch B and provides detailed solution processes for each.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code implements Equation (3): feedback generation conditioned on the current prompt, wrong sample batch B, and the generated exemplars E^t, producing n_f feedback items.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code implements Equation (4): prompt refinement where the optimizer produces a new prompt p^{t+1} based on the current prompt p^t, wrong samples B, and a single feedback f^t using the optimization meta-prompt.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code implements the optimization meta-prompt (Figure 5) that provides the current prompt, wrong samples, a single feedback, and instructs the model to generate a refined prompt wrapped in <prompt> and </prompt> tags, with a word limit of 512 words.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The code implements the Feedback Memory storage with a filtering strategy: (1) only store feedbacks whose corresponding refined prompts bring improvements on the validation set, and (2) use BGE-M3 to compute semantic similarity and discard new feedbacks with high similarity to stored ones.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code integrates the BGE-M3 model to compute semantic similarity between newly generated feedbacks and stored feedbacks for deduplication in Feedback Memory.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code implements Equation (5): computing the selection probability for each stored feedback using softmax over exponential priority scores divided by temperature tau_f.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code implements Equation (6): randomly sampling n_f_hat feedbacks from the stored feedbacks according to their selection probabilities.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code implements the retrieval optimization meta-prompt (Figure 6) that provides the current prompt, wrong samples, and multiple retrieved feedbacks simultaneously to generate a refined prompt wrapped in <prompt> and </prompt> tags.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The code implements Equation (7): updating the priority score of each retrieved feedback using the formula s_p^t(f) = (1 - beta) * s_p(f)^{t-1} + beta * I(f), where I(f) indicates whether sufficient performance gain is achieved.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code implements Equation (8): removing feedbacks from storage whose priority score falls below the threshold theta, retaining only feedbacks with s_p^t(f) >= theta.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The code implements the Exemplar Factory storage with a filtering strategy: (1) verify that the exemplar's chain-of-thought solution generated by the optimizer matches the ground-truth label, and (2) handle duplicate exemplars by replacing stored ones with probability p or rejecting the new one with probability 1-p.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The code implements Equation (9): computing the retrieval probability for each stored exemplar using softmax over the product of priority score s_p(e_i) and semantic similarity s_s^j(e_i) to the query question, divided by temperature tau_e.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The code implements the Exemplar Factory retrieval: during optimization, randomly sample 5 exemplars according to retrieval probabilities; during inference, deterministically select the 5 exemplars with the highest s_p(e_i) * s_s^j(e_i) scores.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The code implements the Exemplar Factory forgetting update: adjust exemplar priority scores based on whether incorporating them as variable content p_R(q_j) leads to performance improvement, and remove exemplars with low priority scores.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The code implements the full prompt optimization loop: evaluate task model on a subset of training set, collect wrong samples, apply Exemplar-Guided Reflection to generate exemplars and feedbacks, update Feedback Memory, generate refined prompts via beam search, evaluate candidates, and update scores.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code implements the beam search strategy for prompt selection: generating 8 candidate prompts per optimization step and selecting the best-performing one on the validation set as the prompt for the next step.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.2"
+  },
+  {
+    "criteria": "The code implements the periodic retrieval of historical feedbacks from Feedback Memory (not every step) to generate new candidate prompts using the retrieval optimization meta-prompt.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code sets up Doubao-Pro as the task model with temperature=0 for deterministic outputs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code sets up GPT-4o-2024-05-13 as the prompt optimizer with temperature=1.0 for diverse generation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code loads and preprocesses the LIAR dataset (3681 train, 461 test) following the same split as ProTeGi.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix A.1"
+  },
+  {
+    "criteria": "The code loads and preprocesses the BBH-Navigate dataset (96 train, 144 test) following the same split as GPO.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix A.1"
+  },
+  {
+    "criteria": "The code loads and preprocesses the ETHOS dataset (440 train, 200 test).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix A.1"
+  },
+  {
+    "criteria": "The code loads and preprocesses the ArSarcasm dataset (8437 train, 2110 test) using the original split.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix A.1"
+  },
+  {
+    "criteria": "The code loads and preprocesses the WebNLG dataset (200 train, 300 test) following the same split as GPO.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix A.1"
+  },
+  {
+    "criteria": "The code loads and preprocesses the GSM8K dataset (200 train, 300 test) following the same split as GPO.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix A.1"
+  },
+  {
+    "criteria": "The code loads and preprocesses the WSC dataset (100 train, 150 test) following the same split as GPO.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix A.1"
+  },
+  {
+    "criteria": "The code implements evaluation metrics: macro F1 score for LIAR, BBH-Navigate, ETHOS, ArSarcasm; accuracy for WSC and GSM8K; ROUGE-L for WebNLG.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code implements the prompt composition structure where the full prompt p = [p_I, p_R(q_i)] can include an invariant task description part and a question-specific variable content part (exemplars).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements the baseline methods APE and ProTeGi for comparison, including their respective meta-prompts and optimization procedures.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code implements the baseline methods OPRO, Promptbreeder, EvoPrompt, and GPO for comparison.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code implements the few-shot baseline where five relevant examples are dynamically selected via kNN clustering in the embedding space (for comparison in Table 3 and Table 10).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 3, Table 10"
+  },
+  {
+    "criteria": "The code for the full ERM pipeline (Exemplar-Guided Reflection + Feedback Memory + Exemplar Factory) has been executed successfully without errors on all seven datasets under zero-shot setting.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for all baseline methods (APE, ProTeGi, OPRO, Promptbreeder, EvoPrompt, GPO) has been executed successfully without errors on all seven datasets under zero-shot setting.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for all methods including ERM has been executed successfully under few-shot setting on all seven datasets.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The code for all ablation configurations (Exemplar-Guided Reflection only, with Exemplar Factory only, with Feedback Memory only, and full ERM) has been executed successfully on all seven datasets.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The code for Exemplar Factory ablation (no retrieval, retrieval without filtering, retrieval with filtering, with selective forgetting) has been executed successfully on LIAR, BBH, and WebNLG.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The code for Feedback Memory ablation (no retrieval, retrieval without filtering, retrieval with filtering, with selective forgetting) has been executed successfully on LIAR, BBH, and WebNLG.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: ERM achieves F1=68.6 on LIAR, F1=86.1 on BBH, F1=98.0 on ETHOS, F1=85.1 on ArSarcasm, ROUGE-L=59.6 on WebNLG, Acc=93.3 on GSM8K, and Acc=86.0 on WSC under zero-shot setting.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: ERM outperforms the best baseline (ProTeGi) by +10.1 F1 on LIAR under zero-shot setting.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: ERM achieves the highest performance across all seven datasets compared to APE, ProTeGi, OPRO, Promptbreeder, EvoPrompt, and GPO under zero-shot setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: ERM outperforms all baseline methods under the few-shot setting across all seven datasets, with at least 8.3 F1 improvement over the best baseline on LIAR.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: adding Exemplar-Guided Reflection alone improves LIAR F1 from 58.5 (ProTeGi baseline) to 62.9; adding Exemplar Factory brings it to 67.2; adding Feedback Memory brings it to 66.6; combining all three reaches 68.6.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5: exemplar retrieval without filtering slightly hurts performance (LIAR 62.3 vs 62.9); adding exemplar filtering improves LIAR to 65.7; adding selective forgetting further improves to 66.6.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 6: feedback retrieval without filtering slightly hurts performance (LIAR 66.4 vs 66.6); adding feedback filtering improves LIAR to 67.5; adding selective forgetting further improves to 68.6.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match the efficiency results in Figure 3: ERM reaches peak performance on LIAR in 7 steps while ProTeGi requires 13 steps, demonstrating roughly half the optimization steps.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 9: ERM's total token consumption (approximately 7503 tokens) is comparable to non-feedback-based methods (APE: 7415, OPRO: 8652, GPO: 7360) despite being feedback-based, and significantly lower than ProTeGi (12836).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 10: using ERM's Exemplar Factory exemplars (LIAR: 66.6, BBH: 82.6, WebNLG: 58.8) outperforms both zero-shot (62.9, 75.7, 56.9) and five relevant kNN examples (65.7, 78.5, 57.4).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 10"
+  },
+  {
+    "criteria": "The execution outcomes confirm that ERM-optimized prompts are more informative than ProTeGi-optimized prompts, as illustrated by the WebNLG prompt examples in Table 2.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  }
+]

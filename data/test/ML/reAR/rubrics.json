@@ -1,0 +1,494 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the visual tokenizer pipeline (encoder, quantizer, decoder) and the autoregressive model formulation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the two sources of generator-tokenizer inconsistency: amplified exposure bias and embedding unawareness.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the two components of reAR: Noisy Context Regularization and Codebook Embedding Regularization.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the experimental setup including dataset, evaluation protocol, model configurations, and training details.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the main class-conditional generation results on ImageNet-1K 256×256.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check generalization results on non-standard tokenizers (TiTok and AliTok).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Tables 3 and 4 to check the ablation study settings for noise augmentation and embedding regularization layer selection.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3, Table 4"
+  },
+  {
+    "criteria": "The agent has read Appendix A completely to understand additional model configuration details (VQGAN codebook size 1024, 16×16 patches, QK-Norm, AdaLN, dropout 0.1, MLP ratio 4.0, 16 attention heads) and training details (β1=0.9, β2=0.96, weight decay=0.03, bfloat16).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the analysis experiment settings for studying generator-tokenizer inconsistency (CTR, perplexity, PSNR, LPIPS metrics).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Appendix C to understand the CKA-based analysis of hidden feature alignment between the AR generator and the tokenizer.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes implementing the amplified exposure bias analysis with two decoding protocols: perfect context (front-loaded ground-truth tokens) and imperfect context (uniformly interleaved ground-truth tokens).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing the embedding unawareness analysis experiment by replacing incorrect token predictions with tokens whose embedding is closest in cosine similarity to the correct token.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the Noisy Context Regularization component: injecting Bernoulli noise into input tokens during training using the annealing schedule.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the Codebook Embedding Regularization component: adding trainable MLP heads at a shallow layer (encoding) and a deep layer (decoding) to predict current and next token codebook embeddings respectively.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan specifies the combined reAR objective combining the noisy context AR loss and the codebook embedding regularization loss with weight λ.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The plan specifies the MLP head architecture: 2-layer MLP with hidden size 2048 and GeLU activation, with parameter overhead of 2.1M/2.1M/4.2M for reAR-S/B/L.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "The plan specifies placing the encoding regularization at layer l=0 (first transformer layer) and the decoding regularization at l'=15/18/18 for reAR-S/B/L (three-quarters model depth).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Section 4.1"
+  },
+  {
+    "criteria": "The plan specifies the truncated linear annealing noise schedule f(t) = max(0, 1 - 4/3 * t) for sampling ε ~ U(0, f(t)) during training.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Appendix A"
+  },
+  {
+    "criteria": "The plan includes model configurations for reAR-S (20 layers, hidden size 768, 201M params), reAR-B (24 layers, hidden size 768, 261M params), and reAR-L (24 layers, hidden size 1024, 461M params).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the training setup: 400 epochs, 8 A800 GPUs, batch size 2048, AdamW optimizer with gradient clipping, learning rate warmup followed by cosine decay.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "The plan includes classifier-free guidance with class label dropout probability 0.1 during training and power-cosine guidance schedule at inference.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "The plan includes ablation experiments for noise augmentation strategies (fixed ratio vs. uniform sampling vs. annealing schedules).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Table 3"
+  },
+  {
+    "criteria": "The plan includes ablation experiments for embedding regularization layer selection, testing encoding and decoding regularization at different transformer layers.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Table 4"
+  },
+  {
+    "criteria": "The plan includes generalization experiments applying reAR to TiTok (AR-TiTok-b64, 261M params, 400 epochs) and AliTok (reAR-B-AliTok, 177M params, 800 epochs) tokenizers.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The plan includes applying reAR to VAR-d16 using the same training settings to validate generalization to non-standard AR paradigms.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix A, Table 6"
+  },
+  {
+    "criteria": "The code for the visual tokenizer pipeline has been implemented following Equation 1: encoder E maps image I to feature z-hat, quantizer Q maps to quantized embedding z^q, and decoder D reconstructs the image.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for the MaskGIT VQGAN tokenizer has been integrated with a codebook of size 1024 producing 16×16 patch features.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The code for the DiT-style decoder-only AR backbone has been implemented with causal mask, class conditioning via AdaLN layers, learnable positional embeddings, QK-Norm, dropout 0.1, and MLP ratio 4.0 with 16 attention heads.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "The code for the standard autoregressive training objective has been implemented as Equation 3: maximizing log-likelihood of next token given ground-truth context (teacher forcing).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for the Noisy Context injection has been implemented as Equation 4: each input token x_i is replaced with a uniform random codebook index u_i with probability ε (Bernoulli(ε)), i.e., x-tilde_i = (1 - b_i) * x_i + b_i * u_i.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code for the modified AR loss under noisy context has been implemented as Equation 5: L_AR'(θ) = -E[sum log p_θ(x_i | x-tilde_{i-1}, ..., x-tilde_1)] where ε ~ U(0, f(t)) is sampled per sequence.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for the 2-layer MLP head h_φ has been implemented with hidden size 2048 and GeLU activation to project transformer hidden features into the tokenizer codebook embedding dimension.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Section 4.1"
+  },
+  {
+    "criteria": "The code for the Codebook Embedding Regularization loss has been implemented as Equation 6: L_re(θ,φ;t) = E[sum d(h_φ^i(w_θ^l(x-tilde)), z_{x_i}) + d(h_φ^i(w_θ^{l'}(x-tilde)), z_{x_{i+1}})] using cosine distance.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for the combined reAR training objective has been implemented as Equation 7: L_reAR(θ,φ;t) = L_AR'(θ;t) + λ * L_re(θ,φ;t) with default λ=1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The encoding regularization is applied at transformer layer l=0 (first layer) to align early hidden features with the current token's codebook embedding z_{x_i}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Section 4.1"
+  },
+  {
+    "criteria": "The decoding regularization is applied at transformer layer l'=15/18/18 for reAR-S/B/L respectively (three-quarters model depth) to align deep hidden features with the next token's codebook embedding z_{x_{i+1}}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Section 4.1"
+  },
+  {
+    "criteria": "The annealing noise schedule f(t) = max(0, 1 - 4/3 * t) has been implemented, where t is the normalized training progress (e.g., t=3/8 at epoch 150 of 400).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Appendix A"
+  },
+  {
+    "criteria": "The AdamW optimizer has been configured with β1=0.9, β2=0.96, weight decay=0.03, gradient clipping norm=1.0, and bfloat16 mixed precision training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "The learning rate schedule has been implemented: linear warmup to 4×10^{-4} over the first 100 epochs, followed by cosine decay to 1×10^{-5} over the remaining 300 epochs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "Gradient accumulation has been implemented: 1 step for reAR-S/B and 2 steps with batch size 1024 per step for reAR-L to achieve effective batch size 2048.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "Classifier-free guidance has been implemented: class labels dropped with probability 0.1 during training, and power-cosine sampling schedule applied at inference with guidance scale 22/14.5/10 and power scale 2.75/2.25/1.75 for reAR-S/B/L.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "KV-cache has been implemented for autoregressive inference to achieve high sampling throughput.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "FID evaluation has been implemented following the ADM protocol: generating 50,000 images at 256×256 and computing FID against the ImageNet-1K validation split.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "Inception Score (IS) evaluation has been implemented following Salimans et al. (2016) for the 50,000 generated images.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The correct token ratio (CTR) metric has been implemented as Equation 8: CTR = (1/N) * sum_i 1[argmax_v p_θ(v|x_{1:i-1}) = x_i].",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The perplexity metric has been implemented as Equation 9: Perplexity = exp(-(1/N) * sum_i log p_θ(x_i | x_{1:i-1})).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The PSNR metric has been implemented as Equations 10-11: MSE between decoded and ground-truth images, then PSNR = 10 * log10(L^2 / MSE).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 10, Equation 11"
+  },
+  {
+    "criteria": "The LPIPS metric has been implemented as Equation 12: weighted sum of squared differences between pretrained network activations of decoded and ground-truth images.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 12"
+  },
+  {
+    "criteria": "The Perfect Context (front-loaded) decoding protocol has been implemented: fixing the first floor(r*n) tokens to ground truth and letting the AR model freely generate the remainder.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix B.2"
+  },
+  {
+    "criteria": "The Imperfect Context (uniformly interleaved) decoding protocol has been implemented: randomly selecting floor(r*n) positions in the sequence for ground-truth tokens while autoregressively sampling all other positions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix B.2"
+  },
+  {
+    "criteria": "The embedding replacement experiment has been implemented: for each incorrect prediction, replacing it with probability r' with the token x'_i whose codebook embedding z^q'_i has the highest cosine similarity to the correct embedding z^q_i (excluding z^q_i itself).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix B.2"
+  },
+  {
+    "criteria": "The CKA score has been implemented as Equation 13: CKA(X,Y) = <K_c, L_c>_F / (||K_c||_F * ||L_c||_F), where K_c and L_c are centered Gram matrices of the generator features and tokenizer embeddings respectively.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 13, Appendix C.2"
+  },
+  {
+    "criteria": "The tied codebook embedding baseline has been implemented (Press & Wolf, 2016; Weber et al., 2024) for comparison in the embedding regularization ablation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Table 4"
+  },
+  {
+    "criteria": "Multiple noise augmentation strategies have been implemented for ablation: fixed ratio (ε=0.25 and ε=0.5), uniform random ratio ε~U(0,0.5), linear annealing f(t)=1-t, and truncated linear annealing f(t)=max(0,1-4/3*t).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Table 3"
+  },
+  {
+    "criteria": "reAR has been implemented and applied to the TiTok tokenizer (AR-TiTok-b64 configuration: 261M params) for the generalization experiment.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "reAR has been implemented and applied to the AliTok tokenizer (reAR-B-AliTok configuration: 177M params) for the generalization experiment.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "reAR has been implemented and applied to VAR-d16 using the same training settings as the main experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A, Table 6"
+  },
+  {
+    "criteria": "The exposure bias analysis experiments (perfect vs. imperfect context with varying CTR) have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.1, Appendix B"
+  },
+  {
+    "criteria": "The embedding unawareness analysis experiments (token replacement with varying replacement ratio r') have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.1, Appendix B"
+  },
+  {
+    "criteria": "Training and evaluation of reAR-S, reAR-B, and reAR-L on ImageNet-1K for 400 epochs have been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 1"
+  },
+  {
+    "criteria": "Generalization experiments training reAR with TiTok (400 epochs) and AliTok (800 epochs) tokenizers have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "Ablation studies for noise augmentation strategies (Table 3) and embedding regularization layer choices (Table 4) for reAR-S have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.3, Table 3, Table 4"
+  },
+  {
+    "criteria": "CKA analysis experiments comparing hidden feature alignment between vanilla AR and reAR across transformer layers have been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix C.2, Figure 9"
+  },
+  {
+    "criteria": "VAR-d16 training with reAR has been executed successfully without errors and FID/IS evaluated.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix A, Table 6"
+  },
+  {
+    "criteria": "Sampling throughput (images/sec) has been measured on a single A800 GPU with batch size 128 using KV-cache for reAR models.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.2, Figure 5"
+  },
+  {
+    "criteria": "The main results match Table 1: reAR-L achieves FID=1.86 (cfg=10.0) and IS=316.9 with 461M params, compared to the AR-L baseline FID=3.02 and IS=256.2.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The results match Table 1: reAR-S (FID=2.00, IS=295.7, 201M params) outperforms LlamaGen-XL (FID=2.34, IS=253.9, 1.4B params) using only 14% of the parameters.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The results match Table 1: reAR-B achieves FID=1.91 and IS=300.9 with 261M params.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The generalization results match Table 2: reAR-B-AliTok achieves FID=1.42 with 177M params, matching REPA (FID=1.42 with 675M params) and outperforming AR-AliTok-B (FID=1.50) and RAR-B-AliTok (FID=1.52).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The generalization results match Table 2: reAR-TiTok-b64 achieves FID=4.01 with 261M params, improving over AR-TiTok-b64 (FID=4.45) and RAR-TiTok-b64 (FID=4.07).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The scaling results match Figure 4: FID consistently decreases as model size increases (reAR-S → reAR-B → reAR-L) across all training steps.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The computation cost results match Table 5: reAR-B adds only ~0.03 min/epoch over AR-B (8.14 vs. 8.11 min), and reAR-L adds ~0.06 min/epoch over AR-L (16.05 vs. 15.99 min).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The noise ablation results match Table 3: fixed ε=0.5 causes training collapse (FID=3.15), truncated linear annealing f(t)=max(0,1-4/3t) achieves best FID=2.00, and noise-only (without embedding reg) gives FID=2.18.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The embedding regularization ablation results match Table 4: EN@0+DE@15 achieves the best FID=19.72 and IS=61.3, while tied codebook embedding (FID=21.08) barely improves over vanilla AR (FID=21.32).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The regularization layer analysis results match Table 4: EN@5+DE@15 (FID=21.36) performs worse than EN@0+DE@15 (FID=19.72), confirming that encoding regularization must be at the first layer.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The nearby regularization layer results match Table 7: DE@15 (FID=20.03) is the best among DE@13 through DE@17, with nearby layers yielding similar performance (e.g., DE@14: FID=20.17, DE@16: FID=20.11).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The exposure bias analysis results match Figure 3(a) and Figure 8(a-d): under the same CTR, imperfect context consistently yields higher LPIPS and lower PSNR than perfect context, demonstrating that exposure bias propagates structural errors in visual AR.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Figure 8"
+  },
+  {
+    "criteria": "The embedding unawareness analysis results match Figure 3(b) and Figure 8(e-g): increasing the embedding replacement ratio r' consistently improves LPIPS and PSNR while keeping CTR unchanged, even though perplexity increases.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Figure 8"
+  },
+  {
+    "criteria": "The CKA analysis results match Figure 9(b-c): reAR increases CKA similarity between generator features and encoded token embeddings at early layers (l=0) and between generator features and decoded (next-token) embeddings at deeper layers (~l=15).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 9, Appendix C"
+  },
+  {
+    "criteria": "The robustness analysis results match Figure 9(a): reAR achieves higher CTR than vanilla AR on unseen validation data (12.3 vs. 11.8) and on noisy unseen data (9.0 vs. 8.3) with 10% token replacement.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 9, Appendix C.1"
+  },
+  {
+    "criteria": "The VAR generalization results match Table 6: reAR applied to VAR-d16 improves FID from 3.55 to 3.39 and IS from 274.4 to 276.6 without tuning any hyperparameters.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6, Appendix A"
+  },
+  {
+    "criteria": "The joint effect results match Table 3: combining noise augmentation (ε~U(0,f(t))) with embedding regularization achieves FID=2.00, which outperforms noise-only (FID=2.18) and embedding-reg-only (ε=0.0, FID=2.12), confirming the complementary nature of both components.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3, Section 4.3"
+  }
+]

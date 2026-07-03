@@ -1,0 +1,308 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the FCI score definition and how attention-based branching is motivated by massive attention values in LLMs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.1.1 and understands that responses are segmented into steps using double newlines ('\\n\\n'), yielding T_k steps per response.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1.1"
+  },
+  {
+    "criteria": "The agent has read Equation 5 and understands that the FCI score for step k at layer l and head h is computed by summing attention weights of all subsequent steps j from k+Δ to T_k attending to step k.",
+    "score": 3,
+    "type": "Paper Observation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The agent has read Equation 6 and understands that the final FCI score y_k is obtained by taking the maximum across all layers and heads.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The agent has read Section 3.1.3 and understands the ATB rule: select steps in the top 20% by FCI score, then pick the top N=2 earliest steps as branching points.",
+    "score": 3,
+    "type": "Paper Observation",
+    "comment": "Section 3.1.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the two components of adaptive sampling: attention-based filtering and difficulty-aware expansion.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Equation 8 and understands that problems whose average FCI scores across initial responses are below the dataset mean are filtered out from Monte Carlo sampling.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The agent has read Equation 9 and understands that the number of trees M per problem is M = Round(exp(-z_n) × M'), where z_n is the difficulty score (fraction of correct initial samples) and M'=6.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The agent has read Section 3.2.2 and Equation 10 to understand that the prompt batch size is updated as B_{m+1} = Round(λB_m + (1-λ)(B'/B''_m)B_m) with λ=0.9, and responses with zero advantage are discarded after MC sampling.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2.2, Equation 10"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 and understands that in one-step off-policy training, initial sampling for the (m+1)-th batch is performed concurrently with MC sampling for the m-th batch, eliminating redundant sampling.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 and noted all key hyperparameters: training batch size 64, PPO minibatch size 32, learning rate 1e-6, Clip-Higher ε_high=0.28, KL loss weight 0.001, λ=0.9, ρ=0.2, Δ=4, N=2, M'=6.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 and identified the evaluation benchmarks (AIME24, AIME25, AMC23, MATH-500, Minerva Math, OlympiadBench), metrics (Pass@1 and Pass@K with K=32 for AIME/AMC23 and K=4 for others), and the evaluation prompt template from Appendix A.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "The plan includes step-level segmentation of model responses using double newline ('\\n\\n') as a delimiter to produce a sequence of reasoning steps.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1.1"
+  },
+  {
+    "criteria": "The plan includes extracting token-level attention scores via a forward pass and aggregating them into step-to-step attention matrices α^{l,h} ∈ R^{T_k × T_k}.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1.1"
+  },
+  {
+    "criteria": "The plan includes computing per-step FCI scores using Equations 5 and 6, with Δ=4 and max aggregation over layers and heads.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 5-6"
+  },
+  {
+    "criteria": "The plan includes implementing ATB: identifying the top 20% steps by FCI score and selecting the top 2 earliest among them as branching points (Equation 7).",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Equation 7, Section 3.1.3"
+  },
+  {
+    "criteria": "The plan includes both components of adaptive sampling: attention-based filtering using mean FCI threshold (Equation 8) and difficulty-aware expansion using exponential scaling (Equation 9).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 8-9"
+  },
+  {
+    "criteria": "The plan includes adaptive batch size update (Equation 10) and discarding zero-advantage samples to ensure valid training batches.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 10, Section 3.2.2"
+  },
+  {
+    "criteria": "The plan includes the one-step off-policy training pipeline where initial sampling for batch m+1 is overlapped with MC sampling for batch m.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan specifies using DS-R1-Distill-Qwen-1.5B and DS-R1-Distill-Qwen-7B as base models, training on DeepScaleR-Preview-Dataset (40.3k problems), and using verl as the training framework with vLLM for rollout generation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan details running main experiments against GRPO, TreeRL, and DeepScaleR-Preview-1.5B on six mathematical benchmarks, and running an ablation study with the five configurations listed in Table 2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Section 4.3"
+  },
+  {
+    "criteria": "The code correctly segments model responses into steps by splitting on double newlines ('\\n\\n'), and handles edge cases such as empty steps or single-step responses.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1.1"
+  },
+  {
+    "criteria": "The code performs a single forward pass through the model to extract token-level attention weights from all layers and heads and aggregates them into step-to-step attention matrices α^{l,h} ∈ R^{T_k × T_k} by summing token-level weights within each step boundary.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1.1"
+  },
+  {
+    "criteria": "The code implements Equation 5: for each step k, layer l, and head h, the FCI score y_k^{l,h} is computed as the sum of α_{j,k}^{l,h} for all j from k+Δ to T_k, with Δ=4.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code implements Equation 6: the final FCI score y_k is computed as the maximum over all layers l and heads h of y_k^{l,h}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code implements Equation 7: the candidate branching set C contains all steps k whose FCI score meets or exceeds the 80th percentile (ρ=0.2 quantile level), and then the top N=2 earliest steps from C are selected as final branching points.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7, Section 3.1.3"
+  },
+  {
+    "criteria": "The code implements TreeRL's tree-based advantage computation: node value V(s_k) = average accuracy of all leaf children (Equation 2), and advantage Â_{i,k} = (1/√|L(s_k)|) × (global_advantage + local_advantage) (Equation 3).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 2-3"
+  },
+  {
+    "criteria": "The code implements Equation 8: attention-based filtering that computes the average FCI score per problem across initial responses and filters out problems whose mean FCI score is below the dataset-wide mean, keeping only problems in D_MC.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 8, Section 3.2.1"
+  },
+  {
+    "criteria": "The code implements Equation 9: difficulty-aware expansion that computes the difficulty score z_n = (1/G) Σ_i 1(o_i is correct) for each problem and sets the number of trees M = Round(exp(-z_n) × M') with M'=6.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 9, Section 3.2.1"
+  },
+  {
+    "criteria": "The code implements Equation 10: adaptive batch size update B_{m+1} = Round(λ × B_m + (1-λ) × (B'/B''_m) × B_m) with λ=0.9, where B' is the target batch size, B''_m is the valid training batch size (non-zero advantage), and B_m is the current prompt batch size.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 10, Section 3.2.2"
+  },
+  {
+    "criteria": "The code correctly discards all samples with zero advantage values after MC sampling before constructing the final training batch.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2.2"
+  },
+  {
+    "criteria": "The code implements the one-step off-policy training pipeline: at step m, initial sampling for the (m+1)-th batch is performed simultaneously with MC sampling for the m-th batch.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code uses the GRPO policy optimization loss (Equation 1) with token-level policy loss, Clip-Higher with ε_high=0.28, and KL divergence penalty with weight 0.001 for training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1, Section 4.1"
+  },
+  {
+    "criteria": "The code correctly loads DS-R1-Distill-Qwen-1.5B and DS-R1-Distill-Qwen-7B as base models and integrates with the verl training framework and vLLM rollout backend with max response length 8192, top-p 1.0, and temperature 1.0.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code loads and preprocesses the DeepScaleR-Preview-Dataset of 40.3k mathematical reasoning problems and applies the evaluation prompt template '{problem} Let\\'s think step by step and output the final answer within \\\\boxed{}.'" ,
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix A"
+  },
+  {
+    "criteria": "The code implements the three PSRL baselines for comparison: (1) GRPO (outcome-based, no critic, group-relative advantage), (2) TreeRL (entropy-based tree branching), and (3) DeepScaleR-Preview-1.5B (strong RL-trained reference model).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code implements the hybrid answer verifier combining DeepScaleR's verifier and Math-Verify to check correctness of model outputs on all six benchmarks.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The five ablation variants are correctly implemented: TreeRL baseline, TreeRL w/first-2-step branching, TreeRL w/ATB only, w/ATB+ADS without attention-based filtering, and w/ATB+ADS without difficulty-aware expansion.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2, Section 4.3"
+  },
+  {
+    "criteria": "The main training experiments for AttnRL are executed successfully on DS-R1-Distill-Qwen-1.5B for 500 training steps using the DeepScaleR-Preview-Dataset with training batch size 64 and PPO minibatch size 32.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Section 4.2"
+  },
+  {
+    "criteria": "The main training experiments for AttnRL are executed successfully on DS-R1-Distill-Qwen-7B using three nodes with 8× NVIDIA H800 GPUs each.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "GRPO and TreeRL baseline training experiments are executed successfully on both DS-R1-Distill-Qwen-1.5B and DS-R1-Distill-Qwen-7B for fair comparison.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "All six ablation study variants are executed successfully on DS-R1-Distill-Qwen-1.5B and results are collected across all six benchmarks.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Evaluation is run on all six benchmarks (AIME24, AIME25, AMC23, MATH-500, Minerva Math, OlympiadBench) with the correct Pass@K values (K=32 for AIME24/AIME25/AMC23, K=4 for MATH-500/Minerva/OlympiadBench) and max response length 32768 tokens.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "Training efficiency metrics are collected: wall-clock training time, number of valid training tokens (tokens with non-zero advantage), and final average performance for GRPO, TreeRL, TreeRL w/one-step off-policy, and AttnRL (matching Table 3).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 3, Section 5.2"
+  },
+  {
+    "criteria": "The AttnRL results on DS-R1-Distill-Qwen-1.5B match Table 1: AIME24≈39.7%, AIME25≈28.5%, AMC23≈83.2%, MATH-500≈90.0%, Minerva≈40.3%, OlympiadBench≈61.4%, average≈57.2%.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The AttnRL results on DS-R1-Distill-Qwen-7B match Table 1: AIME24≈59.3%, AIME25≈42.5%, AMC23≈92.5%, MATH-500≈95.4%, Minerva≈49.3%, OlympiadBench≈73.3%, average≈68.7%.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "AttnRL outperforms GRPO and TreeRL by approximately 1.9% and 1.8% average across six benchmarks at 1.5B scale, matching the reported improvements in Section 4.2.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The ablation results match Table 2: ATB alone improves over TreeRL by approximately 1.2% average; full AttnRL (ATB + ADS) achieves the highest average of 57.2%, confirming the contribution of each component.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "Training efficiency results match Table 3: one-step off-policy reduces TreeRL wall-clock time by approximately 8% (from 67.7 to 62.2 hours), and AttnRL achieves 930.4M valid training tokens versus 274.6M for TreeRL.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The sampling analysis results (Figure 6 and Figure 7) qualitatively match: ATB reduces solve-all and solve-none ratios compared to entropy-based branching, and adaptive sampling reduces the fraction of zero-advantage samples while maintaining a stable valid training batch.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6, Figure 7"
+  },
+  {
+    "criteria": "The preliminary disruption experiment results (Figure 3) are reproducible: disrupting top-20% FCI steps leads to a larger normalized accuracy drop (≈0.24) compared to disrupting non-top-20% steps (≈0.37), and entropy-based disruption falls between (≈0.30) on AIME24 using DS-R1-Distill-Qwen-1.5B.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 3.1.2"
+  }
+]

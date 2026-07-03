@@ -1,0 +1,314 @@
+[
+  {
+    "criteria": "The agent has read Section 4.1 to understand that memorization in diffusion models corresponds to sharp, isolated regions in the log probability landscape, characterized by large negative eigenvalues of the Hessian of log p_t(x_t).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Lemma 4.1 and understood that for a Gaussian vector, E[||s(x)||^2] = -tr(H(x)), establishing the score norm as a proxy for the negative Hessian trace (sharpness measure).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2, Lemma 4.1"
+  },
+  {
+    "criteria": "The agent has read Lemma 4.2 and understood that Wen et al.'s metric ||s_theta^Delta(x_t)||^2 measures sharpness differences through squared eigenvalue differences of the conditional and unconditional Hessians.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3, Lemma 4.2"
+  },
+  {
+    "criteria": "The agent has read Lemma 4.3 and understood that the Hessian-score product gives E[||H(x)s(x)||^2] = -tr(H(x)^3), amplifying high-curvature directions to improve early-stage memorization detection sensitivity.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.4, Lemma 4.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.4 to understand the enhanced sharpness metric ||H_theta^Delta(x_t, c) s_theta^Delta(x_t, c)||^2 where H_theta^Delta = H_theta(x_t, c) - H_theta(x_t) and s_theta^Delta = s_theta(x_t, c) - s_theta(x_t).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The agent has read Section 4.5 to understand the detection experiment setup: 500 memorized prompts from Webster (2023) for SD v1.4, 219 for v2.0, 500 non-memorized prompts from COCO/Lexica/Tuxemon/GPT-4, DDIM sampler with 50 steps, AUC and TPR@1%FPR as metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to understand the SAIL objective: L_SAIL(x_T) = ||s_theta^Delta(x_T + delta * s_theta^Delta(x_T)) - s_theta^Delta(x_T)||^2 + alpha * ||x_T||^2, with early stopping based on threshold l_thres.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Section 5.2 and Appendix D.2 to understand the mitigation experiment setup: SSCD and CLIP score metrics, five baseline methods (RTA, RNA, Ren et al., Wen et al.), five hyperparameter settings each, Adam optimizer at lr=0.05, results averaged over five generations per prompt.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.2, Appendix D.2"
+  },
+  {
+    "criteria": "The agent has read Appendix C to understand the toy experiment setup: DDPM framework with DDIM sampler and 500 sampling steps; 2D Gaussian mixture (3000 samples, ratio 5:95) with one extremely-small-covariance mode; MNIST with digits '3' (3000 samples, generalized) and '9' (1 sample duplicated 100 times, memorized), CFG with guidance scale 5 and unconditional probability p=0.2.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Appendix A.1 to understand that for toy experiments, the second-order score matching loss L_DSM^(2) is jointly used with the standard DSM loss as L = L_DSM + 0.5 * L_DSM^(2) to improve Hessian accuracy.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The agent has read Appendix A.2 to understand that Arnoldi iteration is used to approximate leading Hessian eigenvalues for high-dimensional latent spaces via Hessian-vector products (torch.autograd.functional.jvp) without explicitly forming the Hessian matrix.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The plan includes setting up diffusion model score functions for both conditional s_theta(x_t, c) and unconditional s_theta(x_t) inference using a pretrained Stable Diffusion model (v1.4 and v2.0).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes computing the Hessian of the log probability density as the Jacobian of the score function using automatic differentiation (torch.autograd).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3, Appendix A.1"
+  },
+  {
+    "criteria": "The plan includes implementing the Arnoldi iteration algorithm for numerically approximating leading Hessian eigenvalues using Hessian-vector products.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The plan includes implementing the toy experiments (2D Gaussian mixture and MNIST) with the combined DSM + second-order DSM loss for training.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.1, Appendix C"
+  },
+  {
+    "criteria": "The plan includes implementing the enhanced sharpness metric ||H_theta^Delta(x_T) s_theta^Delta(x_T)||^2 approximated via the finite-difference Taylor expansion using score function evaluations.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.4, Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing the SAIL optimization procedure: iteratively updating x_T by gradient descent on L_SAIL with early stopping based on threshold l_thres.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1, Appendix D.2"
+  },
+  {
+    "criteria": "The plan includes implementing all six baseline detection methods: Tiled-l2 (Carlini et al.), Layer Entropy (LE) and Average Entropy (AE) (Ren et al.), Bright Ending (BE) (Chen et al.), and Wen et al.'s score difference metric.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.5, Appendix D.1"
+  },
+  {
+    "criteria": "The plan includes implementing all four baseline mitigation methods: RTA, RNA (Somepalli et al.), Wen et al.'s text embedding optimization, and Ren et al.'s attention score rescaling.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.2, Appendix D.2"
+  },
+  {
+    "criteria": "The code implements computation of the conditional score s_theta(x_t, c) and unconditional score s_theta(x_t) using a pretrained Stable Diffusion model with classifier-free guidance.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code computes the score difference s_theta^Delta(x_t, c) = s_theta(x_t, c) - s_theta(x_t) corresponding to the classifier-free guidance direction.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code computes the Hessian of the log density as the Jacobian of the score function using torch.autograd.functional.jvp or equivalent Jacobian-vector product routines.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1, Appendix A.2"
+  },
+  {
+    "criteria": "The Arnoldi iteration algorithm is correctly implemented: it builds an orthonormal Krylov subspace basis using successive Hessian-vector products, orthogonalizes via Gram-Schmidt, and extracts Ritz eigenvalue approximations from the resulting upper Hessenberg matrix.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2, Algorithm 1"
+  },
+  {
+    "criteria": "The code implements the second-order score matching loss L_DSM^(2)(theta) = E[||sigma_t^2 * H_theta(x_t) + I - l1 * l1^T||_F^2] where l1 = sigma_t * s_theta(x_t) + epsilon, for use in toy experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The code implements the combined training loss L = L_DSM + 0.5 * L_DSM^(2) for the 2D Gaussian and MNIST toy experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The 2D Gaussian mixture experiment is implemented: a two-mode mixture with ratio 5:95 and 3000 total samples, where one mode has an extremely small covariance to induce memorization, trained with DDPM/DDIM (500 sampling steps).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The MNIST experiment is implemented: digit '3' (3000 samples, generalized) and digit '9' (single sample duplicated 100 times, memorized), training with classifier-free guidance (unconditional probability p=0.2), sampling with guidance scale 5, using DDPM/DDIM with 500 steps.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code implements Wen et al.'s detection metric as the norm of the conditional-unconditional score difference ||s_theta(x_t, c) - s_theta(x_t)||, computed and averaged over specified sampling steps.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Appendix D.1"
+  },
+  {
+    "criteria": "The code implements the paper's enhanced detection metric ||H_theta^Delta(x_T, c) * s_theta^Delta(x_T, c)||^2 approximated via the finite-difference Taylor expansion: ||s_theta^Delta(x_T + delta * s_theta^Delta(x_T)) - s_theta^Delta(x_T)||^2 / delta^2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The SAIL optimization loop is correctly implemented following Algorithm 2: initialize x_T ~ N(0, I), iteratively compute s_theta^Delta(x_T), evaluate L_SAIL = ||s_theta^Delta(x_T + delta * s_theta^Delta(x_T)) - s_theta^Delta(x_T)||^2 + alpha * ||x_T||^2, update x_T via gradient descent, and apply early stopping when L_SAIL <= l_thres.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Algorithm 2"
+  },
+  {
+    "criteria": "SAIL hyperparameters are set correctly: alpha=0.05 for SD v1.4, alpha=0.01 for SD v2.0, Adam optimizer with lr=0.05, l_thres in {7.6, 7.8, 8.2, 8.6, 9.0} for v1.4 and {4, 4.5, 5, 5.5, 6} for v2.0, evaluated over 5 hyperparameter settings.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The Tiled-l2 baseline (Carlini et al., 2023) is implemented: divides generated images into non-overlapping 128x128 tiles and computes maximum pairwise l2 distance between corresponding tiles across multiple generations (n=4 and n=16).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "Ren et al.'s Layer Entropy (LE) and Average Entropy (AE) detection metrics are implemented based on attention score patterns from specific U-Net layers at the first diffusion step (LE) and over the last T/5 steps (AE).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "Chen et al.'s Bright Ending (BE) metric is implemented: multiplies the attention mask m (from averaged attention scores of the first two downsampling layers of U-Net at t=1) with Wen's noise difference metric, normalized by the mean of m.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The RTA and RNA baseline mitigation methods are implemented: perturbing prompts by inserting random tokens or numbers in quantities of {1, 2, 4, 6, 8}.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "Wen et al.'s text embedding optimization mitigation is implemented: minimizing the conditional-unconditional score difference norm by gradient descent on the text embedding, with early stopping based on l_target in {1, 2, 3, 4, 5} for v1.4 and {1, 1.25, 1.5, 1.75, 2} for v2.0.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "Ren et al.'s attention-score-based mitigation is implemented: masking memorization-inducing trigger tokens and rescaling beginning token attention scores with hyperparameter C in {1.1, 1.2, 1.25, 1.3, 1.5}.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The AUC and TPR@1%FPR metrics are correctly computed from detection scores across the memorized and non-memorized prompt sets.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The SSCD similarity score is correctly computed by comparing model-based features of generated images to their corresponding training images, and the CLIP score is computed to evaluate prompt-image alignment; results are averaged over 5 generations per prompt.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The toy experiments (2D Gaussian mixture and MNIST) have been executed successfully: eigenvalue distributions are computed for memorized and non-memorized samples at both initial (t=T-1) and final (t=1) sampling steps.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Appendix C"
+  },
+  {
+    "criteria": "The detection experiments on Stable Diffusion v1.4 and v2.0 have been executed: the enhanced metric ||H_theta^Delta s_theta^Delta||^2 is evaluated at sampling step 1 with n=1 and n=4 generations per prompt.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.5, Table 1"
+  },
+  {
+    "criteria": "All baseline detection methods (Tiled-l2, LE, AE, BE, Wen et al.) have been executed on SD v1.4 and v2.0 at the specified sampling steps (1, 5, 50 where applicable).",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.5, Table 1"
+  },
+  {
+    "criteria": "The SAIL mitigation method has been executed on SD v1.4 and v2.0 across five l_thres hyperparameter settings, producing generated images evaluated with SSCD and CLIP scores.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.2, Figure 6"
+  },
+  {
+    "criteria": "All four baseline mitigation methods (RTA, RNA, Wen et al., Ren et al.) have been executed on SD v1.4 and v2.0 across five hyperparameter configurations each.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.2, Appendix D.2, Figure 6"
+  },
+  {
+    "criteria": "In the toy experiment, the eigenvalue distributions confirm that memorized samples exhibit consistently large negative eigenvalues (sharp peaks) at both initial and final sampling steps, while non-memorized samples show near-zero or positive eigenvalues.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.1, Figure 2"
+  },
+  {
+    "criteria": "In the MNIST experiment, the eigenvalue distributions at t=1 clearly distinguish memorized digit '9' from non-memorized digit '3': memorized samples show large negative eigenvalues while non-memorized samples exhibit positive eigenvalues indicating local convexity.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.1, Figure 2"
+  },
+  {
+    "criteria": "In the Stable Diffusion experiment (Figure 3), eigenvalue distributions at the initial sampling step (t=T-1) show a clear pattern: stronger memorization (EM > PM > non-memorized) correlates with fewer non-negative eigenvalues.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.1, Figure 3"
+  },
+  {
+    "criteria": "The empirical alignment result is reproduced: the correlation between -tr(H_theta(x_t, c)) and ||s_theta(x_t, c)||^2, and between -tr(H_theta(x_t, c)^3) and ||H_theta(x_t, c) s_theta(x_t, c)||^2 holds across MNIST and Stable Diffusion (as in Figure 4).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.2, Figure 4"
+  },
+  {
+    "criteria": "Detection results on SD v1.4 match Table 1: the proposed metric achieves AUC >= 0.987 and TPR@1%FPR >= 0.908 with n=1 generation at step 1, and AUC >= 0.998 and TPR@1%FPR >= 0.982 with n=4 generations at step 1.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 4.5, Table 1"
+  },
+  {
+    "criteria": "Detection results on SD v2.0 match Table 1: the proposed metric achieves AUC >= 0.959 with n=1 and AUC >= 0.991 with n=4 at a single sampling step.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.5, Table 1"
+  },
+  {
+    "criteria": "Mitigation results on SD v1.4 and v2.0 show that SAIL achieves lower SSCD scores (less memorization) while maintaining comparable or higher CLIP scores (better prompt alignment) relative to all four baseline mitigation methods across the five hyperparameter configurations, as shown in Figure 6.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 5.2, Figure 6"
+  },
+  {
+    "criteria": "Qualitative results demonstrate that SAIL preserves key prompt details (e.g., celebrity names, primary objects) in generated images, whereas baseline methods that modify text conditioning exhibit quality degradation.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.2, Figure 6"
+  }
+]

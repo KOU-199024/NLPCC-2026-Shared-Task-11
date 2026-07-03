@@ -1,0 +1,314 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 to understand the overall four-component pipeline: Code Slicing, Multi-role Code Review System, Redundancy Comment Filter Mechanism, and Line Number Localization.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 and Appendix G to understand all four code slicing algorithms (Original Diff, Parent Function, Left Flow, Full Flow) and their algorithmic steps (Algorithms 1–9).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2, Appendix G"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 and Appendix H to understand the four roles in the multi-role LLM framework: Reviewer, Meta-Reviewer, Validator, and Translator, including their Chain-of-Thought prompts.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3, Appendix H"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 to understand the Redundancy Comment Filter Mechanism, including the Q1–Q3 scoring scale (1–7), the coarse filter threshold (Q1 or Q2 ≤ 4 discards a comment), Top-k truncation by Q3 score, Meta-Reviewer merging, and Validator re-scoring.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The agent has read Section 3.5 and Table 1 to understand the inline line number localization format: 'linenumber | {kept}', '-linenumber | {deleted}', '+linenumber | {added}', and '...' for omitted lines.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.5, Table 1"
+  },
+  {
+    "criteria": "The agent has read Appendix M to understand the formal definitions of KBI (Eq. 1), FAR1 (Eq. 2), FAR2 (Eq. 3), CPI1 (Eq. 4), CPI2 (Eq. 5), and LSR (Eq. 6).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix M"
+  },
+  {
+    "criteria": "The plan includes cloning the repository, checking out the merge request commit, applying a static analysis tool to generate ASTs, and orchestrating the slicing workflow as described in Algorithm 1 (CodeSlicing).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes implementing Algorithm 2 (ProcessAST): processing each file's AST with a chosen slicing option and adding intersecting diff statements to a cache.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The plan includes implementing Algorithms 3 and 4 (GenerateNewSlice and GetContiguousDiffSegment): extracting contiguous diff segments and iteratively expanding slices by applying the slicing algorithm to each statement in the new slice.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Algorithms 3, 4"
+  },
+  {
+    "criteria": "The plan includes implementing all four slicing algorithms dispatched by Algorithm 5 (ApplySlicingAlgorithm): OriginalDiff (diff statements + dependencies), ParentFunction (smallest containing function), LeftFlow (backward L-value trace), and FullFlow (LeftFlow + forward R-value and callee trace).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithms 6–9"
+  },
+  {
+    "criteria": "The plan includes implementing the multi-role LLM system with four roles (Reviewer, Meta-Reviewer, Validator, Translator) and Chain-of-Thought prompts for each role as specified in Appendix H.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Appendix H"
+  },
+  {
+    "criteria": "The plan includes implementing the Redundancy Comment Filter Mechanism: Q1–Q3 scoring (1–7 scale), coarse filter (discard if Q1 or Q2 ≤ 4), Top-k truncation sorted by Q3, Meta-Reviewer merging (remove single-reviewer comments), and Validator re-scoring.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes implementing the inline line number format for code input (Table 1) and a mechanism to map comment line numbers back to valid code lines.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The plan includes computing all six metrics (KBI, FAR1, FAR2, CPI1, CPI2, LSR) according to the formulas in Appendix M.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix M"
+  },
+  {
+    "criteria": "The plan includes loading or simulating the dataset of 45 real-world fault reports (merge-request level, C++ codebase) and the associated merge request snapshots from four repositories.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Appendix K"
+  },
+  {
+    "criteria": "The plan includes setting up the baselines CodeReviewer, CCT5, LLaMA-Reviewer, and DISCOREV for comparison.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The code slicing main loop (Algorithm 1) is implemented: clones repository at given commit, applies static analysis (e.g., Cppcheck) to generate ASTs, iterates over ASTs with ProcessAST, then loops until the cache is empty generating slices with GenerateNewSlice.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Appendix N"
+  },
+  {
+    "criteria": "Algorithm 2 (ProcessAST) is implemented: applies the slicing algorithm to get sliced statements for each AST file and adds only statements that intersect the diff to the cache.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "Algorithm 3 (GenerateNewSlice) is implemented: initializes a new slice from the seed, removes seed statements from cache, then iteratively expands by applying the slicing algorithm to each statement and adding any cache-resident expanded statements.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "Algorithm 6 (OriginalDiff) is implemented: collects diff statements from the AST and adds their direct dependencies to the slice set S.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 6"
+  },
+  {
+    "criteria": "Algorithm 7 (ParentFunction) is implemented: finds the smallest function containing all diff statements and returns all statements and declarations within that function.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 7"
+  },
+  {
+    "criteria": "Algorithm 8 (LeftFlow) is implemented: for each diff statement, collects all L-values it affects and performs a backward data-flow trace for each L-value, adding the traced statements to the slice set S.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 8"
+  },
+  {
+    "criteria": "Algorithm 9 (FullFlow) is implemented: extends LeftFlow by also tracing all R-values and callees affected by diff statements in a forward data-flow manner, adding their traced statements to the slice set S.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 9"
+  },
+  {
+    "criteria": "A caching mechanism is implemented to avoid redundant slices across multiple calls to the slicing algorithms during the code slicing process.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The Reviewer role is implemented with the full Chain-of-Thought prompt (System Introduction, Understand, Analyze, Re-evaluate with Q1–Q3, Organize Your Thoughts, Final Comment in JSON) and produces comments with Q1, Q2, Q3 scores.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Appendix H"
+  },
+  {
+    "criteria": "The Meta-Reviewer role is implemented with its CoT prompt (System Introduction, Analyze, Organize and Sort Final Comments): it merges comments from multiple Reviewers, removes single-reviewer comments, and re-sorts by criticality.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, 3.4, Appendix H"
+  },
+  {
+    "criteria": "The Validator role is implemented with its CoT prompt (System Introduction, Validate the Comment, Refine the Comment, Final Comment in JSON): re-scores comments using Q1–Q3 criteria and filters out those below threshold.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, 3.4, Appendix H"
+  },
+  {
+    "criteria": "The Translator role is implemented with its CoT prompt (System Introduction, Translation and Formatting Requirements, Translated Comments in JSON) for translating final comments into the target language.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Appendix H"
+  },
+  {
+    "criteria": "The coarse filter is implemented in the Reviewer stage: comments with Q1 or Q2 score ≤ 4 are discarded, and remaining comments are sorted by Q3 score and truncated to Top-N.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The fine filter in the Meta-Reviewer stage is implemented: merges comments flagged by multiple Reviewers and removes comments mentioned by only one Reviewer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The inline line number format (Table 1) is implemented for code input: lines are prefixed with 'linenumber |', '-linenumber |', or '+linenumber |', and non-contiguous lines use '...' as separator.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.5, Table 1"
+  },
+  {
+    "criteria": "The KBI metric is implemented as the percentage of recalled key issues out of total key issues across all test MRs, matching Equation 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix M, Eq. 1"
+  },
+  {
+    "criteria": "FAR1 is implemented as the average per-MR false alarm rate across all N MRs (Eq. 2), and FAR2 is implemented as the average per-MR false alarm rate only over MRs where key bugs were recalled (Eq. 3).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix M, Eq. 2, 3"
+  },
+  {
+    "criteria": "CPI1 and CPI2 are implemented as the harmonic mean of KBI and (100 − FAR1) or (100 − FAR2) respectively, matching Equations 4 and 5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix M, Eq. 4, 5"
+  },
+  {
+    "criteria": "LSR is implemented as the average per-MR rate of comments providing a valid line number in the code, matching Equation 6.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix M, Eq. 6"
+  },
+  {
+    "criteria": "The LLM inference backend is integrated (e.g., via vLLM API) supporting at least one of the five LLM engines: LLaMA-3.1 (70B), Qwen2 (72B), Command R+ (104B), Mistral-large-2407 (123B), LLaMA3.1 (405B).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Appendix N"
+  },
+  {
+    "criteria": "The four baseline models (CodeReviewer, CCT5, LLaMA-Reviewer, DISCOREV) are integrated for evaluation, with their respective quality estimation filters applied.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The end-to-end framework (Code Slicing → Multi-role Review → Comment Filter → Line Localization) is executed on the fault MR dataset with at least one LLM engine and at least one slicing algorithm, producing KBI, FAR1, CPI1 results without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1, Table 2"
+  },
+  {
+    "criteria": "The baseline models (CodeReviewer, CCT5, LLaMA-Reviewer, DISCOREV) are executed on the same dataset, producing KBI, FAR, and CPI results without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.1, Table 2"
+  },
+  {
+    "criteria": "The code slicing ablation (RQ2) is executed for all four slicing algorithms (Original Diff, Parent Function, Left Flow, Full Flow) with the same LLM engine, covering all filter stages (All, Coarse Filter, Top-10, Top-5, Top-3, +Meta Reviewer, +Validator) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.2, Table 3"
+  },
+  {
+    "criteria": "The reviewer count ablation (RQ3.1) is executed comparing 1-reviewer vs. 3-reviewer settings under +Meta Reviewer and +Validator stages for all four slicing algorithms without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.3.1, Table 4"
+  },
+  {
+    "criteria": "The Validator self-correction ablation (RQ3.2) is executed comparing w/o and w/ Validator across all four slicing algorithms without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.3.2, Table 5"
+  },
+  {
+    "criteria": "The Chain-of-Thought ablation (RQ3.3) is executed comparing w/ and w/o CoT across all four slicing algorithms and multiple pipeline stages (SR-All, SR-Top-5, MR-Meta, MR-Val) without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.3.3, Table 6"
+  },
+  {
+    "criteria": "The comment filter ablation (RQ4) is executed for all filter stages (All, Coarse Filter, Top-10, Top-5, Top-3, +Meta Reviewer, +Validator) across all four slicing algorithms without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.4, Table 7"
+  },
+  {
+    "criteria": "The line number format experiment (RQ5) is executed comparing three formats (No, Relative, Inline) under 'All' and '+Meta Reviewer' settings for at least one slicing algorithm, reporting KBI, FAR1, CPI1, FAR2, CPI2, and LSR.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.5, Table 8"
+  },
+  {
+    "criteria": "The RQ1 results match Table 2: the framework with Left Flow or Full Flow and any tested LLM engine achieves KBI ≥ 20% and CPI1 ≥ 10%, while all four baselines (CodeReviewer, CCT5, LLaMA-Reviewer, DISCOREV) achieve KBI ≤ 2.22%, demonstrating a ≥ 10× KBI improvement.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The RQ2 results match Table 3: Left Flow and Full Flow achieve higher KBI in 'All' and '+Meta Reviewer' settings than Original Diff and Parent Function (Left Flow KBI ≥ 31.11% vs. Original Diff ≤ 13.33% in '+Meta Reviewer'), and Left Flow generally outperforms Full Flow in the '+Validator' setting.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The RQ3.1 results match Table 4: increasing reviewers from 1 to 3 raises KBI but also raises FAR1 and FAR2 in the '+Meta Reviewer' setting; adding the Validator improves CPI1 and CPI2 for the 3-reviewer setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The RQ3.2 results match Table 5: the Validator reduces FAR1 and FAR2 compared to w/o Validator across all four slicing algorithms, while also reducing KBI, confirming the precision-recall trade-off.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The RQ3.3 results match Table 6: CoT prompting improves or maintains performance in Left Flow and Full Flow slicing settings (especially MR-Meta and MR-Val stages), while showing less consistent benefit in Original Diff and Parent Function settings.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The RQ4 results match Table 7: for Left Flow and Full Flow, each successive filter stage (Coarse Filter → Top-k → +Meta Reviewer → +Validator) progressively reduces FAR1 and improves CPI1, while for Original Diff and Parent Function the Coarse Filter is the most impactful single step.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The RQ5 results match Table 8: the Inline format achieves higher CPI1 and CPI2 than both No and Relative formats in the '+Meta Reviewer' setting, and the Inline format achieves KBI of 31.11% vs. 17.78% for No and Relative in that setting.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  }
+]

@@ -1,0 +1,446 @@
+[
+  {
+    "criteria": "The agent has read Section 2.2.1 completely to understand the ARIMA model components (AR, I, MA) and the differencing operation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2.2 completely to understand the Transit Comb Filter (TCF) periodogram and its role in identifying double-spike patterns in ARIMA residuals.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2.2"
+  },
+  {
+    "criteria": "The agent has read Section 2.4 to understand the DIAmante light curve input: 976,814 stars from TESS Year 1 sectors 1-13, restricted to FGK stars with V<13 and M stars with V<=16 and D<600pc, and log g >= 3.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The agent has read Section 2.5 to understand the additional ramping and outlier removal step applied to DIAmante light curves before ARIMA fitting.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.5"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the Kepler-based planet injection methodology for the positive training set.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 to understand the negative training set construction with injected eclipsing binary and sinusoidal variable signals.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand all 37 features and their weights used in the final Random Forest classifier.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the classification metrics (TPR, FPR, MCC, Adjusted F-Score, Youden's J) for the chosen threshold PRF=0.300.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 and Figure 13 to understand the DTARPS-S Analysis List of 7,377 objects and the RF prediction distribution.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3, Figure 13"
+  },
+  {
+    "criteria": "The agent has read Section 9 completely to understand the completeness analysis of the RF classifier on injected planetary signals.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 9"
+  },
+  {
+    "criteria": "The plan includes the preprocessing pipeline: loading DIAmante light curves and applying the additional ramping/outlier removal step with outlier threshold of 5 sigma and gap threshold of 50 time steps.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.5"
+  },
+  {
+    "criteria": "The plan includes the ARIMA modeling step: applying differencing (d=1) first, then fitting ARMA(p,q) models with p+q <= 10 using auto.arima with AIC model selection.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.2.1"
+  },
+  {
+    "criteria": "The plan includes running the TCF periodogram on ARIMA residuals over periods 0.2 to 30 days (354,982 periods in log-space), with LOESS detrending of the periodogram.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the ARIMAX model fitting using the best TCF period to jointly fit transit depth and autocorrelated noise.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2.3"
+  },
+  {
+    "criteria": "The plan includes constructing the positive training set: downloading 949 Kepler confirmed planets with P<13.5 days and Kepler Model.SNR>=20, augmenting to 10,850 synthetic planets using ANS-SMOTE, injecting into 6,506 random DIAmante light curves, and recovering 1,327 via TCF human vetting.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes constructing the negative training set: 11,342 injected False Positive light curves (EBs in circular/eccentric orbits and sinusoidal variables in equal thirds) plus 15,611 random light curves.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes splitting the labeled data 80/20 into training and validation sets (training: 1,048 positive, 9,095 FP, 12,475 random; validation: 279 positive, 2,247 FP, 3,136 random).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes the Random Forest classifier optimization: balanced RF with 1,000 trees, 37 features with weights, threshold PRF=0.300, using CRAN randomForestSRC.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes applying the final RF classifier to 823,099 DIAmante light curves and producing the DTARPS-S Analysis List of 7,377 objects.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 7"
+  },
+  {
+    "criteria": "The plan includes generating the completeness heat map of RF recall rates as a function of injected period and radius bins from 7,751 synthetic planet injections.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 9, Figure 17"
+  },
+  {
+    "criteria": "The plan includes computing the effective SNR (SNR^eff) for injected planetary signals using Equation 8 and analyzing the lower bound of SNR^eff=6 for recovered injections.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 9.2, Equation 8"
+  },
+  {
+    "criteria": "The plan includes comparing DTARPS-S recall rates against M20 DIAmante candidates (364 processed), NASA Exoplanet Archive confirmed planets (202 in DIAmante), TOI list (846 overlap), and previously identified False Positives (513 in DIAmante).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 10"
+  },
+  {
+    "criteria": "The code for loading and preprocessing DIAmante light curves has been implemented, including reading the extracted light curve files from Montalto (2020b).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The code for the additional ramping and outlier removal step is implemented: recursive clipping with outlier threshold 5*sigma from the median and gap threshold of 50 time steps (25 hours).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.5"
+  },
+  {
+    "criteria": "The code for the differencing operation (Equation 2) is implemented: x_t^dif = x_t - x_{t-1}, applied to the light curve before ARMA fitting to guarantee the double-spike transit pattern.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for the AR(p) component (Equation 3) is implemented: x_t = phi_1*x_{t-1} + ... + phi_p*x_{t-p} + epsilon_t, where epsilon ~ N(0, sigma^2).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for the MA(q) component (Equation 4) is implemented: x_t = epsilon_t + theta_1*epsilon_{t-1} + ... + theta_q*epsilon_{t-q}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The ARIMA model fitting is implemented using the auto.arima function from the R forecast package with the constraint p+q <= 10 and d=1, with AIC-based model selection.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.2.1, Section 3.1"
+  },
+  {
+    "criteria": "The Ljung-Box test is applied to both original light curves and ARIMA residuals to quantify autocorrelation, with p-value > 0.01 indicating white noise.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Figure 7"
+  },
+  {
+    "criteria": "The TCF (Transit Comb Filter) periodogram Fortran code is integrated and called from the R-based DTARPS pipeline, searching periods 0.2 to 30 days using 354,982 log-spaced trial periods.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The TCF periodogram implementation searches transit durations from 15% of the period to a maximum of 25 hours (50 time steps) for each trial period.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The LOESS smoothing is applied to the TCF periodogram to remove trend, and the best TCF peak SNR is computed within a window of 10,000 periodogram values around each peak.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2.2, Section 3.2"
+  },
+  {
+    "criteria": "The ARIMAX model is implemented using auto.arima with the transit mask as an exogenous variable, fitting transit depth with confidence interval from the best TCF period/phase/duration.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2.3, Section 3.3"
+  },
+  {
+    "criteria": "The stellar selection cuts for planet injection hosts are implemented: temperature/radius-dependent subgiant exclusion criteria (e.g., T_eff < 4750K and R < 1 R_sun, etc.).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code to download and filter the 949 Kepler confirmed planets from the NASA Exoplanet Archive (P<13.5 days, Kepler Model.SNR>=20) for use as injection templates is implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The ANS-SMOTE (Adaptive Neighbor SMOTE) algorithm is implemented using the smotefamily R package to augment the 949 Kepler planets to 10,850 synthetic exoplanets with matching period/duration/depth distributions.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The transit injection code is implemented: a trapezoidal-shaped transit model with period, depth, duration, and random phase is added point-wise to DIAmante light curves after preprocessing but before DTARPS-S processing.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Figure 10"
+  },
+  {
+    "criteria": "The human vetting criterion for recovered injections is implemented: TCF period matches injected period (or integer ratio) within 1%, and a transit dip is visible in the folded light curve, yielding 1,327 of 10,850 recovered injections.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The negative training set injected False Positives are implemented: EB signals with secondaries > 2.5 R_Jupiter in circular and eccentric orbits, plus short-period sinusoidal variables mimicking spotted stars, in equal thirds (11,342 total FP injections).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The 80/20 random train/validation split is implemented on the full labeled dataset: 22,618 training objects (1,048 positive, 9,095 FP, 12,475 random) and 5,662 validation objects (279 positive, 2,247 FP, 3,136 random).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "All 37 features listed in Table 1 are computed for each light curve, including stellar properties (TIC v8 and Gaia DR2), DIAmante light curve properties (reduced chi^2, tail range, POM, skewness, kurtosis, Ljung-Box p-value), differenced light curve properties, ARIMA residual properties, TCF periodogram properties, and best TCF transit properties.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 5.3"
+  },
+  {
+    "criteria": "The IQR improvement ratio (IQR of ARIMA residuals / IQR of DIAmante light curve) and reduced chi^2 improvement ratio features are implemented with high feature weight (0.108) as specified in Table 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 5.3"
+  },
+  {
+    "criteria": "The eleven best TCF transit features are implemented with weight 0.135 each: TCF_power, TCF_depthSNR, TCF_shape (mean in-transit / MAD out-of-transit), Folded_AD (Anderson-Darling test on phases), arbox_deperr, even.odd.p_value, trans.p_value, snr.transit, frac_dur, LOESS_mnsnr, TCFpeaks_mean, LOESSpeaks_mean.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 5.3"
+  },
+  {
+    "criteria": "The planet radius feature (planet_rad_tcf) is computed from the TCF transit depth and the TIC stellar radius, included to help the RF classifier reject deep eclipsing binary signals.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 5.3"
+  },
+  {
+    "criteria": "The Matthews Correlation Coefficient (MCC, Equation 5), Adjusted F-Score (Equation 6), and Youden's J Index (Equation 7) are implemented for classifier evaluation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equations 5-7, Section 5.2"
+  },
+  {
+    "criteria": "The ROC curve and Precision-Recall curve are generated using the ROCR R package, with AUC computed for both curves during classifier optimization.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Figure 11"
+  },
+  {
+    "criteria": "The balanced Random Forest classifier is implemented using randomForestSRC R package with balanced RF option (undersampling majority class per tree), 1,000 trees, and 7 features tried at each node.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The RF classifier optimization loop is implemented: training approximately 20,000 trial classifiers (500-1000 trees each), filtering by AUC-ROC > 0.9 and AUC-PR > 0.85, and iterating feature selection/weight tuning over 4+ rounds.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The 133 random M20 DIAmante candidates are included in the final optimization round with their TPR used as an additional criterion for final classifier selection.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The out-of-bag (OOB) prediction values are used for training set performance evaluation in the confusion matrix, with the chosen threshold PRF=0.300 applied.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6, Figure 12"
+  },
+  {
+    "criteria": "The effective SNR formula (Equation 8: SNR^eff = (delta/IQR) * sqrt(n_pts * T_dur/P)) is implemented using IQR instead of standard deviation for both injected signal and best TCF transit assessment.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 8, Section 9.2"
+  },
+  {
+    "criteria": "The completeness heat map is implemented: computing recall rate for each log-spaced period-radius bin from 7,751 synthetic planet injections processed by the RF classifier at threshold PRF=0.300.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 9.1, Figure 17"
+  },
+  {
+    "criteria": "The period matching logic is implemented for comparing TCF periods to external catalog periods: match within 1% fractional difference or matching an integer harmonic ratio of the reported period.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 10"
+  },
+  {
+    "criteria": "Cross-matching of DIAmante light curves with external catalogs (NASA Exoplanet Archive, TOI list, M20, and other surveys) is implemented using TIC ID and/or 5 arcsecond coordinate matching.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 10"
+  },
+  {
+    "criteria": "The full ARIMA modeling pipeline has been executed on the ~0.9 million DIAmante light curves without errors, producing ARIMA residuals for all stars.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The TCF periodogram has been run on ARIMA residuals for all processed light curves, producing periodograms with best TCF period, depth, and SNR for each star.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The 10,850 planet injections (and all FP injections) have been processed through the full DTARPS-S pipeline (preprocessing, ARIMA, TCF) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The Random Forest classifier optimization has been executed, training approximately 20,000 trial classifiers across multiple optimization rounds using the R randomForestSRC package.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The final RF classifier with 37 features, 1,000 trees, and threshold PRF=0.300 has been applied to the 823,099 DIAmante light curves without errors, producing the DTARPS-S Analysis List.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 7"
+  },
+  {
+    "criteria": "The completeness heat map analysis has been executed on 7,751 synthetic planet injections processed through the RF classifier, producing recall rates by period-radius bins.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 9, Figure 17"
+  },
+  {
+    "criteria": "The Ljung-Box test results match Figure 7: 46% of DIAmante light curves have significant autocorrelation (p<0.01) before ARIMA modeling, and only 4% after ARIMA residual modeling.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 7, Section 3.1"
+  },
+  {
+    "criteria": "The injection recovery statistics match Section 4.1: of 10,850 synthetic planetary injections, 1,327 (approximately 12%) are recovered by TCF and human vetting for use as the positive training set.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The final RF classifier performance matches Table 2 at threshold PRF=0.300: TPR=92.83% (approximately 92.5%), FPR=0.37% (approximately 0.43%), MCC=0.9246, Adjusted F-Score=0.9283, Youden's J=0.9246.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2, Section 6"
+  },
+  {
+    "criteria": "The confusion matrix matches Figure 12: only 2 out of 11,342 (0.02%) injected FP signals are falsely labeled as exoplanet transit signals in the labeled dataset.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 12, Section 6"
+  },
+  {
+    "criteria": "The RF classifier applied to 823,099 DIAmante light curves produces a DTARPS-S Analysis List of 7,377 objects (0.9% of input), matching the reported result.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Section 7"
+  },
+  {
+    "criteria": "The period distribution of the DTARPS-S Analysis List matches Figure 13: the vast majority of injected planets are recovered with periods ~0.7 to 11 days, with a strong spike of false negatives at 13-15 day periods due to the TESS satellite orbital period.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 13, Section 6"
+  },
+  {
+    "criteria": "The TCF radius bias matches Section 8.1: recovered injected planets show TCF radii slightly below the 1:1 line, with more pronounced bias for radii > 10 R_earth; 43% of unrecovered injections with R<4 R_earth have TCF radii more than twice the true radius.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 8.1, Figure 15"
+  },
+  {
+    "criteria": "The completeness heat map matches Figure 17: poor completeness (<10%) for radii < 2 R_earth across all periods; low completeness (10%-25%) for 2-4 R_earth; high completeness (70%-100%) for radii 8-30 R_earth and periods 0.6-13 days.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Figure 17, Section 9.1"
+  },
+  {
+    "criteria": "The SNR^eff analysis matches Figure 18: approximately 93% of rejected injected planetary signals lie below the SNR^eff=6 boundary; recovery rate above SNR^eff=6 is approximately 71%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 18, Section 9.2"
+  },
+  {
+    "criteria": "The M20 DIAmante candidate recall rate matches Section 10.1: 213 of 364 processed M20 candidates (59%) are in the DTARPS-S Analysis List, with TCF periods matching M20 periods in 333 of 364 cases (91%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 10.1, Figure 20"
+  },
+  {
+    "criteria": "The NASA Exoplanet Archive confirmed planet recall rate matches Section 10.2: 130 of 202 confirmed planets (64%) are recovered in the DTARPS-S Analysis List, with TCF correctly matching periods for 166 of 202 (82%) confirmed planets.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 10.2, Table 5"
+  },
+  {
+    "criteria": "The TOI recall rate matches Section 10.3: 433 of 846 TOIs (51%) are in the DTARPS-S Analysis List, with TCF matching periods for 566 of 706 non-long-period TOIs (80%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 10.3, Table 5"
+  },
+  {
+    "criteria": "The False Positive specificity matches Section 10.5: 400 of 513 (78%) previously identified False Positives are correctly classified as non-exoplanet candidates by the RF classifier, with 90% specificity for periods <1 day and 97% for periods >10 days.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 10.5, Figure 23"
+  },
+  {
+    "criteria": "The feature importance ranking matches Figure 14: snr.transit is the most important feature, followed by arbox_deperr, TCF_period, and planet_rad_tcf among the top features.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 14, Section 6"
+  }
+]

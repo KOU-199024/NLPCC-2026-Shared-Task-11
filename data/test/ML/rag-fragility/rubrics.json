@@ -1,0 +1,488 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the task formulation, the four linguistic dimensions (formality, readability, politeness, grammatical correctness), and the robustness evaluation approach.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the query rewriting design: 5,000 original queries per dimension, GPT-4o-mini with three distinct prompts, 15,000 rewritten samples per dimension per dataset.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Appendix A.1 to understand the quantitative thresholds for each linguistic dimension: formality < 0.5 probability, readability FRES < 60, politeness sum > 0.5, typos edit distance ≥ 1, RTT differing from original.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the four datasets used (PopQA, EntityQuestions, MS MARCO, Natural Questions) and their splits (PopQA test, EntityQuestions dev, MS MARCO dev+test, NQ dev+test).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 to understand the two retrieval models (Contriever: facebook/contriever, ModernBERT Embed: nomic-ai/modernbert-embed-base) and nine LLMs from three families.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the retrieval metric (Recall@k, k=5 primary) and generation metrics (AM, EM, F1, and LLM-as-a-Judge with GPT-5-mini).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the retrieval performance drop results across all linguistic dimensions, datasets, and retrieval models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the RAG generation performance using ModernBERT retriever and nine LLMs with AM scores across all datasets and linguistic variations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Figure 2 to understand the LLM scaling results comparing RAG with ModernBERT, Contriever, and LLM-only (Vanilla) generation on PopQA and Natural Questions.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The agent has read Section 5.4 to understand the advanced RAG techniques explored (HyDE query expansion and Cross-Encoder reranking) and their effects on robustness.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The agent has read Appendix B.1 to check the LLM generation hyperparameters: temperature=0.5, top_q=0.90, and max_tokens=128.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The agent has read Appendix I to understand the three distinct prompts used for each of formality, readability, and politeness rewrites.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix I"
+  },
+  {
+    "criteria": "The plan includes implementing the four linguistic dimensions of query rewriting: formality (less formal), readability (less readable), politeness (more polite), and grammatical correctness (RTT and typos).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes using GPT-4o-mini with three different prompts per dimension to generate 5,000 rewritten queries per prompt (15,000 total per dimension per dataset).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes applying deterministic typo transformations with random addition, deletion, or substitution at 20% probability per word, requiring edit distance of at least 1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing round-trip translation (RTT) via English-Afrikaans-English using EasyNMT with the opus-mt model.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes semantic consistency filtering using MPNet-v2 sentence similarity with a threshold of > 0.7 to ensure rewrites preserve the original pragmatic intent.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes loading and indexing the Wikipedia passage set used in DPR for PopQA, EntityQuestions, and Natural Questions datasets, and the MS MARCO passage dataset for MS MARCO.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing two retrieval models: Contriever (facebook/contriever) and ModernBERT Embed (nomic-ai/modernbert-embed-base), using the Izacard et al. (2022) retrieval system implementation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing nine LLMs: Llama 3.1 (8B, 70B Instruct), Qwen 2.5 (3B, 7B, 32B, 72B Instruct), and Gemma 2 (2B, 9B, 27B instruction-tuned) for generation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing few-shot prompting with two question-answer pairs (one original and one rewritten with same answer) and top-5 retrieved passages.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing LLM-only (vanilla) generation without retrieval as a baseline to compare against RAG systems.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The plan includes implementing HyDE (Hypothetical Document Embeddings) query expansion for the advanced RAG evaluation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.4.1"
+  },
+  {
+    "criteria": "The plan includes implementing MS MARCO Cross-Encoder reranking (Reimers and Gurevych 2019) to re-rank passages retrieved by ModernBERT and Contriever.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.4.2"
+  },
+  {
+    "criteria": "The code for measuring formality using the RoBERTa-based formality classifier from Babakov et al. (2023) has been implemented, with threshold < 0.5 probability for rewritten queries.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.1"
+  },
+  {
+    "criteria": "The code for computing the Flesch Reading Ease Score (FRES) has been implemented using Equation (1): FRES = 206.835 - 1.015*(total words/total sentences) - 84.6*(total syllables/total words), with threshold < 60.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1, Appendix A.1"
+  },
+  {
+    "criteria": "The code for computing politeness scores using Polite Guard (Intel, 2024) has been implemented, requiring the sum of 'somewhat polite' and 'polite' scores > 0.5 for rewritten queries.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.1"
+  },
+  {
+    "criteria": "The code for typo introduction has been implemented with random character-level addition, deletion, or substitution at 20% probability per word, requiring edit distance ≥ 1 and different GLEU score from original.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.1"
+  },
+  {
+    "criteria": "The code for round-trip translation (RTT) via English-Afrikaans-English has been implemented using EasyNMT with the opus-mt model, requiring the output to differ from the original query.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.1"
+  },
+  {
+    "criteria": "The code for query rewriting using GPT-4o-mini has been implemented with three distinct prompts per dimension, generating rewritten queries for 5,000 sampled original queries per dimension per dataset.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for semantic consistency filtering has been implemented using MPNet-v2 (sentence-transformers/all-mpnet-base-v2) to compute sentence-level similarity, filtering out rewrites with similarity ≤ 0.7.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Appendix A.1"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the PopQA dataset (test split), EntityQuestions dataset (dev split), MS MARCO dataset (dev and test splits), and Natural Questions dataset (dev and test splits) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading and indexing the Wikipedia DPR passage corpus for PopQA, EntityQuestions, and Natural Questions retrieval has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading and indexing the MS MARCO passage dataset for MS MARCO retrieval has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for Contriever (facebook/contriever) retrieval has been implemented using the Izacard et al. (2022) retrieval system.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for ModernBERT Embed (nomic-ai/modernbert-embed-base) retrieval has been implemented using the Izacard et al. (2022) retrieval system.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for computing Recall@k (R@k) with k=5 as the primary metric, checking whether gold answers are present as substrings in retrieved document text, has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for computing Recall@k for k={5, 10, 20, 100} to analyze the effect of scaling the number of retrieved documents has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Appendix E"
+  },
+  {
+    "criteria": "The code for generating answers with the nine LLMs (Llama 3.1 8B/70B Instruct, Qwen 2.5 3B/7B/32B/72B Instruct, Gemma 2 2B/9B/27B) using few-shot prompting has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for few-shot prompting has been implemented with exactly two question-answer pairs in context (one original query with answer, one linguistically rewritten version with same answer) plus the top 5 retrieved passages.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The LLM generation hyperparameters have been set correctly: temperature=0.5, top_q=0.90, max_tokens=128.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for computing Answer Match (AM) score — the fraction of predictions where any substring of the prediction is an exact match of any ground truth answer — has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for computing Exact Match (EM) score — the fraction of predictions that exactly match any ground truth answer — has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for computing F1 score — the harmonic mean of precision and recall in generated responses — has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for LLM-as-a-Judge evaluation using GPT-5-mini has been implemented to validate automated metrics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Table 4"
+  },
+  {
+    "criteria": "The code for LLM-only (Vanilla) generation — running LLMs without any retrieved passages — has been implemented as a baseline for comparison against RAG systems.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The code for HyDE (Hypothetical Document Embeddings) query expansion has been implemented, where the LLM generates a hypothetical document for each query which is then used for retrieval.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.4.1"
+  },
+  {
+    "criteria": "The code for MS MARCO Cross-Encoder reranking (using the Sentence-BERT MS MARCO Cross-Encoders from Reimers and Gurevych 2019) has been implemented to re-rank top passages from both Contriever and ModernBERT.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.4.2"
+  },
+  {
+    "criteria": "The code for computing relative percentage performance degradation (Delta = (Original - Rewritten) / Original * 100) to compare original vs. rewritten query performance has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2, Table 3"
+  },
+  {
+    "criteria": "The code for the supplementary LLaMA rewriting experiment (Appendix C) — using Llama-3.1-70B-Instruct to rewrite 500 PopQA queries for formality, readability, and politeness — has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code for computing query token-length change (Δ Q-len) to analyze the relationship between query length variation and retrieval performance has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The three distinct GPT-4o-mini prompts for formality rewriting have been implemented as specified in Appendix I.1, each instructing the model to use different colloquial constructions and informal language styles.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix I.1"
+  },
+  {
+    "criteria": "The code for the query rewriting pipeline has been executed successfully without errors for all five linguistic dimensions (formality, readability, politeness, RTT, typos) across all four datasets, producing valid rewritten datasets.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for retrieval experiments with Contriever and ModernBERT has been executed successfully on both original and rewritten queries for all five linguistic dimensions and four datasets.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for RAG generation experiments with all nine LLMs and ModernBERT retriever has been executed successfully on all five linguistic dimensions and four datasets.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code for LLM-only (Vanilla) generation — without retrieval — has been executed successfully for all nine LLMs on all linguistic variations.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.3, Figure 2"
+  },
+  {
+    "criteria": "The code for RAG generation experiments with Contriever retriever across all nine LLMs, five linguistic dimensions, and four datasets has been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The code for HyDE query expansion experiments (retrieval and generation) has been executed successfully on PopQA and MS MARCO datasets with Contriever and ModernBERT.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.4.1, Appendix G"
+  },
+  {
+    "criteria": "The code for reranking experiments (retrieval and generation) has been executed successfully on PopQA and MS MARCO datasets with Contriever and ModernBERT.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.4.2, Appendix H"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: formality changes cause the largest degradation for Contriever on MS MARCO (40.41% drop in R@5), representing the most severe single retrieval degradation observed.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: overall average retrieval degradation is approximately 16.7% for Contriever and 13.3% for ModernBERT across all linguistic modifications.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: grammatical variations (RTT and typos) have the highest average impact on retrieval recall, with RTT causing ~19.56% average drop and typos causing ~18.51% drop.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: politeness variations have the minimal impact on retrieval performance with an average recall drop of only ~6.48% across all datasets and retrievers.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: ModernBERT shows greater robustness than Contriever to character-level typos (14.81% vs 22.22% drop), but greater vulnerability to RTT (20.12% vs 19% drop).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: query token-length change does not directly correlate with retrieval performance drop (formality +13.65 tokens causes inconsistent impacts; RTT -0.26 tokens causes severe degradation).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: average generation performance drops are approximately 16.52% (AM), 41.15% (EM), and 19.60% (F1) across all datasets, linguistic dimensions, and models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: RTT causes the most severe generation degradation with PopQA showing 33.86% average AM drop, followed by politeness showing EM drops of 44.57% (NQ) despite low AM impact.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: PopQA shows the highest sensitivity to all linguistic variations with an average AM performance drop of 18.64%, including 18.22% for readability and 33.86% for RTT.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4 (LLM-as-a-Judge evaluation): RTT causes the largest degradation across datasets (35.60% PopQA, 22.74% NQ, 15.21% MARCO, 22.18% Entity) confirming the AM score findings.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: RAG systems show substantially higher sensitivity to linguistic variations than LLM-only generation (PopQA: 22.53% RAG vs 10.78% LLM-only average performance drop).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: ModernBERT RAG shows greater robustness than Contriever RAG (19.52% vs 24.38% average performance drop on rewritten queries), with both outperforming LLM-only for original queries.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: LLM-only generation shows barely any performance difference on formality rewrites, confirming that formality-related errors cascade from retrieval to generation in RAG.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: performance gap for formality and readability variations narrows with larger LLM scale (e.g., readability degradation on PopQA decreases from 22.35% at 3B to 16.25% at 72B), but RTT gap widens with scale.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3 (HyDE results on PopQA): HyDE improves ModernBERT retrieval on linguistically varied queries by ~2.61% on average but severely impairs performance on RTT queries (~11% decrease) and reduces original query performance by 5.43%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 5.4.1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3 (reranking results): reranking substantially improves retrieval performance for rewritten queries by an average of 16.56% compared to only 7.40% for original queries.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 5.4.2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3 (reranking generation results): reranking improves generation quality by 1.83% for original queries and 8.50% for rewritten queries.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 5.4.2"
+  },
+  {
+    "criteria": "The execution outcomes match Appendix E.1 (scaling documents): for typos with Contriever, the performance degradation decreases from 22.2% at R@5 to 12.0% at R@100, and for ModernBERT from 20.1% to 9.8%, confirming that linguistic perturbations primarily affect ranking order.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Appendix E.1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5 (semantic preservation): human annotation confirms 86.7%-100% semantic preservation across all linguistic variations, with inter-annotator agreement of 96.7%-100%.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Appendix C (LLaMA rewriting): using Llama-3.1-70B-Instruct produces similar vulnerability patterns, with readability causing 21.5% retrieval degradation and 25.6% AM degradation on PopQA.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix C, Tables 6-7"
+  },
+  {
+    "criteria": "The execution outcomes confirm that across all five linguistic variations and both retrieval models, R@5 performance degrades consistently for all four datasets, validating the core paper claim of RAG fragility to linguistic variation.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes confirm that across all nine LLMs, five linguistic dimensions, and four datasets, RAG generation performance drops consistently (all AM values positive), validating the core finding that RAG systems exhibit universal vulnerability to linguistic variations.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  }
+]

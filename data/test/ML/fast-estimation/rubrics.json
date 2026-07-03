@@ -1,0 +1,500 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the definitions of Wasserstein distance, one-dimensional projected Wasserstein distance, lifted transportation plan, and their computational properties.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the six sliced Wasserstein (SW) distance variants: SW, Max-SW, EBSW (lower bounds) and PW, Min-SWGG, EST (upper bounds), and their empirical estimation procedures.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the regression framework of Wasserstein distance onto SW distances, including the unconstrained and constrained linear models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand all five RG model instances (RG-s, RG-e, RG-o, RG-se, RG-seo) and the three main experiment tracks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Appendix B.4 completely to understand the preprocessing protocols for MNIST, ShapeNetV2, MERFISH Cell Niches, and scRNA-seq datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The agent has read Table 1 and Table 3 to check the k-NN classification accuracy results on ShapeNetV2 for all RG variants and baselines.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1, Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the R2/MSE/MAE results comparing RG variants against Wormhole across four datasets at training size N=100.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Appendix B.5 to understand the five experiments comparing RG-Wormhole vs Wormhole (training time, encoder, decoder, barycenters, interpolation).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B.5"
+  },
+  {
+    "criteria": "The plan includes implementation of the one-dimensional projected Wasserstein distance computation as in Equation 2.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The plan includes implementation of the lifted transportation plan (SWGG) computation as in Equations 3-4.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equations 3-4"
+  },
+  {
+    "criteria": "The plan includes implementation of the standard SW distance via Monte Carlo estimation (Equation 5).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The plan includes implementation of Max-SW distance via optimization (e.g., projected or Riemannian gradient ascent).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementation of EBSW distance via importance sampling with exponential energy function.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementation of PW (projected Wasserstein) distance via Monte Carlo estimation (Equation 6).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The plan includes implementation of Min-SWGG distance via optimization.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementation of EST (expected sliced transport) distance via importance sampling.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementation of the unconstrained linear regression model (Equation 9) with closed-form least-squares solution (Equation 10).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 9-10"
+  },
+  {
+    "criteria": "The plan includes implementation of the constrained linear regression model (Equation 11) with least-squares estimation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 11-12"
+  },
+  {
+    "criteria": "The plan includes the five RG model instances: RG-s (SW+PWD), RG-e (EBSW+EST), RG-o (Max-SW+Min-SWGG), RG-se (SW+EBSW+PWD+EST), and RG-seo (all six predictors).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes the few-shot estimation procedure: sampling M pairs from N to compute regression weights, then predicting on remaining N-M pairs.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the point-cloud classification experiment on ShapeNetV2 using k-NN with k in {1, 3, 5, 10, 15} and M0=10 training samples.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes the low-data regime comparison experiment against Wormhole across MNIST, ShapeNetV2, MERFISH, and scRNA-seq with N in {10, 50, 100, 200}.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Appendix B.4"
+  },
+  {
+    "criteria": "The plan includes reimplementing Wormhole in PyTorch (since the original is in JAX/TensorFlow) with the hyperparameters in Table 4.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.4, Table 4"
+  },
+  {
+    "criteria": "The plan includes the RG-Wormhole architecture where every Wasserstein call in the Wormhole encoder and decoder is replaced with a calibrated unconstrained RG surrogate.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes the Gaussian mixture simulation (Appendix B.1) with 3-component mixtures, d=1 to 100, 10 seeds, 200 points per component.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes the classical methods comparison (Appendix B.6) against Sinkhorn and Linear OT in terms of runtime and R2 accuracy.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.6"
+  },
+  {
+    "criteria": "The code for computing the one-dimensional projected Wasserstein distance has been implemented as Equation 2 by sorting the projected 1D distributions and computing the quantile function integral.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for computing the lifted cost (SWGG) has been implemented as Equations 3-4, constructing the lifted transportation plan using disintegration of measures.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 3-4"
+  },
+  {
+    "criteria": "The code for computing the standard SW distance via Monte Carlo estimation has been implemented as Equation 5, using L i.i.d. uniform random directions on S^{d-1}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for computing the Max-SW distance has been implemented by solving the maximization over directions theta via projected gradient ascent or Riemannian gradient ascent.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for computing EBSW distance has been implemented using importance sampling with exponential energy weights as in Section 3.1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for computing PW (projected Wasserstein) distance has been implemented via Monte Carlo estimation over uniform random directions, using the lifted cost formula.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for computing Min-SWGG distance has been implemented by minimizing the lifted cost over directions theta using optimization (simulated annealing or gradient-based methods).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for computing EST (expected sliced transport) distance has been implemented using importance sampling with negative energy weights as in Section 3.1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for the unconstrained linear regression (LSE) of Wasserstein onto SW distances has been implemented with the closed-form solution as Equation 10: omega_LSE = (S^T S)^{-1} S^T W.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 10"
+  },
+  {
+    "criteria": "The code for the constrained linear regression (CLSE) has been implemented as Equation 11, enforcing the constraint that weights for lower bound and upper bound sum to 1 for each k.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 11-12"
+  },
+  {
+    "criteria": "The closed-form constrained LSE for K=1 has been implemented as Equation 12: omega_CLSE = E[(SU-SL)(SU-W)] / E[(SU-SL)^2].",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 12"
+  },
+  {
+    "criteria": "The code for the five RG model instances has been implemented: RG-s (SW+PWD), RG-e (EBSW+EST), RG-o (Max-SW+Min-SWGG), RG-se (SW+EBSW+PWD+EST), RG-seo (all six).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "Both constrained and unconstrained versions have been implemented for each RG model instance.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The few-shot regression procedure has been implemented: subsample M pairs from N to estimate regression weights, then use weights to predict Wasserstein for remaining N-M pairs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the ShapeNetV2 dataset has been implemented: centralizing and normalizing to [-1,1]^3, uniformly subsampling 2,048 points per shape, selecting 50 training and 100 test examples per class for the 10-class subset.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for k-NN classification on ShapeNetV2 has been implemented using distance matrices computed under each metric with k in {1, 3, 5, 10, 15}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for loading and preprocessing MNIST as 2D point clouds has been implemented by thresholding 28x28 grayscale images at 0.5 and treating active pixel coordinates as the point cloud.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The code for loading and preprocessing ShapeNetV2 for the Wormhole comparison has been implemented: using 15k points per shape, normalizing to [-1,1]^3, splitting into 10k training and 5k test points, sampling 2,048 points per shape.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The code for loading and preprocessing MERFISH Cell Niches has been implemented: scaling gene expression to [-1,1] divided by sqrt(d), using 50 µm radius neighborhoods of 11 nearest neighbors, keeping cells with sufficient neighbors.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The code for loading and preprocessing scRNA-seq data has been implemented: selecting 2,500 highly variable genes, normalizing counts with library-size 10^4 and log(1+x), scaling to [-1,1] divided by sqrt(2500), clustering cells with K-means.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "Wormhole has been reimplemented in PyTorch with the Transformer autoencoder architecture using the hyperparameters in Table 4: batch_size=10, Adam optimizer with lr=1e-4, ExponentialLR schedule, 2000 epochs (20,000 steps), num_layers=3, num_heads=4, emb_dim=128, mlp_dim=512, attention_dropout=0.1, coeff_dec=0.1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The code for RG-Wormhole has been implemented by calibrating a RG surrogate on M0=10 exact Wasserstein pairs and replacing every Wasserstein call in both the encoder loss (pairwise distances) and decoder loss (reconstruction) with the calibrated unconstrained RG surrogate.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code for the Gaussian mixture simulation (Appendix B.1) has been implemented: 3-component Gaussian mixtures, d=1 to 100 dimensions, 10 random seeds, 200 points per component, computing exact Wasserstein and six sliced metrics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for evaluating R2, MSE, and MAE metrics between predicted and exact Wasserstein distances has been implemented for all experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for UMAP visualization of metric-induced geometry has been implemented using pairwise distance matrices computed under each metric on 500 shapes per class from ShapeNetV2 (10 categories).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The code for the classical methods comparison (Sinkhorn and Linear OT) has been implemented for the runtime and accuracy benchmarks in Appendix B.6.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.6"
+  },
+  {
+    "criteria": "The code for the inter-class and intra-class experiments (Appendix B.7) has been implemented: training on intra-class pairs and testing on inter-class pairs (and vice versa) with 5 experiments per setting and 10 training pairs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.7"
+  },
+  {
+    "criteria": "The code for RG-Wormhole encoder quality evaluation has been implemented: computing R2/MSE/MAE between pairwise distances in the learned embedding space and exact Wasserstein.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.5"
+  },
+  {
+    "criteria": "The code for k-NN classification on ShapeNetV2 (Section 4.1 / Appendix B.2) has been executed successfully for all metrics (WD, SWD, PWD, EBSW, EST, Max-SW, Min-SWGG, and all RG variants) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1, Table 3"
+  },
+  {
+    "criteria": "The comparison experiment of RG variants vs Wormhole across four datasets (MNIST, ShapeNetV2, MERFISH, scRNA-seq) with N in {10, 50, 100, 200} has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2, Table 2"
+  },
+  {
+    "criteria": "The RG-Wormhole training-time comparison experiment has been executed successfully, sweeping batch sizes 4-20 and training set sizes N in {10, 50, 100, 200} for both Wormhole and RG-Wormhole.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.3, Figure 14"
+  },
+  {
+    "criteria": "The Gaussian mixture simulation (Appendix B.1) has been executed successfully for d=1 to 100 with 10 seeds, reporting constrained weights and R2 per dimension.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B.1, Figure 4"
+  },
+  {
+    "criteria": "The UMAP visualization experiment (Appendix B.3) has been executed successfully for ShapeNetV2 across all metrics.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B.3, Figure 5"
+  },
+  {
+    "criteria": "The classical methods comparison (Appendix B.6) has been executed successfully for Sinkhorn (iters=500 and 1000), Linear OT, and all RG variants on ShapeNetV2 pairwise runtime and across four datasets for R2.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B.6, Tables 5-6"
+  },
+  {
+    "criteria": "The inter-class and intra-class experiments (Appendix B.7) have been executed successfully for both settings on ShapeNetV2 with 5 runs each.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B.7, Figures 21-22"
+  },
+  {
+    "criteria": "The RG-Wormhole encoder, decoder, barycenter, and interpolation experiments (Appendix B.5) have been executed successfully on ModelNet40.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Appendix B.5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1/3: WD achieves 84.2% at k=5; among single sliced metrics SW and EBSW are strongest at ~72.5% top-1; RG-s and RG-e achieve around 82.5% top-1 with R2≈0.9; RG-se and RG-seo reach up to 83.5% with R2≈0.93.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1, Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2 (N=100): RG variants consistently outperform Wormhole across all four datasets with Wormhole achieving R2=0.28, 0.65, -3.6, 0.04 on MNIST, ShapeNetV2, MERFISH, scRNA-seq respectively.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: constrained RG variants (RG-s, RG-e, RG-se) achieve R2 of at least 0.84 on MNIST and at least 0.88 on ShapeNetV2 at N=100.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: unconstrained RG variants are generally stronger than constrained variants, with RG-s (unconstr.) achieving R2=0.93 on MNIST and 0.94 on ShapeNetV2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: on MERFISH and scRNA-seq, RG variants achieve near-perfect R2 (≥0.91 and ≥0.99 respectively) while Wormhole fails badly (R2=-3.6 on MERFISH).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4 (Appendix B.1): R2 is always above 0.8 for all three RG variants across all dimensions; as dimension increases, the constrained weight on the lower bound decreases (upper bound dominates at high dimensions).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4, Appendix B.1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 14 (Appendix B.5): RG-Wormhole is substantially faster than Wormhole across all batch sizes and training set sizes, with Wormhole's time growing near-exponentially with batch size while RG-Wormhole grows only slightly.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 14, Appendix B.5"
+  },
+  {
+    "criteria": "The execution outcomes match Figures 15-16 (Appendix B.5): RG-Wormhole encoder achieves essentially identical R2, MSE, and MAE compared to Wormhole for pairwise distance alignment with exact Wasserstein.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figures 15-16, Appendix B.5"
+  },
+  {
+    "criteria": "The execution outcomes match Figures 17-18 (Appendix B.5): RG-Wormhole and Wormhole produce very small and nearly identical Wasserstein reconstruction losses.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figures 17-18, Appendix B.5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5 (Appendix B.6): RG-s achieves 2.043s for 1,225 pairs vs Linear OT's 15.473s and Wormhole not being applicable for inference; Sinkhorn (1000 iters) is the slowest at 572.441s.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5, Appendix B.6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6 (Appendix B.6): RG-s achieves R2=0.925, 0.942, 0.964, 0.989 on MNIST, ShapeNetV2, MERFISH, scRNA-seq respectively; Sinkhorn has negative R2 on MNIST and ShapeNetV2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6, Appendix B.6"
+  },
+  {
+    "criteria": "The execution outcomes match Figures 21-22 (Appendix B.7): RG generalizes well to out-of-sample data with R2 values such as 0.902, 0.846, 0.932, 0.805 in cross-class settings, compared to ~0.95 in-distribution.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figures 21-22, Appendix B.7"
+  },
+  {
+    "criteria": "The execution outcomes confirm (Figures 6-13, Appendix B.4) that RG variants consistently outperform Wormhole at all training sizes N in {10, 50, 100, 200}, with unconstrained variants slightly stronger and constrained variants converging faster at the smallest sizes.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figures 6-13, Appendix B.4"
+  },
+  {
+    "criteria": "The execution outcomes confirm (Figure 5, Appendix B.3): RG variants produce UMAP embeddings of ShapeNetV2 that are visually very close to Wasserstein embeddings with well-separated class clusters, while single sliced baselines show more mixing and noise.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 5, Appendix B.3"
+  },
+  {
+    "criteria": "The execution outcomes match Figures 23-30 (Appendix B.8): the optimal regression weights vary substantially across datasets, confirming that no fixed set of coefficients universally applies across domains.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figures 23-30, Appendix B.8"
+  },
+  {
+    "criteria": "The code for computing the exact Wasserstein distance (ground truth) for training and evaluation has been implemented using an LP solver or POT library with O(n^3 log n) time complexity.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The sample-based SW distances matrix S_hat (M x K) and Wasserstein distances vector W_hat (M) have been constructed correctly for computing the least-squares regression weights.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The constrained regression for K>1 has been implemented using quadratic programming to minimize the sum of squared residuals subject to 0 <= omega_k <= 1 for each k.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Equation 11"
+  },
+  {
+    "criteria": "The computational complexity analysis of the RG method has been verified: training cost O(MKLn(log n+d)) + O(Mn^2(n log n+d)) + O(MK^2+K^3), prediction cost O((N-M)KLn(log n+d)) + O((N-M)K).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The evaluation on 10,000 independently sampled test pairs has been implemented for the low-data regime comparison experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The RG-Wormhole training time experiment has been implemented by training both models under the same optimizer and schedule, measuring wall-clock time while sweeping batch sizes from 4 to 20.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.5"
+  }
+]

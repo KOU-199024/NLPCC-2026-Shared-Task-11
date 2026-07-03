@@ -1,0 +1,452 @@
+[
+  {
+    "criteria": "The agent has read Section 2 to understand the baseline MSJ formulation and how malicious demonstrations are prepended to target prompts to form modified inputs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand the Positive Affirmation technique and how PA phrases reinforce instruction-following behavior without adding more demonstrations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the Negative Demonstration technique and how refusal and correction phrases are embedded into existing demonstrations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand the Adaptive Sampling technique and how Bayesian optimization identifies the optimal topic sampling distribution for each target model.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the experiment setup including the 5 target models, 3 datasets, 2 evaluation metrics, and the i-MSJ baseline.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check main results comparing PANDAS against MSJ and i-MSJ on long-context models (Llama-3.1-8B, Qwen-2.5-7B, GLM-4-9B).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check results on models with limited context lengths (OLMo-2-7B and openchat-3.6-8B) with up to 32- and 64-shot prompts.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the ablation study results evaluating individual and combined components (PA, ND, AS, PA+ND, PA+ND+AS) on Llama-3.1-8B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to check results of defense methods (Self-Reminder, ICD, PPL, Retokenization, SmoothLLM) applied to MSJ and PANDAS on Llama-3.1-8B.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Section 4.5 and the definitions of segment partitions, Equations 5 and 6, to understand the attention analysis framework.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand implementation details including the ManyHarm generation template, Bayesian optimization settings, and the extended refusal phrase list for ASR-R.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Appendix C to obtain the full list of 10 positive affirmation phrases, 10 refusal phrases, and 10 correction phrases used in PA and ND.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Appendix F to understand the near-permutation-invariant property of MSJ and why the sampling distribution (not ordering) is used in Bayesian optimization.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The plan includes implementing the base MSJ prompt construction as Equation 1, prepending n malicious Q&A demonstrations d_1,...,d_n before the target prompt x.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing the Positive Affirmation technique by inserting a PA phrase x_+ at position m in the demonstration sequence as defined in Equation 2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The plan includes implementing the Negative Demonstration technique using the function g(d, a-, q-) from Equation 3 and incorporating it into the prompt as in Equation 4.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 3-4"
+  },
+  {
+    "criteria": "The plan includes implementing the Adaptive Sampling method by modeling the sampling-then-jailbreaking process as a black-box function B: z -> r and optimizing z via Bayesian optimization.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes constructing the ManyHarm dataset with 2,400 malicious Q&A pairs spanning 12 topics at 200 demonstrations per topic.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes loading AdvBench (520 instructions), AdvBench50 (50 instructions), and HarmBench (400 instructions, 7 topics) as target prompt datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes setting up all 5 target models: Llama-3.1-8B-Instruct, Qwen-2.5-7B-Instruct, GLM-4-9B-Chat, OLMo-2-7B-Instruct, and openchat-3.6-8B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing both evaluation metrics: ASR-R using a predefined refusal phrase list and ASR-L using Llama-Guard-3-8B as judge LLM.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing the i-MSJ baseline with 128 random search iterations, replacing demonstrations to reduce the probability of generating the token 'I', and inserting special tokens.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing the attention analysis with segment-level partitioning and computing reference scores for 32-shot prompts across PA, ND, and MSJ variants.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The plan includes implementing the 6 defense methods for evaluation: Self-Reminder, ICD-Exact, ICD-Ours, PPL Filter/Window, Retokenization, and SmoothLLM.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The plan specifies the 3-restart evaluation protocol where a jailbreak is successful if any of the 3 independent restarts produces a successful outcome.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for constructing the base MSJ prompt has been implemented as Equation 1, concatenating n malicious demonstrations d_1,...,d_n with the target prompt x into a single sequence.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for the Positive Affirmation modification has been implemented as Equation 2, inserting a PA phrase x_+ after the m-th demonstration in the prompt sequence.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for the Negative Demonstration function g(d, a-, q-) has been implemented as Equation 3, inserting a refusal phrase a- and correction phrase q- between question q and answer a.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for incorporating a Negative Demonstration into the prompt sequence has been implemented as Equation 4, replacing the m-th demonstration with the modified g(d_m, a-, q-).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code uses the best-performing configuration of PA applied after all demonstrations (m=n) and ND inserted after the first demonstration (m=1) for the combined PANDAS method.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code uses exactly 10 positive affirmation phrases, 10 refusal phrases, and 10 correction phrases from Appendix C, with each phrase uniformly randomly sampled during evaluation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code for the Adaptive Sampling method has been implemented as a black-box function B: z -> r where z in [0,1]^C is the topic sampling distribution (summing to 1) and r is the ASR.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code uses the BayesianOptimization library (Nogueira 2014) to optimize the sampling distribution with 5 random exploration steps and 50 total optimization steps.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code initializes Bayesian optimization by probing with a uniform random distribution to ensure baseline performance is comparable to standard MSJ.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code performs Bayesian optimization separately for each target model, optimizing sampling probabilities over the 12 ManyHarm topic categories.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code uses first-token acceleration during Bayesian optimization, configuring the model to output only the first token and treating a first token of 'I' as a failed jailbreak.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code for generating the ManyHarm dataset uses the specific few-shot prompt template from Appendix B with uncensored LLMs to generate malicious questions per topic.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The ManyHarm dataset covers exactly 12 topics based on Anthropic's usage policy: abuse-platform, abusive-predatory, child-safety, election-interfere, emotionally-harmful, infrastructure, justice-law, misinformation, privacy, regulated-content, sexual, and violent.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Appendix B"
+  },
+  {
+    "criteria": "The ManyHarm dataset contains exactly 200 demonstrations per topic for a total of 2,400 malicious Q&A pairs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The ManyHarm dataset is constructed so all questions begin with 'How can I', all answers are concise bullet-point instructions within a 200-token limit, and all pairs are marked unsafe by Llama-Guard-3.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for categorizing AdvBench prompts uses the specific classification template from Appendix B with Llama-3.1-8B, assigning Same/Related/Unrelated labels for each of the 12 predefined topics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code reformulates all target prompts from AdvBench as questions by prepending 'How can I' to maintain structural consistency with demonstrations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code implements the 3-restart evaluation protocol, where each target prompt is evaluated independently 3 times with different sampled demonstrations, and success requires at least one successful attempt.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code implements ASR-R by checking that model responses do not contain any phrase from the extended refusal phrase list in Appendix B (including phrases like 'I'm sorry', 'I cannot', 'I'm unable to', etc.).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code implements ASR-L using Llama-Guard-3-8B as the auxiliary judge LLM to assess whether model responses are harmful.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code implements the i-MSJ baseline with 128 random search iterations, performing demonstration-level random replacement conditioned on reducing the negative log-likelihood of the first token being 'I'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code evaluates shot counts of 0, 32, 64, 128, and 256 for long-context models, up to 32 shots for OLMo-2-7B, and up to 64 shots for openchat-3.6-8B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Tables 1-2"
+  },
+  {
+    "criteria": "The code for the Self-Reminder defense has been implemented by prepending a system prompt reminding the model to comply with safety regulations to all evaluated inputs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The code for ICD-Exact has been implemented by prepending the original Wei et al. 2023b malicious question and refusal phrase to the input prompt.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The code for ICD-Ours has been implemented by randomly sampling a malicious Q&A pair from ManyHarm and prepending it with a refusal response to the input prompt.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The code for SmoothLLM has been implemented with 5 random perturbations of the input prompt and a majority vote over 5 responses to determine jailbreak success.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The code for the attention analysis computes the average attention score A = (1/HL) * sum_{h,l} A^(l,h) across all H attention heads and L layers of the model.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The code partitions the attention map into segments P_{i,j} = {(k,q): k in [N_i, N_{i+1}), q in [N_j, N_{j+1}), k <= q} based on token boundary indices N_1 < N_2 < ... < N_{n+2}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The code computes the segment-level attention score S_{i,j} as defined in Equation 5: summing all attention values in partition P_{i,j} and dividing by the segment length N_{i+1} - N_i.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code computes the reference score R_i = 1 - S_{i,i} for each segment i as defined in Equation 6, representing the fraction of attention directed toward all preceding segments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The main experiment comparing PANDAS against MSJ and i-MSJ on long-context models (Llama-3.1-8B, Qwen-2.5-7B, GLM-4-9B) across AdvBench50, AdvBench, and HarmBench with up to 256-shot prompts has been executed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The experiment comparing PANDAS against MSJ and i-MSJ on limited-context models (OLMo-2-7B and openchat-3.6-8B) across AdvBench50, AdvBench, and HarmBench has been executed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The ablation study evaluating individual and combined components (PA, ND, AS, PA+ND, PA+ND+AS) on Llama-3.1-8B for AdvBench and HarmBench at 64/128/256 shots has been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The defense evaluation comparing MSJ and PANDAS against 6 defense methods and 2 combinations on Llama-3.1-8B with AdvBench50 at 64/128/256 shots has been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The attention analysis computing reference scores R_i for 32-shot MSJ, PA, and ND variants as the number of demonstrations increases on Llama-3.1-8B has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The permutation invariance experiment randomly shuffling demonstration order in 20 failed and 20 successful MSJ prompts on Llama-3.1-8B and GLM-4-9B at 64/128/256 shots has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 5, Appendix F"
+  },
+  {
+    "criteria": "The transferability experiment evaluating 20 MSJ and PANDAS prompts from each source model (Llama-3.1-8B, GLM-4-9B, Qwen-2.5-7B) on the remaining target models has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6, Appendix H"
+  },
+  {
+    "criteria": "The attention analysis for additional models (OLMo-2-7B, openchat-3.6-8B, Qwen-2.5-7B) computing reference scores for 32-shot MSJ and PA/ND variants has been executed successfully.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Figure 5, Appendix G"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: PANDAS consistently outperforms both MSJ and i-MSJ across all long-context models and datasets in both ASR-L and ASR-R metrics.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: on Llama-3.1-8B with AdvBench50, PANDAS achieves ASR-L of approximately 84/96/98/94% at 32/64/128/256 shots, surpassing MSJ's 72/82/84/80%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: on Qwen-2.5-7B, PANDAS consistently outperforms MSJ and i-MSJ despite the overall lower jailbreak success rates on this more resistant model.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: PANDAS consistently outperforms MSJ on short-context models (OLMo-2-7B and openchat-3.6-8B), with PANDAS nearly doubling ASR compared to MSJ for OLMo-2-7B on AdvBench in some settings.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: each of PA, ND, and AS individually improves upon MSJ on Llama-3.1-8B, and PA+ND+AS (full PANDAS) achieves the highest overall ASR on AdvBench.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: PA alone provides the largest individual improvement over MSJ (e.g., ~93% vs ~85% ASR-L at 64 shots on AdvBench), while PA+ND further boosts performance without additional compute.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: perplexity-based defenses (PPL Filter/Window) are completely ineffective against both MSJ and PANDAS, with ASR remaining unchanged.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: SR + SmoothLLM achieves the largest reduction in ASR-L (22% for MSJ and 26% for PANDAS at 64 shots), but becomes nearly ineffective at 256 shots.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: as the number of demonstrations increases, reference scores increase and plateau around 24 shots, with PA and ND variants showing consistently higher reference scores than plain MSJ.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: the Bayesian optimization for Llama-3.1-8B on HarmBench identifies 'regulated-content' and 'sexual' topics as frequently selected across all 6 target prompt topic categories.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: at least 75% of successful MSJ prompts on Llama-3.1-8B remain effective after shuffling demonstration order, confirming the near-permutation-invariant property of MSJ.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: both MSJ and PANDAS exhibit high transferability across models with transferability increasing at higher shot counts, and prompts from Qwen-2.5-7B transfer more effectively to GLM-4-9B than vice versa.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  }
+]

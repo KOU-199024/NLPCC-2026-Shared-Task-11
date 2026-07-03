@@ -1,0 +1,464 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the molecule graph representation G(V, E), the two template types (atom-template and bond-template), and the GNN split into feature extractor f and prediction head h.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 completely to understand the store construction procedure for atom store S_A and bond store S_B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 2.3 completely to understand the KNN retrieval equations (1-4) for combining GNN and KNN predictions.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The agent has read Section 2.4 completely to understand the adapter network architecture including the GIN layer, FC layers, and prediction of T_A, T_B, lambda_a, and lambda_b.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the dataset splits, preprocessing scripts, template counts, backbone GNN configuration, and evaluation protocol.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Tables 1, 2, and 3 to understand the main results on USPTO-50K (with and without reaction type) and USPTO-MIT.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Tables 1, 2, 3"
+  },
+  {
+    "criteria": "The agent has read Table 5 to understand the ablation study design with five system configurations.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The agent has read Table 6 to understand the study on the number of retrieved reactions (K in KNN) and its effect on accuracy.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 to understand the zero-shot and few-shot experimental setup, including the filtering of reaction classes 6-10 for zero-shot and keeping 10% of classes 6-10 for few-shot.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Table 7 to understand the datastore size statistics and inference latency measurements.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The plan includes training the backbone GNN (LocalRetro-style 6-layer MPNN + GRA) on USPTO-50K and USPTO-MIT datasets before building the KNN stores.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes building the atom store S_A and bond store S_B offline from the training data following Algorithm 1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes implementing KNN retrieval using faiss with IndexIVFPQ index and K=32 neighbours.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing the KNN probability computation for atom templates using Equation 1 with temperature T_A and indicator function.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing the KNN probability computation for bond templates using Equation 2 with temperature T_B.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The plan includes implementing the GNN-KNN interpolation for atom and bond templates using interpolation factor lambda_a and lambda_b as in Equations 3 and 4.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 3, 4"
+  },
+  {
+    "criteria": "The plan includes implementing the lightweight adapter network with one GIN layer followed by FC layers to predict T_A, T_B, lambda_a, and lambda_b adaptively per reaction.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The plan includes training the adapter on the validation set of USPTO-50K (10 epochs) and USPTO-MIT (2 epochs) with early stopping by best validation loss.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes running the ablation study with five system configurations: baseline, +KNN (fixed T and lambda), +KNN adaptive T, +KNN adaptive lambda, full RetroKNN.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes running zero-shot and few-shot experiments by filtering USPTO-50K reactions by class (classes 1-5 for training, classes 6-10 for evaluation).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes ranking all atom and bond template predictions together and outputting the top 50 candidates for each target molecule.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The plan includes computing top-K accuracy for K=1, 3, 5, 10, and 50 using the evaluation script from Chen and Jung (2021).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for loading and preprocessing USPTO-50K (40k/5k/5k split) using the preprocessing scripts from Chen and Jung (2021) to extract 658 reaction templates has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for loading and preprocessing USPTO-MIT (409k/40k/30k split) using the preprocessing scripts from Chen and Jung (2021) to extract 20,221 reaction templates has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for extracting atom and bond input features using DGL-LifeSci has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The backbone GNN feature extractor f has been implemented as a 6-layer MPNN followed by a single GRA layer with 8 attention heads and hidden dimension 320.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The backbone GNN applies dropout with rate 0.2 during training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The prediction head h has been implemented as two dense layers with ReLU activation to predict template probability distributions over T_a and T_b.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The backbone GNN training uses Adam optimizer with learning rate 0.001, runs for up to 50 epochs, and early stops when validation loss does not improve for 5 consecutive epochs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The store construction (Algorithm 1) iterates all training molecules, extracts hidden representations h_v for each node and h_e for each edge using the trained feature extractor f, and stores (h_v, t) for reaction center atoms and (h_v, 0) for non-center atoms in S_A.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The store construction (Algorithm 1) stores (h_e, t) for reaction center bonds and (h_e, 0) for non-center bonds in S_B, producing atom store S_A and bond store S_B.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The KNN search is implemented using the faiss library with IndexIVFPQ index for fast approximate nearest neighbor search in both atom store S_A and bond store S_B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The number of nearest neighbors K is set to 32 for the KNN search during inference.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The KNN atom template probability P_KNN(t_a | M, a) has been implemented as Equation 1: a sum over K neighbors where each neighbor's weight is exp(-d(h_a, h_i)/T_A) and only neighbors with matching template t_i = t_a contribute via the indicator function.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The KNN bond template probability P_KNN(t_b | M, b) has been implemented as Equation 2: a sum over K neighbors with weights exp(-d(h_b, h_i)/T_B) using the indicator function for template matching.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The combined atom template probability P(t_a | M, a) has been implemented as Equation 3: a linear interpolation lambda_a * P_GNN(t_a | M, a) + (1 - lambda_a) * P_KNN(t_a | M, a).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The combined bond template probability P(t_b | M, b) has been implemented as Equation 4: a linear interpolation lambda_b * P_GNN(t_b | M, b) + (1 - lambda_b) * P_KNN(t_b | M, b).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The adapter GIN layer for node features h_v^(g) has been implemented as Equation 5: h_v^(g) = W_vg * ((1 + epsilon) * h_v + sum_{e in E(v)} ReLU(h_v + h_e)) + b_vg, where epsilon and W_vg are learnable parameters.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The adapter FC projection of atom KNN distances h_v^(k) has been implemented as Equation 6: h_v^(k) = W_vk * {d(h_v, h_i)}_{i=1}^{K} + b_vk, building a K-dimensional vector of distances.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The adapter FC projection of bond KNN distances h_e^(k) has been implemented as Equation 7: h_e^(k) = W_ek * {d(h_e, h_i)}_{i=1}^{K} + b_ek, building a K-dimensional vector of distances.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The combined node representation h_v^(o) has been implemented as Equation 8: ReLU(W_vo * ReLU(h_v^(g) || h_v^(k)) + b_vo), where || denotes tensor concatenation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The combined edge representation h_e^(o) has been implemented as Equation 9: ReLU(W_eo * ReLU(h_es^(g) || h_et^(g) || h_e^(k)) + b_eo), concatenating start-node, end-node, and KNN distance features.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The softmax temperature T_A for atom KNN is predicted from h_v^(o) and clamped to [1, 100] as in Equation 10: T_A = max(1, min(100, W_ta * h_v^(o) + b_ta)).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 10"
+  },
+  {
+    "criteria": "The interpolation factor lambda_a for atom templates is predicted from h_v^(o) using sigmoid as in Equation 11: lambda_a = sigma(W_la * h_v^(o) + b_la) to ensure lambda_a in (0, 1).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 11"
+  },
+  {
+    "criteria": "The softmax temperature T_B for bond KNN is predicted from h_e^(o) and clamped to [1, 100] as in Equation 12: T_B = max(1, min(100, W_tb * h_e^(o) + b_tb)).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 12"
+  },
+  {
+    "criteria": "The interpolation factor lambda_b for bond templates is predicted from h_e^(o) using sigmoid as in Equation 13: lambda_b = sigma(W_lb * h_e^(o) + b_lb) to ensure lambda_b in (0, 1).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 13"
+  },
+  {
+    "criteria": "The adapter training loss L_M has been implemented as Equation 14: the negative log-likelihood over both atom and bond template predictions, averaged over all atoms and bonds in the target molecule.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 14"
+  },
+  {
+    "criteria": "The adapter uses the same hidden dimension (320) as the backbone GNN and is trained with Adam optimizer at learning rate 0.001.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The adapter is trained for 10 epochs on USPTO-50K validation set and 2 epochs on USPTO-MIT validation set, selecting the model with best validation loss.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The inference procedure ranks all non-zero atom and bond template predictions by their combined probability and outputs the top 50 reactions as the final output.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The ablation study code for system 2 (KNN only without adapter) includes a grid search over T in {1, 5, 25, 50} and lambda in {0.1, 0.3, 0.5, 0.7, 0.9} for a total of 20 combinations, selecting parameters by validation loss.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Table 5"
+  },
+  {
+    "criteria": "The code for zero-shot dataset creation filters USPTO-50K training and validation data to retain only reaction classes 1-5, while evaluating on classes 6-10.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for few-shot dataset creation retains only 10% of reactions with classes 6-10 in the training data while keeping all other classes intact.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The evaluation code computes top-K exact match accuracy for K=1, 3, 5, 10, and 50 using the evaluation script from LocalRetro (Chen and Jung 2021).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The backbone GNN has been trained successfully on the USPTO-50K dataset and saved for downstream store construction and adapter training.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The backbone GNN has been trained successfully on the USPTO-MIT dataset and saved for downstream store construction and adapter training.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The atom store S_A and bond store S_B have been constructed successfully from the USPTO-50K training data (|S_A|=1,039k, |S_B|=2,241k) and indexed with faiss.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The atom store S_A and bond store S_B have been constructed successfully from the USPTO-MIT training data (|S_A|=10,012k, |S_B|=21,495k) and indexed with faiss.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The adapter network has been trained successfully on the USPTO-50K validation set and the adapter with best validation loss is selected for testing.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The adapter network has been trained successfully on the USPTO-MIT validation set and the adapter with best validation loss is selected for testing.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The full RetroKNN inference has been executed successfully on the USPTO-50K test set without errors, producing top-50 candidate templates for each target molecule.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1, Table 2"
+  },
+  {
+    "criteria": "The full RetroKNN inference has been executed successfully on the USPTO-MIT test set without errors, producing top-50 candidate templates for each target molecule.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "All five ablation system configurations (baseline, +KNN, +KNN adaptive T, +KNN adaptive lambda, full RetroKNN) have been executed successfully on USPTO-50K.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The K-size study experiments with K in {1, 4, 8, 16, 32} have been executed successfully, training a separate adapter for each K value.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The zero-shot experiments comparing LocalRetro baseline and RetroKNN across reaction classes 6-10 on the modified USPTO-50K have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The few-shot experiments comparing LocalRetro baseline and RetroKNN across reaction classes 6-10 on the 10%-filtered USPTO-50K have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: RetroKNN achieves top-1 accuracy of 57.2 on USPTO-50K (reaction type unknown), outperforming the LocalRetro backbone at 53.4.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: RetroKNN achieves top-3 accuracy 78.9, top-5 accuracy 86.4, top-10 accuracy 92.7, and top-50 accuracy 98.1 on USPTO-50K (reaction type unknown).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: RetroKNN achieves top-1 accuracy of 66.7 on USPTO-50K when the reaction type is given, improving over LocalRetro at 63.9.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: RetroKNN achieves top-1 accuracy of 60.6 on USPTO-MIT, improving by 6.5 points over the LocalRetro backbone at 54.1.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: RetroKNN achieves top-3 accuracy 77.1, top-5 accuracy 82.3, top-10 accuracy 87.3, and top-50 accuracy 92.9 on USPTO-MIT.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The ablation study results match Table 5: system 1 (baseline) achieves 53.4, system 2 (+KNN fixed) achieves 56.3, system 3 (+KNN adaptive T) achieves 56.7, system 4 (+KNN adaptive lambda) achieves 56.8, and system 5 (full RetroKNN) achieves 57.2.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The K-size study results match Table 6: K=1 achieves 55.6, K=4 achieves 57.4, K=8 achieves 57.1, K=16 achieves 56.9, and K=32 achieves 57.2 top-1 accuracy on USPTO-50K.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes confirm the zero-shot study in Figure 4(a, c): RetroKNN achieves non-zero top-5 and top-10 accuracy on reaction classes 6-10 while the LocalRetro baseline achieves zero accuracy on most classes.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes confirm the few-shot study in Figure 4(b, d): RetroKNN consistently outperforms the LocalRetro baseline across all reaction classes 6-10 with an average improvement of 8.56 points top-5 and 5.64 points top-10 accuracy.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes confirm the datastore sizes in Table 7: the atom store S_A contains approximately 1,039k entries and bond store S_B contains approximately 2,241k entries for USPTO-50K.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes confirm the inference latency in Table 7: the average per-reaction latency with KNN retrieval is approximately 3.31 ms on USPTO-50K versus 2.71 ms without KNN, measured on a single NVIDIA A100 GPU.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  }
+]

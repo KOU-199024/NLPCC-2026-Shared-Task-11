@@ -1,0 +1,404 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the RoPE preliminaries, including how the relative position matrix M is constructed as a Toeplitz matrix.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand the three guiding principles of AdaGroPE: minimizing reuse, prioritizing distant relative position reuse, and progressively increasing reuse count from close to distant.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 2.3 completely to understand the adaptive relative position adjustment strategy and the general closed-form formula for M_a[i][j].",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand the experimental setup including all models (Llama-2 7b/13b, Llama-3 8b, Mistral 7b, SOLAR 10.7b, Phi-2), baselines (DCA, SelfExtend, Longlora, Together, CodeLlama, CLEX), and datasets (PG19, passkey retrieval, LongBench, L-Eval).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the perplexity (PPL) evaluation results on PG19 across context lengths 4k, 8k, 16k, 32k.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Figure 2 to understand the passkey retrieval accuracy results for Mistral-7b with different methods across context lengths and depths.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the LongBench evaluation results across 16 subtasks for all models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to understand the L-Eval evaluation results on 4 closed-ended tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Figure 3 to understand how AdaGroPE performance scales as context length increases for passkeys of 16, 48, and 64 digits.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The agent has read Figure 4 to understand the ablation study on the selection of P and r using Qasper and Lcc from LongBench.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The agent has read Figure 5 to understand the varying-length passkey retrieval experiment comparing fine-tuned and training-free methods on Llama-2-chat-7b.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The plan includes implementing the core AdaGroPE relative position matrix M_a[i][j] following all three guiding principles: minimizing reuse, prioritizing distant position reuse, and progressively increasing reuse count.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes computing the L_n^max sequence and deriving G_s^m(L) to determine the maximum reuse count for any given target extension length L.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Eq. 15, 16"
+  },
+  {
+    "criteria": "The plan includes implementing the r_n sequence that defines the minimum number of relative positions retained with each reuse count when G_s^m exceeds that count.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Eq. 9"
+  },
+  {
+    "criteria": "The plan includes implementing both mapping functions f_n^m(x) and f_n^r(x) for remapping original relative positions to AdaGroPE-adjusted positions.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Eq. 8, 12"
+  },
+  {
+    "criteria": "The plan includes integrating AdaGroPE into the LLM self-attention mechanism as a plug-and-play, training-free replacement of standard RoPE relative positions.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The plan includes loading and testing all model variants: Llama-2 (7b and 13b), Llama-3 (8b), Mistral (7b), SOLAR (10.7b), and Phi-2.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes implementing DCA (Dual Chunk Attention) and SelfExtend as training-free baselines for comparison.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes language modeling evaluation on PG19 with context lengths 4096, 8192, 16384, and 32768 tokens.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes passkey retrieval evaluation with a 36-digit passkey across context lengths from 8k to 64k.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes evaluation on LongBench across all 16 subtasks.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes evaluation on L-Eval's 4 closed-ended tasks: TOFEL, QUALITY, Coursera, and SFiction.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes an ablation study varying P values and r values on Qasper and Lcc from LongBench with Llama-2-7b-chat.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The plan includes varying-length passkey retrieval experiments with digit lengths {5, 8, 16, 36, 48, 64, 100} and the context-length scaling analysis with passkey lengths {16, 48, 64}.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Figure 3, Figure 5"
+  },
+  {
+    "criteria": "The neighbor window of size w_n = rP is implemented to preserve exact original relative positions i-j for all tokens with relative distance i-j < w_n (Eq. 4).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Eq. 4"
+  },
+  {
+    "criteria": "The L_n^max sequence is computed according to the general formula L_n^max = nP - sum_{k=1}^{n-1}(n-k-1)*r_k (Eq. 15), with the base cases L_1^max = P, L_2^max = 2P - w_n (Eq. 5).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Eq. 5, 15"
+  },
+  {
+    "criteria": "The maximum reuse count G_s^m(L) is correctly computed for any given input length L by comparing against the L_n^max thresholds (Eq. 16).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 16"
+  },
+  {
+    "criteria": "The d_n value is computed as d_n = L - L_n^max for L in (L_n^max, L_{n+1}^max], representing the number of relative positions that must be reused n+1 times (Eq. 6).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Eq. 6"
+  },
+  {
+    "criteria": "The r_n sequence is implemented according to Eq. 9: r_n = floor(r/n * P) when log2(n) is a non-negative integer, and r_n = 0 otherwise, with r_1 = w_n.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Eq. 9"
+  },
+  {
+    "criteria": "The f_n^m(x) mapping function is implemented as L - (n+1)*d_n + floor((x - (L - (n+1)*d_n)) / (n+1)), mapping the farthest positions to their maximum-reuse-count relative positions (Eq. 8).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 8"
+  },
+  {
+    "criteria": "The f_n^r(x) mapping function is implemented inductively as sum_{k=1}^{n-1} r_k*k + floor((x - sum_{k=1}^{n-1} r_k*k) / n), mapping positions with reuse count up to n (Eq. 12).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 12"
+  },
+  {
+    "criteria": "The complete general formula for M_a[i][j] (Eq. 17) is correctly implemented, selecting among f_1^r, f_2^r, ..., f_{g_l}^r, f_{g_l}^m based on the value of i-j, where g_l = G_s^m(L) - 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 17"
+  },
+  {
+    "criteria": "The default hyperparameter r is set to 0.25 and the neighbor window size w_n is derived as w_n = rP.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The position mapping dynamically adapts to the actual input sequence length L at inference time, ensuring optimal performance for variable-length inputs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "AdaGroPE is integrated into the LLM self-attention by replacing the standard RoPE relative position indices with the M_a[i][j] values when computing query-key dot products.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The implementation correctly handles the boundary condition where L <= P (G_s^m = 1), in which case no reuse is applied and original relative positions are preserved.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Eq. 16"
+  },
+  {
+    "criteria": "Algorithm 1 (pseudocode for computing relative positions during decoding, provided in the Appendix) is faithfully implemented in code.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "Llama-2 7b and 13b models are loaded with AdaGroPE applied to their self-attention layers for evaluation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "Llama-3 8b, Mistral 7b, SOLAR 10.7b, and Phi-2 models are loaded with AdaGroPE applied for evaluation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The DCA (Dual Chunk Attention / ChunkLlama) baseline is implemented and applied to the same set of models.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The SelfExtend baseline is implemented and applied to the same set of models.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "Perplexity (PPL) evaluation on the PG19 validation set is implemented with context lengths 4096, 8192, 16384, and 32768 tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "Fine-tuned long-context models (Longlora-7b-32k, Together-7b-32k, CodeLlama-7b-16k, CLEX-7b-16k) are included as additional baselines in the language modeling PPL experiment.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The passkey retrieval task is set up with a 36-digit passkey randomly placed within a 400-token span, tested at multiple depths within the document.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "Passkey retrieval is tested across context lengths from 8k to 64k tokens, with 10 evaluation iterations per (context length, depth) combination.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "LongBench evaluation is implemented covering all 16 subtasks: NarrativeQA, Qasper, MultiField-en, HotpotQA, 2WikiMQA, Msique, GovReport, QMSum, MultiNews, TREC, TriviaQA, SAMSum, PassageCount, PassageRe, Lcc, and RepoBench-P.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "L-Eval evaluation is implemented on 4 closed-ended tasks: TOFEL (3k-5k tokens), QUALITY (4k-9k tokens), Coursera (5k-17k tokens), and SFiction (6k-27k tokens).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The ablation study is implemented by varying P across {1024, 2048, 4096} and r^{-1} across {2, 3, 4, 5, 8} on the Qasper and Lcc datasets from LongBench using Llama-2-7b-chat.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The varying-length passkey retrieval experiment is implemented with passkey digit lengths {5, 8, 16, 36, 48, 64, 100} comparing fine-tuned models (Vicuna-1.5-7b-16k, Llama-2-7b-32k, Longlora) against training-free methods using Llama-2-chat-7b.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The context length scaling experiment is implemented with passkey lengths {16, 48, 64} digits across context window sizes {8k, 16k, 32k, 64k, 128k} for ChunkMistral, SE-Mistral, and AdaGroPE-Mistral.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "Language modeling experiments (PPL on PG19) run successfully for all models and context lengths without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "Passkey retrieval experiments (36-digit passkey, 8k-64k context) execute successfully for all models, depths, and context lengths without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "LongBench evaluation experiments run successfully for all models and all 16 subtasks without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "L-Eval experiments run successfully for all 4 closed-ended tasks and all relevant models without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "Ablation study experiments on the selection of P and r execute successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "Varying-length passkey retrieval and context length scaling analysis experiments execute successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "PPL results match Table 2: AdaGroPE-Llama-2-7b achieves perplexity of 7.87/7.65/7.56/7.75 at 4k/8k/16k/32k context lengths.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "PPL results match Table 2: AdaGroPE-Llama-3-8b achieves perplexity of 9.04/8.71/8.57/8.52 at 4k/8k/16k/32k context lengths.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "PPL results match Table 2: AdaGroPE outperforms or matches SelfExtend across context lengths for both Llama-2-7b and Llama-3-8b models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "PPL results match Table 2: Training-free AdaGroPE outperforms fine-tuned models (Longlora-7b-32k, Together-7b-32k) on PPL at 16k and 32k context lengths.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "Passkey retrieval results match Figure 2: AdaGroPE with Mistral-7b achieves nearly 100% passkey retrieval accuracy across all depths and context lengths (8k to 64k).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "LongBench results match Table 3: AdaGroPE achieves the best average score compared to DCA and SelfExtend for each model group (Llama-2-7b-chat avg 35.27, Llama-3-8b-ins avg 47.10, Mistral-7b-ins avg 40.77, SOLAR-10.7b-ins avg 42.62, Phi-2 avg 26.15).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "L-Eval results match Table 4: AdaGroPE-Llama-2-7b-chat achieves avg 49.28, outperforming SE-Llama-2-7b-chat (47.51) and Longchat-1.5-7b-32k (41.85).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "L-Eval results match Table 4: AdaGroPE-SOLAR-10.7b-ins achieves avg 69.83, outperforming SE-SOLAR-10.7b-ins (68.34) on all 4 closed-ended tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "Context length scaling results match Figure 3: AdaGroPE-Mistral maintains approximately 95% accuracy at 128k context with a 64-digit passkey, while ChunkMistral drops to ~60% and SE-Mistral drops to ~60%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "Ablation results match Figure 4: The selection of P has a more significant impact on AdaGroPE performance than r; the default r=0.25 (r^{-1}=4) consistently yields strong average performance across Qasper and Lcc.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "Varying-length passkey results match Figure 5: AdaGroPE-Llama-2-7b-chat shows milder performance degradation than baselines as passkey length increases, maintaining ~95% accuracy even at 100-digit passkeys while Vicuna-1.5-7b-16k and Longlora drop below 65%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  }
+]

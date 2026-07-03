@@ -1,0 +1,482 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the context consistency property of language models and the distinction between single-prompt and multi-prompt generation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Equation 1 to understand the LDM training loss function used as the backbone diffusion model (SDXL).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.1.1 and Figure 2 to understand the context consistency analysis in text embeddings via t-SNE and average L2 distance (46.42 for single-prompt vs. 71.25 for multi-prompt).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 3.1.1, Figure 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1.2 and Figure 3 to understand the context consistency analysis in image space using DINOv2 features and t-SNE.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 3.1.2, Figure 3"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the Singular-Value Reweighting (SVR) and Identity-Preserving Cross-Attention (IPCA) techniques.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Equation 2 to understand the SVR+ formulation for enhancing singular values of the express set: sigma_hat = beta * e^(alpha * sigma) * sigma.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The agent has read Equation 3 to understand the SVR- formulation for suppressing singular values of the suppress set: sigma_tilde = beta' * e^(-alpha' * sigma_hat) * sigma_hat.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The agent has read Equation 4 to understand the new cross-attention map formulation in IPCA: A_tilde = softmax(Q_tilde * K_tilde^T / sqrt(d)).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to understand the complete 1Prompt1Story pipeline combining Prompt Consolidation (PCon), SVR, and IPCA for each frame generation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Appendix B.1 to check the implementation details including SDXL model configuration, SVR hyperparameters (alpha=0.01, beta=0.05 for Eq.2; alpha'=0.01, beta'=1.0 for Eq.3), IPCA dropout rate of 0.5, same noise initialization, and FreeU usage.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to check the experimental setup including comparison methods, ConsiStory+ benchmark, and evaluation metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the quantitative comparison results across all methods on ConsiStory+ benchmark.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the user study results comparing 1Prompt1Story (48.60%) with IP-Adapter (8.60%), ConsiStory (13.00%), and StoryDiffusion (29.80%).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the ablation study results for PCon+SVR+, PCon+SVR-, PCon+SVR++SVR-, and the full method PCon+SVR++SVR-+IPCA.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to check the additional prompt alignment and visual quality metrics comparison (VQAScore, DSG with/without dependency, FID).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Appendix B.2 to understand the ConsiStory+ benchmark construction: 200 prompt sets of 5-10 prompts each, 8 superclasses (humans, animals, fantasy, inanimate, fairy tales, nature, technology, foods), generated using ChatGPT 4.0-turbo.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The agent has read Appendix C.2 to understand the iterative vs. joint suppression analysis in SVR, confirming iterative suppression is more effective.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix C.2"
+  },
+  {
+    "criteria": "The plan includes implementation of Prompt Consolidation (PCon) that concatenates all prompts as [P0; P1; ...; PN] into a single text embedding for each frame generation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementation of Naive Prompt Reweighting (NPR) with a scaling factor of 2 for the express frame embedding and 0.5 for suppress frame embeddings, keeping cEOT unchanged.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes Singular-Value Reweighting SVR+ using SVD decomposition of Xexp = [cPj, cEOT] to enhance singular values via Equation 2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Equation 2"
+  },
+  {
+    "criteria": "The plan includes Singular-Value Reweighting SVR- using iterative SVD decomposition to suppress each frame prompt in the suppress set individually via Equation 3.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Equation 3"
+  },
+  {
+    "criteria": "The plan includes Identity-Preserving Cross-Attention (IPCA) by zeroing out frame prompt token features in K_bar to form K_tilde = Concat(K_tilde^T, K_bar^T)^T and Equation 4.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Equation 4"
+  },
+  {
+    "criteria": "The plan includes the full 1Prompt1Story pipeline following Algorithm 1 that combines PCon, SVR+, SVR-, and IPCA for generating each frame.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan specifies the SVR hyperparameters: alpha=0.01, beta=0.05 for SVR+ (Eq.2), and alpha'=0.01, beta'=1.0 for SVR- (Eq.3).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes using SDXL as the backbone model and updating text embeddings separately for both CLIP L/14 and OpenCLIP bigG/14 text encoders.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes use of FreeU to enhance generation quality and generating images at 1024x1024 resolution.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes construction or loading of the ConsiStory+ benchmark with 200 prompt sets of 5-10 prompts each across 8 superclasses, generating up to 1500 images.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes all comparison methods: BLIP-Diffusion, Textual Inversion, IP-Adapter, PhotoMaker, The Chosen One, ConsiStory, StoryDiffusion, and NPR.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes evaluation using CLIP-T, CLIP-I, and DreamSim metrics, with background removal via CarveKit and replacement with random noise before similarity measurement.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes an ablation study evaluating each component separately: PCon+SVR+, PCon+SVR-, PCon+SVR++SVR-, and the full method PCon+SVR++SVR-+IPCA.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The plan includes a user study comparing 1Prompt1Story against IP-Adapter, ConsiStory, and StoryDiffusion on 30 randomly selected prompt sets with 4 frames each.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Appendix F"
+  },
+  {
+    "criteria": "The code for Prompt Consolidation (PCon) has been implemented to concatenate all prompts [P0; P1; ...; PN] into a single text embedding C = [cSOT, cP0, cP1, ..., cPN, cEOT] using the SDXL text encoders.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for Naive Prompt Reweighting (NPR) has been implemented, multiplying the express frame token embedding by a factor of 2 and suppress frame token embeddings by 0.5, while keeping cEOT unchanged.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for SVD decomposition of the express set Xexp = [cPj, cEOT] has been implemented to extract singular values sigma_0 >= ... >= sigma_ni and left/right singular matrices U and V.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for SVR+ (Equation 2) has been implemented as sigma_hat = beta * exp(alpha * sigma) * sigma with alpha=0.01 and beta=0.05 to exponentially enhance singular values of the express set.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for SVR- (Equation 3) has been implemented as sigma_tilde = beta' * exp(-alpha' * sigma_hat) * sigma_hat with alpha'=0.01 and beta'=1.0 to suppress singular values of each frame in the suppress set.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The SVR- implementation uses iterative suppression: for each frame Pk (k != j) in the suppress set, a separate SVD is performed on X_k^sup = [cPk, c_hat_EOT] and Equation 3 is applied individually.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Appendix C.2"
+  },
+  {
+    "criteria": "The code correctly assembles the updated text embedding C_tilde = [cSOT, cP0, c_tilde_P1, ..., c_hat_Pj, ..., c_tilde_PN, c_tilde_EOT] after applying SVR+ to Pj and SVR- to all Pk (k != j).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for Identity-Preserving Cross-Attention (IPCA) has been implemented: K_bar and V_bar are derived from K_tilde and V_tilde by setting token features corresponding to Pi (i in [1,N]) to zero while keeping the identity prompt P0 features.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The IPCA concatenation has been implemented as K_tilde = Concat(K_tilde^T, K_bar^T)^T and V_tilde = Concat(V_tilde^T, V_bar^T)^T.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Equation 4"
+  },
+  {
+    "criteria": "The IPCA attention map (Equation 4) has been implemented as A_tilde = softmax(Q_tilde * K_tilde^T / sqrt(d)) and the final output is A_tilde x V_tilde.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The IPCA attention mask has been implemented: column values corresponding to Pi (i in [1,N]) are set to zero and all other positions to one, and the natural log of this mask is added to the attention map.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code applies a dropout rate of 0.5 to the token features in K_bar corresponding to P0 during IPCA.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The IPCA code correctly derives K_tilde and V_tilde from the original text embeddings C prior to applying SVR (not from the SVR-updated embeddings C_tilde).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code initializes all frames with the same noise (identical initial latent vector zt) for each frame generation in the 1Prompt1Story pipeline.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The full 1Prompt1Story algorithm (Algorithm 1) has been implemented: for each frame j, apply SVR+ to Xexp, iteratively apply SVR- to each X_k^sup, construct C_tilde, then during denoising apply IPCA using Q_tilde, K_tilde, V_tilde.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The code processes SDXL's two text encoders (CLIP L/14 and OpenCLIP bigG/14) separately when applying SVR and updating text embeddings.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "FreeU has been integrated into the generation pipeline to enhance image quality.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "All generated images using SDXL are produced at a resolution of 1024x1024.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for loading and using the ConsiStory+ benchmark (200 prompt sets, 5-10 prompts each, 8 superclasses) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for generating reference images for comparison methods (BLIP-Diffusion, IP-Adapter, PhotoMaker) using only the identity description prompt has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The reimplementation of ConsiStory has been coded since the original is not open-source.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The code for computing CLIP-T (average CLIP-Score between each generated image and its corresponding frame prompt) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for computing CLIP-I (cosine distance between image embeddings using CLIP) has been implemented for identity consistency evaluation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for computing DreamSim score has been implemented with background removal via CarveKit and replacement with random noise prior to similarity measurement.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for background removal using CarveKit has been implemented and applied prior to identity consistency evaluation (both CLIP-I and DreamSim).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for extracting frame prompt token embeddings (cPi) from both multi-prompt and single-prompt setups and computing L2 distances has been implemented for context consistency analysis.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1.1, Figure 2"
+  },
+  {
+    "criteria": "The code for t-SNE dimensionality reduction and visualization of text embeddings for multi-prompt vs. single-prompt comparison has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 3.1.1, Figure 2"
+  },
+  {
+    "criteria": "The code for extracting DINOv2 visual features from generated images (with background removed) and performing t-SNE visualization for image identity consistency analysis has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 3.1.2, Figure 3"
+  },
+  {
+    "criteria": "The additional prompt alignment metrics VQAScore and DSG (with and without dependency) have been implemented for extended evaluation.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix E.1, Table 4"
+  },
+  {
+    "criteria": "The FID computation has been implemented using SDXL-generated images as the real dataset and each method's generated images as the fake dataset.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2, Table 4"
+  },
+  {
+    "criteria": "The sliding window technique for generating stories of arbitrary length has been implemented: for frame i <= t use [P0; P1; ...; Pt]; for i > t use [P0; P(i-t+1); ...; Pi] with window size t.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The main experiment generating up to 1500 images on 200 ConsiStory+ prompt sets using 1Prompt1Story (50 DDIM steps, 1024x1024 resolution) has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The comparison experiment running all baseline methods (BLIP-Diffusion, Textual Inversion, IP-Adapter, PhotoMaker, The Chosen One, ConsiStory, StoryDiffusion, NPR) on ConsiStory+ has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 1"
+  },
+  {
+    "criteria": "The evaluation pipeline computing CLIP-T, CLIP-I, and DreamSim scores for all methods on ConsiStory+ has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The ablation study running all four configurations (PCon+SVR+, PCon+SVR-, PCon+SVR++SVR-, PCon+SVR++SVR-+IPCA) on ConsiStory+ has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The additional evaluation computing VQAScore, DSG with dependency, DSG without dependency, and FID for all methods has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4, Appendix E"
+  },
+  {
+    "criteria": "The context consistency analysis computing average L2 distances between frame text embeddings in multi-prompt vs. single-prompt setups across ConsiStory+ has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 2, Figure 18"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: 1Prompt1Story achieves CLIP-T=0.8942, CLIP-I=0.9117, and DreamSim=0.1993 on ConsiStory+.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: 1Prompt1Story ranks first among all training-free methods on CLIP-T, CLIP-I, and DreamSim, and second overall (after IP-Adapter on CLIP-I/DreamSim).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: NPR achieves CLIP-T=0.8411, CLIP-I=0.8916, DreamSim=0.2548 using 16.04 GB memory and 17.24s inference time.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: 1Prompt1Story uses 50 DDIM steps, 18.70 GB memory, and 23.21s inference time.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 for baseline methods: ConsiStory achieves CLIP-T=0.8769, CLIP-I=0.8737, DreamSim=0.3188 and StoryDiffusion achieves CLIP-T=0.8877, CLIP-I=0.8755, DreamSim=0.3212.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: the full method PCon+SVR++SVR-+IPCA achieves CLIP-I=0.9117 and DreamSim=0.1993, significantly better than PCon+SVR++SVR- alone (CLIP-I=0.8849, DreamSim=0.2538), confirming IPCA's contribution to identity consistency.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: PCon+SVR+ achieves CLIP-T=0.8774, CLIP-I=0.8886, DreamSim=0.2560 and PCon+SVR- achieves CLIP-T=0.8910, CLIP-I=0.8904, DreamSim=0.2605.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: 1Prompt1Story achieves the highest user preference at 48.60%, followed by StoryDiffusion (29.80%), ConsiStory (13.00%), and IP-Adapter (8.60%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: 1Prompt1Story achieves VQAScore=0.8275, DSG with dependency=0.8520 (highest among all methods), and DSG without dependency=0.8945 (highest among all methods).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: NPR achieves FID=44.02 (best) and 1Prompt1Story achieves FID=44.16 (second best), both outperforming ConsiStory (FID=45.20) and StoryDiffusion (FID=51.63).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes confirm the context consistency analysis in Section 3.1.1: single-prompt setup yields average L2 distance of 46.42 between frame text embeddings vs. 71.25 for multi-prompt setup.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 3.1.1, Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes confirm that 1Prompt1Story achieves the lowest average pairwise image feature distance on ConsiStory+ compared to SDXL and NPR baselines in Figure 3 (right).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  }
+]

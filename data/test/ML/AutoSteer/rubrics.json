@@ -1,0 +1,470 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the three core components of AutoSteer: SAS-based layer selection, safety prober, and refusal head.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the Safety Awareness Score (SAS) method, including contrastive vector computation and pairwise cosine similarity aggregation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the safety prober architecture: an MLP with a single hidden layer of 64 dimensions, ReLU activation, and sigmoid output.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 completely to understand the adaptive steering mechanism: the thresholding function α(s), steered embedding computation, and modified logit derivation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the datasets (VLSafe, ToViLaG+, MMMU, RealWorldQA) and the baseline setup.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to check the implementation details: Layer 20 selected for LLaVA-OV, Layer 24 for Chameleon, threshold τ = 0.5, and steering intensity ε = 0.1.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the main results on Attack Success Rate (ASR) and general accuracy across all benchmarks and models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Appendix A to check the exact prompts used for safe counterpart data construction (A.1) and ToViLaG+ augmentation (A.2, A.3, A.4).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the evaluation protocols: direct answer comparison for LLaVA-OV general accuracy, regex matching for Chameleon, and GPT-4o binary classification for ASR.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes loading and sampling VLSafe (3,000 entries for refusal head and prober training, 500 entries for VLSafe Examine evaluation).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes constructing safe counterpart data from VLSafe toxic queries using GPT-4o with the prompt specified in Appendix A.1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The plan includes the three-stage AutoSteer training pipeline: positive/negative pair creation, SAS layer selection with prober training, and refusal head training.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes computing SAS for each layer using N = 3,000 contrastive pairs derived from both VLSafe and constructed toxic-safe pairs.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Section 4.1"
+  },
+  {
+    "criteria": "The plan includes training the safety prober (MLP) on layer activations from the SAS-selected layer using 3,000 toxic and 3,000 safe examples.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes training the Refusal Head using the LM-Steer framework on 3,000 VLSafe alignment entries, with the refusal target being 'I am sorry, but I can't assist with that'.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.4, Section 4.1"
+  },
+  {
+    "criteria": "The plan includes augmenting the LLaVA-OV Refusal Head training with 3,000 toxic images from ToViLaG (no overlap with test images).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes loading and sampling ToViLaG+ with three test types (text-only, image-only, text+image toxicity), 500 entries each.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes loading and sampling MMMU (500 entries) and RealWorldQA (500 entries) for general capability evaluation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the Steer baseline implementation using LM-Steer with global (non-conditional) steering applied to all inputs.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing ASR evaluation using GPT-4o as a binary toxicity classifier with the prompt from Appendix B.2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes the ε sensitivity analysis varying steering intensity from 0 to beyond 0.2 on VLSafe for LLaVA-OV and Chameleon.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.4.4"
+  },
+  {
+    "criteria": "The plan includes the SAS score comparison across layers for both models and prober accuracy evaluation across training epochs.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.4.1"
+  },
+  {
+    "criteria": "The code for loading and sampling VLSafe (3,000 training entries and 500 evaluation entries) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for constructing safe counterparts from VLSafe using GPT-4o with the exact prompt from Appendix A.1 has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The code for loading and sampling the ToViLaG+ dataset with three test subsets (text-only, image-only, text+image, 500 entries each) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for constructing ToViLaG+ text+image toxicity data using Grok-2 with the prompt from Appendix A.2 has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code for constructing ToViLaG+ text-only toxicity data using Grok-2 with the prompt from Appendix A.3 has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The code for constructing ToViLaG+ image-only toxicity data using GPT-4o with the prompt from Appendix A.4 has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "The code for loading and sampling MMMU (500 entries) and RealWorldQA (500 entries) for general capability evaluation has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading the LLaVA-OV-7B model and extracting intermediate layer activations has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading the Chameleon-7B model and extracting intermediate layer activations has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for extracting hidden state activation vectors h_l(x) at each intermediate layer l for a given input x has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for computing contrastive vectors δ_l = h_l(x_toxic) - h_l(x_safe) as defined in Equation 7 has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code for computing the Safety Awareness Score (SAS) at each layer as the mean pairwise cosine similarity over N sampled contrastive vectors as defined in Equation 8 has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The code for automatically selecting the optimal probing layer L as the layer with the highest SAS score has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The safety prober P has been implemented as an MLP with a single hidden layer of 64 dimensions and ReLU activation, as defined in Equation 10.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 10"
+  },
+  {
+    "criteria": "The safety prober weight dimensions are correctly implemented: W1 ∈ R^(64×d), W2 ∈ R^(1×64), with bias vectors b1 ∈ R^64 and b2 ∈ R, and sigmoid output.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The safety prober output s = P(h_L(x)) ∈ [0,1] representing toxicity probability as defined in Equation 9 has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The safety prober training code uses activations extracted from the SAS-selected layer L, trained on 3,000 toxic and 3,000 safe examples.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Section 4.1"
+  },
+  {
+    "criteria": "The threshold function α(s) has been implemented as defined in Equation 11: α(s) = 0 if s < τ, α(s) = 1 if s ≥ τ, with τ = 0.5.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 11"
+  },
+  {
+    "criteria": "The steered embedding computation e'_v ← (I + εα(s)·W)e_v has been implemented as defined in Equation 12.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 12"
+  },
+  {
+    "criteria": "The modified logit computation z̃_t = H_t · E' = H_t · (E + εα(s) · (E·W)^T) has been implemented as defined in Equation 13.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 13"
+  },
+  {
+    "criteria": "The Refusal Head matrix W has been trained on 3,000 toxic samples from VLSafe using the LM-Steer framework, with the refusal target 'I am sorry, but I can't assist with that'.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.4, Section 4.1"
+  },
+  {
+    "criteria": "The LLaVA-OV Refusal Head training is augmented with 3,000 toxic images from ToViLaG with no test image overlap.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The inference pipeline extracts activations from the SAS-selected layer (Layer 20 for LLaVA-OV, Layer 24 for Chameleon) for each input.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The inference pipeline applies the safety prober to the extracted layer activation to produce a toxicity score, then conditionally activates the Refusal Head only when the score exceeds τ = 0.5.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The AutoSteer inference code uses ε = 0.1 for the steering intensity, matching the perturbation strength used during training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The Steer (LM-Steer) baseline has been implemented with uniform, unconditional steering applied to all inputs regardless of toxicity.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The original model (Orig.) baseline evaluation code has been implemented for both LLaVA-OV and Chameleon without any steering applied.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The ASR evaluation code using GPT-4o as a binary classifier has been implemented with the exact prompt from Appendix B.2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The general accuracy evaluation for LLaVA-OV has been implemented by direct comparison with ground-truth answers (single character, yes/no, or number).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The general accuracy evaluation for Chameleon has been implemented using regex matching to check if the ground-truth answer appears in the model output.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for training a separate prober at each layer and tracking prober accuracy across training epochs (for Figures 3, 9, 10) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4.1"
+  },
+  {
+    "criteria": "The code for computing and comparing SAS scores across all evaluated layers for LLaVA-OV (layers 4, 8, 12, 16, 20, 24) and Chameleon (layers 4, 8, 12, 16, 20, 24, 28) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The code for computing pairwise cosine similarity heatmaps of CAA vectors across layers (Figure 5, Figure 11-12) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4.2"
+  },
+  {
+    "criteria": "The code for the ε sensitivity analysis, sweeping ε from 0 to beyond 0.2 and measuring ASR at each value, has been implemented for both LLaVA-OV and Chameleon.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4.4"
+  },
+  {
+    "criteria": "The data construction pipeline (safe counterpart generation from VLSafe and ToViLaG+ augmentation) has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The SAS computation across all layers has been executed successfully for both LLaVA-OV and Chameleon, producing SAS scores per layer.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.4.1"
+  },
+  {
+    "criteria": "The safety prober training has been executed successfully for all evaluated layers of LLaVA-OV (layers 4, 8, 12, 16, 20, 24) and Chameleon (layers 4, 8, 12, 16, 20, 24, 28).",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.4.1"
+  },
+  {
+    "criteria": "The Refusal Head training has been executed successfully for both LLaVA-OV and Chameleon.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The main evaluation experiments (Table 1) have been executed successfully for LLaVA-OV on VLSafe Examine and all three ToViLaG+ test sets.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The main evaluation experiments (Table 1) have been executed successfully for Chameleon on VLSafe Examine and all three ToViLaG+ test sets.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The general capability evaluation on RealWorldQA (both models) and MMMU (LLaVA-OV) has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The ε sensitivity analysis experiment has been executed successfully for LLaVA-OV on VLSafe (Figure 6) and for Chameleon (Figure 8).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 6, Figure 8"
+  },
+  {
+    "criteria": "The prober accuracy analysis across training epochs for all layers has been executed successfully for both models (Figures 3, 9, 10).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The cosine similarity heatmap analysis of CAA vectors across layers has been executed successfully for both models (Figure 5).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: AutoSteer reduces LLaVA-OV ASR on VLSafe from 60.0% to 4.2%, while the Steer baseline achieves 2.0%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: AutoSteer reduces LLaVA-OV ASR on ToViLaG+ text-only from 44.8% to 3.6%, and on image-only from 70.6% to 0.0%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: AutoSteer fully preserves LLaVA-OV RealWorldQA accuracy at 61.8% (no degradation from original), outperforming Steer at 60.8%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: AutoSteer preserves LLaVA-OV MMMU accuracy at 48.4%, matching the original and outperforming Steer at 47.8%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: AutoSteer reduces Chameleon ASR on VLSafe from 67.8% to 15.4%, matching the Steer baseline.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: AutoSteer preserves Chameleon RealWorldQA accuracy at 6.0%, matching the original and outperforming Steer at 5.4%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: Layer 20 has the highest SAS score for LLaVA-OV (approximately 0.355) and Layer 24 has the highest for Chameleon (approximately 0.172).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: most layers of LLaVA-OV achieve prober training accuracy above 98%, with early layers (4, 8) failing on image-only toxicity test sets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: later layers (e.g., Layer 20) of LLaVA-OV show stronger and more consistent cosine similarity alignment in safety-related CAA vectors compared to early layers (e.g., Layer 4).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6: LLaVA-OV ASR on VLSafe drops steeply as ε increases from 0 to approximately 0.05, then plateaus at low ASR for higher ε values.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes confirm that Chameleon has globally low SAS scores and no layer is effective on image-only toxicity subsets, consistent with its limited visual safety awareness.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 4, Figure 10"
+  },
+  {
+    "criteria": "The execution outcomes confirm that AutoSteer's selective/conditional steering avoids general capability degradation that is observed in the always-on Steer baseline.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1, Section 4.3"
+  }
+]

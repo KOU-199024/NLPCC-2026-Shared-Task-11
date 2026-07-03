@@ -1,0 +1,524 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the three-step POLCA methodology: selecting a Hessian-based basis, decomposing the loss along that basis, and clustering datapoints by projected loss trajectories.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 and Algorithm 1 to understand iterative Hessian eigenvector basis construction, including projection onto the nullspace of the current basis at each checkpoint.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1, Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the POLCA decomposition, including the first-order term (Equation 2) and the second-order approximation of the datapoint Hessian projection (Equations 3-7).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand that HDBSCAN is applied separately per basis vector on projected loss trajectories, and that tokens where the decomposed loss increases are discarded before clustering.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 to understand the breakthrough detection function break(f, x, Delta) (Equation 9) and the hidden breakthrough indicator hidden(f, X', Delta) with threshold tau (Equation 10).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the arithmetic experiment setup: 3-digit addition task, 3-layer Transformer (9M parameters), and a validation set of 1250 data points (5000 output tokens).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 and Table 1 to understand the cluster quality comparison between POLCA, exact loss, LCA, and other baselines on the carry skill homogeneity and hidden breakthrough fraction.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2, Table 1"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to understand the English language modeling experiment setup: Wikipedia March 2022 dataset, 40M parameter Transformer, 12600-token validation set, and POS-tag-based automatic cluster labeling.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Appendix D (Tables 2-7) to understand all training and POLCA hyperparameters for both the arithmetic and natural language experiments.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D, Tables 2-7"
+  },
+  {
+    "criteria": "The agent has read Appendix E to understand experimental details including skill labeling procedures for arithmetic (digit position and carry computation) and NL (POS-tag-based labeling with 70% coverage threshold).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The agent has read Appendix G to understand the decomposition strategy comparison metrics: carry skill homogeneity, recall, F1, and fraction of clusters with hidden breakthroughs.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix G, Tables 8-9"
+  },
+  {
+    "criteria": "The agent has read Appendix H to understand the POLCA basis comparison experiment across random orthonormal, random shuffled Hessian, and top Hessian eigenvector bases.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix H, Tables 10-11"
+  },
+  {
+    "criteria": "The plan includes the implementation of Algorithm 1: iteratively compute top k Hessian eigenvectors at each checkpoint, project them onto the nullspace of the current basis, and append to form the full basis B_T.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes computing Hessian-vector products (e.g., via CoLA or pytorch-hessian-eigenthings) to avoid materializing the full Hessian matrix when finding top eigenvectors.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the full second-order POLCA decomposition (Equations 6-7), combining the first-order gradient-projection term and the approximate second-order datapoint Hessian term.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 6-7"
+  },
+  {
+    "criteria": "The plan includes computing the projected loss L_b(x, theta_t) as the cumulative sum of POLCA values over time (Equation 8), producing a 1D trajectory per example per basis vector.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The plan includes filtering out oscillatory basis directions by removing vectors for which the mean projected loss does not decrease from the first to the last checkpoint.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes HDBSCAN clustering applied separately per basis vector on the projected loss trajectories, with minimum cluster size and minimum samples as specified in Tables 4 and 7.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Tables 4, 7"
+  },
+  {
+    "criteria": "The plan includes implementing the breakthrough detection function (Equation 9) and hidden breakthrough indicator (Equation 10) with threshold tau to evaluate whether clusters contain hidden breakthroughs.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equations 9-10"
+  },
+  {
+    "criteria": "The plan includes the synthetic arithmetic experiment: generating a 3-digit addition dataset, training a 3-layer Transformer (9M parameters), and computing POLCA over a 1250-example validation set.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix E.1"
+  },
+  {
+    "criteria": "The plan includes implementing digit skill labeling (output token position: 1000s, 100s, 10s, 1s) and carry skill labeling (whether summing the corresponding digit inputs produces a carry) for the arithmetic task.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E.1"
+  },
+  {
+    "criteria": "The plan includes the English Wikipedia language modeling experiment: loading the March 2022 Wikipedia dataset, training a 40M parameter Transformer, and computing POLCA over 12600 validation tokens.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1, Appendix E.2"
+  },
+  {
+    "criteria": "The plan includes the automatic POS-tag-based cluster labeling for the NL experiment: using the smallest set of POS tags to cover 70% of the cluster's 4-gram samples, filtered to at most 2 POS tags.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1, Appendix E.2"
+  },
+  {
+    "criteria": "The plan includes implementing all comparison baselines: exact loss clustering, change in exact loss, Fisher information, LCA (Equation 1), and first-order POLCA (Equation 2).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The plan includes the carry skill homogeneity, recall, and F1 metrics for cluster quality evaluation, as well as the hidden breakthrough fraction metric using Equation 10.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The plan includes the basis ablation experiments comparing random orthonormal vectors, random shuffled Hessian basis, and the standard Hessian eigenvector basis.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The code for Algorithm 1 is implemented: at each checkpoint t, compute the top k eigenvectors of the Hessian projected onto the nullspace of B_{t-1} using Pi_perp = I - B(B^T B)^{-1} B^T, and append to the basis.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "Hessian-vector products are used to compute Hessian eigenvectors efficiently (e.g., via CoLA or pytorch-hessian-eigenthings), avoiding explicit construction of the full d x d Hessian matrix.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The nullspace projection Pi_perp = I - B(B^T B)^{-1} B^T is correctly implemented to ensure new eigenvectors are orthogonal to the existing basis B_{t-1}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The oscillatory direction filtering is implemented: after constructing the full basis B_T, remove basis vectors b for which the mean projected loss E_x[L_b(x, theta_T)] > E_x[L_b(x, theta_1)], i.e., the aggregate projected loss increases over training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The first-order POLCA term is implemented as <b, grad_theta L(x; theta_t)> * <b, theta_{t+1} - theta_t> for each example x and basis vector b (Equation 2).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The approximate second-order term h_tilde(x, b, theta_t) is implemented as (lambda_t(X, b) / 2) * <theta_{t+1} - theta_t, b>^2 * (<L(x; theta_{t+1}) - L(x; theta_t), b> / <L(X; theta_{t+1}) - L(X; theta_t), b>) (Equations 3-5).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 3-5"
+  },
+  {
+    "criteria": "The full POLCA value POLCA(x, b; theta_t) is computed as the sum of the first-order term (Equation 2) and the approximate second-order term h_tilde (Equation 5), as specified in Equations 6-7.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 6-7"
+  },
+  {
+    "criteria": "The aggregate Hessian eigenvalue lambda_t(X, b) = b^T H_t(X) b is tracked and stored at each basis checkpoint for each basis vector, for use in the second-order approximation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equations 3-5"
+  },
+  {
+    "criteria": "The projected loss L_b(x, theta_t) is computed as the cumulative sum of POLCA values from checkpoint 0 to t-1 (Equation 8), yielding a 1D trajectory for each (example, basis vector) pair.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The breakthrough detection function break(f, x, Delta) is implemented as argmax_t {[f(x, t+Delta) - f(x, t)] - [f(x, t) - f(x, t-Delta)]} (Equation 9).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The hidden breakthrough indicator hidden(f, X', Delta) is implemented: return 1 if the mean of break(f, x, Delta) over x in X' exceeds the threshold tau where the exact loss plateaus (Equation 10).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 10"
+  },
+  {
+    "criteria": "The per-basis-vector token filtering is implemented: for each basis vector b, remove tokens x for which the total decomposed loss increases (L_b(x, theta_T) > L_b(x, theta_0)) before clustering.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Section 4.1"
+  },
+  {
+    "criteria": "HDBSCAN clustering is applied separately to the projected loss trajectories for each basis vector, with parameters minimum_cluster_size and min_samples set as in Tables 4 and 7.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Tables 4, 7"
+  },
+  {
+    "criteria": "The 3-digit arithmetic addition dataset is generated: pairs of 3-digit numbers tokenized into a string format, with model trained to predict the 4-digit output sum.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix E.1"
+  },
+  {
+    "criteria": "The digit skill label is implemented for each output token based on its position in the output sequence: 1000s, 100s, 10s, or 1s place.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.1"
+  },
+  {
+    "criteria": "The carry skill label is implemented for each output token: labeled 'carry' if the sum of the two input digits at the next-lower position (plus any propagated carry) is 10 or greater, otherwise 'no carry'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E.1"
+  },
+  {
+    "criteria": "The 3-layer Transformer for the arithmetic task is implemented using TransformerLens, with embedding dimension 512, 4 attention heads per layer, and MLP dimension 2048 (approximately 9M total parameters).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix E.1"
+  },
+  {
+    "criteria": "The arithmetic model is trained with AdamW optimizer, learning rate 1e-5, weight decay 0.1, betas (0.9, 0.95), linear warmup LR schedule min(i/100, 1.0), for 10000 steps with batch size 64.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "Checkpoints are saved at every 5 training steps for POLCA computation, and the Hessian basis is updated every 200 steps with k=1 eigenvector per checkpoint for a total of T=50 basis vectors in the arithmetic setting.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The POLCA values and projected loss trajectories are computed for all 5000 output tokens of the 1250-example validation set at each POLCA checkpoint interval of 20 steps in the arithmetic setting.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The Hessian for basis construction in the arithmetic setting is estimated using a 1250-data-point sample of the training set.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.1"
+  },
+  {
+    "criteria": "HDBSCAN clustering for arithmetic uses minimum_cluster_size=150 and min_samples = number_of_tokens / 15.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The English Wikipedia March 2022 dataset is loaded and preprocessed for causal language modeling training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix E.2"
+  },
+  {
+    "criteria": "The 3-layer Transformer for NL modeling is implemented using TransformerLens, with embedding dimension 512, 4 attention heads, and MLP dimension 2048 (approximately 40M total parameters).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "The NL model is trained with AdamW optimizer, learning rate 1e-5, weight decay 0.1, betas (0.9, 0.95), LR schedule min(i/100, 1.0), for 14000 steps with batch size 64.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "For the NL setting, the POLCA basis is updated every 750 steps with k=1 eigenvector per checkpoint for T=30 total basis vectors, and POLCA values are computed every 200 steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The Hessian for basis construction in the NL setting is estimated using a 1000-data-point sample of the training set.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "POLCA values and projected loss trajectories are computed for 12600 output tokens on the NL validation set at each POLCA checkpoint interval of 200 steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "HDBSCAN clustering for the NL experiment uses minimum_cluster_size=300 and min_samples = number_of_tokens / 15.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "POS tagging is applied to each target token and its three preceding tokens using spacy, generating a 4-gram POS tag sequence per token for cluster labeling in the NL experiment.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix E.2"
+  },
+  {
+    "criteria": "The automatic cluster labeling procedure is implemented: for each position in the 4-gram, find the smallest set of POS tags that covers 70% of the cluster; filter to clusters describable with at most 2 POS tags.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix E.2"
+  },
+  {
+    "criteria": "The exact loss clustering baseline is implemented: apply HDBSCAN to exact loss trajectories L(x, theta_t) without any decomposition.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Appendix G"
+  },
+  {
+    "criteria": "The change-in-exact-loss baseline is implemented: cluster the sequence of loss differences L(x, theta_t) - L(x, theta_{t-1}) using HDBSCAN.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The Fisher information baseline is implemented: approximate empirical Fisher as ||grad_theta L(x, theta_t)||_2^2, and project onto each basis vector b as <b, grad_theta L(x, theta_t)>^2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The LCA baseline is implemented: compute datapoint-wise LCA trajectories (Equation 1) projected onto the top 50 model parameters by magnitude at the end of training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix G, Equation 1"
+  },
+  {
+    "criteria": "The first-order POLCA baseline is implemented by computing only the first-order Taylor term (Equation 2) without the second-order correction h_tilde.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix G, Equation 2"
+  },
+  {
+    "criteria": "The carry skill homogeneity metric is implemented: for each cluster, compute the fraction of tokens that carry to the 10s or 100s digit position (excluding carry to 1000s place), and report the maximum across all clusters.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The recall and F1 metrics for cluster quality evaluation are implemented, excluding HDBSCAN-marked outlier tokens from the computation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The fraction of clusters with hidden breakthroughs is computed using Equation 10 with Delta=100 and tau=1000 for the arithmetic setting.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix G, Table 9"
+  },
+  {
+    "criteria": "The basis ablation experiment is implemented with three basis types: (1) random orthonormal vectors, (2) random shuffled Hessian (Algorithm 1 applied with randomly shuffled checkpoints), and (3) standard top Hessian eigenvectors.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The first-versus-second-order POLCA comparison is implemented by computing cosine similarity and L2 norm between first-order (Equation 2) and second-order (Equation 7) POLCA trajectory vectors.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix I, Table 12"
+  },
+  {
+    "criteria": "The arithmetic model training completes successfully for 10000 steps, with checkpoints saved at every 5 steps, without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The POLCA basis construction (50 vectors, one every 200 steps) and per-token POLCA value computation for all 5000 arithmetic validation tokens complete successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 3"
+  },
+  {
+    "criteria": "The HDBSCAN clustering on arithmetic POLCA projected loss trajectories runs successfully across all filtered basis vectors and produces non-trivial cluster assignments.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The NL model training completes successfully for 14000 steps with checkpoints saved at every 200 steps, without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The POLCA basis construction (30 vectors, one every 750 steps) and per-token POLCA value computation for all 12600 NL validation tokens complete successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1, Table 6"
+  },
+  {
+    "criteria": "The HDBSCAN clustering on NL POLCA trajectories runs successfully, and the automatic POS labeling identifies at least one cluster with a simple label (at most 2 POS tags) from at least 22 of the 26 remaining basis vectors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "All comparison baselines (exact loss, change in loss, Fisher information, LCA, first-order POLCA) are executed successfully on the arithmetic POLCA dataset.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The basis ablation experiments (random orthonormal and random shuffled Hessian) are executed successfully and produce cluster quality metrics.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: POLCA achieves a maximum carry skill homogeneity of 0.973, compared to 0.514 for exact loss clustering, 0.524 for change-in-loss, and 0.792 for LCA.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: POLCA achieves 0.355 fraction of clusters with hidden breakthroughs past the loss plateau at step tau=1000, while exact loss and change-in-exact-loss both achieve 0.0.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: exact loss clustering on arithmetic data fails to recover carry-homogeneous clusters, with the maximum fraction of carry tokens in any cluster not exceeding 0.514.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: POLCA clustering on the first basis vector recovers clusters dominated by digit skill (1000s place), and clustering on the second basis vector recovers the carry skill with cluster homogeneity of approximately 0.90.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes confirm Figure 4: the projected loss trajectories along basis vectors 1 and 2 show distinct breakthrough patterns per cluster that are not visible in the corresponding smooth exact loss curves.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8 (Appendix G): first-order POLCA achieves maximum carry homogeneity of 0.948 and Fisher information achieves 0.664, with POLCA (0.973) being the highest.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Table 9 (Appendix G): Fisher information achieves 0.284, first-order POLCA achieves 0.307, and POLCA achieves 0.355 fraction of clusters with hidden breakthroughs, the highest of all methods.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The execution outcomes match Table 10 (Appendix H): the Hessian-based basis achieves the highest carry homogeneity (0.973), compared to random orthonormal (0.902) and random shuffled Hessian (0.856).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 10"
+  },
+  {
+    "criteria": "The execution outcomes match Table 11 (Appendix H): the random orthonormal basis achieves only 0.031 fraction of clusters with hidden breakthroughs, significantly lower than random shuffled Hessian (0.304) and POLCA (0.355).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The execution outcomes match Table 12 (Appendix I): the cosine similarity between first-order and second-order POLCA trajectory vectors is approximately 0.99987, confirming the two approximations are nearly identical in practice.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 12"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: NL POLCA clusters produced from basis vector 13 recover interpretable grammatical constructions such as 'and/from after the first clause in a sentence', 'repeated newline', and 'comma after parenthetical phrase'.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes confirm Section 5.2: NL POLCA clusters show sudden changes in their projected loss curves at different training steps while their exact loss curves remain smooth, demonstrating hidden breakthroughs in the NL setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.2, Figure 5"
+  }
+]

@@ -1,0 +1,494 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the Markov chain formulation of the LLM generation process over token-level hidden representations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand how the reward function and value function are defined to estimate difficulty.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the temporal difference (TD) learning training objective.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to check all datasets, baselines, models, evaluation metrics, and implementation details for the experiments.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Appendix A.1 to understand the precise data split ratios for each of the six datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The agent has read Appendix A.2 to understand the exact hyperparameter settings and prompt templates for all five baselines.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The agent has read Appendix A.3 to check all implementation details including Python/PyTorch versions, GPU type, sampling temperature, network architecture, and learning rate.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The plan includes modelling the LLM autoregressive generation process as a Markov chain over token-level hidden representations.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes defining a reward function R(s_t) and a value function V(s_t) via the Bellman equation to estimate perceived difficulty.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes training a two-layer fully connected neural network to approximate the value function using temporal difference (TD) learning.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes loading all six evaluation datasets (MMBench, ScienceQA, MathVista, StrategyQA, GSM8K, CommonsenseQA) with their correct splits.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The plan includes implementing all five baselines: prompt, AG, LLMs-Ranking, HaluSearch-Gen, and HaluSearch-Critic.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes three difficulty-aware adaptive inference strategies: Self-Consistency, Best-of-N, and Self-Refine.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes ablation studies on the number of inference attempts, Markov order k, and answer extraction method.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6.4"
+  },
+  {
+    "criteria": "The plan includes cross-domain generalization experiments (training on one dataset, testing on another) and cross-model generalization experiments.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6.2"
+  },
+  {
+    "criteria": "The code for formalizing the LLM generation process as a Markov chain has been implemented as Equation 1: H_{t+1}, y_{t+1} = f_theta(H_t, y_t), with {H_t, y_t} as the Markov state s_t.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code correctly defines the initial Markov state s_0 = {H_0, x}, where H_0 = (h_0) is the hidden representation generated from the input question x before any tokens are generated.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for the reward function R(s_t) has been implemented as defined: R(s_t) = Reward(y) if y_t = EOS, and 0 otherwise.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1 (reward definition)"
+  },
+  {
+    "criteria": "The code for the value function V(s_t) has been implemented using the Bellman equation: V(s_t) = E[R(s_t) + gamma * V(s_{t+1})].",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for the simplified value function has been implemented as Equation 3: V(s_t) = gamma * E[V(s_{t+1})] if y_t != EOS, and R(s_t) if y_t = EOS.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The difficulty threshold tau is implemented to classify questions: x is classified as 'Difficult' if V(s_0) <= tau, and 'Easy' if V(s_0) > tau.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for the TD error delta_t has been implemented with two cases: gamma * Reward(y) - F_phi(s_t) when y_t = EOS, and gamma * F_phi(s_{t+1}) - F_phi(s_t) otherwise.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3 (TD error)"
+  },
+  {
+    "criteria": "The training loss L_TD has been implemented as the expectation of the sum of squared TD errors over all sampled responses.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3 (L_TD)"
+  },
+  {
+    "criteria": "The value function approximator F_phi is implemented as a two-layer fully connected neural network.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix A.3"
+  },
+  {
+    "criteria": "The implementation uses the last layer hidden state h_t as the representation of the Markov state s_t when training the value function.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The ground truth labeling for easy/hard classification uses three independent inference attempts: a question is classified as easy if all three attempts produce correct answers, and hard otherwise.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The sampling temperature T for the LLMs is set to 0.5 when generating training data and evaluation responses.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The learning rate for training the two-layer FC network is set to 1e-4.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The code for the difficulty-aware Self-Consistency strategy has been implemented: sample K CoT paths if V(s_0) <= tau (difficult), use direct answer if V(s_0) > tau (easy).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The Self-Consistency final answer selection uses majority vote: argmax_a sum_{k=1}^{K} I(Ans(y_k^CoT) = a) when the question is classified as difficult.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for the difficulty-aware Best-of-N strategy has been implemented: sample K CoT paths if difficult, select argmax_k P(true|x, y_k^CoT) using the model's estimated correctness probability.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for the difficulty-aware Self-Refine strategy has been implemented: iteratively refine for T steps (y_t ~ f_theta(y|x, y_{t-1})) if difficult, use Ans(y^(T)) as final answer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The budget K is set to 10 for Self-Consistency and Best-of-N in the main experiments (Figure 3), and K=5 for Self-Refine.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "MMBench dataset is loaded with 50% of data as training set, 45% as test set, and 5% as validation set for determining threshold tau.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1.1"
+  },
+  {
+    "criteria": "ScienceQA dataset is loaded using the official training, test, and validation splits, with the validation set used to determine threshold tau.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1.2"
+  },
+  {
+    "criteria": "MathVista dataset is loaded with 50% as training set, 45% as test set, and 5% as validation set for determining threshold tau.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1.3"
+  },
+  {
+    "criteria": "StrategyQA dataset uses the official test split, with 95% of official training data for training and 5% as validation for determining threshold tau.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1.4"
+  },
+  {
+    "criteria": "GSM8K dataset follows the official test split, with 95% of official training data used for training and 5% as validation for threshold tau.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1.5"
+  },
+  {
+    "criteria": "CommonsenseQA dataset uses the official training, test, and validation splits provided by the dataset.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1.6"
+  },
+  {
+    "criteria": "Both target LLMs (Qwen2.5-VL-7B-Instruct and InternVL3-8B) are loaded and used for experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The prompt baseline is implemented using the exact prompt template from Table 10: asking the model 'Is this question difficult for you?' with a strict 'Yes' or 'No' answer.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 10, Appendix A.2.1"
+  },
+  {
+    "criteria": "The AG baseline is implemented using Chain-of-Thought consistency with k=10 samples following the original paper's setup.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2.2"
+  },
+  {
+    "criteria": "The LLMs-Ranking baseline is implemented with Difficulty Ranking (CoT, batch size B=8, random split rounds R=5) and Problem Partition (pre-sample size p=4, judge window size k=32).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2.3"
+  },
+  {
+    "criteria": "The HaluSearch-Gen baseline generates reward data using GPT-4o with the exact prompt from Table 11, then fine-tunes Qwen2.5-VL-7B-Instruct to assess question difficulty.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 11, Appendix A.2.4"
+  },
+  {
+    "criteria": "The HaluSearch-Critic baseline generates reward data using GPT-4o with the exact prompt from Table 12 (including critic explanation on first line, score on second line), then fine-tunes the model.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 12, Appendix A.2.5"
+  },
+  {
+    "criteria": "ROC-AUC and Macro-F1 are used as evaluation metrics for the binary classification task of difficulty estimation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "Easy-Acc (proportion of easy questions classified as easy) and Hard-Acc (proportion of hard questions classified as hard) are computed separately in addition to ROC-AUC and Macro-F1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "Accuracy and total output token length are computed as evaluation metrics for the difficulty-aware repeated sampling experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "For the open-ended evaluation (Section 6.1), RLHF-V and VLFeedback datasets are loaded and LLaVA-Critic is used as the reward model to score generated responses.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The open-ended difficulty threshold is implemented as: score below 50 = hard question, score above 50 = easy question (with LLaVA-Critic scoring up to 100).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The cross-domain generalization experiment is implemented by training the value function on ScienceQA and evaluating on MMBench without any fine-tuning on MMBench.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.2, Table 3"
+  },
+  {
+    "criteria": "The cross-domain generalization experiment is implemented by training the value function on StrategyQA and evaluating on CommonsenseQA.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.2, Table 3"
+  },
+  {
+    "criteria": "The cross-model generalization experiment is implemented by training the value function on Qwen2.5-7B-Instruct hidden states and evaluating on LLaMA-3.1-8B-Instruct.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.2, Table 5"
+  },
+  {
+    "criteria": "The scalability experiment is implemented by applying the difficulty estimation framework to all four Qwen2.5-VL model sizes: 3B, 7B, 32B, and 72B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.3, Table 4"
+  },
+  {
+    "criteria": "The ablation on inference attempts is implemented by varying the number of independent inference attempts from 3 to 6 on MMBench.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.4, Table 7"
+  },
+  {
+    "criteria": "The ablation on Markov order is implemented by redefining the state as a tuple of the previous k hidden states, with k varying over {1, 2, 3} on MMBench.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.4, Table 8"
+  },
+  {
+    "criteria": "The ablation on answer extraction is implemented by replacing the original extractor with GPT-4o to verify answer extraction does not significantly affect difficulty estimation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.4, Table 9"
+  },
+  {
+    "criteria": "The additional difficulty-aware sampling experiments use budget K=5 for SC and BoN, and K=3 for SR (Figure 4 in Appendix).",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The code for the main difficulty estimation experiments has been executed successfully on all six datasets (MMBench, ScienceQA, MathVista, StrategyQA, GSM8K, CommonsenseQA) with both models.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code for the time cost evaluation (Figure 2) has been executed successfully with 400 randomly sampled questions from each dataset's test set.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The code for the difficulty-aware Self-Consistency experiments on MMBench, ScienceQA, and MathVista has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.3, Figure 3"
+  },
+  {
+    "criteria": "The code for the difficulty-aware Best-of-N experiments on MMBench, ScienceQA, and MathVista has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.3, Figure 3"
+  },
+  {
+    "criteria": "The code for the difficulty-aware Self-Refine experiments on MMBench, ScienceQA, and MathVista has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.3, Figure 3"
+  },
+  {
+    "criteria": "The code for open-ended difficulty estimation on RLHF-V and VLFeedback with both models has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 6.1, Table 2"
+  },
+  {
+    "criteria": "The cross-domain generalization experiments (ScienceQA->MMBench and StrategyQA->CommonsenseQA) have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 6.2, Table 3"
+  },
+  {
+    "criteria": "The scalability experiments across four Qwen2.5-VL model sizes on ScienceQA have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 6.3, Table 4"
+  },
+  {
+    "criteria": "All three ablation study experiments (inference attempts, Markov order k, answer extraction) on MMBench have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 6.4"
+  },
+  {
+    "criteria": "The training time comparison experiment with 400 randomly sampled training examples has been executed for our method, HaluSearch-Gen, and HaluSearch-Critic.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: our method nearly outperforms all baseline methods across all six datasets and both models in terms of ROC-AUC and Macro-F1.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: on ScienceQA with Qwen2.5-VL-7B-Instruct, the method achieves ROC-AUC of approximately 93.09% and Macro-F1 of approximately 79.48%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: on MMBench with Qwen2.5-VL-7B-Instruct, the method achieves ROC-AUC of approximately 94.15% and Macro-F1 of approximately 80.68%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: our method requires less test-time computation (in minutes) than all baseline methods across all six datasets for difficulty estimation.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: across all three sampling strategies (SC, BoN, SR) on MMBench, ScienceQA, and MathVista, our method achieves the highest or near-highest accuracy while using fewer or comparable tokens.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: on the open-ended RLHF-V dataset, our method outperforms LLMs-Ranking, HaluSearch-Gen, and HaluSearch-Critic in ROC-AUC for both models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: on VLFeedback with Qwen2.5-VL-7B-Instruct, our method achieves ROC-AUC of approximately 92.16% and Macro-F1 of approximately 75.57%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: our method generalizes better cross-domain than HaluSearch-Gen and HaluSearch-Critic (e.g., ScienceQA->MMBench ROC-AUC of approximately 89.03%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: our difficulty estimation method maintains consistently high ROC-AUC (90%+) and Macro-F1 across Qwen2.5-VL model sizes of 3B, 7B, 32B, and 72B on ScienceQA.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: cross-model generalization from Qwen2.5-7B-Instruct to LLaMA-3.1-8B-Instruct shows a notable performance drop (ROC-AUC near 47-50%), confirming that per-model value function training is needed.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: our method's training time is significantly lower than HaluSearch-Gen and HaluSearch-Critic (approximately 1.56 minutes vs 5.32/10.23 minutes on MMBench with 400 samples).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7: the Macro-F1 scores for 3 to 6 inference attempts show minimal difference (within ~0.3 points), confirming that 3 attempts are sufficient.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8: varying the Markov order k from 1 to 3 produces ROC-AUC and Macro-F1 differences within 1 point, confirming that k=1 (first-order Markov) is sufficient.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Table 9: replacing the original answer extractor with GPT-4o produces differences within 1.5 points in both ROC-AUC and Macro-F1, confirming robustness to answer extraction method.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 9"
+  }
+]

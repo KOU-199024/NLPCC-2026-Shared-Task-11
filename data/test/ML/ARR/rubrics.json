@@ -1,0 +1,392 @@
+[
+  {
+    "criteria": "The agent has read Section 2 to understand the formal representation of single-hop and two-hop knowledge triplets t = (s, r1, b), (b, r2, o) and the cloze-pattern prompt format.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3 to understand the criteria distinguishing factual shortcuts (Exact-Match, Pattern-Object Co-occurrence, Subject-Object Co-occurrence) and latent reasoning (shortcut filtering, single answer, bridge recall via CoT).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes collecting the two-hop dataset from 2WikiMultiHop and the Human-Generated Dataset, standardized with the unified template: 'The r2 of u(b) is ___'.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The plan includes implementing the three shortcut detection methods: Exact-Match (EM), Pattern-Object Co-occurrence (POC), and Subject-Object Co-occurrence (SOC).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes filtering latent reasoning examples via shortcut-free filtering, single-hop answer verification, and CoT consistency check to construct Ds and Dr.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The code loads and preprocesses the two-hop dataset from 2WikiMultiHop and the Human-Generated Dataset using the unified cloze template 'The r2 of u(b) is ___'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code implements Exact-Match (EM) shortcut detection by replacing words with semantically equivalent synonyms and filtering cases where the model still predicts the correct answer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code implements Pattern-Object Co-occurrence (POC) shortcut detection by masking the subject position in the prompt and checking if the model still predicts the correct object.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code implements Subject-Object Co-occurrence (SOC) shortcut detection by masking r1 and r2 relation positions and checking if the model still predicts the correct object based on subject alone.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code filters latent reasoning examples (Dr) by: (1) removing shortcuts, (2) verifying correct single-hop bridge recall, and (3) using CoT prompts to ensure reasoning path consistency with s->r1->b->r2->o.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The dataset construction pipeline is executed to produce Ds and Dr for LLaMa 2-7B and LLaMa 2-13B, yielding Ds sizes of approximately 1878 and 2246 respectively.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The dataset construction pipeline is executed for Pythia 6.9B, Pythia 12B, and DeepSeek-R1-Distill variants (1.3B, 7B, 14B, 32B), producing corresponding Ds and Dr subsets for each model.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The resulting dataset statistics match Table 1: for LLaMa 2-7B, the two-hop dataset has ~4728 samples with Ds~1878 and Dr~328; for LLaMa 2-13B, ~5530 samples with Ds~2246 and Dr~543.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the attention knockout method: setting A_ij^(l+1) = -inf to block attention from position i to j at layer l, as defined in Equation 1.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1, Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing attention knockout experiments blocking attention from the last position to the subject position (S) and all non-subject positions (R), using a k-window of subsequent layers.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code implements the attention knockout method by setting attention weights A_ij to negative infinity (-inf) to block information flow from specific positions to the last position, as in Equation 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Equation 1"
+  },
+  {
+    "criteria": "The attention knockout experiments are configured with a k-window of k=7 for LLaMa 2-7B and k=10 for LLaMa 2-13B, blocking attention separately from the last position to S (subject), R1, R2, and R (all non-subject positions).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The attention knockout experiments are executed on both Ds and Dr for LLaMa 2-7B and LLaMa 2-13B, measuring changes in final prediction probabilities.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The attention knockout results match Figure 3: blocking attention to both subject and non-subject positions reduces final prediction probabilities by 40-50% at their peaks for both Ds and Dr.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The attention knockout results show that for Ds, the inflection point (peak probability drop) appears earlier than in Dr, with both occurring primarily in the middle-upper layers.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 to understand the logit lens method: projecting hidden states h into vocabulary space via vocab_{l,i} = softmax(h_{l,i} * W_U) as in Equation 2, and the AR (Attribute Rate) metric.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2, Equation 2"
+  },
+  {
+    "criteria": "The plan includes implementing the logit lens by projecting subject position hidden states to vocabulary space, and tracking top-k (k=1000) tokens across layers for bridge (b), object (o), and subject (s).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes computing AR (Attribute Rate) by: (1) retrieving Wikipedia paragraphs about entity t using BM25, (2) tokenizing retrieved text with common word and sub-word fragment filtering, and (3) computing the proportion of top-k tokens appearing in the attribute set A_t.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code implements the logit lens (Equation 2): vocab_{l,i} = softmax(h_{l,i} * W_U), projecting hidden layer representations at the subject position to vocabulary probabilities across all layers.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Equation 2"
+  },
+  {
+    "criteria": "The code analyzes the top k=1000 tokens with the highest probabilities at the last-subject position and tracks their probabilities and ranks across all layers for bridge entity b, object o, and subject s.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code implements BM25 retrieval of Wikipedia paragraphs for a given entity t to construct the candidate attribute set A_t, with tokenization and filtering of common words and sub-word fragments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code computes the Attribute Rate AR(t) as the proportion of tokens in the top-k set T that appear in A_t, and measures AR(b), AR(o), and AR(s) for both Ds and Dr datasets.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The logit lens and AR experiments are executed on both Ds and Dr for LLaMa 2-7B and LLaMa 2-13B, tracking probabilities, ranks, and AR values across all layers.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The AR results match Figure 4: AR(s) at the last subject position consistently increases to nearly 50% in the middle-upper layers for both reasoning patterns.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The AR results show that in Dr, AR(b) rises and stabilizes after peaking in middle layers, while in Ds, AR(b) remains at a consistently lower level without the same pattern of elevation.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The results show that the object rank rises and stabilizes around a mean of ~980 before the information node, with AR(o) following a similar trend in both Ds and Dr.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the logit ablation method: reducing bridge-related logits and reverse-mapping via h' = modified_logits * W_U^dagger (Equation 3), with the smooth adjustment strategy.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3, Equation 3"
+  },
+  {
+    "criteria": "The plan includes computing intersecting attribute token sets: Ab, Ao, As, Abs, Abo, Aos, and Abos, and implementing the smooth logit adjustment to reduce bridge-related information while preserving object-related information.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code computes the attribute token sets Ab, Ao, As and their intersections Abs, Abo, Aos, Abos from the top-k (k=1000) projection of the subject hidden states.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code implements the smooth logit adjustment strategy: decreasing logit values for tokens in (Ab - Abs), and redistributing the reduced values to tokens in (As - Ab - Ao + Abos), using the average logits of top-k (k=1000) tokens as the perturbation value.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code implements the reverse mapping (Equation 3): h' = modified_logits * W_U^dagger, where W_U^dagger is the pseudo-inverse of the vocabulary projection matrix W_U.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Equation 3"
+  },
+  {
+    "criteria": "The logit ablation experiments apply a k-window layer intervention (k=7 for LLaMa 2-7B, k=10 for LLaMa 2-13B) and are executed on Dr for both models.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The logit ablation results match Figure 6: reducing the preference for bridge-related tokens in subject hidden states significantly decreases the final prediction probability in Dr.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The logit ablation results show LLaMa 2-13B experiences less impact from bridge-related token suppression compared to LLaMa 2-7B, demonstrating greater robustness of larger models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The agent has read Section 5 to understand the ARR metric definition: ARR(b,o) = log(AR(b)/AR(o)), computed at the inflection point using a sliding window of K consecutive layers, with ARR>0 indicating latent reasoning and ARR<=0 indicating factual shortcuts.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5, Equation 4"
+  },
+  {
+    "criteria": "The plan includes implementing ARR(b,o) = log(AR(b)/AR(o)) at the inflection point with model-specific sliding window sizes K, and evaluating classification accuracy on Ds and Dr for all 8 models.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code implements the ARR metric (Equation 4): ARR(b,o) = log(AR(b)/AR(o)), computed at the inflection point of AR curves using a sliding window of K consecutive layers.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5, Equation 4"
+  },
+  {
+    "criteria": "The code applies model-specific window sizes K for ARR computation: LLaMa 2-7B (K=5), LLaMa 2-13B (K=7), Pythia 6.9B (K=5), Pythia 12B (K=6), DeepSeek-1.3B (K=4), DeepSeek-7B (K=5), DeepSeek-14B (K=6), DeepSeek-32B (K=6).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The code classifies each sample as latent reasoning (ARR(b,o) > 0) or factual shortcut (ARR(b,o) <= 0) and computes accuracy separately on Ds and Dr for each model.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5, Table 5"
+  },
+  {
+    "criteria": "The ARR classification experiments are executed on all 8 models (LLaMa 2-7B, LLaMa 2-13B, Pythia 6.9B, Pythia 12B, DeepSeek-1.3B, 7B, 14B, 32B) on their respective Ds and Dr datasets.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The ARR classification accuracy on LLaMa 2-7B matches Table 5: approximately 90.31% on Ds and 87.78% on Dr.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The ARR classification accuracy on LLaMa 2-13B matches Table 5: approximately 91.23% on Ds and 88.33% on Dr.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The ARR classification results show consistently high accuracy (~85-92%) across all 8 model families and sizes, with larger models (e.g., DeepSeek-32B) achieving higher accuracy (~92.10% on Ds, 89.02% on Dr).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The code implements the subject replacement indirect validation (s -> s'): replacing the subject entity changes the bridge entity (b -> b') and the ARR metric captures the change in bridge attribution.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Table 6"
+  },
+  {
+    "criteria": "The code implements the fine-tuning indirect validation: fine-tuning to increase s-o co-occurrence frequency to encourage shortcut learning, and measuring changes in AR(b) and AR(o).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Table 6"
+  },
+  {
+    "criteria": "The indirect validation results match Table 6: subject replacement in Dr decreases AR(b) sharply (e.g., LLaMa 2-7B: 58% -> 15%, a drop of 43%), while fine-tuning decreases AR(b) while maintaining or slightly increasing AR(o).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The agent has read Section 6 to understand the 2FC (Two-hop Fact Conflict) dataset structure: each sample s = (x, a_gol, c+, a_neg, c-), the D+/D- partition, and the four conflict scenarios D1-D4.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The plan includes constructing the 2FC dataset from MuSiQue reconstructed in the KRE dataset, partitioning into D+ and D- based on model's ability to answer without context, and defining the four categories D1-D4.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The plan includes computing ARR(b,o) at inflection points for each of D1, D2, D3, and D4 categories and analyzing the correlation between reasoning mode (ARR>0 or ARR<=0) and model behavior under conflicting prompts.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code constructs the 2FC dataset by loading MuSiQue from the KRE dataset, partitioning into D+ (model answers correctly without context) and D- (model answers incorrectly without context).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code implements the four conflict categories: D1 (D+ with misleading c-, model still correct), D2 (D+ with misleading c-, model changes to incorrect), D3 (D- with correct c+, model corrects answer), D4 (D- with correct c+, model still incorrect).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code computes ARR(b,o) at inflection points for each D1-D4 subset and measures the proportion of samples with ARR>0 vs ARR<=0 for LLaMa 2-7B and LLaMa 2-13B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6, Table 7"
+  },
+  {
+    "criteria": "The knowledge conflict experiments are executed on the 2FC dataset for LLaMa 2-7B, LLaMa 2-13B, and additional models (Pythia 6.9B, Pythia 12B, DeepSeek variants) across all four D1-D4 categories.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 7, Table 11"
+  },
+  {
+    "criteria": "The knowledge conflict results match Table 7: for D1 (latent reasoning, misleading prompt), ~77% (LLaMa 2-7B) and ~79% (LLaMa 2-13B) of samples show ARR<0, indicating factual shortcut behavior dominates when models resist misleading prompts.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The knowledge conflict results match Table 7: for D3 (model corrects answer with accurate context), ~74% (LLaMa 2-7B) and ~72% (LLaMa 2-13B) of samples show ARR>0, indicating latent reasoning correlates with better use of external context.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The knowledge conflict results match Table 7: for D2 (model changes to incorrect answer despite having correct internal memory), a higher proportion shows ARR>0 compared to D1, indicating latent reasoning makes models more susceptible to misleading prompts.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The causal intervention experiments on MHSA and MLP sublayers (zeroing out sublayers and measuring effects on AR) are implemented and executed, showing MLPs primarily facilitate subject enrichment while MHSA has more direct role in extracting relation-related subject candidates.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The causal intervention results on MHSA and MLP sublayers match Figure 5: in early layers MLPs dominate subject enrichment; in middle layers MHSA shows greater impact on extracting relation-related subject candidates.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The full pipeline for the main experiment (dataset construction -> attention knockout -> logit lens/AR -> ARR classification) is executable end-to-end without errors for at least LLaMa 2-7B and LLaMa 2-13B.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": null
+  },
+  {
+    "criteria": "The overall ARR metric achieves approximately 90% classification accuracy across all eight tested model families, validating its effectiveness as a metric for distinguishing latent reasoning from factual shortcuts.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  }
+]

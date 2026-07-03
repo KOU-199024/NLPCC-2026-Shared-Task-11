@@ -1,0 +1,404 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the two raw datasets (matbench_expt_gap for band gap regression with 4604 samples and matbench_glass for glass formation classification with 5680 samples) and their Magpie composition features.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Section 2.1.1 completely to understand all five OOD target set generation methods (LOCO, SparseXSingle, SparseYSingle, SparseXCluster, SparseYCluster) and how they differ from random splitting.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand that Random Forest is the baseline model, and that Roost and ModNet are used as neural network comparison models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 2.3.1 to understand the six feature-based DA methods evaluated (PRED, FA, CORAL, SA, TCA, FMMD) and that FMMD is excluded for band gap regression due to excessive runtime.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.3.2 to understand the six instance-based DA methods (WANN, KMM, RULSIF, ULSIF, NNW, BW) and that ULSIF is excluded for band gap regression.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3.2"
+  },
+  {
+    "criteria": "The agent has read Section 2.3.3 to understand the parameter-based DA methods and the specific subset used for each task: band gap uses RegularTransferLR, RegularTransferNN, LinInt, TrAdaBoostR2; glass uses TransferTreeClassifier, RegularTransferLC, RegularTransferNN, TrAdaBoost, LinInt.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3.3"
+  },
+  {
+    "criteria": "The agent has read Section 2.4 to understand the evaluation metrics: MAE (Equation 1) for band gap regression and Balanced Accuracy (Equation 2) for glass classification.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the best-performing algorithm and corresponding MAE or balanced accuracy with standard deviation for each of the 10 OOD test datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The plan includes downloading matbench_expt_gap (4604 samples, regression) and matbench_glass (5680 samples, classification) from the Matbench benchmark repository.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes computing 132-dimensional Magpie composition-based features for all materials in both datasets as the input representation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes implementing the LOCO (Leave-One-Cluster-Out) target set generation by K-means clustering the whole dataset into 50 clusters using Magpie features and using each cluster as the test set in turn.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1.1.1"
+  },
+  {
+    "criteria": "The plan includes implementing the SparseXSingle method using t-SNE (random_state=42, 2 components) for 2D dimensionality reduction, KDE for density estimation, selecting the top 500 least dense samples, K-means into 50 clusters, and picking 1 sample per cluster as the test set.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1.1.2"
+  },
+  {
+    "criteria": "The plan includes implementing the SparseYSingle method by computing density over property (y) values, selecting the top 500 least dense samples, K-means into 50 clusters, and picking 1 sample per cluster.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1.1.3"
+  },
+  {
+    "criteria": "The plan includes implementing the SparseXCluster and SparseYCluster methods by extending the single-point methods: after K-means clustering, selecting N nearest neighbors (Euclidean distance in Magpie feature space) for each seed to form clusters of approximately 11 samples each, with no sample assigned to multiple clusters.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1.1.4-2.1.1.5"
+  },
+  {
+    "criteria": "The plan includes using Random Forest (RF) as the baseline model for all DA experiments, applying DA algorithms from the Adapt Python package.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes evaluating Roost (fine-tuned with 500 most similar training samples to target set) and ModNet as neural network comparison baselines on all 10 datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes applying the correct subset of feature-based DA methods per task: PRED, FA, CORAL, SA, TCA for band gap; PRED, FA, CORAL, SA, TCA, FMMD for glass.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.3.1"
+  },
+  {
+    "criteria": "The plan includes applying the correct subset of instance-based DA methods per task: WANN, KMM, RULSIF, NNW, BW for band gap; WANN, KMM, RULSIF, ULSIF, NNW, BW for glass.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.3.2"
+  },
+  {
+    "criteria": "The plan includes applying the correct subset of parameter-based DA methods per task: RegularTransferLR, RegularTransferNN, LinInt, TrAdaBoostR2 for band gap; TransferTreeClassifier, RegularTransferLC, RegularTransferNN, TrAdaBoost, LinInt for glass.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.3.3"
+  },
+  {
+    "criteria": "The plan specifies that for LOCO supervised DA, only 3 labeled target samples are used for domain adaptation, and that SparseXSingle and SparseYSingle test sets (one sample each) can only use unsupervised DA methods.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1-3.2"
+  },
+  {
+    "criteria": "The plan includes computing and reporting mean MAE and standard deviation across 50 clusters/folds for band gap datasets, and mean balanced accuracy and standard deviation for glass datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The code for loading the matbench_expt_gap dataset (4604 samples, band gap regression) from the Matbench benchmark has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for loading the matbench_glass dataset (5680 samples, glass formation classification) from the Matbench benchmark has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for computing 132-dimensional Magpie composition-based features for all material compositions in both datasets using the Magpie feature generator has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for LOCO target set generation has been implemented: K-means clustering of the whole dataset into 50 clusters using Magpie features, with each cluster used as the test set in a leave-one-cluster-out evaluation.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.1.1"
+  },
+  {
+    "criteria": "The code for SparseXSingle target set generation has been implemented with t-SNE dimensionality reduction using random_state=42 and n_components=2 to project Magpie features to 2D space.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.1.2"
+  },
+  {
+    "criteria": "The code for SparseXSingle has been implemented to apply kernel density estimation (KDE) on the 2D t-SNE space, select the top 500 least dense samples, cluster them into 50 clusters with K-means, and pick exactly 1 sample per cluster as the test set (50 total test samples).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.1.2"
+  },
+  {
+    "criteria": "The code for SparseYSingle target set generation has been implemented by computing density over property (y) values, selecting the top 500 samples with the lowest property density, clustering them into 50 clusters with K-means, and picking 1 sample per cluster as the test set.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.1.3"
+  },
+  {
+    "criteria": "The code for SparseXCluster target set generation has been implemented to extend SparseXSingle: after selecting 50 seed samples, it picks the N nearest neighbors (Euclidean distance in Magpie feature space) for each seed to form 50 clusters with approximately 11 samples each, ensuring no sample is selected into multiple clusters.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.1.4"
+  },
+  {
+    "criteria": "The code for SparseYCluster target set generation has been implemented to extend SparseYSingle: after selecting 50 seed samples, it picks N nearest neighbors (Euclidean distance in Magpie feature space) for each seed to form 50 clusters with approximately 11 samples each, ensuring no sample is in multiple clusters.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.1.5"
+  },
+  {
+    "criteria": "The code for training a Random Forest (RF) baseline model on the training split and evaluating it on each OOD test set has been implemented for both regression (band gap) and classification (glass) tasks.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for evaluating the Roost model on all 10 OOD test datasets has been implemented, including the transfer-learning variant where the pre-trained Roost model is fine-tuned using the 500 training samples most similar to the target set.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for evaluating the ModNet model on all 10 OOD test datasets has been implemented as a comparison baseline against the DA-enhanced RF models.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for applying the five feature-based DA methods (PRED, FA, CORAL, SA, TCA) from the Adapt package to the RF model on all five band gap OOD test datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3.1"
+  },
+  {
+    "criteria": "The code for applying all six feature-based DA methods (PRED, FA, CORAL, SA, TCA, FMMD) from the Adapt package to the RF model on all five glass OOD test datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3.1"
+  },
+  {
+    "criteria": "The code for applying five instance-based DA methods (WANN, KMM, RULSIF, NNW, BW) from the Adapt package to the RF model on all five band gap OOD test datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3.2"
+  },
+  {
+    "criteria": "The code for applying all six instance-based DA methods (WANN, KMM, RULSIF, ULSIF, NNW, BW) from the Adapt package to the RF model on all five glass OOD test datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3.2"
+  },
+  {
+    "criteria": "The code for applying parameter-based DA methods (RegularTransferLR, RegularTransferNN, LinInt, TrAdaBoostR2) to the RF model on the band gap OOD test datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3.3"
+  },
+  {
+    "criteria": "The code for applying parameter-based DA methods (TransferTreeClassifier, RegularTransferLC, RegularTransferNN, TrAdaBoost, LinInt) to the RF model on the glass OOD test datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3.3"
+  },
+  {
+    "criteria": "The code for supervised DA experiments on LOCO datasets has been implemented so that only 3 labeled samples from each target cluster are used during DA training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for the MAE metric has been implemented as defined in Equation 1 to evaluate regression performance on band gap OOD test sets.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for the Balanced Accuracy metric has been implemented as defined in Equation 2 (average of sensitivity and specificity) to evaluate classification performance on glass OOD test sets.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code computes and aggregates mean performance and standard deviation across all 50 clusters or folds for each dataset and algorithm combination.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The code for generating all five OOD test splits (LOCO, SparseXSingle, SparseYSingle, SparseXCluster, SparseYCluster) for the band gap dataset has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 2.1.1"
+  },
+  {
+    "criteria": "The code for generating all five OOD test splits for the glass dataset has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 2.1.1"
+  },
+  {
+    "criteria": "The code for all supervised and unsupervised DA experiments on the band gap LOCO dataset has been executed successfully without errors, producing MAE results for all methods.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The code for all supervised and unsupervised DA experiments on the glass LOCO dataset has been executed successfully without errors, producing balanced accuracy results for all methods.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The code for unsupervised DA experiments on the band gap SparseXSingle and SparseYSingle datasets has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The code for unsupervised DA experiments on the glass SparseXSingle and SparseYSingle datasets has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The code for supervised and unsupervised DA experiments on the band gap SparseXCluster and SparseYCluster datasets has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The code for supervised and unsupervised DA experiments on the glass SparseXCluster and SparseYCluster datasets has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The Roost and ModNet models have been evaluated on all 10 OOD test datasets and their results have been recorded successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4(a): for the band gap LOCO dataset with supervised DA, only BW (MAE approximately 0.454 eV) and TrAdaBoostR2 (MAE approximately 0.458 eV) improve over the baseline RF (MAE approximately 0.477 eV), while WANN, RegularTransferLR, and LinInt show significant performance degradation.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4(a)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4(b): for the band gap LOCO dataset with unsupervised DA, only KMM (MAE approximately 0.524 eV) and RULSIF (MAE approximately 0.4756 eV) improve over the baseline RF, while all feature-based methods (CORAL, SA, TCA) degrade performance.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4(b)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5(a): for the glass LOCO dataset with supervised DA, only BW improves the balanced accuracy from 0.652 to 0.704, while all other supervised DA methods decrease in performance.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5(a)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5(b): for the glass LOCO dataset with unsupervised DA, only KMM improves balanced accuracy from 0.652 to 0.704, while all other unsupervised methods decrease in performance.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5(b)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6(a): for the band gap SparseXSingle dataset, RULSIF achieves the best MAE (approximately 0.399 eV, 28% improvement over baseline 0.555 eV), followed by FMMD and KMM, and RULSIF outperforms both Roost (MAE 0.483 eV) and ModNet (MAE 0.436 eV).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 6(a)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6(b): for the band gap SparseYSingle dataset, only KMM (MAE approximately 0.611 eV) and NNW (MAE approximately 0.567 eV) outperform the baseline, while feature-based methods (CORAL, SA, TCA) significantly degrade performance.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6(b)"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: for glass SparseXSingle, only KMM shows a slight improvement (0.76 vs. baseline 0.75); for glass SparseYSingle, NNW achieves the best balanced accuracy (0.84) and RULSIF achieves 0.76, while feature-based methods (CORAL, SA) degrade dramatically.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 7(a-b): for the band gap SparseXCluster dataset, BW, RegularTransferNN, and TrAdaBoostR2 (best, MAE approximately 0.516 eV) improve among supervised DAs, and only RULSIF (MAE approximately 0.468 eV) improves among unsupervised DAs, beating all supervised methods.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 7(c-d): for the band gap SparseYCluster dataset, BW and TrAdaBoostR2 (best, MAE approximately 0.461 eV) improve among supervised DAs, and RULSIF (MAE approximately 0.417 eV) is the only improving unsupervised DA, performing as well as Roost (MAE 0.419 eV) while outperforming ModNet (MAE 0.824 eV).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 8(a-b): for the glass SparseXCluster dataset, BW is the only supervised DA to improve (balanced accuracy approximately 0.791), and NNW is the only unsupervised DA to improve (approximately 0.729), with BW outperforming Roost (0.776) and ModNet (0.60).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 8(c-d): for the glass SparseYCluster dataset, BW is the only supervised DA to improve (balanced accuracy approximately 0.802) and NNW is the only improving unsupervised DA (approximately 0.751), with BW outperforming Roost (0.755) and Roost fine-tuned (0.779), while ModNet only achieves 0.51.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: for band gap datasets, Roost achieves best MAE on LOCO (0.371 eV) and SparseXCluster (0.421 eV), while RULSIF achieves best on SparseYCluster (0.417 eV) and SparseXSingle (0.399 eV), and Roost also best on SparseYSingle (0.495 eV).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: for glass datasets, BW achieves best balanced accuracy on LOCO (0.704), SparseXCluster (0.791), and SparseYCluster (0.802); Roost achieves best on SparseXSingle (0.840); NNW achieves best on SparseYSingle (0.840).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes confirm that instance-based DA methods (BW and RULSIF) consistently achieve the best OOD prediction performance across datasets, while feature-based and most parameter-based DAs fail to improve or degrade the baseline RF performance.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The execution outcomes confirm that ModNet, which achieves approximately 0.331 eV MAE on standard 5-fold CV for band gap, degrades significantly on the OOD test sets (e.g., 0.8592 eV on LOCO), demonstrating the OOD generalization problem addressed in this paper.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 3.1"
+  }
+]

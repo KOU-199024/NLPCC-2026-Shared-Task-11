@@ -1,0 +1,296 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the MEMAGENT workflow: processing text segment-by-segment, maintaining a fixed-length memory via an overwrite strategy, and decomposing inference into Context-Processing and Answer-Generation modules.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand the Multi-Conv DAPO training algorithm, including the extension of the loss computation from (group, token) to (group, conversation, token) dimensionality.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the experimental setup: backbone models (Qwen2.5-7B-Instruct and Qwen2.5-14B-Instruct), the two-stage curriculum RL strategy, context window allocation (1024 query + 5000 chunk + 1024 memory + 1024 output = 8K), and all evaluation benchmarks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Appendix A.1 to understand the two prompt templates: (1) the context-processing template that takes problem, memory, and chunk as input and outputs updated memory, and (2) the answer-generation template that takes problem and memory and outputs a boxed answer.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.1, Table 5"
+  },
+  {
+    "criteria": "The agent has read Appendix A.3 to understand all training hyperparameters: KL factor 1e-3, AdamW optimizer with lr=1e-6, linear warmup with 20 warmup steps, rollout batch size 256, group size 16, off-policy ratio 16, and no entropy loss.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The plan includes implementation of the MEMAGENT context-processing loop: iterating over document chunks, updating the memory after each chunk using the memory-update prompt template, and starting from an empty memory.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes implementation of the MEMAGENT answer-generation module: given the final accumulated memory and the original question, generating the boxed answer.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes the Multi-Conv DAPO training algorithm, treating each context-independent conversation as an independent optimization objective with advantage derived from the final conversation applied to all preceding conversations.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes the two-stage curriculum training strategy: Stage I with HotpotQA-based RULER synthetic data (~32K tokens each) and Stage II with DocQA-RL-1.6K mixed data (max 60K tokens).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The plan includes evaluation on all four benchmark categories: RULER-HQA, LongBench-QA, NIAH (three levels), and LongBench-SUM (GovReport and QMSum).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The context-processing loop is implemented: the model processes document chunks one at a time, and after reading each chunk, overwrites the previous memory with an updated one using the memory-update prompt template.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1, Table 5"
+  },
+  {
+    "criteria": "The answer-generation module is implemented: after all chunks are processed, the model consults only the problem statement and the final memory to produce its answer formatted with \\boxed{}.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1, Table 5"
+  },
+  {
+    "criteria": "The prompt template for context-processing is implemented exactly as in Table 5 (top), containing placeholders for {prompt}, {memory}, and {chunk}, and prompting the model to update memory while retaining relevant details.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1, Table 5"
+  },
+  {
+    "criteria": "The prompt template for answer-generation is implemented exactly as in Table 5 (bottom), containing placeholders for {prompt} and {memory}, and instructing the model to put the answer in \\boxed{}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1, Table 5"
+  },
+  {
+    "criteria": "The 8K context window allocation is correctly implemented: 1024 tokens for query, 5000 tokens for context chunk, 1024 tokens for memory, and 1024 tokens for output.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The Multi-Conv DAPO advantage computation is implemented as Equation 1: the advantage for all conversations from the same sample is derived from the final-answer conversation reward minus the group mean reward, without division by standard deviation.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1, Section 2.2"
+  },
+  {
+    "criteria": "The Multi-Conv DAPO loss function is implemented as Equation 2: summing over (group, conversation, token) indices with clipped importance-sampling ratio and KL divergence penalty from the reference model.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2, Section 2.2"
+  },
+  {
+    "criteria": "The clipped importance-sampling ratio in the DAPO loss is correctly implemented using asymmetric clipping bounds (1 - epsilon_low, 1 + epsilon_high) as shown in Equation 2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The rule-based reward function is implemented as in Equation 3: R(y_hat, y) = 1 if is_equiv(y, y_hat) else 0, comparing the predicted answer from the final conversation against the ground truth.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3, Section 2.2"
+  },
+  {
+    "criteria": "The multi-conversation rollout is implemented correctly: for each sample, G groups are generated where each group consists of multiple conversations (context-processing turns + one final answering turn), and the reward is derived only from the final answer conversation.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.2, Algorithm 1"
+  },
+  {
+    "criteria": "The Multi-Conv DAPO algorithm (Algorithm 1) is fully implemented using the verl framework, with off-policy training (ratio of sample batch size to backpropagation batch size set to 16).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2, A.3"
+  },
+  {
+    "criteria": "The training uses the AdamW optimizer with a constant learning rate of 1e-6, linear warmup scheduler with 20 warmup steps, KL factor beta=1e-3, rollout batch size 256, and group size 16.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "Stage I training data is prepared: 32,768 synthetic QA instances generated using the RULER methodology on HotpotQA, embedding golden paragraphs within extensive distractor content from the same dataset, each approximately 32K tokens in length.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The HotpotQA data filtering pipeline is implemented: filtering out questions where Qwen2.5-7B-Base or Qwen2.5-7B-Instruct achieves 100% Best-Of-2 score without context (common knowledge filtering), resulting in approximately 50% of data being retained.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "Stage II training data is prepared: 2,560 instances with a maximum length of 60K tokens, composed of DocQA-RL-1.6K mixed with Stage I data.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The RULER-HQA test sets with different context lengths are synthesized: ranging from approximately 7K to 3.5M tokens, with 50 to 6,400 wiki items from HotpotQA.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The evaluation uses the sub-EM (substring exact match) metric: an answer is considered correct if the model's extracted answer contains all elements of the ground truth.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "Answer normalization is applied before evaluation: removing definite articles, ignoring case distinctions, and applying other standard normalization steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "Answers are extracted from model outputs using regular expressions, with the model prompted to respond in the format 'the answer is ANSWER' or \\boxed{} format.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4"
+  },
+  {
+    "criteria": "The NIAH benchmark evaluation is implemented using three levels from RULER (niah_single_1, niah_single_2, niah_single_3) with the specified configurations: level 1 (repeat haystack, word key, number value), level 2 (essay haystack, word key, number value), level 3 (essay haystack, word key, UUID value).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.4, Table 7"
+  },
+  {
+    "criteria": "The LongBench-QA evaluation is implemented on five datasets: NarrativeQA, Qasper, HotpotQA, 2WikiMultihopQA, and MuSiQue.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The LongBench-SUM evaluation is implemented using ROUGE-{1,2,L} recall scores on GovReport and QMSum datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The Stage I training is executed successfully for approximately 400 steps until convergence, using Qwen2.5-7B-Instruct and Qwen2.5-14B-Instruct as backbone models.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The Stage II training is executed successfully after Stage I convergence using the mixed DocQA-RL-1.6K and Stage I data.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "RULER-HQA evaluation is executed successfully for RL-MEMAGENT-14B and RL-MEMAGENT-7B across context lengths from 7K to 3.5M tokens.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.2, Table 1"
+  },
+  {
+    "criteria": "LongBench-QA evaluation is executed successfully for MEMAGENT-14B and MEMAGENT-7B across all five datasets (2Wiki, HQA, MuSiQue, NQA, Qasper).",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.2, Table 3"
+  },
+  {
+    "criteria": "NIAH evaluation is executed successfully for RL-MEMAGENT across context lengths up to 512K, covering all three difficulty levels.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.2, Figure 5"
+  },
+  {
+    "criteria": "LongBench-SUM evaluation is executed successfully for RL-MEMAGENT-14B and RL-MEMAGENT-7B on GovReport and QMSum.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.2, Table 2"
+  },
+  {
+    "criteria": "The ablation study comparing RL-MEMAGENT vs. MEMAGENT without RL is executed on RULER-HQA and LongBench-QA.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.3.1, Figures 6-7"
+  },
+  {
+    "criteria": "The memory-length ablation study is executed with memory sizes ranging from 256 to 4096 tokens (keeping total context length within 8192) on both NIAH and LongBench-QA benchmarks.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.3.2, Figures 8-9, Tables 8-9"
+  },
+  {
+    "criteria": "The RULER-HQA results match Table 1: RL-MEMAGENT-14B achieves approximately 80%+ accuracy across all context lengths from 7K to 896K, and approximately 79% and 71% at 1.75M and 3.5M tokens respectively, demonstrating near-lossless extrapolation.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The RULER-HQA results match Table 1: RL-MEMAGENT-7B achieves approximately 81% accuracy at 7K and maintains above 71% even at 3.5M tokens, outperforming all baseline models by a large margin.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The LongBench-QA results match Table 3: MEMAGENT-14B achieves approximately 79.0 on 2Wiki, 73.0 on HQA, 52.0 on MuSiQue, 25.0 on NQA, 26.0 on Qasper (AVG ~51.0), outperforming larger models like QwenLong-L1-32B and DS-Distill-Qwen-32B.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The NIAH results match Figure 5: RL-MEMAGENT achieves over 95% accuracy on the NIAH benchmark at 512K context length, with a performance loss of less than 5%, while baseline models show substantial degradation.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5, Section 3.2"
+  },
+  {
+    "criteria": "The LongBench-SUM results match Table 2: RL-MEMAGENT-14B achieves SOTA (37.16 ROUGE-1, 12.03 ROUGE-2, 16.23 ROUGE-L, AVG 21.80) on GovReport, and strong performance on QMSum (50.21 ROUGE-1, AVG 31.39).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The RL ablation results match Figures 6-7: MEMAGENT without RL shows significant performance degradation as context length increases on RULER-HQA, and only marginal or negative improvements on LongBench-QA compared to the backbone model, while RL-MEMAGENT achieves significant improvements in both scenarios.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figures 6-7, Section 3.3.1"
+  },
+  {
+    "criteria": "The memory-length ablation results match Tables 8-9 and Figures 8-9: the default configuration (m=1024, c=5000) achieves a reasonable performance sweet spot, and MEMAGENT performance is robust across different memory sizes (256-4096).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables 8-9, Figures 8-9, Section 3.3.2"
+  },
+  {
+    "criteria": "The context distribution probing experiment results match Table 4: RL-MEMAGENT remains consistently robust (within ±5% of random baseline) across all five context distribution patterns (0%-20%, 0%-100%, 20%-80%, 40%-60%, 80%-100%), demonstrating immunity to information-overwritten and lost-in-the-middle phenomena.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4, Section 3.3.3"
+  },
+  {
+    "criteria": "The RAG agent baseline comparison results match Tables 10-11: RL-MEMAGENT-14B outperforms RAG+Qwen2.5-14B with K=8 on RULER-HQA (80.47 vs 78.12 at 7K, and maintaining advantage at extreme lengths like 3.5M), and significantly outperforms RAG baselines on LongBench-QA (51.0 AVG vs 39.42 best RAG).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables 10-11, Appendix D.2"
+  }
+]

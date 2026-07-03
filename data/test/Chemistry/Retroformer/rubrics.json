@@ -1,0 +1,416 @@
+[
+  {
+    "criteria": "The agent has read Section 3 (Preliminary) completely to understand the SMILES sequence, molecular graph G_mol, and SMILES graph G_smi formalism used throughout the paper.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the local attention head, global attention head, and edge update module in the encoder.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand atom and bond reaction center identifiers and the naive versus search RC detection strategies.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 completely to understand the sparse local cross-attention in the decoder conditioned on the detected reaction center S_rc.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.4 and 4.6 to understand the SMILES attention guidance loss and the full multi-task training objective.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.4, 4.6"
+  },
+  {
+    "criteria": "The agent has read Appendix 7 (Algorithm 1) to understand the SMILES graph construction procedure using RDKit atom tagging.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix 7, Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Appendix 8 (Algorithm 2) to understand the ground truth SMILES token alignment computation using atom mapping numbers.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix 8, Algorithm 2"
+  },
+  {
+    "criteria": "The agent has read Appendix 9 (Algorithm 3 and Equation 8) to understand the multi-stage reaction center subgraph search and the reactive score formula.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix 9, Algorithm 3"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the top-k accuracy results for all three Retroformer variants in both reaction class known and unknown settings.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 4 to understand the six ablation configurations and which components they isolate.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The plan includes data preparation for USPTO-50K: canonicalizing SMILES with atom mapping following the GraphRetro protocol and using RDChiral to extract ground truth reaction centers.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes the SMILES graph construction (Algorithm 1) that expands the molecular graph G_mol into the SMILES graph G_smi to align atom tokens with SMILES tokens.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix 7, Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes the local attention head restricted to the one-hop neighborhood of each token, incorporating bond features via element-wise multiplication with the key vector.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Equation 1"
+  },
+  {
+    "criteria": "The plan includes the edge update module that updates bond representations at each encoder layer using the concatenation of updated token features.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Equation 3"
+  },
+  {
+    "criteria": "The plan includes the Atom RC Identifier and Bond RC Identifier as two separate FFN modules producing per-atom and per-bond reactive probabilities.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Equations 4-5"
+  },
+  {
+    "criteria": "The plan includes both the naive RC detection strategy (threshold-based, used at training and inference) and the search RC strategy (subgraph search, used only at inference).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes the local-global decoder with sparse local cross-attention restricted to detected reaction center tokens S_rc and global cross-attention over the full encoder output.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Equations 6-7"
+  },
+  {
+    "criteria": "The plan includes the SMILES token alignment computation (Algorithm 2) and the attention guidance loss enforced at the first global head of the last decoder layer (Guided_last).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.4, Appendix 8"
+  },
+  {
+    "criteria": "The plan includes on-the-fly data augmentation: 50% probability of product SMILES permutation and 50% probability of reactants order permutation per training iteration.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The plan includes the full multi-task loss: L = L_LM + L_RC_bond + L_RC_atom + L_AG.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.6"
+  },
+  {
+    "criteria": "The plan specifies the model hyperparameters: 8 encoder layers, 8 decoder layers, embedding dimension 256, 8 total attention heads (4 global + 4 local), Adam optimizer with lr=1e-4, dropout=0.3.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes all three Retroformer variants: Retroformer_base (no augmentation, naive RC), Retroformer_aug (augmentation + naive RC), and Retroformer_aug+ (augmentation + search RC).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes evaluation using top-k accuracy, top-k SMILES validity (via RDKit), and top-k round-trip accuracy (via pretrained Molecule Transformer as oracle).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code for SMILES graph construction (Algorithm 1) has been implemented: assigning RDKit atom tags, writing tagged SMILES without canonicalization, and retrieving token-level edge connections and bond features.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix 7, Algorithm 1"
+  },
+  {
+    "criteria": "The bond features from Table 5 have been implemented as a feature vector: bond type (4-dim one-hot), aromatic (1), conjugated (1), and part of ring (1), for a total size of 7.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix 10, Table 5"
+  },
+  {
+    "criteria": "The local attention head has been implemented as Equation 1: attention restricted to one-hop neighbors N(i), with element-wise multiplication of the key vector by the bond feature matrix A_ij before the dot product.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Equation 1"
+  },
+  {
+    "criteria": "The global attention head has been implemented as standard scaled dot-product self-attention over the full SMILES sequence.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The encoder token representation update has been implemented as Equation 2: h^{l+1} = Linear([x_global^{l+1}; x_local^{l+1}]), concatenating global and local head outputs along the hidden dimension.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Equation 2"
+  },
+  {
+    "criteria": "The edge update module has been implemented as Equation 3: A_ij^{l+1} = A_ij^l + FFN([h_i^{l+1}; h_j^{l+1}]), using a residual connection with a fully connected layer on concatenated token features.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Equation 3"
+  },
+  {
+    "criteria": "The Atom RC Identifier has been implemented as Equation 4: P_rc(s_i) = sigma(FFN_atom(h_i)) applied only to atom tokens s_i in V_m.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Equation 4"
+  },
+  {
+    "criteria": "The Bond RC Identifier has been implemented as Equation 5: P_rc(e_ij) = sigma(FFN_bond(A_ij)) applied only to bonds e_ij in E_m.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Equation 5"
+  },
+  {
+    "criteria": "The naive RC strategy has been implemented: a token is marked as reactive if P_rc(e) > 0.5 for at least one of its incident bonds AND P_rc(s) > 0.5, with special tokens guaranteed non-reactive.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The local cross-attention in the decoder has been implemented as Equation 6: y_i^{l+1}_local = sum over s_j in S_rc of sigma(q_i k_j^T / sqrt(d)) v_j, restricting attention to detected reaction center tokens only.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Equation 6"
+  },
+  {
+    "criteria": "The decoder representation update has been implemented as Equation 7: g^{l+1} = Linear([y_global^{l+1}; y_local^{l+1}]), concatenating global and local cross-attention outputs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3, Equation 7"
+  },
+  {
+    "criteria": "The SMILES token alignment computation has been implemented as Algorithm 2: iterating over reactant atom tokens, matching by atom mapping number to product tokens, and extending the alignment via substring matching for non-atom tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix 8, Algorithm 2"
+  },
+  {
+    "criteria": "The attention guidance loss L_AG has been implemented as a label smoothing cross-entropy loss between the ground truth SMILES token alignment and the cross-attention weights of the first global head of the last decoder layer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The language modeling loss L_LM has been implemented as a cross-entropy loss over the decoder's token predictions for the reactant SMILES sequence.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.6"
+  },
+  {
+    "criteria": "The reactive probability losses L_RC_atom and L_RC_bond have been implemented as binary cross-entropy losses using ground truth reaction center labels extracted by RDChiral.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.6"
+  },
+  {
+    "criteria": "The combined multi-task loss has been implemented as L = L_LM + L_RC_bond + L_RC_atom + L_AG with all four components summed without additional weighting coefficients.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.6"
+  },
+  {
+    "criteria": "On-the-fly data augmentation has been implemented: at each training iteration, with 50% probability permute the product SMILES, and with 50% probability permute the order of reactants.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "The reaction center subgraph search (Algorithm 3) has been implemented: filtering atoms/bonds by alpha_atom and alpha_bond thresholds, retrieving connected components, and performing recursive pruning with maxRootSize, minLeafSize, and maxBranch constraints.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix 9, Algorithm 3"
+  },
+  {
+    "criteria": "The subgraph reactive score (Equation 8) has been implemented: normalized log-sum of atom and bond reactive probabilities weighted by a Gaussian size prior phi(|V|, mu, sigma^2) with mu=5.55 and sigma=1.2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix 9, Equation 8"
+  },
+  {
+    "criteria": "The subgraph search hyperparameters have been set correctly: n=3, temperature T=10, beta=0.5, maxRootSize=25, maxBranch=5, and percentile thresholds k_s=40, k_e=40 for reaction class unknown and k_s=40, k_e=55 for reaction class known.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix 9"
+  },
+  {
+    "criteria": "The search inference strategy has been implemented: generating k/n reactants per reaction center candidate, then ranking all k results by the sum of reaction center score and generative score.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The diversity-enforcing step in the subgraph search has been implemented: removing all candidate subgraphs (excluding the top-1) that share at least two common nodes with the top-1 subgraph.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix 9, Algorithm 3"
+  },
+  {
+    "criteria": "The model architecture has been implemented with 8 encoder layers and 8 decoder layers built on the vanilla Transformer architecture.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The embedding dimension has been set to 256 and the total number of attention heads to 8, with 4 heads designated as global and 4 as local in both encoder and decoder.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The optimizer has been implemented as Adam with a fixed learning rate of 1e-4 and a dropout rate of 0.3 applied throughout the model.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The data preprocessing pipeline has been implemented: canonicalizing molecule SMILES with atom mapping using the GraphRetro protocol and using RDChiral to extract ground truth reaction center labels.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The top-k accuracy evaluation has been implemented as exact match of the full predicted reactant SMILES against the ground truth across k=1, 3, 5, 10.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The top-k SMILES validity evaluation has been implemented as Valid(k) = (1/(N*k)) * sum over N*k candidates of 1(SMILES is valid according to RDKit).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The top-k round-trip accuracy evaluation has been implemented as RoundTrip(k) = (1/(N*k)) * sum over N*k candidates of 1(Reach Ground Truth Product), using a pretrained Molecule Transformer as the forward reaction oracle.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The ablation configurations have been implemented: (a) no guidance, (b) Guided_all, (c) Guided_last, (d) without local-global encoder, (e) without local-global decoder, (f) with reaction center search.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "Retroformer_base (no data augmentation, naive RC detection) has been trained successfully on 1 NVIDIA Tesla V100 GPU for 24 hours without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "Retroformer_aug (with on-the-fly data augmentation and naive RC detection) has been trained successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "Retroformer_aug+ (with data augmentation and search RC strategy at inference) has been run successfully for inference and evaluation without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "All six ablation configurations (a)-(f) from Table 4 have been executed successfully without errors on the reaction class unknown setting.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The SMILES validity and round-trip accuracy evaluations have been executed successfully on the test set for Retroformer_aug and Retroformer_aug+.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2, Table 3"
+  },
+  {
+    "criteria": "The execution outcomes for Retroformer_base match Table 1 for reaction class unknown: top-1 accuracy of 47.9% and top-10 accuracy of 70.7%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes for Retroformer_aug match Table 1 for reaction class known: top-1 accuracy of 64.0% and top-10 accuracy of 88.3%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes for Retroformer_aug+ match Table 1 for reaction class unknown: top-1 accuracy of 53.2% and top-10 accuracy of 82.1%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes confirm that Retroformer_aug+ achieves new state-of-the-art accuracy for template-free retrosynthesis in both reaction class known and unknown settings.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes for Retroformer_aug match Table 2 for top-k SMILES validity in the reaction class unknown setting: top-10 validity of 92.6%, improving over the vanilla Transformer by approximately 23.6% at top-10.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes for Retroformer_aug+ match Table 2 for top-k SMILES validity: top-10 validity of 96.7%, showing superior validity compared to all template-free baselines.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes for Retroformer_aug match Table 3 for top-k round-trip accuracy: top-10 round-trip accuracy of 57.6%, improving over the vanilla Transformer by approximately 22.0% at top-10.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The ablation study outcomes match Table 4: configuration (c) (Guided_last + local-global encoder + local-global decoder) achieves 47.9% top-1 accuracy in the reaction class unknown setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The ablation study outcomes match Table 4: removing the local-global encoder (d vs c) causes a 3.8% drop in top-1 accuracy (44.1% vs 47.9%), confirming the encoder's contribution.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The ablation study outcomes match Table 4: the search strategy (f vs c) boosts top-10 accuracy from 70.7% to 78.8%, a 4.9% improvement from adding reaction center search at inference.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The ablation study outcomes confirm that Guided_last (c) achieves comparable or better performance than Guided_all (b), validating the choice of enforcing alignment loss only at the last decoder layer.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  }
+]

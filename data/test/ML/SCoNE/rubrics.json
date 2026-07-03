@@ -1,0 +1,476 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the Noise Augmentation Module and its prompt-formatted input structure (Instruction + Context + Results).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 completely to understand the step-wise entity masking procedure that generates augmented training samples with increasing levels of corruption.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the three-phase noise-aware learning schedule: warmup, main training with dynamic sampling (Equation 3), and fine-tuning.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the Confidence-Based Self-Correction module, including the three rule-based re-masking strategies for entity tokens, separators, and noise tokens.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand dataset statistics (Florilege, CHEMDNER-CEM, CHEMDNER Fine-Grained), the 8.1:0.9:1 split, the K-shot settings, and the F1 evaluation metric.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Appendix A.2 to check all implementation details: T5-large backbone, custom <extra_id_i> tokens, batch size 8, 100 epochs for K-shot and 20 epochs for full-data, confidence threshold 0.9, single CS iteration, and 10-fold validation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The agent has read Appendix D to understand the dynamic sample scheduler and its comparison with linear curriculum sampling and loss-based sampling strategies.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The agent has read Appendix E to understand the comparison between CS-single (re-mask only uncertain tokens) and CS-multi (position-aware rule-based re-masking) strategies.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The plan includes implementing the prompt-formatted training input composed of an Instruction prefix, the raw Context, and the Results segment appended during training (removed at inference).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing Algorithm 1 (Step-wise Entity Masking) to generate augmented training samples in both partially noisy and fully noisy modes.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes implementing the three-phase noise-aware learning schedule: warmup phase (90% partially noisy), main training phase (dynamic sampling via Equation 3), and fine-tuning phase (100% fully noisy).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing the Confidence-Based Self-Correction module with confidence threshold 0.9, the three rule-based re-masking strategies, and the iterative re-generation loop.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes loading and preprocessing all three datasets (Florilege, CHEMDNER-CEM, CHEMDNER Fine-Grained) with the 8.1:0.9:1 train/validation/test split.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes reproducing all six baselines: BioBERT+CRF, BBMC, BiGRU, DiffusionNER, DVDNER, and T5+Instruction.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the key hyperparameters: T5-large backbone, maximum batch size of 8 per GPU, 100 training epochs for K-shot settings, and 20 epochs for full-data settings.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The plan includes experiments under all five training conditions (K ∈ {10, 20, 50, 100}-shot and full-data) for all models on all three datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the ablation study with two conditions: removing the Noise Augmentation module (w/o NA) and removing the Confidence-Based Self-Correction module (w/o CS).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The plan includes the sampling strategy comparison experiment with three strategies: linear curriculum, loss-based, and the proposed dynamic sampling.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The plan includes the re-masking strategy comparison between CS-single (re-mask only uncertain tokens) and CS-multi (position-aware rule-based re-masking across entity, separator, and noise token roles).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The instruction prefix is implemented in the format 'Extract l1, l2, ..., lm entities from the context' using the full names of entity types, prepended to the context during both training and inference.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The Results segment is implemented in the format 'l1: a1 l2: a2 ... lm: am', where multiple mentions under the same label are separated by @@, and absent types are marked as 'no entity'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "Algorithm 1 (Step-wise Entity Masking) is fully implemented: all entity mentions and 'no entity' marks are extracted from Results and flattened into list E, shuffled, then progressively replaced with <noise_i> tokens to generate augmented training pairs (Xi, Yi).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The Partially Noisy Mode is implemented: entity mentions or 'no entity' marks are progressively and randomly masked with sequentially assigned <noise_j> tokens, producing staged training examples with increasing masking scope.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Figure 3"
+  },
+  {
+    "criteria": "The Fully Noisy Mode is implemented: all answer spans ak (including @@ separators) are masked with <noise_k> tokens assigned in label order, emulating the inference-time fully masked input format.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Figure 3"
+  },
+  {
+    "criteria": "The T5 custom tokens <extra_id_i> (for i ∈ {0, 1, ..., 99}) are used as the series of noise tokens throughout the data construction and model training pipeline.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The T5-large model (~770M parameters) is used as the backbone for SCoNE with its encoder-decoder architecture for generative entity recognition.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The encoder's contextualized hidden states H = {h1, ..., hm} via self-attention (Equation 1: hi = sum_j(alpha_ij * vj), vj = Wv * xj) are produced through the T5 encoder for input representation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The decoder's autoregressive token probability P(yt) = softmax(Wo * st) (Equation 2) is correctly utilized through the T5 decoder for output generation at each decoding step.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The warmup phase is implemented with 90% probability of sampling partially noisy examples to enable stable early-stage learning before dynamic adjustment begins.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The main training phase dynamic sampling is implemented: at the end of each epoch, average losses L0 (partially noisy) and L1 (fully noisy) are computed, and sampling probabilities p0 = L0/(L0+L1) and p1 = 1-p0 (Equation 3) are applied for the next epoch.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3, Section 3.2"
+  },
+  {
+    "criteria": "The fine-tuning phase is implemented by gradually increasing the proportion of fully-noisy examples to 100% and maintaining it for several epochs to align training with inference-time conditions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "Token-level confidence scores are computed by first extracting logits_t = Wo * st (Equation 4) at each decoding step and then applying softmax (Equation 5: confidence_scores = Softmax(logits)) to obtain per-token probability scores.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 4 and 5"
+  },
+  {
+    "criteria": "The confidence threshold of 0.9 is applied to classify each generated token as reliable (score >= 0.9) or uncertain (score < 0.9), triggering rule-based re-masking for uncertain tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Appendix A.2"
+  },
+  {
+    "criteria": "The re-masking rule for low-confidence entity tokens is implemented: the entire entity span is replaced with '<noise_i> @@ <noise_i+1>' when the first token of a predicted entity has low confidence, and noise indices are reordered.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The re-masking rule for a low-confidence separator (@@) is implemented: a new '<noise_i>' is inserted before the separator yielding '<noise_i> @@', signaling that the prior entity was not fully generated, and existing noise indices are reordered.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The re-masking rule for a low-confidence '<noise_i>' token is implemented: a new '<noise_i>' is appended after the last reliable entity span under that label to allow recovery of ungenerated mentions, with existing noise indices reordered.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The iterative re-masking procedure is fully implemented: the model regenerates the sequence after each re-masking round, repeating until all output tokens exceed the confidence threshold or the maximum number of iterations is reached.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The CS module is configured to run with a single iteration during both training and inference, as specified in Appendix A.2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "Noise index reordering is implemented after each re-masking operation to maintain consistent alignment between noise tokens and their corresponding entity spans.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The Florilege dataset is loaded and preprocessed: 392 documents with approximately 7,000 entities across 5 entity types (taxon, use, phenotype, molecule, habitat), of which 26% are nested or discontinuous.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The CHEMDNER-CEM dataset is loaded and preprocessed from the CHEMDNER corpus (~10,000 PubMed abstracts, ~84,000 chemical mentions, 16% nested) for single-type chemical mention recognition.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The CHEMDNER Fine-Grained dataset is loaded and preprocessed with all 7 entity type categories for fine-grained chemical entity recognition.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The 8.1:0.9:1 train/validation/test split is applied consistently across all three datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "K-shot sampling (K ∈ {10, 20, 50, 100}) is implemented without class balancing, using random selection to reflect real-world distributions.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The BioBERT+CRF sequence labeling baseline is reproduced on all three datasets with minimal compatibility adjustments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The BBMC sequence labeling baseline is reproduced on all three datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The BiGRU sequence labeling baseline is reproduced on all three datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The DiffusionNER generative baseline is reproduced on all three datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The DVDNER generative baseline is reproduced on all three datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The T5+Instruction baseline is implemented using only the instruction-prefixed input (without the Results segment or any noise augmentation) to directly generate entity predictions in standard sequence generation format.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix A.1"
+  },
+  {
+    "criteria": "The F1 score (harmonic mean of precision and recall) evaluation metric is implemented and used consistently for all datasets, models, and training conditions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "Output parsing code is implemented to extract predicted entity mentions from the generated text by parsing the structured format 'l1: a1 l2: a2 ... lm: am' with @@ separators and 'no entity' markers.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The 10-fold validation is implemented to compute average performance and standard deviation for robust performance reporting across all settings.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "Evaluation of complex entity recognition (nested and discontinuous entities) using recall as the primary metric is implemented for comparison against T5+Instruction and DiffusionNER.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The w/o NA ablation condition is implemented: the model uses the fully noisy format without any data augmentation from partially noisy stages and without any dynamic sampling strategy, as described in Appendix C.1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.4, Appendix C.1"
+  },
+  {
+    "criteria": "The w/o CS ablation condition is implemented: the model performs standard inference using only the initial generation output, without any confidence-based re-masking or re-generation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The linear curriculum sampling strategy is implemented as a comparison baseline: it follows a fixed linear schedule for transitioning between partially noisy and fully noisy examples.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The loss-based sampling strategy is implemented as a comparison baseline: it uses per-epoch loss values to determine sampling probabilities without the structured curriculum of the dynamic scheduler.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The CS-single re-masking strategy is implemented: it re-masks only the individual uncertain tokens without applying position-aware rules based on token role (entity, separator, or noise token).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "All six baseline models (BioBERT+CRF, BBMC, BiGRU, DiffusionNER, DVDNER, T5+Instruction) are executed on all three datasets under all five training settings (10, 20, 50, 100-shot, full-data) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "SCoNE is trained and evaluated on the Florilege dataset under all five training settings (10, 20, 50, 100-shot, full-data) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "SCoNE is trained and evaluated on the CHEMDNER-CEM dataset under all five training settings (10, 20, 50, 100-shot, full-data) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "SCoNE is trained and evaluated on the CHEMDNER Fine-Grained dataset under all five training settings (10, 20, 50, 100-shot, full-data) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The ablation experiments (w/o NA and w/o CS conditions) are executed on all three datasets under all five training settings without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Tables 5, 8, 9"
+  },
+  {
+    "criteria": "The sampling strategy comparison experiments (w/o sampling, linear, loss-based, dynamic) are executed on all three datasets without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 10"
+  },
+  {
+    "criteria": "The re-masking strategy comparison experiments (w/o CS, CS-single, CS-multi) are executed on all three datasets without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: SCoNE achieves F1 scores from 36.63 (10-shot) to 79.06 (full-data) on Florilege, outperforming all baseline models in most settings.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: SCoNE achieves F1 scores from 32.75 (10-shot) to 85.82 (full-data) on CHEMDNER-CEM, outperforming sequence labeling baselines in all settings.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: SCoNE achieves F1 scores from 10.95 (10-shot) to 81.45 (full-data) on CHEMDNER Fine-Grained, outperforming all baselines in all settings.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: SCoNE achieves the highest complex entity recall on all three datasets across all training settings, with improvements up to 4.42 recall points and an average gain of 2.69 points over baselines.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5: removing the NA module drops Florilege F1 by up to 13.69 points, and removing the CS module drops it by up to 2.31 points in the full-data setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Tables 8 and 9: NA module removal drops CHEMDNER-CEM F1 by up to 8.25 points and CHEMDNER Fine-Grained F1 by up to 8.00 points.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables 8, 9"
+  },
+  {
+    "criteria": "The execution outcomes confirm that SCoNE outperforms the best-performing sequence labeling baseline by an average of 7.33 F1 points, with the most significant gain of approximately 20 F1 points in the 10-shot scenario across datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The execution outcomes confirm that SCoNE outperforms the best-performing generative baseline by an average of 0.58 F1 points, with the most notable gain of 2.73 F1 points on the Florilege dataset.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 7: SCoNE achieves an average improvement of 3.21 F1 points over GPT-NER and InsLLM across all three datasets, despite using the much smaller T5-large backbone (~770M vs. ~7B parameters).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 10: the dynamic sampling strategy achieves the best overall F1 performance compared to no-sampling, linear, and loss-based strategies, with gains of up to 1.86 F1 points.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 10"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 11: CS-multi outperforms CS-single on multi-type tasks (Florilege, CHEMDNER Fine-Grained), while CS-single achieves better performance than CS-multi on CHEMDNER-CEM (single entity type).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 12: SCoNE average inference time per sentence is approximately 1.90 seconds on CHEMDNER Fine-Grained, while without the CS module it is 1.46 seconds.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 12"
+  },
+  {
+    "criteria": "The execution outcomes match the standard deviation results in Table 6: SCoNE yields stable performance with standard deviations below ±1.2 across all datasets and training conditions.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  }
+]

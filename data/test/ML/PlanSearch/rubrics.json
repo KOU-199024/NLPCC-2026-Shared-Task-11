@@ -1,0 +1,464 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the motivation for searching over natural language idea space rather than directly over code.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the backtranslation experiment: GPT-4o generates 1000 attempts, passing solutions are backtranslated into natural language sketches of varying lengths, and providing these sketches significantly improves accuracy.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2, Figure 3(a)"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand the idea quality conditioning experiment: 5 ideas per problem are generated using IdeaSearch, 25 candidate solutions are sampled per idea, and problems with 0% or 100% solve rates are filtered out.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3, Figure 3(b)"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 completely to understand the full PlanSearch algorithm: first-order observations, subset creation, second-order observations, and the translation from observations to pseudocode to code.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to understand the three benchmarks used: LiveCodeBench (May 2024 to September 2024 subset), HumanEval+, and MBPP+.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Section 5.2 to check the experiment details: temperature 0.9, top-p 0.95 for all models except o1-mini (temperature 1.0, top-p 1.0), and the use of the unbiased pass@k estimator in Equation 4.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The agent has read Section 6.1 to understand the diversity score formula (Equation 1) and how pairwise code similarity is judged by GPT-4o-mini.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.1, Equation 1"
+  },
+  {
+    "criteria": "The agent has read Appendix M to understand all prompt templates used in the paper (backtranslation, repeated sampling, IdeaSearch, and all four PlanSearch prompts).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix M"
+  },
+  {
+    "criteria": "The agent has read Appendix H to understand the ablation experiments on S (maximum subset size), L (number of observation layers), and the translation pipeline steps.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The plan includes loading and accessing LiveCodeBench problems filtered to the May 2024 to September 2024 date range to avoid data contamination.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes loading HumanEval+ and MBPP+ benchmarks with their additional test cases for robust evaluation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing the Repeated Sampling baseline with few-shot prompting using the prompt in Appendix M.2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix M.2"
+  },
+  {
+    "criteria": "The plan includes implementing the IdeaSearch method as a two-stage process: first generating a natural language solution, then using that solution to generate code.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing the PlanSearch first-order observation generation step using the prompt from Appendix M.4.1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.1, Appendix M.4.1"
+  },
+  {
+    "criteria": "The plan includes creating all subsets of first-order observations with size at most S=2, resulting in l_1 = 1 + n_1 + C(n_1, 2) subsets.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.1"
+  },
+  {
+    "criteria": "The plan includes generating second-order observations from each subset by prompting the model with the original problem and the observations in each subset using the prompt from Appendix M.4.2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.2, Appendix M.4.2"
+  },
+  {
+    "criteria": "The plan includes the full translation pipeline from observations to natural language solution, fix/critique step, pseudocode, and final Python code.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.3"
+  },
+  {
+    "criteria": "The plan includes computing pass@k using the unbiased estimator (Equation 4) for all methods and models.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 4, Section 5.2"
+  },
+  {
+    "criteria": "The plan includes implementing the pairwise diversity score (Equation 1) using GPT-4o-mini to judge code similarity, sampling 40 codes for large n.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6.1, Equation 1"
+  },
+  {
+    "criteria": "The plan includes the backtranslation experiment: generating GPT-4o solutions, filtering for passing ones, and backtranslating to natural language sketches of varying detail levels.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes running experiments on all four primary models: GPT-4o-mini, GPT-4o, DeepSeek-Coder-V2, and Claude-Sonnet-3.5.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for loading and filtering LiveCodeBench to the May 2024 to September 2024 date range has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for loading HumanEval+ and MBPP+ datasets has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The Repeated Sampling baseline has been implemented using few-shot prompting with the exact system prompt from Appendix M.2: 'You are an expert Python programmer. You will be given a question (problem specification) and will generate a correct Python program that matches the specification and passes all tests. You will NOT return anything except for the program inside Markdown codeblocks.'",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix M.2"
+  },
+  {
+    "criteria": "The IdeaSearch method has been implemented as a two-stage process where the LLM is first asked to produce a natural language solution S to problem P, and a separate LLM instance is given both P and S to generate the final code.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Appendix M.3"
+  },
+  {
+    "criteria": "The IdeaSearch prompt has been implemented using the exact template from Appendix M.3, which asks the model to brainstorm a 'high-level, natural language solution' and explicitly instructs the model to 'come up with simple, creative ideas that go beyond what you would usually come up with.'",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix M.3"
+  },
+  {
+    "criteria": "The PlanSearch first-order observation generation has been implemented using the exact prompt from Appendix M.4.1: asking for 'several useful, non-obvious, and correct observations about the problem, like hints to solve the problem,' with no code returned.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1, Appendix M.4.1"
+  },
+  {
+    "criteria": "The PlanSearch second-order observation generation has been implemented using the exact prompt from Appendix M.4.2, where the model is given the problem and existing observations and asked to 'brainstorm several new, useful, and correct observations about the problem, derived from the given observations.'",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.2, Appendix M.4.2"
+  },
+  {
+    "criteria": "The subset enumeration step has been implemented to create all combinations of first-order observations with size at most S=2, generating l_1 = 1 + n_1 + C(n_1, 2) subsets from n_1 first-order observations.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1"
+  },
+  {
+    "criteria": "The second-order observation tree has been implemented with depth L=2, where each leaf C_i^1 from the first layer generates its own set of second-order observations s_i^2, and the same subset enumeration is applied again.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.2"
+  },
+  {
+    "criteria": "The observations-to-solution step has been implemented using the combining observations prompt from Appendix M.4.3, which provides the problem statement, the relevant observations, and instructs the model to quote relevant observations before each step of the solution.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.3, Appendix M.4.3"
+  },
+  {
+    "criteria": "The fix/critique step has been implemented: for each generated natural language solution, a second idea is generated by asking the LLM to criticize the current solution and produce a corrected alternative, doubling the total number of solution ideas.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.3"
+  },
+  {
+    "criteria": "The pseudocode translation step has been implemented, where each natural language solution is first translated into pseudocode before final Python code generation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.3"
+  },
+  {
+    "criteria": "The final code generation step has been implemented to translate pseudocode into Python code, with the output extracted from markdown code blocks.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.3"
+  },
+  {
+    "criteria": "All models are called with temperature 0.9 and top-p 0.95, except o1-mini which uses temperature 1.0 and top-p 1.0.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The pass@k unbiased estimator has been implemented as Equation 4: pass@k_i = 1 - C(n-c, k) / C(n, k), where n is the total number of samples and c is the number of correct samples.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 4, Section 5.2"
+  },
+  {
+    "criteria": "Generated code is validated against all test cases, and a solution is marked correct only if it passes all tests; solutions that do not follow the required formatting are marked incorrect.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The diversity score has been implemented as Equation 1: D = 1 - (sum_{i<j} S(c_i, c_j)) / C(n, 2), where S(c_i, c_j) in {0,1} is the LLM-judged pairwise similarity.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1, Section 6.1"
+  },
+  {
+    "criteria": "The diversity score evaluation uses GPT-4o-mini with the exact prompt from Appendix O.1 to judge whether two code solutions have the 'same idea,' with the model outputting only 'Yes.' or 'No.'",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix O.1, Section 6.1"
+  },
+  {
+    "criteria": "For computing diversity with large n, the implementation samples 40 codes and compares all C(40, 2) = 780 pairs instead of comparing all pairs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The backtranslation experiment has been implemented: GPT-4o generates 1000 attempts per problem, passing solutions are identified, and an LLM is prompted with the problem and code solution to produce a natural language description at varying levels of detail (e.g., 'in w words').",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Appendix M.1"
+  },
+  {
+    "criteria": "The backtranslation system prompt has been implemented with the exact text from Appendix M.1.1, asking for a 'high-level, natural language solution to the question, like an editorial' with 'NO code.'",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix M.1.1"
+  },
+  {
+    "criteria": "The implement-backtranslation-idea prompt has been implemented with the exact text from Appendix M.1.2, providing the problem and natural language solution and generating Python code inside markdown codeblocks.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix M.1.2"
+  },
+  {
+    "criteria": "The conditioning-on-idea experiment has been implemented: IdeaSearch generates 5 ideas per problem, 25 candidate solutions are sampled per idea, problems with 0% or 100% overall solve rates are filtered out, leaving 75 problems and 375 sketches.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The public test filtering mechanism has been implemented to discard code solutions that fail the provided public tests before submitting, effectively shrinking the pool n and correct count c.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix R, Section 5.2"
+  },
+  {
+    "criteria": "The Chain-of-Thought baseline has been implemented as a comparison that generates both the reasoning and the code solution in a single model response.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The ablation over S (maximum subset size) has been implemented for S in {1, 2, 3}, comparing pass@k curves using GPT-4o-mini on LiveCodeBench.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix H, Figure 27"
+  },
+  {
+    "criteria": "The ablation over L (number of observation tree layers) has been implemented for L in {1, 2, 3}, comparing pass@k curves using GPT-4o-mini on LiveCodeBench.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix H, Figure 28"
+  },
+  {
+    "criteria": "The ablation over the translation pipeline has been implemented, comparing: (1) full PlanSearch, (2) no pseudocode, (3) no fix step and no pseudocode, and (4) no solution sketch and no pseudocode.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix H, Figure 29"
+  },
+  {
+    "criteria": "The temperature sweep has been implemented, sweeping T from 0.0 to 1.2 in 0.1 increments with top-p 0.95 for Repeated Sampling and IdeaSearch.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix F, Figure 24"
+  },
+  {
+    "criteria": "The base vs. instruct model comparison has been implemented for DeepSeek-Coder-V2-Lite, Llama-3.1-8B, and Llama-3.1-70B across all three benchmarks.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix I, Figure 31"
+  },
+  {
+    "criteria": "The agentic baseline has been implemented: the model generates code, runs it on public tests, receives error feedback if it fails, and iterates up to T=10 times.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix U"
+  },
+  {
+    "criteria": "For o1-mini, the PlanSearch implementation filters prompts to remove the words 'steps', 'step', and 'quote' to reduce query refusals, and routes remaining refused queries to GPT-4o, and removes the pseudocode step.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix K"
+  },
+  {
+    "criteria": "The compute-normalized comparison has been implemented by measuring average generated tokens per completion per problem: approximately 244 for Repeated Sampling and 1,428 for PlanSearch.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Figure 17"
+  },
+  {
+    "criteria": "The Repeated Sampling baseline (pass@200) has been executed successfully on LiveCodeBench, HumanEval+, and MBPP+ for all four primary models (GPT-4o-mini, GPT-4o, DeepSeek-Coder-V2, Claude-Sonnet-3.5) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The IdeaSearch method (IS@200) has been executed successfully on LiveCodeBench, HumanEval+, and MBPP+ for all four primary models without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The PlanSearch method (PS@200) has been executed successfully on LiveCodeBench, HumanEval+, and MBPP+ for all four primary models without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The backtranslation experiment has been executed successfully on LiveCodeBench using GPT-4o-mini, with backtranslated sketches of varying lengths provided to the model.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.2, Figure 3(a)"
+  },
+  {
+    "criteria": "The conditioning-on-idea experiment has been executed successfully using GPT-4o-mini on LiveCodeBench, generating 5 ideas per problem and 25 solutions per idea.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.3, Figure 3(b)"
+  },
+  {
+    "criteria": "The diversity score computation has been executed successfully for all methods and models on LiveCodeBench, producing the correlation data in Figure 5.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 6.1, Figure 5"
+  },
+  {
+    "criteria": "The PlanSearch ablation experiments (S, L, and translation pipeline) have been executed successfully using GPT-4o-mini on LiveCodeBench.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix H, Figures 27-29"
+  },
+  {
+    "criteria": "The o1-mini experiments (Repeated Sampling, IdeaSearch, PlanSearch) have been executed successfully on LiveCodeBench.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix K, Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: PlanSearch achieves pass@200 of 77.0% on LiveCodeBench for Claude-Sonnet-3.5, outperforming Repeated Sampling@200 (55.6%) and pass@1 (40.3%).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: PlanSearch outperforms both Repeated Sampling@200 and IdeaSearch@200 across all four models (GPT-4o-mini, GPT-4o, DeepSeek-Coder-V2, Claude-Sonnet-3.5) on LiveCodeBench.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1 on HumanEval+: PlanSearch@200 achieves 98.2%, 99.5%, 99.3%, 98.5% for GPT-4o-mini, GPT-4o, DeepSeek-Coder-V2, and Claude-Sonnet-3.5 respectively.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1 on MBPP+: PlanSearch@200 achieves 91.0%, 92.2%, 92.6%, 93.7% for GPT-4o-mini, GPT-4o, DeepSeek-Coder-V2, and Claude-Sonnet-3.5 respectively.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3(a): providing a backtranslated natural language sketch to the model significantly improves accuracy on LiveCodeBench, and accuracy increases monotonically with the length of the backtranslated sketch.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3(a)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3(b): when conditioning on a specific idea/sketch in IdeaSearch, the distribution of solve rates polarizes towards 0% or 100%, whereas the unconditional distribution is more spread out.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3(b)"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: there is a strong positive correlation between the diversity score (Equation 1) and the relative gain from pass@1 to pass@200 across all methods and models on LiveCodeBench.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 for o1-mini on LiveCodeBench: PlanSearch@200 (91.3%) slightly outperforms IdeaSearch@200 (91.2%) and Repeated Sampling@200 (90.8%) at pass@200.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: even at k=10, PlanSearch with public test filtering outperforms filtered Repeated Sampling by 30 to 40 percentage points on LiveCodeBench.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes confirm the compute normalization result: PlanSearch begins to outperform Repeated Sampling when approximately 10,000 tokens per problem are expended, given that Repeated Sampling uses ~244 tokens per completion and PlanSearch uses ~1,428 tokens per completion.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix D, Figure 17"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 27: ablations with S=1, S=2, and S=3 show similar performance, with S=1 or S=2 slightly outperforming S=3.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix H, Figure 27"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 28: ablations with L=1, L=2, L=3 show that increasing L improves pass@k for k above 50, with L=2 chosen to balance performance and compute cost.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix H, Figure 28"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 29: the full PlanSearch pipeline (with pseudocode and fix step) achieves the highest pass@k, while removing the solution sketch results in the lowest performance.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix H, Figure 29"
+  },
+  {
+    "criteria": "The execution outcomes confirm the base vs. instruct model finding: base models (DeepSeek-Coder-V2-Lite, Llama-3.1-8B, Llama-3.1-70B) exhibit higher pass@k than their instruct counterparts for sufficiently large k on HumanEval+ and MBPP+.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix I, Figure 31"
+  },
+  {
+    "criteria": "The execution outcomes match Appendix E results: IdeaSearch outperforms Chain-of-Thought (CoT) prompting on LiveCodeBench, likely due to splitting the solution sketch and code generation across two model responses.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix E, Figures 18-20"
+  }
+]

@@ -1,0 +1,422 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the probabilistic analysis of aggregation accuracy, including the setup of the support set Y, probability distribution over answers, and the distinction between majority voting, PRM Vote, and PRM Max aggregation methods.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand the core EPIC framework, including the utility-driven optimization, contrastive representation learning with probability regularization, and the inference-time matching procedure.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Appendix B completely to understand the full specification of the universe of methods M, including all reasoning strategies (CoT-G, Best-of-N, Beam Search, MCTS), aggregation methods (MV, PVM, PVL, PMM, PML), temperature settings, and candidate solution sizes.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Section 5 completely to understand the experimental setup: the MATH training set (7,500 problems), MATH500 test set (500 samples), Qwen2.5-Math-7B-Instruct as the generation model, and math-shepherd-mistral-7b-prm as the reward model.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Table 1 (main results on MATH500) to understand the accuracy and token count benchmarks for all individual reasoning methods and ensemble baselines, including the key result that EPIC-0.25 achieves 86.4% accuracy with 1859.2 tokens.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the transferability experiments: (a) GSM8K transfer results and (b) multi-model results with Qwen2.5-Math-1.5B and 7B models, including the cost proxy as parameter count times token count.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Appendix C to understand the four baseline methods (RA, Offline Ada-BoK, DRA-λ, CL-λ) and the complete experimental results in Table 4, including all λ values and the comparison structure.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Appendix D to understand all ablation studies: representation dimension d ∈ {16, 32, 64, 128}, trade-off parameter λ, alternative utility function (PMU), and the code generation experiments on LiveCodeBench.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The plan includes constructing the full universe of 81 reasoning methods by combining: Best-of-N (4 N values × 3 temperatures × 5 aggregations = 60), Beam Search (2 N values × 5 aggregations = 10), MCTS (2 N values × 5 aggregations = 10), and CoT-G (1).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B, Table 3"
+  },
+  {
+    "criteria": "The plan includes running all 81 reasoning methods on the MATH training set (7,500 problems) to generate the dataset of accuracy signals a_{i,j} and token cost c_{i,j} for each (method, question) pair.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes computing the empirical PRM statistics (p_k, μ_k, σ_k) by generating 80 solutions per question (5 runs of N=16) for each core configuration to enable the probability-bound-based regularizer targets.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing the utility function u(a_ij, c_ij) = λ*a_ij + (1-λ)*(1-c_ij) with normalized cost c_ij obtained by applying φ and dividing by the maximum transformed cost across all methods.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The plan includes implementing the EPIC two-tower model: a sentence embedding using all-MiniLM-L6-v2 (D=384) followed by a lightweight MLP g_θ mapping R^D to R^d, plus trainable method embedding vectors v_i ∈ R^d.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Discussion 1"
+  },
+  {
+    "criteria": "The plan includes implementing the InfoNCE contrastive loss (Equation 6) with positive method identified as the argmax of utility u(a_ij, c_ij) for each question.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The plan includes implementing the probability-bound regularization loss (Equation 7) using the theoretical bounds from Section 3 as target values for method pairs differing only in N.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The plan includes training EPIC with the combined loss (Equation 8) using hyperparameter τ=10^-3, embedding dimension d=64, and λ ∈ {0.0, 0.25, 0.5, 0.75, 1.0}.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The plan includes implementing all four baseline methods: RA (random allocation), Offline Ada-BoK (individual-question-level adaptation), DRA-λ (distributional random allocation), and CL-λ (two-layer classifier on pretrained sentence transformer with cross-entropy loss).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes evaluating all methods on MATH500 (500 samples) with accuracy measured via automatic grading and average token count measured with max_new_tokens=2048.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes the transferability experiment: training EPIC on MATH and testing on GSM8K (Table 2a), and the multi-model experiment with augmented universe including Qwen2.5-Math-1.5B methods and cost proxy = parameter count × tokens (Table 2b).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code correctly implements the majority voting accuracy lower bound from Theorem 3.1 (Equation 1a): Pr(Majority_Vote picks y_1) ≥ 1 - Σ_{k≥2} exp(-N(√p_1 - √p_k)^2) when p_1 > p_k for all k.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Theorem 3.1, Equation 1a"
+  },
+  {
+    "criteria": "The code correctly implements the majority voting accuracy upper bound from Theorem 3.1 (Equation 1b): Pr(Majority_Vote picks y_1) ≤ exp(-N(√p_k - √p_1)^2) when p_1 < p_k for some k.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Theorem 3.1, Equation 1b"
+  },
+  {
+    "criteria": "The code correctly implements the PRM Vote (score sum) accuracy lower bound from Theorem 3.2 (Equation 2a), including the convex infimum optimization solved via Newton's method.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Theorem 3.2, Equation 2a"
+  },
+  {
+    "criteria": "The code correctly implements the PRM Vote (score sum) accuracy upper bound from Theorem 3.2 (Equation 2b), including the infimum optimization over t > 0.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Theorem 3.2, Equation 2b"
+  },
+  {
+    "criteria": "The code correctly implements the PRM Max accuracy lower bound from Theorem 3.3 (Equation 3a) using the CDF of standard normal Φ_k(t) and computing the infimum over t ∈ R via one-dimensional numerical optimization.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Theorem 3.3, Equation 3a"
+  },
+  {
+    "criteria": "The code correctly implements the PRM Max accuracy upper bound from Theorem 3.3 (Equation 3b) using the one-dimensional infimum form (1 - p_k[1-Φ_k(t)])^N + 1 - (1 - p_1[1-Φ_1(t)])^N.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Theorem 3.3, Equation 3b"
+  },
+  {
+    "criteria": "The code implements the full data generation pipeline: for each of the 81 methods and each training question, running the method to record binary accuracy a_{i,j} (or mean over 5 seeds for stochastic methods) and token count c̃_{i,j}.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code implements the cost normalization step: applying the non-decreasing function φ to raw token counts c̃_{i,j} and dividing by the maximum transformed cost across all methods i' ∈ M to obtain c_{i,j} ∈ [0, 1].",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation after Eq 4"
+  },
+  {
+    "criteria": "The code implements the utility function u(a_{i,j}, c_{i,j}) = λ * a_{i,j} + (1-λ) * (1 - c_{i,j}) as defined in Equation 5, producing a value in [0, 1], with λ as a configurable trade-off parameter.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code uses the all-MiniLM-L6-v2 sentence embedding model (22.6M parameters, 80MB VRAM, D=384) to extract feature vectors f_j for each question x_j.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.4, Discussion 1"
+  },
+  {
+    "criteria": "The code implements the lightweight MLP embedding network g_θ: R^D → R^d with d ≪ D, mapping question feature vectors to d-dimensional embeddings, with d=64 as the default configuration.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code implements trainable embedding vectors v_i ∈ R^d for each of the M=81 reasoning methods, initialized and jointly optimized with the question embedding network θ during training.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code correctly implements the InfoNCE contrastive loss (Equation 6): for each question j, the positive method m+(x_j) = argmax_{i ∈ M} u(a_{i,j}, c_{i,j}) is identified, and the loss is the negative log softmax of the similarity s(g_θ(f_j), v_{m+}) over all methods.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The similarity function s used in the contrastive loss is either dot product similarity or negative 2-norm, consistently applied in both the contrastive loss and the regularization term.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code implements the empirical estimation of PRM statistics: generating 80 solutions per question (5 independent runs of N=16 with different seeds), then computing p̂_k, μ̂_k, σ̂_k from the distribution of distinct answers and their PRM scores.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code implements the logic to identify whether the lower or upper probability bound (Theorems 3.1–3.3) is active for each question-method pair, and assigns the corresponding bound value as target^j_i for the regularization term, falling back to empirical accuracy for small N.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code correctly implements the regularization loss (Equation 7): for each question j and each pair (i, i') of methods differing only in N, the squared difference between the ratio of similarities and the ratio of target values is computed.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code implements the combined training objective (Equation 8): minimizing ℓ_contrastive + τ * ℓ_reg over θ and all v_i, with regularization weight τ=10^-3.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The code implements all four reasoning strategies with integration from the OpenR framework: greedy CoT-G, Best-of-N sampling with configurable temperature, Beam Search (generating N/m steps per expansion with PRM scoring, maximum 50 beam expansions), and MCTS with UCB selection policy.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code implements all five aggregation methods for multi-candidate reasoning: MV (majority vote by answer frequency), PVM (sum of per-generation minimum PRM step scores), PVL (sum of last-step PRM scores), PMM (max of per-generation minimum PRM step scores), PML (max of last-step PRM scores).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code implements the universe M of 81 methods with the correct composition: 60 Best-of-N variants (N ∈ {2,4,8,16}, temp ∈ {0.4,0.7,1.0}, 5 aggregations), 10 Beam Search variants (N ∈ {2,4}, temp=0.5, 5 aggregations), 10 MCTS variants (N ∈ {2,4}, temp=0.5, 5 aggregations), and 1 CoT-G.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B, Table 3"
+  },
+  {
+    "criteria": "The code implements the RA (Random Allocation) baseline that randomly selects a reasoning method from M for each test question at inference time.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code implements the Offline Ada-BoK baseline adapted for individual-question-level operation (without batch context), using hidden representations to predict if more computation improves response quality.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code implements the DRA-λ (Distributional Random Allocation) baseline: during training, label each question with the highest λ-adjusted utility method; at inference, randomly sample from the observed training distribution of method selections.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code implements the CL-λ (multi-class classifier) baseline: a two-layer classifier on top of the frozen all-MiniLM-L6-v2 sentence transformer, trained with standard cross-entropy loss to predict the utility-optimal method, with the same λ-based labeling as EPIC.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code implements the EPIC inference procedure: pass the test question through all-MiniLM-L6-v2 and g_θ to obtain the embedding, then select m* = argmax_{i ∈ M} s(g_θ(f_new), v_i) and deploy that method to answer the question.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The code implements automatic grading of model outputs, using the grading function from Lightman et al. [2023b] (MATH evaluation suite) to extract and verify the boxed final answer against the ground truth.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code implements the augmented universe for the multi-model transferability experiment: adding 81 new methods based on Qwen2.5-Math-1.5B-Instruct to the original 81 Qwen2.5-Math-7B methods, and computing the cost proxy as (parameter count in billions) × (token count).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2.1"
+  },
+  {
+    "criteria": "The code implements the code generation experiment on LiveCodeBench: using Qwen2.5-Coder-3B-Instruct and 7B-Instruct, a simplified universe without aggregation methods (τ=0), temperatures {0.0, 0.2, 0.6}, N ∈ {1,2,4,8,16}, and the pass@k evaluation metric.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.4"
+  },
+  {
+    "criteria": "The code for generating the full training dataset (running 81 methods on 7,500 MATH training questions) has been executed successfully, producing accuracy a_{i,j} and token count c_{i,j} for each (method, question) pair.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The code for generating the PRM statistics dataset (80 solutions per question per core configuration) has been executed successfully, producing the estimated parameters p̂_k, μ̂_k, σ̂_k required for the regularizer targets.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The EPIC training script has been executed successfully on the MATH training set with default configuration (d=64, τ=10^-3, λ ∈ {0.25, 0.5, 0.75, 1.0}) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "All individual reasoning methods (CoT-G, Best-of-2/4/8/16, MCTS, Beam-search) have been evaluated on MATH500 without errors, recording accuracy and average token count.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "All ensemble baselines (RA, Offline Ada-BoK, DRA-λ, CL-λ) and all EPIC-λ variants have been evaluated on MATH500 without errors at all λ ∈ {0.0, 0.25, 0.5, 0.75, 1.0}.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.1, Appendix C"
+  },
+  {
+    "criteria": "The EPIC transferability experiment on GSM8K has been executed successfully: EPIC trained on MATH (d=64, λ=0.25) tested on GSM8K, comparing against CoT-G, Best-of-2/4/8/16.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.2.2, Table 2a"
+  },
+  {
+    "criteria": "The multi-model transferability experiment with Qwen2.5-Math-1.5B and 7B has been executed successfully on MATH500 with the augmented 162-method universe, comparing EPIC(λ=0.25) and EPIC(λ=1.0) against individual model baselines.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.2.1, Table 2b"
+  },
+  {
+    "criteria": "The ablation study on representation dimension d ∈ {16, 32, 64, 128} has been executed on MATH500 with λ=0.25, producing accuracy and average token count for each dimension.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix D.1, Table 5"
+  },
+  {
+    "criteria": "The ablation study on trade-off parameter λ ∈ {0.0, 0.25, 0.5, 0.75, 1.0} has been executed on MATH500 with d=64, confirming the monotone accuracy-cost trade-off.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix D.2, Table 6"
+  },
+  {
+    "criteria": "The utility function ablation (PMU: a_{i,j}^λ × (1-c_{i,j})^{1-λ}) has been executed for λ ∈ {0.25, 0.5, 0.75} on MATH500 with d=64, comparing against the original EPIC.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix D.3, Table 7"
+  },
+  {
+    "criteria": "The code generation experiments on LiveCodeBench with Qwen2.5-Coder-3B-Instruct and 7B-Instruct have been executed without errors, comparing EPIC (λ=0.25, λ=1.0) against CoT-G and Best-of-N baselines.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix D.4, Table 8"
+  },
+  {
+    "criteria": "The execution results for Table 1/4 match the paper: EPIC-0.25 achieves approximately 86.4% accuracy with ~1859 tokens, and EPIC-1.0 achieves approximately 89.4% accuracy with ~6922 tokens on MATH500.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1, Table 4"
+  },
+  {
+    "criteria": "The execution results match Table 4: EPIC-λ consistently outperforms DRA-λ and CL-λ at every λ setting in terms of the accuracy-token-count trade-off (higher accuracy or lower token count at comparable accuracy).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution results match the paper: at λ=0.25, EPIC achieves approximately 5x reduction in token count compared to Best-of-16 (1859.2 vs 10036.2 tokens) while matching its accuracy level (~86.4% vs 86.8%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The execution results match Table 1: individual baselines CoT-G (83.2%, 620 tokens), Best-of-4 (86.2%, 2499 tokens), Beam-search (85.2%, 2638 tokens), MCTS (85.4%, 4338 tokens), and the upper bound under M of 91.2% are approximately reproduced.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution results match Table 2a: EPIC trained on MATH and evaluated on GSM8K achieves approximately 95.0% accuracy with ~2085 tokens, outperforming Best-of-16 (94.2%, ~5019 tokens).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2a"
+  },
+  {
+    "criteria": "The execution results match Table 2b: EPIC (λ=0.25) achieves 86.2% accuracy at cost 8047.8, matching 7B-Best-of-4 (86.2%, cost 17495.8) at over 50% lower cost; EPIC (λ=1.0) achieves 89.0% at cost 35705.4, outperforming 7B-Best-of-16 (86.8%, cost 70253.4).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2b"
+  },
+  {
+    "criteria": "The execution results match Figure 2: EPIC instances with varying λ lie on the Pareto frontier of the accuracy-token-count trade-off, with all EPIC points dominating or lying above the cloud of individual methods in the universe M.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution results match Table 5: as d increases from 16 to 128, accuracy shows a general upward trend (85.6%, 85.4%, 86.4%, 86.2%) while average token count tends to flatten or slightly decrease at λ=0.25.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution results match Table 6: as λ increases from 0 to 1 with d=64, accuracy increases monotonically from 85.8% to 89.4% and average token counts increase from 892.9 to 6921.7.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution results match Table 7: EPIC consistently outperforms the PMU variant at λ ∈ {0.25, 0.5, 0.75}, with EPIC achieving higher accuracy and/or lower token counts than PMU at each setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution results match Table 8: for code generation on Qwen2.5-Coder-7B, EPIC (λ=1.0) achieves ~61.88% accuracy with ~7013 tokens (outperforming Best-of-16 at 58.71% with 8034 tokens); for 3B, EPIC (λ=1.0) achieves ~48.01% exceeding Best-of-16 (46.38%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8, Appendix D.4"
+  }
+]

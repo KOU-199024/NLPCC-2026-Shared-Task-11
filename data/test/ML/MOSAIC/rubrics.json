@@ -1,0 +1,362 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the two-phase dataset generation process: comprehensive generation followed by stratified sampling.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the four content generation tasks: marketing email, product review, FAQ entry, and internal memo.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the eight product/service descriptions used as prompt context.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to understand all 21 constraints across five categories (Formatting, Lexical, Syntactic, Semantic, Business/Legal).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the four evaluation metrics: SCC, PCC, PosCC, and PA (Prompt-level Accuracy).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand that Formatting, Lexical, and Syntactic constraints use rule-based functions, while Semantic and Business/Legal constraints use an LLM-as-a-judge approach.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Appendix D completely to understand the specific evaluation function implementations for each constraint category.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The agent has read Section 4 to understand which seven models are evaluated: Llama 3.3 70B, Llama 3.1 8B, Deepseek-R1 8B, Qwen3 8B, Claude 3.7 Sonnet, Gemini Flash 2.5, and Mixtral-8x-7b.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes building a prompt template using the system/user/assistant header structure defined in Section 3.1, combining task description, constraint list, and product/service description.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing all 21 constraints grouped into the five categories: Formatting (6), Lexical (5), Syntactic (2), Semantic (5), and Business/Legal (3).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The plan includes generating the comprehensive dataset by pairing all task and product/service combinations with 1 to 20 constraints drawn without replacement from the 21-constraint pool.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes permutation control: for constraint sets of size 3 or fewer, generate all permutations; for larger sets, generate multiple random shuffles.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes stratified sampling to extract 4,000 prompts from the comprehensive dataset, achieving balanced distribution across constraint list sizes (1–20), ranks, tasks, and product/service types.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing all four evaluation metrics: SCC (Equation 1), PCC (Equation 2), PosCC (Equation in Section 3.2), and PA (Equation 3).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing rule-based evaluation functions using NLTK for all Formatting, Lexical, and Syntactic constraints.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Appendix D"
+  },
+  {
+    "criteria": "The plan includes implementing an LLM-as-a-judge pipeline using GPT-4o-mini to evaluate Semantic and Business/Legal constraints on a 0–10 scale.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Appendix D.4"
+  },
+  {
+    "criteria": "The plan includes evaluating all seven LLMs: Llama 3.3 70B, Llama 3.1 8B, Deepseek-R1 8B, Qwen3 8B, Claude 3.7 Sonnet, Gemini Flash 2.5, and Mixtral-8x-7b.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes computing Pearson correlation coefficients on PCC values to identify synergistic and conflicting constraint pairs.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The prompt template is implemented with the exact structure: system header containing the task description and constraint list, followed by a user header containing the product/service description.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "All four text generation tasks are implemented as described in Table 2: marketing email, product review, FAQ entry, and internal memo.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "All eight product/service descriptions are implemented as specified in Table 3 (Smartphone, Wireless Earbuds, Savings Account, Credit Card, Meditation App, Fitness Monitor, Meals Subscription, News Streaming).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "All 21 constraints are implemented with their exact descriptions from Table 4, including dynamic placeholder fields such as <SelectedTone> and <kw1, kw2, ...>.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The tone options (Empathetic and apologetic, Formal and authoritative, Enthusiastic and inspiring, Neutral and objective) and per-product keyword sets from Appendix B are implemented for dynamic placeholder population.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The comprehensive dataset generation is implemented to produce all task × product/service pairings with 1 to 20 constraints drawn without replacement, yielding a large initial dataset (~765,472 prompts).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "Permutation control is implemented: all permutations are generated for constraint sets of size ≤3, while multiple random shuffles are generated for larger constraint sets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "Stratified sampling is implemented to extract a final balanced subset of 4,000 prompts, sampling uniformly across constraint list sizes (1–20), constraint ranks, tasks, and product/service types.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The Single Constraint Compliance (SCC) metric is implemented as per Equation 1: SCC_c = (sum of is_followed(c, r) for all r in R) / |R|, computed independently for each constraint c.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The Pairwise Constraint Compliance (PCC) metric is implemented as per Equation 2: PCC_{c_i, c_j} = (sum of is_followed(c_i, c_j, r) for all r in R) / |R|, for each pair of distinct constraints.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The Position-based Constraint Compliance (PosCC) metric is implemented as per the formula in Section 3.2: PosCC_p = (sum of is_followed(c_{r,p}, r) for all r in R_p) / |R_p|, where R_p is the set of responses to prompts with at least p constraints.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The Prompt-level Accuracy (PA) metric is implemented as per Equation 3: PA_r = (sum of is_followed(c, r) for all c in C_r) / |C|, measuring the fraction of constraints satisfied per response.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The paragraph count evaluation function is implemented by splitting text on 1+ newline characters and comparing the resulting count against the constraint's specified range.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The paragraph length evaluation function is implemented by isolating paragraphs and counting sentences per paragraph using regular expressions to verify they fall within the target range (2–4 sentences).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The list formatting evaluation function is implemented by checking whether each line of the text begins with a dash (-), returning the proportion of compliant lines as the score.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The <BOC> and <EOC> token presence evaluation is implemented as a binary check for the exact token at the beginning or end of the generated content, respectively.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The JSON format evaluation function is implemented by attempting to parse the response as a JSON object, assigning a perfect score on success and a partial score based on the severity of the parsing error on failure.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The Flesch Reading Ease evaluation function is implemented using the textstat library to compute the score and assigns a soft compliance score based on how closely the result matches the target range of 70–80.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The keyword usage evaluation function is implemented by scanning the text for presence or absence of specified keywords, returning the fraction of required keywords found (or forbidden keywords correctly omitted).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The custom variable evaluation function is implemented by scanning the text to confirm the presence of the {{FirstName}} variable string.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The sentence length variation evaluation function is implemented using the NLTK English sentence tokenizer to segment text, then computing the standard deviation of word counts per sentence as the compliance score.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.3"
+  },
+  {
+    "criteria": "The maximum sentence length evaluation function is implemented by evaluating each sentence individually against a 25-word limit, returning the proportion of sentences that satisfy the constraint.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.3"
+  },
+  {
+    "criteria": "The LLM-as-a-judge pipeline is implemented using GPT-4o-mini, prompting it with a system prompt defining its role as an expert writing coach and a user prompt containing the passage, rubric name, and description, requiring JSON output with 'reasoning' and 'score' keys.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix D.4, D.4.1"
+  },
+  {
+    "criteria": "Evaluation rubrics for all seven Semantic and Business/Legal constraints are implemented as described in Appendix D.4.2, with dynamic placeholders such as {product_description} and {tone} properly populated.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.4.2"
+  },
+  {
+    "criteria": "The binary conversion of all fractional compliance scores is implemented using the threshold of 0.5: scores < 0.5 map to 0 (non-compliant) and scores ≥ 0.5 map to 1 (compliant).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The model evaluation pipeline is implemented for all seven LLMs: Llama 3.1 8B and Llama 3.3 70B via HuggingFace TGI with Temperature=1.0; Deepseek-R1 8B and Qwen3 8B via Ollama with Q4_K_M quantization; Claude 3.7 Sonnet and Gemini Flash 2.5 via proprietary APIs with default settings; Mixtral-8x-7b via HuggingFace TGI.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "Pearson correlation coefficient computation is implemented on PCC measurements for each model to identify statistically significant synergistic and conflicting constraint pairs (|r| > 0.2, p < 0.05).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The dataset generation pipeline has been executed successfully, producing the initial comprehensive dataset and the final 4,000-prompt stratified subset.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "All seven models have been evaluated on the 4,000-prompt MOSAIC dataset and responses have been collected successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "SCC scores have been computed for all 21 constraints across all seven models and are available for analysis.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "PCC values and their Pearson correlations have been computed for all constraint pairs across all seven models.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "PosCC analysis has been executed to compute constraint compliance as a function of constraint rank position for all seven models.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Prompt-level compliance (PA) by number of constraints has been computed and visualized for all models.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The SCC results match Table 5: near-perfect compliance (≥0.99) for Avoid contradictions, Clear purpose, and Use positive language across most models; low compliance for Flesch reading ease 70-80 (0.42–0.80) and Avoid unsubstantiated superlatives (0.66–0.79).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The SCC results match Table 5 for the Structure body into lists constraint: Llama models achieve near-perfect compliance (0.97–0.99), while Qwen3 8B achieves 0.34 and Deepseek-R1 8B nearly completely fails (0.07).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The category-level SCC results match Table 6: Syntactic constraints achieve the highest compliance across all models (≥0.93), while Formatting constraints show the most variance (0.77–0.94) driven by Structure body into lists failures.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The positional compliance analysis matches Figure 2: Llama, Qwen3, and Deepseek models exhibit a primacy effect (higher compliance for earlier constraints), while Mixtral, Claude, and Gemini exhibit a recency effect.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The prompt-level compliance results match Figure 3: Qwen3 leads for prompts with 1–6 constraints; all models show a distinct compliance drop when the number of constraints exceeds 15; reasoning models (Deepseek-R1, Qwen3) show more pronounced degradation at high constraint counts.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The pairwise correlation results match the reported findings: a consistent negative correlation between Flesch reading ease 70-80 and Use given keywords is confirmed across models (e.g., r=-0.278 for Llama 3.3 70B, r=-0.320 for Mixtral, r=-0.337 for Qwen3).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables 7-13, Section 4.2"
+  },
+  {
+    "criteria": "The pairwise correlation results match Table 13: for Deepseek-R1 8B, a strong positive correlation between Clear purpose and Use unambiguous language is confirmed (r=0.866).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 13"
+  },
+  {
+    "criteria": "The pairwise correlation results match Table 9: for Qwen3 8B, a strong positive correlation between Keep paragraphs short and Keep body short (r=0.783) and a strong negative correlation between Include <BOC> token and Respond in JSON (r=-0.531) are confirmed.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The pairwise correlation results match Table 12: for Mixtral-8x-7B, Use given tone shows a web of positive correlations with Clear purpose (r=0.525), Avoid contradictions (r=0.548), Use positive language (r=0.640), and Use unambiguous language (r=0.565).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 12"
+  }
+]

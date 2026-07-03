@@ -1,0 +1,440 @@
+[
+  {
+    "criteria": "The agent has read the Introduction to understand the iterative attractor algorithm concept: starting from a seed gene, it converges to a ranked gene co-expression signature.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 1"
+  },
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the five main steps of the CASCC algorithm: (1) graph-based initial clustering, (2) DEG selection as seeds, (3) adaptive attractor run and feature extraction, (4) determining K, (5) K-means with attractor-based initialization.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand the two evaluation dataset collections (15 benchmark datasets and 19 Tabula Sapiens datasets) and the evaluation metrics used.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand the comparative results of CASCC versus six baseline methods across multiple datasets and metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Figure 1a to understand the overview of the CASCC clustering pipeline.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 1a"
+  },
+  {
+    "criteria": "The agent has read Figure 1b to understand ARI performance of CASCC and six baselines on the 15 benchmark datasets, noting CASCC's 34% improvement over SC3.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 1b"
+  },
+  {
+    "criteria": "The agent has read Figure 1c to understand ARI performance of CASCC and five baselines (SIMLR excluded) on the 19 large-scale Tabula Sapiens datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Figure 1c"
+  },
+  {
+    "criteria": "The agent has read Supplementary Table S1 to check the identifiers, tissue sources, and cell counts of the 15 benchmark scRNA-seq evaluation datasets.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Supplementary Table S1"
+  },
+  {
+    "criteria": "The agent has read Supplementary Table S2 to check the identifiers and sizes of the 19 Tabula Sapiens organ datasets (ranging from 5000 to 30000 cells).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Supplementary Table S2"
+  },
+  {
+    "criteria": "The plan includes the overall CASCC R package architecture, covering the five-step pipeline, data loading utilities, baseline wrappers, and evaluation metric functions.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes downloading and loading the 15 evaluation datasets as SingleCellExperiment objects from the hemberg-lab scRNA-seq datasets repository.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes downloading and loading the 19 Tabula Sapiens human organ datasets from the figshare repository.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes implementing the initial low-computational-complexity graph-based clustering step using Seurat as the first step of CASCC.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes selecting top-ranked differentially expressed genes (DEGs) from each initial cluster to serve as features and as potential seeds for the adaptive attractor algorithm.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes implementing the adaptive attractor algorithm that takes seed genes, iteratively converges, and outputs a ranked list of co-expressed genes.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes extracting the top co-expressed genes from each resulting attractor to serve as additional features in the feature-selected expression matrix.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes determining the final number of clusters K based on the attractor output.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes implementing K-means clustering on the feature-selected expression matrix, using cells with the highest expression levels of attractors as the initial cluster centers.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes wrappers or scripts to run all six baseline methods (CIDR, RaceID3, SC3, Seurat V4, SIMLR, TSCAN) on the evaluation datasets.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes computing ARI, AMI, and NMI metrics to compare clustering results against ground-truth cell type labels.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes computing the absolute log-modulus and deviation score metrics to evaluate accuracy of estimating the number of cell types.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes computing the average silhouette width (ASW) on 2D embeddings produced by each method.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes a parallel computing option to reduce the computation time of CASCC.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes a Wilcoxon test to assess statistical significance of CASCC's ARI improvement over each baseline method.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Supplementary Table S4"
+  },
+  {
+    "criteria": "The code for loading the 15 evaluation datasets as SingleCellExperiment objects from the hemberg-lab repository has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for loading the 19 Tabula Sapiens organ datasets from figshare has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for data preprocessing (e.g., normalization and log transformation of the raw count matrix) prior to clustering has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for the initial graph-based clustering step using Seurat V4 (e.g., FindNeighbors and FindClusters) as step 1 of CASCC has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for identifying and selecting top-ranked differentially expressed genes (DEGs) from each initial cluster as candidate features and seeds has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for the adaptive attractor algorithm — starting from each seed gene, iteratively computing co-expression, and converging to a ranked gene signature — has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for the iterative convergence mechanism of the adaptive attractor algorithm, ensuring it terminates and outputs a stable ranked gene list, has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for selecting the top co-expressed genes from each attractor output to augment the feature set for downstream clustering has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for constructing the feature-selected expression matrix by combining top DEGs and top attractor genes has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for determining the final number of clusters K based on the attractor algorithm output (e.g., the number of distinct attractors found) has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for K-means clustering performed on the feature-selected expression matrix has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for selecting initial K-means cluster centers as the cells with the highest expression levels of each attractor has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for computing dimensionality reduction (PCA) as part of the preprocessing pipeline for CASCC has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 1"
+  },
+  {
+    "criteria": "The code for generating 2D embeddings (t-SNE or UMAP) for visualization and ASW evaluation has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for computing the Adjusted Rand Index (ARI) between predicted cluster labels and ground-truth cell type labels has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for computing Adjusted Mutual Information (AMI) between predicted and true labels has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for computing Normalized Mutual Information (NMI) between predicted and true labels has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for computing the absolute log-modulus metric to evaluate accuracy of the estimated number of cell types has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for computing the deviation score to evaluate accuracy of the estimated number of cell types has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for computing the average silhouette width (ASW) on 2D embeddings has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for running the Wilcoxon signed-rank test to compare CASCC's ARI scores with those of each baseline method has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Supplementary Table S4"
+  },
+  {
+    "criteria": "The code for running the CIDR baseline method on the evaluation datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for running the RaceID3 baseline method on the evaluation datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for running the SC3 baseline method on the evaluation datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for running the Seurat V4 baseline method on the evaluation datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for running the SIMLR baseline method on the 15 small evaluation datasets (not applied to large datasets) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for running the TSCAN baseline method on the evaluation datasets has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for the parallel computing option in CASCC that reduces computational time has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The CASCC method has been packaged as an R package with proper exported functions callable by users.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 1"
+  },
+  {
+    "criteria": "The code for CASCC has been executed successfully on all 15 benchmark evaluation datasets without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for all six baseline methods (CIDR, RaceID3, SC3, Seurat V4, SIMLR, TSCAN) has been executed on all 15 benchmark datasets without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for CASCC has been executed on all 19 large-scale Tabula Sapiens datasets without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The code for the five applicable baseline methods (CIDR, RaceID3, SC3, Seurat V4, TSCAN; SIMLR excluded) has been executed on all 19 Tabula Sapiens datasets without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The ARI, AMI, and NMI scores for all methods on the 15 benchmark datasets have been computed and recorded.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The absolute log-modulus and deviation score for the estimated number of clusters by all methods have been computed and recorded.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Supplementary Table S5"
+  },
+  {
+    "criteria": "The ASW values for 2D embeddings produced by each method have been computed and recorded.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Supplementary Figure S2"
+  },
+  {
+    "criteria": "The Wilcoxon test comparing CASCC's ARI scores against each baseline across the 15 datasets has been executed.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Supplementary Table S4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 1b: CASCC achieves the highest median ARI on the 15 benchmark datasets compared to all six baseline methods.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 1b"
+  },
+  {
+    "criteria": "The execution outcomes match the reported 34% improvement in mean ARI of CASCC over SC3 (the second-best method) on the 15 benchmark datasets.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The execution outcomes match Supplementary Figure S1: CASCC is the top performer on the AMI metric across the 15 benchmark datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Supplementary Figure S1"
+  },
+  {
+    "criteria": "The execution outcomes match Supplementary Figure S1: CASCC is the top performer on the NMI metric across the 15 benchmark datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Supplementary Figure S1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 1c: CASCC achieves the best ARI performance on the 19 large-scale Tabula Sapiens datasets compared to the five applicable baseline methods.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 1c"
+  },
+  {
+    "criteria": "The execution outcomes match Supplementary Table S4: CASCC achieves statistically significant ARI differences compared to all six baseline methods as determined by the Wilcoxon test.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Supplementary Table S4"
+  },
+  {
+    "criteria": "The execution outcomes match Supplementary Table S5: CASCC has the smallest absolute log-modulus value among all methods, indicating the most accurate estimation of the number of cell types.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Supplementary Table S5"
+  },
+  {
+    "criteria": "The execution outcomes match Supplementary Table S5: CASCC has the smallest absolute deviation among all methods in estimating the number of cell types.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Supplementary Table S5"
+  },
+  {
+    "criteria": "The execution outcomes match Supplementary Table S5: SC3 has the highest mean absolute deviation value in large datasets, indicating it significantly overestimates the number of cell types.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Supplementary Table S5"
+  },
+  {
+    "criteria": "The execution outcomes match Supplementary Figure S2: CASCC and Seurat achieve much higher ASW values than the other methods on 2D embeddings, indicating better cluster separation and cohesion.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Supplementary Figure S2"
+  },
+  {
+    "criteria": "The execution outcomes confirm that SIMLR encounters out-of-memory errors when applied to the large-scale Tabula Sapiens datasets (at least 400 GB memory), consistent with its exclusion from the large-dataset comparison.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The execution outcomes match Supplementary Table S6: the computational complexity of CASCC is at a reasonable level compared to the other methods.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Supplementary Table S6"
+  }
+]

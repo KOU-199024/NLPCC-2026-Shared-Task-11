@@ -1,0 +1,386 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the background on cellular sheaves (Definitions 2.1–2.3), the sheaf Laplacian (Equation 2), and the NSD update rule (Equation 3), as well as cooperative GNNs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand why undirected SNNs cannot achieve full cooperative behavior (Proposition 3.1) and how directed cellular sheaves (Definition 3.2) and their in- and out-degree Laplacians (Definition 3.3) address this limitation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand the CSNN construction: normalized in/out-degree Laplacians, the CSNN layer update rule (Equation 6), and the efficient flat vector bundle implementation (Equations 7 and 8).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the theoretical guarantees: cooperative behavior (Proposition 4.1), 2t-hop receptive field per layer (Proposition 4.2), and selective long-range communication while ignoring intermediate nodes (Proposition 4.3).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 6.1 and Figure 5 to understand the NeighborsMatch over-squashing experiment: binary trees of depth r from 2 to 8, baselines (GCN, GIN, GAT, GGNN), and CSNN achieving 100% accuracy across all r.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.1, Figure 5"
+  },
+  {
+    "criteria": "The agent has read Table 6 in Appendix C to check the NeighborsMatch hyperparameter configuration: sheaf dimension 2, layers r+1, hidden channels 32, GNN layers r+1, GNN dimension 32, no dropout, identity activation, left/right weights true, layer normalization true.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 6, Appendix C"
+  },
+  {
+    "criteria": "The agent has read Section 6.2 to understand the node classification experimental setup: seven Platonov et al. (2023) datasets (Table 1), four Pei et al. (2020) datasets (Table 2), 10 fixed splits, baselines, and metrics (AUROC vs. accuracy).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.2, Table 1, Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 5 in Appendix C to understand the hyperparameter search grid for heterophilic node classification: sheaf dimension 3–5, layers 2–5, hidden channels 32/64, GNN layers 0–5, GNN dimension 32/64, dropout 0.2, input dropout 0.2, 2000 epochs, GELU activation, learning rate 0.02 (or 0.002), weight decay 1e-7/1e-8.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 5, Appendix C"
+  },
+  {
+    "criteria": "The agent has read Section 6.3 and Table 3 to understand the graph classification experiment on peptides-func (AP) and peptides-struct (MAE) with a 500k parameter budget and 4 random seeds.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6.3, Table 3"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the additional experiments: Penn94 large-scale node classification (Table 4) and the synthetic path-graph illustration of Proposition 4.3 (Figure 6).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B, Table 4"
+  },
+  {
+    "criteria": "The plan includes converting the input undirected graph into a directed graph by replacing each undirected edge {i, j} with a pair of directed edges (i→j) and (j→i).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes the implementation of the out-degree sheaf Laplacian (Equation 4) using per-node source map S_i and target map T_i in the flat vector bundle setting.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 4, Equation 7"
+  },
+  {
+    "criteria": "The plan includes the implementation of the in-degree sheaf Laplacian (Equation 5) and its transpose using per-node target map T_i and source map S_j in the flat vector bundle setting.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 5, Equation 8"
+  },
+  {
+    "criteria": "The plan includes normalization of both in- and out-degree sheaf Laplacians using their respective block-diagonal degree matrices D_in and D_out.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes the CSNN layer update rule (Equation 6): composing the transposed normalized in-degree Laplacian with the normalized out-degree Laplacian, applying weight matrices W_{1,t} and W_{2,t}, a nonlinearity σ, and a residual with learned scaling ε.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The plan includes learning per-node source conformal maps S_{i,t} and target conformal maps T_{i,t} via a learnable neural network (GraphSAGE or MLP) applied to node features at each layer.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes using Householder reflections to compute the orthogonal components of conformal maps S_i and T_i, multiplied by a learned positive scalar per node.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes the NeighborsMatch experiment with binary trees of depth r ∈ {2, 3, 4, 5, 6, 7, 8} and comparison against GCN, GIN, GAT, and GGNN baselines.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The plan includes node classification experiments on seven Platonov et al. (2023) heterophilic datasets with the specified baselines (GCN, SAGE, GAT, GAT-sep, GT, GT-sep, CO-GNN, O(d)-NSD, BuNN) using 10 fixed splits.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6.2, Table 1"
+  },
+  {
+    "criteria": "The plan includes node classification experiments on four Pei et al. (2020) datasets (Texas, Wisconsin, Film, Cornell) with the corresponding set of heterophily-specific baselines.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6.2, Table 2"
+  },
+  {
+    "criteria": "The plan includes graph classification experiments on peptides-func (average precision) and peptides-struct (MAE) from the Long Range Graph Benchmark with a 500k parameter budget and 4 seeds.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6.3"
+  },
+  {
+    "criteria": "The plan specifies using the cleaned versions of Squirrel and Chameleon datasets from Platonov et al. (2023) to avoid data leakage from duplicate nodes.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 6.2"
+  },
+  {
+    "criteria": "The plan includes the additional Penn94 experiment with CSNN evaluated against baselines from Li et al. (2022) on the large-scale heterophilic dataset.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix B, Table 4"
+  },
+  {
+    "criteria": "The code for converting an undirected graph to a directed graph by replacing each undirected edge {i, j} with two directed edges (i→j) and (j→i) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for the flat vector bundle out-degree sheaf Laplacian (Equation 7) has been implemented: for each node i, L_F^{out}(X)_i = sum_{j∈N(i)} (S_i^T S_i x_i - T_i^T S_j x_j).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code for the flat vector bundle transposed in-degree sheaf Laplacian (Equation 8) has been implemented: for each node i, ((L_F^{in})^T(X))_i = sum_{j∈N(i)} (T_i^T T_i x_i - T_i^T S_j x_j).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The code for normalizing the out-degree sheaf Laplacian as Δ_F^{out} = D_out^{-1/2} L_F^{out} D_out^{-1/2} has been implemented, using the diagonal blocks S_i^T S_i summed over neighbors as the degree scaling.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for normalizing the transposed in-degree sheaf Laplacian as (Δ_F^{in})^T = D_in^{-1/2} (L_F^{in})^T D_in^{-1/2} has been implemented, using the diagonal blocks T_i^T T_i summed over neighbors as the degree scaling.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The CSNN layer update (Equation 6) has been implemented: X_{t+1} = (1 + (1_{n×h} ⊗ ε)) ⊙ X_t − σ((Δ_F^{in})^T Δ_F^{out} (I_n ⊗ W_{1,t}) X_t W_{2,t}), composing the two normalized Laplacians.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for the learned residual scaling vector ε ∈ [−1, 1]^d applied element-wise across the stalk dimension in the CSNN layer update has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for the left weight matrix W_{1,t} ∈ R^{d×d} (mixing features within each stalk) and the right weight matrix W_{2,t} ∈ R^{h×h} (mixing channels) in each CSNN layer has been implemented as optional components controlled by flags.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6, Table 5"
+  },
+  {
+    "criteria": "The code for computing orthogonal maps via Householder reflections (parameterizing Q_i and R_i for source and target conformal maps) and scaling them by a learned positive scalar per node has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for computing per-node source conformal maps S_{i,t} = η(G, X_t, i) and target conformal maps T_{i,t} = φ(G, X_t, i) via a neural network at each layer has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for the GraphSAGE-based restriction map learner (with a configurable number of GNN layers and dimension) has been implemented, falling back to a 2-layer MLP when the number of GNN layers is 0.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code for the efficient message-passing-based CSNN implementation (not requiring explicit Laplacian matrix construction) has been implemented as an alternative to the matrix-multiplication approach.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The GELU nonlinear activation function σ is used in the CSNN layer update for the heterophilic node classification experiments, as specified in Table 5.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 5, Appendix C"
+  },
+  {
+    "criteria": "The identity function (no nonlinearity) is used as the activation σ for the NeighborsMatch experiment, and layer normalization is applied as specified in Table 6.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6, Appendix C"
+  },
+  {
+    "criteria": "The code for generating or loading the NeighborsMatch dataset (binary trees of depth r, root node as target, leaves encoding possible labels, leaf matching root neighbor count as true label) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The NeighborsMatch experiment is configured with sheaf dimension 2, number of CSNN layers = r+1, hidden channels 32, GNN layers r+1, GNN dimension 32, no dropout, no input dropout, left weights true, right weights true, and layer normalization true.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 6, Appendix C"
+  },
+  {
+    "criteria": "The code for loading the seven heterophilic node classification datasets from Platonov et al. (2023) — roman-empire, amazon-ratings, minesweeper, tolokers, questions, squirrel (cleaned), chameleon (cleaned) — has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6.2"
+  },
+  {
+    "criteria": "The roman-empire dataset is processed as a directed graph using its stored directed edge list (not doubled), while all other node classification datasets are treated as undirected graphs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The evaluation metric for minesweeper, tolokers, and questions is AUROC, while accuracy is used for roman-empire, amazon-ratings, squirrel, and chameleon, consistent with Table 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.2, Table 1"
+  },
+  {
+    "criteria": "The node classification evaluation uses 10 fixed splits provided by Platonov et al. (2023) for the seven heterophilic datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.2"
+  },
+  {
+    "criteria": "The hyperparameter search for roman-empire and amazon-ratings uses sheaf dimension 3–5, layers 2–5, hidden channels 32/64, GNN layers 0–5, GNN dimension 32/64, dropout 0.2, input dropout 0.2, 2000 epochs, learning rate 0.02, and weight decay 1e-7/1e-8.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 5, Appendix C"
+  },
+  {
+    "criteria": "The hyperparameter search for minesweeper, tolokers, and questions additionally includes learning rate 0.002 (in addition to 0.02), matching the extended grid in Table 5.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Table 5, Appendix C"
+  },
+  {
+    "criteria": "The code for loading the four Pei et al. (2020) node classification datasets (Texas, Wisconsin, Film, Cornell) with their 10 fixed splits has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.2, Table 2"
+  },
+  {
+    "criteria": "The CO-GNN baseline is trained with μ and Σ treated as explicit hyperparameters (not as separate CO-GNN(μ,μ) and CO-GNN(Σ,Σ) model variants), consistent with Appendix C.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code for loading the Long Range Graph Benchmark Peptides datasets (peptides-func and peptides-struct, 15k graphs each) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6.3"
+  },
+  {
+    "criteria": "The CSNN model for graph classification is configured to respect the 500k parameter budget, and graph classification results are reported as mean ± standard deviation over 4 random seeds.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.3"
+  },
+  {
+    "criteria": "Average Precision (AP) is used as the evaluation metric for peptides-func (graph classification) and Mean Absolute Error (MAE) is used for peptides-struct (graph regression).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6.3, Table 3"
+  },
+  {
+    "criteria": "The code for loading and evaluating on the Penn94 large-scale dataset (41,554 nodes, 1,362,229 edges, 5-dimensional features) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B, Table 4"
+  },
+  {
+    "criteria": "The NeighborsMatch experiments for all depths r = 2, 3, 4, 5, 6, 7, 8 have been executed successfully for CSNN and all four baselines (GCN, GIN, GAT, GGNN) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 6.1, Figure 5"
+  },
+  {
+    "criteria": "The node classification experiments on all seven Platonov et al. (2023) heterophilic datasets have been executed for CSNN and all baselines (GCN, SAGE, GAT, GAT-sep, GT, GT-sep, CO-GNN, O(d)-NSD) without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 6.2, Table 1"
+  },
+  {
+    "criteria": "The node classification experiments on the four Pei et al. (2020) datasets (Texas, Wisconsin, Film, Cornell) have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 6.2, Table 2"
+  },
+  {
+    "criteria": "The graph classification experiments on peptides-func and peptides-struct have been executed successfully with 4 seeds and the 500k parameter budget without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 6.3, Table 3"
+  },
+  {
+    "criteria": "The Penn94 experiment has been executed successfully without errors, producing accuracy results for CSNN and baselines (MLP, GCN, GAT, MixHop, GCNII, H2GCN, WRGAT, GPR-GNN, ACM-GCN, LINKX, GloGNN).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B, Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: CSNN achieves 100% training accuracy for all NeighborsMatch tree depths r = 2 through r = 8.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: GCN and GIN fail to achieve perfect accuracy starting from r = 4, while GAT and GGNN fail starting from r = 5 in the NeighborsMatch task.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: CSNN is the best-performing method in 6 out of 7 Platonov et al. (2023) datasets, including 92.63 ± 0.50% on roman-empire, 99.07 ± 0.25% AUROC on minesweeper, and 41.18 ± 2.23% on squirrel.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: CSNN outperforms CO-GNN and O(d)-NSD on the Platonov et al. (2023) heterophilic benchmarks in most datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: CSNN achieves results comparable to the best methods on Pei et al. (2020) datasets, with 90.00 ± 2.83% on Wisconsin and 38.03 ± 1.12% on Film.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: CSNN achieves the best peptides-struct MAE of 24.32 ± 0.04, outperforming all baselines including BuNN (24.63 ± 0.12).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: CSNN achieves peptides-func AP of 71.58 ± 0.80, placing second behind BuNN (72.76 ± 0.65).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: CSNN achieves 86.00 ± 0.39% accuracy on Penn94, outperforming all reported baselines including GloGNN (85.57 ± 0.35%) and LINKX (84.71 ± 0.52%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4, Appendix B"
+  }
+]

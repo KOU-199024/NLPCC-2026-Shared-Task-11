@@ -1,0 +1,434 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the iterative code synthesis setup, including the multi-turn conversation structure with public and private test sets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand the MDP formulation, PPO training procedure, reward function (Equations 1-2), KL penalty, and the hybrid token-level policy / turn-level value function design.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand the experimental setup: CodeContests benchmark, Llama 3.1 8B and 70B Instruct models, 3-turn limit, and the n@k evaluation metric.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the main CodeContests results comparing RLEF-trained 8B and 70B models against prior work.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the single-turn vs. multi-turn 1@3 solve rates across CodeContests, HumanEval+, and MBPP+ for base and RLEF models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Figure 3 to understand the inference-time behavior analysis: error rates in turn 1, error recovery in turns 2-3, chrF code-change metric, and random feedback ablation.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The agent has read Figure 4 to understand pass@1 vs. pass@10 across turn limits with true vs. random feedback, and 10@k solve rates across different turn-limit budgets.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check ablation results comparing few-shot prompting, SFT, and RLEF for iterative code synthesis.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to check the comparison of single-turn (ST) vs. multi-turn (MT) RLEF training on 8B and 70B Instruct models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Appendix A.1 to understand the PPO implementation details: AdamW optimizer (lr=2e-7), weight decay 0.1, linear warm-up 50 steps, KL factor β=0.05, PPO clip ε=0.2, value clip α=0.2, discount γ=1, 1024 rollouts, 4 updates on 256 sequences each, and training schedule.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The agent has read Appendix A.3 to understand the SFT setup: 100 rollouts per problem with Llama 3.1 70B Instruct on the training set, 313,639 successful trajectories, fine-tuning on last response only, LR sweep (5e-6, 2e-6), epochs 2-3, batch size 64, sequence length 8192.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The agent has read Appendix C.1 to understand the exact CodeContests prompt template for the initial prompt and the four execution feedback templates (wrong answer, exception, timeout, out-of-memory).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "The agent has read Appendix C.4 and C.5 to understand the adapted HumanEval+ and MBPP+ prompt and execution feedback templates used in the generalization experiments.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix C.4, C.5"
+  },
+  {
+    "criteria": "The plan includes implementing a multi-turn code synthesis environment where the LLM receives a problem description, generates code, receives execution feedback on public tests, and iterates up to a configurable turn limit.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes two separate test sets: public tests for intermediate feedback and early stopping, and private tests for the final reward signal.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes implementing the reward function with three cases: +1 for final passing, -1 for final failing, and -0.2 penalty for responses containing no valid code.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 2.2, Equation 2"
+  },
+  {
+    "criteria": "The plan includes implementing the KL penalty term in the reward, computing KL as the geometric mean (average log-probability) of policy vs. reference policy per response.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.2, Equation 1"
+  },
+  {
+    "criteria": "The plan includes a hybrid value/policy architecture: policy optimized at the token level with per-token advantages, while value function is predicted from the last token of each prompt (turn-level).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes PPO training with importance sampling accounting for a behavior policy π_b (asynchronous training), a clipped surrogate objective, and a clipped value loss.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The plan includes training Llama 3.1 8B Instruct for 12,000 updates and Llama 3.1 70B Instruct for 8,000 updates, selecting checkpoints based on validation set performance.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes evaluating models using the n@k metric (expectation that any of n solutions, selected from k samples, is correct), with 200 rollouts per evaluation following Li et al. (2022).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes running baselines: vanilla Llama 3.1 Instruct (8B and 70B) in both single-turn and multi-turn settings without RLEF training.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1, Table 2"
+  },
+  {
+    "criteria": "The plan includes ablation experiments: few-shot prompting, supervised fine-tuning (SFT), single-turn RLEF (ST), and multi-turn RLEF (MT).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes generalization experiments on HumanEval+ and MBPP+ using adapted multi-turn prompt/feedback templates.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Table 2"
+  },
+  {
+    "criteria": "The plan includes an inference-time random feedback ablation, substituting execution results of an unrelated problem's incorrect solution as feedback.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Appendix C.2"
+  },
+  {
+    "criteria": "The code for the multi-turn code synthesis dialogue is implemented: the conversation starts with the problem description, each LLM response is executed, feedback is appended to the conversation, and the loop terminates when public tests pass or the turn limit is reached.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1, Figure 2"
+  },
+  {
+    "criteria": "The code for sandboxed Python execution of generated solutions is implemented using the CodeContests companion codebase (Python 3.10), with a 1 GB memory limit and 10-second wall-clock time limit per test case when problem-specific limits are not specified.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code for the reward function has been implemented as Equation 2: r=+1 at end of episode if all tests pass, r=-1 at end of episode if any test fails, r=-0.2 if the response contains no valid code.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.2, Equation 2"
+  },
+  {
+    "criteria": "The code for the full RLEF reward (Equation 1) has been implemented: R(s_t, a_t) = r(s_t, a_t) - β * log(π(a_t|c_t) / ρ(a_t|c_t)), where KL is computed using the geometric mean of token log-probabilities (average log-prob) rather than their sum/product.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.2, Equation 1"
+  },
+  {
+    "criteria": "The code for the PPO importance-sampling clipped surrogate objective has been implemented as Appendix A.1 Equations 3-4: using the ratio r_t(θ) with stop-gradient clipping against the behavior policy π_b, with clip threshold ε=0.2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The code for the advantage computation has been implemented: A_t = -V(c_t) + sum_{i=t}^{T} R(s_i, a_i), with a single advantage value used for all token actions within a response.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2, Appendix A.1"
+  },
+  {
+    "criteria": "The code for the value function loss has been implemented as Appendix A.1 Equation 6: a clipped value loss with clipping threshold α=0.2 and discount γ=1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1, Equations 5-6"
+  },
+  {
+    "criteria": "The code for the turn-level (response-level) value function has been implemented: the value of a response a_t is predicted from the hidden state of the last token of its respective prompt, not at the token level.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The PPO training infrastructure has been implemented with separate policy and value function networks initialized from the same LLM checkpoint, with the value function's final layer replaced by a randomly initialized linear projection.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The code for online, asynchronous RLEF training has been implemented: decoupled inference (rollout generation) and optimization, collecting 1024 rollouts and performing 4 update steps on 256 sequences per iteration.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The AdamW optimizer has been implemented with lr=2e-7, weight decay=0.1, and a linear warm-up over 50 steps with KL regularization factor β=0.05.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The CodeContests initial prompt template has been implemented: 'Provide a Python solution for the following competitive programming question: ${problem}. Your code should be enclosed in triple backticks like so: ```python YOUR CODE HERE```.'",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "The execution feedback templates for CodeContests have been implemented for all four error types: wrong answer (input/expected/observed), exception (stacktrace), timeout, and out-of-memory, followed by 'Give it another try.' and the code formatting instruction.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "The code for loading and evaluating on the CodeContests dataset has been implemented: 13,328 training problems (minus 669 with missing tests), 117 validation problems, and 165 test problems.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for computing the n@k solve rate metric has been implemented following Li et al. (2022), estimating the probability that any of n solutions from k samples is correct, with 200 rollouts per evaluation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for SFT data mining has been implemented: running multi-turn rollouts with Llama 3.1 70B Instruct on the CodeContests training set (top-p=0.95, temperature sampled from U(0.1, 1.0)), collecting 100 rollouts per problem, and filtering for successful trajectories.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The SFT fine-tuning code has been implemented: next-token prediction loss computed on the last response only, cosine LR schedule with linear warm-up (10 steps), batch size 64, sequence length 8192, evaluated every 200 optimizer steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The HumanEval+ multi-turn evaluation setup has been implemented: using 'base' tests for inference-time feedback and 'plus' tests for solve rate, extracting individual assert statements and transforming them into unittest.TestCase assertions for informative failure messages.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.4"
+  },
+  {
+    "criteria": "The MBPP+ multi-turn evaluation setup has been implemented: problem description with a single example test in the initial prompt, and execution feedback following the HumanEval+ format with additional formatting guidelines.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.5"
+  },
+  {
+    "criteria": "The random execution feedback ablation has been implemented: for each problem, sampling a different problem from the same test set, evaluating one of its incorrect solutions against the corresponding public tests to obtain unrelated feedback.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.2"
+  },
+  {
+    "criteria": "The few-shot prompting ablation has been implemented: selecting successful multi-turn trajectories from Llama 3.1 70B Instruct on the CodeContests training set with 2 and 3 successful attempts, and prepending them to the dialogue for instruction-tuned models.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.3"
+  },
+  {
+    "criteria": "The confidence interval computation has been implemented following Li et al. (2022): bootstrapping N samples with replacement, repeating 200 times, using 2.5th and 97.5th percentiles as bounds.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The code for the token-level value function ablation has been implemented: predicting a value for each individual token of a response rather than at the turn level, with otherwise identical reward formulation and training settings.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.6"
+  },
+  {
+    "criteria": "The code for the 'No Execution Feedback' ablation has been implemented: removing execution feedback from the prompt, replacing it with just 'Give it another try', always requesting two follow-up solutions (total of three), without early stopping on public test success.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.5"
+  },
+  {
+    "criteria": "The RLEF training on Llama 3.1 8B Instruct (12,000 updates) and Llama 3.1 70B Instruct (8,000 updates) on CodeContests has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.1, Appendix A.1"
+  },
+  {
+    "criteria": "The evaluation of initial (pre-RLEF) and RLEF-trained 8B and 70B Llama 3.1 Instruct models on CodeContests valid and test sets in the 1@3 multi-turn setting (temperature 0.2, top-p 0.95) has been executed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The evaluation in the 10@100 setting (temperature 1.0, top-p 0.95) on CodeContests valid and test sets for the 8B and 70B Instruct and RLEF models has been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The single-turn vs. multi-turn 1@3 evaluation on CodeContests test, HumanEval+, and MBPP+ for base and RLEF Llama 3.1 8B and 70B models has been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The random feedback ablation evaluation on CodeContests (valid and test sets combined, 20 rollouts per problem) has been executed for both base and RLEF-trained 8B and 70B models.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3, Section 3.3"
+  },
+  {
+    "criteria": "The few-shot prompting and SFT experiments on Llama 3.1 8B and 70B Instruct models on CodeContests (1@3 valid and test) have been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3, Section 3.4.1"
+  },
+  {
+    "criteria": "The single-turn RLEF training experiment (ST RLEF without invalid-code penalty) for 8B and 70B Instruct models on CodeContests has been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 4, Section 3.4.2"
+  },
+  {
+    "criteria": "The pass@1 and pass@10 experiments across varying turn limits (1, 2, 3, ... turns) for RLEF-trained models with true and random feedback on CodeContests have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 4a"
+  },
+  {
+    "criteria": "The 10@k solve rate experiments across different turn limits (1, 3, 5, 10 turns) and sample budgets for 8B and 70B RLEF-trained models with temperature 1.0 on CodeContests have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 4b"
+  },
+  {
+    "criteria": "The token-level value function ablation and no-execution-feedback ablation training and evaluation runs for Llama 3.1 8B Instruct on CodeContests have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6b, Appendix B.5, B.6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: the RLEF-trained Llama 3.1 70B achieves 37.5 on the valid set and 40.1 on the test set with 1@3, and the RLEF-trained 8B achieves 17.2 (valid) and 16.1 (test) with 1@3.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: the Llama 3.0 8B Instruct improves from 4.1 to 12.5 (valid) and 3.2 to 12.1 (test) after RLEF training with 1@3.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: in the 10@100 setting, the RLEF-trained 70B achieves 54.5 on both valid and test sets, and the RLEF-trained 8B achieves 29.8 (valid) and 28.7 (test).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: RLEF-trained Llama 3.1 8B improves from 10.5 (ST) to 16.1 (MT) on CodeContests test, and RLEF 70B improves from 30.1 (ST) to 40.1 (MT), while base models show no benefit or degradation from multi-turn generation.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: RLEF gains from CodeContests transfer to HumanEval+ and MBPP+; the 70B RLEF achieves 80.4 (HE+ MT) and 72.2 (MBPP+ MT) compared to 75.0 and 70.2 for the base 70B model.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: RLEF-trained models produce fewer wrong-answer and exception errors in turn 1 but more timeout errors; error recovery in turns 2 and 3 is significantly improved; initial models frequently repeat the same code (low chrF change); random feedback severely impairs error recovery.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4a: with true feedback, pass@1 keeps increasing with higher turn limits for RLEF models; with random feedback, pass@1 degrades as turn limit increases; pass@10 shows little difference between true and random feedback.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4a"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4b: after RLEF training, 3-5 turns yield consistent improvement over independent sampling (1 turn) across sample budgets; 10 turns provides no additional benefit under fixed budget; base 8B model shows best performance with 1 turn except at high budgets on the test set.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4b"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: RLEF achieves 17.2/16.1 (8B valid/test) and 37.5/40.1 (70B valid/test), significantly outperforming SFT (10.3/10.0 and 27.7/27.2) and few-shot prompting, which is detrimental to Instruct models (8.5/8.5 and 22.5/20.3).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: multi-turn RLEF outperforms single-turn RLEF for both 8B and 70B; applying single-turn trained 70B in multi-turn setting achieves 31.1 (valid) and 32.9 (test), compared to MT RLEF 37.5/40.1.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6b: 'No Execution Feedback' RLEF training achieves 12.2/10.9 (valid/test) for 8B, compared to 17.2/16.1 for full RLEF; token-level value function achieves 13.1/13.7; single-turn + repair model achieves 14.8/12.6.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6b, Appendix B.4, B.5, B.6"
+  },
+  {
+    "criteria": "The execution outcomes match Appendix B.2 Table 6a: base (pre-trained) models achieve lower performance than instruction-tuned models in all cases (e.g., 8B Base SFT: 6.9/3.5 valid/test vs. 8B Instruct SFT: 10.3/10.0).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 6a, Appendix B.2"
+  },
+  {
+    "criteria": "The execution outcomes match Appendix B.3: the RLEF-trained 70B model improves from 37.5 to 40.4 on the valid set when feedback from private/generated tests (up to 20 total, up to 8 failures shown) is used during inference.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix B.3"
+  }
+]

@@ -1,0 +1,608 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the three design principles of APPL: readability and flexibility, easy parallelization, and convenient conversion.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand APPL syntax and semantics, including APPL functions, expression statements, context managers, gen(), and the Definition class.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the implementation of the @ppl decorator that marks APPL functions and creates an implicit prompt context.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the implementation of expression statement capturing within APPL functions to append values to the prompt context via promptify.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the implementation of the gen() function as an asynchronous LLM generation call that implicitly uses the accumulated prompt context.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the implementation of the promptify mechanism for converting Python objects into string prompts appendable to the context.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The @ppl decorator has been implemented to mark APPL functions and provide an implicit PromptContext for each function.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The expression statement capturing has been implemented so that standalone expression statements within APPL functions are converted to prompts via promptify and appended to the prompt context.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The PromptContext class has been implemented to store prompt-related information (a scratchpad) as local and global prompts accessible via records() and convo().",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Section 3.3"
+  },
+  {
+    "criteria": "The gen() function has been implemented to use the accumulated prompt in the APPL function context to call LLMs asynchronously, returning a StringFuture.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The promptify function has been implemented to convert Python objects (strings, function outputs, etc.) into prompt-compatible string representations.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The Role Changer context managers (e.g., AIRole, SystemMessage) have been implemented to specify the role/owner of messages in the chat prompt.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The Prompt Compositor context managers (e.g., NumberedList, DashList, StarList, LineSeparated, DoubleLineSeparated) have been implemented to control delimiter, indentation, indexing format, prologue, and epilogue of prompts.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Figure 4"
+  },
+  {
+    "criteria": "The Definition class has been implemented as a special base class allowing custom definitions to be referred to in f-strings and instantiated with descriptions.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Figure 4"
+  },
+  {
+    "criteria": "The output structure specification feature has been implemented in gen() allowing it to return structured Pydantic BaseModel objects via a response_model parameter.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The records() function has been implemented to retrieve the local prompt records from the current APPL function context.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The convo() function has been implemented to retrieve the full conversation (global prompts) from the APPL function context.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the APPL runtime, including context passing, asynchronous semantics, tool calling, and tracing.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the implementation of four inter-function context passing modes (new, copy, same, resume).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Figure 5"
+  },
+  {
+    "criteria": "The plan includes the implementation of asynchronous LLM call semantics where gen() is non-blocking and synchronizes only when the result value is accessed.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the implementation of automatic tool specification generation from Python function docstrings and signatures.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Appendix A.3"
+  },
+  {
+    "criteria": "The 'new' context passing mode has been implemented to create a clean empty context for the callee APPL function (default mode).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Figure 5"
+  },
+  {
+    "criteria": "The 'copy' context passing mode has been implemented to create a copy of the caller's context for the callee, so modifications do not affect the original (call-by-value semantics).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Figure 5"
+  },
+  {
+    "criteria": "The 'same' context passing mode has been implemented so the callee shares the caller's context directly, with modifications applied to the original (call-by-reference semantics).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Figure 5"
+  },
+  {
+    "criteria": "The 'resume' context passing mode has been implemented so the callee resumes its memorized context from the last run, making the function stateful.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Figure 5"
+  },
+  {
+    "criteria": "The automatic tool specification generation (as_tool or equivalent) has been implemented to create OpenAI API-compatible JSON schema tool specifications from Python function docstrings (Google Style) and signatures.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Appendix A.3, Figure 12, Figure 13"
+  },
+  {
+    "criteria": "The automatic execution of LLM tool call outputs as Python function calls has been implemented (e.g., via run_tool_calls()), returning tool results as observations.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Figure 6"
+  },
+  {
+    "criteria": "The tracing module has been implemented to record APPL function calls and LLM request events (SendRequest, FinishRequest) for failure diagnosis and replay.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The LLM call caching mechanism has been implemented to cache responses and support failure recovery by loading cached results.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the compilation (transpilation) of APPL using Python's ast package with three key transformations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the implementation of the APPL compiler that transpiles APPL Python source using AST parsing and transformation to insert context management.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The APPL compiler has been implemented using Python's ast package to parse the original function as an AST, apply transformations, and compile back to a Python function.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The AST transformation for context management has been implemented, inserting the _ctx keyword parameter into APPL function definitions and propagating it through function calls annotated with __need_ctx__.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix D, Figure 17"
+  },
+  {
+    "criteria": "The AST transformation for capturing expression statements has been implemented, wrapping all standalone expression statements within APPL functions with an appl.execute() call.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix D, Figure 17"
+  },
+  {
+    "criteria": "The context propagation across nested APPL function calls has been implemented via appl.with_ctx() in the transpiled code.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix D, Figure 17"
+  },
+  {
+    "criteria": "The standalone f-string handling has been implemented in the compiler to split f-strings into sequential sub-expressions so that gen() calls within an f-string receive the prefix text before being invoked.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix A.1, Figure 10"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand StringFuture and BooleanFuture implementations for asynchronous execution.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes the implementation of StringFuture as a list-based representation of asynchronous string values that delays synchronization until str() is explicitly called.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes the implementation of BooleanFuture as an asynchronous boolean that enables future objects in control flows.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The StringFuture class has been implemented as a list of StringFutures with synchronization defined by Equation 1: str([s1,...,sn]) → str(s1) ⊕ str([s2,...,sn]).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Equation 1"
+  },
+  {
+    "criteria": "The StringFuture concatenation has been implemented as defined in Equation 2: S ⊕ T = [s1,...,sn] ⊕ [t1,...,tm] = [s1,...,sn, t1,...,tm], enabling delayed concatenation of two StringFutures.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Equation 2"
+  },
+  {
+    "criteria": "The StringFuture synchronization has been implemented so that str(S) waits and concatenates all constituent elements, and for unsupported methods (e.g., len()), it falls back to materializing S first.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The BooleanFuture class has been implemented to represent an asynchronous boolean that synchronizes only when bool() is called, enabling its use in control flow conditions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The Future-based asynchronous execution runtime has been implemented using Python's concurrent.futures so that independent gen() calls run in parallel without blocking the main thread.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 and Figure 7 completely to understand the CoT-SC case study comparison across APPL, LMQL, SGLang, and Guidance.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1, Figure 7"
+  },
+  {
+    "criteria": "The plan includes the implementation of CoT-SC in APPL using a @ppl function that returns a list comprehension of parallel gen() calls.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The CoT-SC implementation has been coded in APPL as a @ppl function that returns [gen() for _ in range(num_trials)], achieving automatic parallelization as shown in Figure 7a.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Figure 7a"
+  },
+  {
+    "criteria": "The equivalent CoT-SC implementations in LMQL (with asyncio-based parallelization), SGLang (with lm.fork()), and Guidance (sequential) have been coded for comparison as shown in Figure 7.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Figure 7b, 7c, 7d"
+  },
+  {
+    "criteria": "The agent has read Table 2 completely to check the parallelization speedup results for CoT-SC, SoT, MemWalker, and ToT across different models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes all four parallelization experiments: CoT-SC (10 branches), SoT (vicuna-80 top-20 instances), MemWalker (QuALITY first 20 articles), and ToT.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.2, Appendix B"
+  },
+  {
+    "criteria": "The CoT-SC parallelization experiment has been implemented with num_trials=10 branches, tested on gpt-3.5-turbo-1106 (OpenAI API) and a locally deployed LLAMA-7b on SGLang SRT backend.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Appendix B"
+  },
+  {
+    "criteria": "The SoT (Skeleton-of-Thought) implementation has been coded in APPL using skeleton_prompt and point_expanding_prompt functions as shown in Figure 14, with parallel expansion of skeleton points.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Appendix B, Figure 14"
+  },
+  {
+    "criteria": "The SoT experiment has been configured to use the top-20 data instances of the vicuna-80 dataset as in the original SoT paper.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The MemWalker hierarchical summarization has been implemented using the TreeNode dataclass with construct_leaf and construct_nonleaf APPL functions as shown in Figure 15.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Appendix B, Figure 15"
+  },
+  {
+    "criteria": "The MemWalker experiment has been configured to use the first 20 articles from the QuALITY dataset, with 4000 characters per leaf node, 4 leaf nodes per intermediate node, and 2 intermediate nodes per top-level node (three-layer hierarchy).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The ToT (Tree of Thoughts) implementation has been coded in APPL with parallel execution of reasoning branches, tested on GPT-4o and LLAMA3.2-3B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Table 2"
+  },
+  {
+    "criteria": "The speedup estimation has been implemented using Amdahl's law formula S = 1 / (sum_i pi/si) where pi is approximated by request count and si by the number of maximum parallelizable requests.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The parallelization experiments for all four tasks (CoT-SC, SoT, MemWalker, ToT) in both sequential and parallel modes have been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: CoT-SC achieves approximately 9.49× speedup with GPT-3.5 and 9.34× with LLAMA-7b.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: SoT achieves approximately 2.79× speedup with GPT-3.5 and 3.17× with LLAMA-7b.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: MemWalker achieves approximately 3.07× speedup with GPT-3.5 and 1.84× with LLAMA-7b.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: ToT achieves approximately 9.39× speedup with GPT-4o and 6.48× with LLAMA3.2-3B.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Section 5.3 and Figure 9 completely to understand the ReAct tool-use agent comparison between APPL and Guidance.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.3, Figure 9"
+  },
+  {
+    "criteria": "The plan includes the implementation of the ReAct agent with the three-stage loop: thoughts generation (tool_choice='none'), tool call actions generation (tool_choice='required'), and tool call execution for observations.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The ReAct agent has been implemented in APPL as shown in Figure 9a, including the iteration loop with AIRole context, thoughts generation via gen(tools=tools, tool_choice='none'), actions generation via gen(tools=tools, tool_choice='required'), and run_tool_calls().",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3, Figure 9a"
+  },
+  {
+    "criteria": "The equivalent ReAct implementation in Guidance (Figure 9b) has been coded for comparison, with manual tool_names, tool_map, tool_desc specification and select() for structured generation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3, Figure 9b"
+  },
+  {
+    "criteria": "The ReAct agent has been executed successfully without errors demonstrating tool calling functionality.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the AST-size metric comparing code conciseness across APPL, LMQL, and SGLang/Guidance for four tasks.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The plan includes the implementation of the AST-size metric using Python's ast.parse to count AST nodes as a measure of code conciseness.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The AST-size metric has been implemented using Python's ast package (ast.parse) to count the total number of AST nodes in programs written in different languages.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The AST-size comparison has been executed for CoT-SC, ReAct, SoT, and MemWalk across APPL, LMQL, and SGLang/Guidance implementations.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: APPL has smaller AST-size than LMQL and SGLang/Guidance across all tasks (CoT-SC: APPL=35, LMQL=57, SGLang=61; ReAct: APPL=61, SGLang=134; SoT: APPL=59, LMQL=120, SGLang=107; MemWalk: APPL=36, LMQL=64, SGLang=60).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Section 5.5 and Appendix C completely to understand the LLM-based pairwise evaluation setup with four LLM judges across five criteria.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.5, Appendix C"
+  },
+  {
+    "criteria": "The plan includes the implementation of the LLM evaluation using GPT-4o, GPT-4 turbo, claude-35-sonnet, and DeepSeek-V2 as pairwise judges across succinctness, readability, intuitiveness, convenience, and overall criteria.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.5, Appendix C"
+  },
+  {
+    "criteria": "The Comparison Pydantic model has been implemented with fields: thoughts (str), succinctness, readability, intuitiveness, convenience, overall (each Literal['first', 'second', 'tie']).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C, Figure 16"
+  },
+  {
+    "criteria": "The get_comparison() APPL function has been implemented as shown in Figure 16, using prompt compositors (StarList) to present evaluation criteria and gen(response_model=Comparison) for structured LLM output.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C, Figure 16"
+  },
+  {
+    "criteria": "The pairwise comparison scoring has been implemented: the better code receives +1 point and the worse one -1 point, with final scores averaged across all LLM judges and normalized by number of comparisons.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The LLM evaluation has been executed with all four judges (GPT-4o, GPT-4 turbo, claude-35-sonnet, DeepSeek-V2) comparing APPL, Guidance, LMQL, and SGLang on the same code examples used in Section 5.4.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.5, Appendix C"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 8: APPL ranks the highest in almost all aspects (succinctness, readability, intuitiveness, convenience) and achieves the highest overall average score across all tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The agent has read Appendix A.3 to understand how tool specifications are automatically generated from Python function signatures and Google Style docstrings.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix A.3, Figure 12, Figure 13"
+  },
+  {
+    "criteria": "The tool specification generation has been implemented to parse Google Style docstrings and function signatures, producing an OpenAI API-compatible JSON schema as shown in Figure 13.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3, Figure 13"
+  },
+  {
+    "criteria": "The agent has read Appendix D (Figure 17) to understand the full transpilation result showing before/after APPL compilation of the question answering example.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix D, Figure 17"
+  },
+  {
+    "criteria": "The transpiled code correctly inserts PromptContext as a keyword-only parameter with default PromptContext() (_ctx: PromptContext=PromptContext()) in all APPL function definitions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Figure 17"
+  },
+  {
+    "criteria": "The transpiled code correctly decomposes standalone f-strings with embedded gen() calls into sequential sub-expressions using an enclosing Str() context manager.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Figure 17, Appendix A.1"
+  },
+  {
+    "criteria": "The agent has read Appendix F.1 to understand the strict and non-strict reproducibility modes for tracing and failure recovery.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix F.1"
+  },
+  {
+    "criteria": "The strict reproducibility tracing has been implemented by annotating each generation request with a unique identifier and recording ordered SendRequest events and out-of-order FinishRequest events matched by identifier.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F.1"
+  },
+  {
+    "criteria": "The non-strict reproducibility tracing has been implemented by grouping cached requests by generation parameters with a CommitRequest event, popping one cached result per cache hit from the group.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F.1"
+  },
+  {
+    "criteria": "The trace visualization export has been implemented to support at least one frontend (Langfuse, Lunary, LangSmith, or Chrome Tracing) with hierarchical timeline information including start/end times, prompt, and cost.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix F.2, Figure 19"
+  },
+  {
+    "criteria": "The agent has read Appendix E to understand the multi-agent chat implementation using both explicit history management and resume context methods.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix E, Figure 18"
+  },
+  {
+    "criteria": "The multi-agent chat implementation using explicit history management has been coded (Figure 18a), where Agent._history is initialized via _setup(), retrieved and written in chat(), and updated with records() after each response.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E, Figure 18a"
+  },
+  {
+    "criteria": "The multi-agent chat implementation using resume context has been coded (Figure 18b), where the chat method uses @ppl(ctx='resume') to maintain stateful conversation history across calls.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E, Figure 18b"
+  },
+  {
+    "criteria": "The two-agent chat demo has been executed successfully showing two agents alternating conversation as shown in Figure 18c.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix E, Figure 18c"
+  },
+  {
+    "criteria": "The agent has read Appendix G to understand how APPL implements a long prompt (1000+ tokens) from ToolEmu using BracketedDefinition classes and modular APPL functions.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The BracketedDefinition base class and concrete Definition subclasses (User, Agent, Simulator, UserInfo, etc.) have been implemented for reference-based prompt construction as shown in Appendix G.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The modular APPL functions for the ToolEmu agent prompt (global_defs, env_setup, tool_specification, agent_task_desc, agent_scratchpad, agent_format_instruction) have been implemented using prompt compositors for structured hierarchical formatting.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the feature comparison between APPL and existing prompt languages (LMQL, Guidance, SGLang).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan covers all key differentiating features of APPL from Table 1: automatic prompt capturing, automatic context passing, promptify tool, prompt compositor, Python-native generation output retrieval, generation without side-effects, and failure recovery.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The generation-without-side-effects feature has been implemented in gen(), allowing LLM generation calls that do not write results back to the prompt context when called without assignment.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Appendix B.1 to understand the Amdahl's law-based speedup estimation methodology used in Table 2.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The local SRT benchmark experiments have been configured to run on an NVIDIA RTX 3090 GPU with 24 GiB memory using SGLang's SRT backend for LLAMA-7b.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The execution outcomes confirm that actual speedup ratios in Table 2 approximately match the estimated speedups derived from Amdahl's law across the four parallelization experiments.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2, Appendix B.1"
+  }
+]

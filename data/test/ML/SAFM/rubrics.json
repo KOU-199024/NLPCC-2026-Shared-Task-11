@@ -1,0 +1,506 @@
+[
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the two-stage overview of SAFM (decision stage and tuning stage).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the decision stage, including the warmup procedure and architecture search procedure.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Equation (1) to understand how the hidden state h_n^l is computed as a weighted average of all candidate adapter outputs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The agent has read Equation (2) to understand how the weight vector λ^l is initialized using the sparse factor α and reuse factor β via softmax.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 completely to understand the tuning stage, including the pseudo-replay mechanism and the layer-wise loss.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The agent has read Equations (3) and (4) to understand how the layer-wise loss is computed as cosine similarity between adjacent adapter hidden states and summed across all layers.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equations 3, 4"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the two experimental scenarios (similar and dissimilar) and the datasets used in each.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to check all implementation details: GPT-2 backbone, AdamW optimizer, learning rate 1.75e-4, batch size 8, decision stage epochs 6 (3 warmup + 3 AS), tuning stage epochs 12, α=0.11, β=0.08, no-AS layers, pseudo-replay rate 0.2, and layer-wise loss weights.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the main results comparing SAFM with all baselines on Score, BWT, and learnable parameters across both scenarios.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the ablation study comparing ACM, SAFM (w/o layer-wise), and SAFM across all eight task orders.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the ablation study on different pseudo-sample ratios (0.1, 0.2, 0.5, 0.8) for SAFM versus ACM at ratio 0.2.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to check the ablation study on the effect of fixing no architecture search (no-AS) in specific adapter layers.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Table 6 to check the scale-up experiments with different backbone model sizes (GPT-2 124M, 355M, 774M, and Llama3-8B).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The agent has read Appendix C (Table 8) to understand all eight task orders used in the similar (Orders 1-4) and dissimilar (Orders 5-8) scenarios.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C, Table 8"
+  },
+  {
+    "criteria": "The plan includes implementing SAFM as a two-stage framework: a decision stage (warmup + architecture search) followed by a tuning stage (pseudo-replay + layer-wise loss).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes three types of adapter candidates per layer: the empty adapter A_e, k unique prior adapters relabeled as μ^l = {μ_1^l, ..., μ_k^l}, and the newly initialized adapter A_n^l.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the warmup procedure: initializing a task-specific adapter set A_n = {A_n^1, ..., A_n^L} across all L transformer layers for each new task T_n.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the architecture search procedure: computing the weight vector λ^l using Equation (2) and selecting the candidate adapter with the highest weight as the final A_n^l for each layer.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the pseudo-replay mechanism: generating pseudo-samples P_i from each previously learned task T_i whose adapter is reused by the current task, and combining them with current task data D_n during the tuning stage.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes the layer-wise loss mechanism using cosine similarity between hidden states of adjacent adapter layers within the same task, as defined in Equations (3) and (4).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 3, 4"
+  },
+  {
+    "criteria": "The plan includes loading the similar scenario datasets: E2ENLG, RNNLG (restaurant, hotel, TV, laptop), SGD, TM19, TM20, spanning 14 domains with four task orders (Orders 1-4).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix C"
+  },
+  {
+    "criteria": "The plan includes loading the dissimilar scenario datasets: E2ENLG, RNNLG, WikiSQL, CNN/DailyMail, SGD, TM19, TM20, spanning 14 domains with four task orders (Orders 5-8).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix C"
+  },
+  {
+    "criteria": "The plan includes all 10 baseline methods: Finetune, EWC, LAMOL, InsCL, AdapterCL, Adapter+LAMOL, ACM, O-LoRA, SAPT, and Multi.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing evaluation metrics per task type: ACC for INTENT, JGA for DST, BLEU for NLG and Summarization, and EM for SQL Query Generation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The plan includes computing the two overall evaluation metrics: Average Score as (1/t) Σ R_{N,i} and BWT as (1/(t-1)) Σ (R_{N,i} - R_{i,i}).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The plan specifies using GPT-2 as the backbone with AdamW optimizer (lr=1.75e-4), batch size 8, sparse factor α=0.11, reuse factor β=0.08, and pseudo-replay rate 0.2.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes the ablation study variant SAFM (w/o layer-wise) which uses architecture search but omits the layer-wise loss.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes ablation experiments on pseudo-sample ratios (0.1, 0.2, 0.5, 0.8) tested on Order 1 (similar) and Order 5 (dissimilar).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The plan includes scale-up experiments comparing SAFM and ACM on GPT-2 (124M, 355M, 774M) and Llama3-8B, measuring scores after task 8 and task 10 in Order 1.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The adapter module has been implemented as a residual bottleneck adapter inserted after each transformer layer, following Houlsby et al. (2019).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The empty adapter A_e has been implemented as a pass-through module that produces zero contribution (no trainable parameters and no output transformation).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The warmup procedure has been implemented to initialize a new adapter set A_n = {A_n^1, ..., A_n^L} across all L transformer layers for each incoming task T_n before the architecture search.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The prior adapter relabeling step has been implemented: unique adapters from previous tasks at layer l are collected and relabeled as μ^l = {μ_1^l, ..., μ_k^l} where k ≤ t-1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The candidate adapter set c^l has been implemented to include the empty adapter A_e, the k relabeled prior adapters {μ_1^l, ..., μ_k^l}, and the newly initialized adapter A_n^l, forming k+2 candidates.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The hidden state computation has been implemented as Equation (1): h_n^l = λ_e^l × A_e(f_n^l(h_n^{l-1})) + Σ_{i=1}^{k} λ_i^l × μ_i^l(f_n^l(h_n^{l-1})) + λ_n^l × A_n^l(f_n^l(h_n^{l-1})).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The weight vector initialization has been implemented as Equation (2): λ_e^l = e^α/φ, λ_j^l = e^β/φ for j∈[1,k], and λ_n^l = e^{-β}/φ, where φ = e^α + k×e^β + e^{-β}.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The architecture search selection has been implemented: the adapter from c^l with the highest weight λ is selected as the final A_n^l for each layer, completing the adapter assignment for task T_n.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The ordering constraint α > β > 0 has been implemented so that λ_e^l ≥ λ_j^l > λ_n^l, biasing selection toward empty or reused adapters rather than a new adapter.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The sparse factor α=0.11 and reuse factor β=0.08 have been set as hyperparameters for the architecture search weight initialization.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The pseudo-replay mechanism has been implemented: a language model generates pseudo-samples P_i from each reused prior task T_i, which are combined with current task data D_n to update the shared adapter in the tuning stage.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The layer-wise loss per layer has been implemented as Equation (3): L_n^l = 0 if A_n^l = A_e, otherwise L_n^l = cos(h_n^l, h_n^{l-1}).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The total layer-wise loss has been implemented as Equation (4): L_n = Σ_{l=1}^{L} L_n^l, summing the per-layer cosine similarity losses across all L transformer layers.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The layer-wise loss weight has been implemented as 0.4 for the similar scenario and 0.1 for the dissimilar scenario when adding L_n to the total training loss.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The no-AS constraint has been implemented: for the similar scenario, layer 5 is excluded from architecture search (always uses a new adapter); for the dissimilar scenario, layer 6 is excluded.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The training schedule has been implemented with 6 epochs for the decision stage (3 warmup epochs followed by 3 architecture search epochs) and 12 epochs for the tuning stage.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The pseudo-replay rate has been implemented as 0.2, generating pseudo-samples equal to 20% of the current task's training data.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The GPT-2 backbone (124M parameters) has been loaded with L=12 transformer layers and d=768 embedding/hidden dimensionality.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Section 4.3"
+  },
+  {
+    "criteria": "The AdamW optimizer has been implemented with a learning rate of 1.75e-4 and batch size of 8 for both the decision and tuning stages.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The similar scenario datasets (E2ENLG, RNNLG with restaurant/hotel/TV/laptop domains, SGD, TM19, TM20) have been loaded and preprocessed for all 14 domains with train/valid/test splits per Table 7.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix B, Table 7"
+  },
+  {
+    "criteria": "The dissimilar scenario datasets (E2ENLG, RNNLG, WikiSQL, CNN/DailyMail, SGD, TM19, TM20) have been loaded and preprocessed for all 14 domains with train/valid/test splits per Table 7.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix B, Table 7"
+  },
+  {
+    "criteria": "All eight task orders (Orders 1-4 for similar, Orders 5-8 for dissimilar) have been implemented as specified in Table 8 in Appendix C.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C, Table 8"
+  },
+  {
+    "criteria": "The INTENT task evaluation has been implemented using Accuracy (ACC) to compare predicted intent against the ground truth intent.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The DST task evaluation has been implemented using Joint Goal Accuracy (JGA), requiring exact match of both intent keyword and its value against the gold truth.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The NLG and Summarization task evaluation has been implemented using the BLEU score to measure similarity between generated text and reference text.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The SQL Query Generation task evaluation has been implemented using Exact Match (EM), requiring the generated SQL query to exactly match the gold SQL query.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The Average Score metric has been implemented as Score = (1/t) Σ_{i=1}^{t} R_{N,i}, averaging the test results on all tasks after all tasks have been learned.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The Backward Transfer (BWT) metric has been implemented as BWT = (1/(t-1)) Σ_{i=1}^{t-1} (R_{N,i} - R_{i,i}), measuring the effect of learning new tasks on previous task performance.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "All 10 baselines have been implemented: Finetune, EWC, LAMOL, InsCL, AdapterCL, Adapter+LAMOL, ACM, O-LoRA, SAPT, and Multi (upper bound).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The ACM baseline has been implemented correctly including its adaptive module composition mechanism that decides whether to reuse or add a new adapter for each task.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The SAFM (w/o layer-wise) ablation variant has been implemented: SAFM with architecture search procedure but without the layer-wise loss during the tuning stage.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The pseudo-sample ratio ablation has been implemented with ratios {0.1, 0.2, 0.5, 0.8} for SAFM tested on Order 1 (similar) and Order 5 (dissimilar).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The no-AS layer index ablation has been implemented by fixing no AS at each of layers {3, 5, 7, 9} for Order 1 and {2, 4, 6, 8} for Order 5, with a 'Null' baseline using no fixed no-AS layer.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The scale-up experiments have been implemented with GPT-2-medium (355M) and GPT-2-large (774M) as backbone models, comparing SAFM and ACM on Order 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The Llama3-8B scale-up experiment has been implemented for comparing SAFM and ACM on the task sequence in Order 1, reporting scores and learnable parameters at task 8 and task 10.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The learnable parameter count has been tracked and reported for each method, measuring total trainable parameters across all adapter modules accumulated over the task sequence.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The main SAFM experiments on the similar scenario (Orders 1-4) have been executed successfully without errors, producing Score, BWT, and learnable parameter counts.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The main SAFM experiments on the dissimilar scenario (Orders 5-8) have been executed successfully without errors, producing Score, BWT, and learnable parameter counts.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "All 10 baseline methods have been run successfully on both the similar and dissimilar scenarios, completing the full comparison in Table 1.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The ablation study experiments (ACM, SAFM w/o layer-wise, and full SAFM) have been executed successfully across all four task orders for both scenarios, reporting Score, BWT, and learnable parameters per order.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The pseudo-sample ratio ablation experiments with ratios {0.1, 0.2, 0.5, 0.8} have been executed successfully on Order 1 and Order 5.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The no-AS layer index ablation experiments have been executed successfully for ACM and SAFM across all selected layer indices in Order 1 (similar) and Order 5 (dissimilar).",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The scale-up experiments with GPT-2 (124M, 355M, 774M) and Llama3-8B have been executed successfully for both SAFM and ACM in Order 1, reporting scores and parameter counts at task 8 and task 10.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: SAFM achieves Score 44.55% (±0.30) and BWT 0.60% (±0.84) with 14.88M learnable parameters in the similar scenario.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: SAFM achieves Score 51.38% (±0.12) and BWT 0.57% (±0.14) with 15.21M learnable parameters in the dissimilar scenario.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: SAFM is the only method to achieve positive BWT in both scenarios (0.60 and 0.57), with all baselines including AdapterCL showing non-positive BWT.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: SAFM achieves superior or comparable Score compared to AdapterCL (44.03 similar, 50.82 dissimilar) while using approximately 59% fewer learnable parameters (14.88M vs 25.06M).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: SAFM (w/o layer-wise) outperforms ACM across all task orders in both scenarios while using only 57.7%-70.2% of ACM's learnable parameters.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Full SAFM (with layer-wise loss) outperforms SAFM (w/o layer-wise) across all task orders while using fewer parameters, confirming the positive impact of layer-wise loss.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: SAFM with only 0.1 pseudo-sample ratio achieves Score 42.71 (Order 1) and 51.43 (Order 5), outperforming ACM with 0.2 ratio (41.51 and 48.90).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: SAFM performance consistently improves as pseudo-sample ratio increases from 0.1 to 0.8 in both Order 1 and Order 5.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: Both ACM and SAFM show improved performance as the no-AS layer index increases in both scenarios, with the Null setting (no fixed no-AS) as the performance lower bound.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: SAFM's learning curve in Order 5 is consistently above all compared methods across all tasks, confirming its superior continual learning performance.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: SAFM consistently outperforms ACM on all GPT-2 model sizes (124M, 355M, 774M) at both task 8 and task 10 in Order 1, with SAFM using significantly fewer learnable parameters.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: For Llama3-8B at task 8 in Order 1, SAFM achieves Score 42.78 with 1031.1M parameters versus ACM's Score 20.95 with 5279.3M parameters, demonstrating SAFM's superiority on large models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  }
+]

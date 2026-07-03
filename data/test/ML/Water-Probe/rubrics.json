@@ -1,0 +1,452 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the definitions of LLMs, watermark rules, N-Gram based watermarking (Definition 3, Equation 2), Fixed-Key-List based watermarking (Definition 4, Equation 3), and the black-box watermark identification problem (Definition 5).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand why watermarked LLM identification is theoretically possible, including the concept of distortion-free watermarks (Definition 6, Equation 4) and Observation 1 (distributional difference of watermarked LLMs).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the three-step pipeline of the Water-Probe algorithm: constructing correlated prompts (Equation 5), sampling with simulated fixed watermark keys (Equation 6), and analyzing cross-prompt watermark consistency via rank transformation and z-test (Equations 9–10).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand the difference between Water-Probe-v1 (fixed prefix approach, Prompt 1) and Water-Probe-v2 (random prefix approach, Prompt 2) for constructing prompts that simulate repeated sampling with the same watermark key.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the experiment setup, including the 8 tested watermarking algorithms with their hyperparameters, the 9 tested LLMs, and the Water-Probe parameter settings (µ = 0.1, 3 repetitions, temperature = 1, W = 10^4 samples).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the main watermarked LLM identification results showing detection similarities for 9 LLMs across 8 watermarking conditions using both Water-Probe-v1 and Water-Probe-v2.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the further analysis on the influence of sampling temperature (Figure 3 left) and sampling number (Figure 3 right) on Water-Probe performance using Llama2-7B.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Section 5 to understand the Water-Bag strategy for enhancing watermark imperceptibility via multiple master keys and their inversions (Definition 7, Equations 11–12), and its comparison with Exp-Edit in Table 2.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the performance comparison of Water-Bag (varying bag sizes |K∪K̄| = 1, 2, 4, 8) and Exp-Edit (key lengths 420, 1024, 2048) in both watermarked LLM identification and watermarked text detection (F1, PPL, robustness, detection time).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Appendix C to understand the detailed prompts for simulating watermark keys, including the full list of 50 prefixes for Water-Probe-v1 (Prompt 3 and 4) and the specific prompt formats for Water-Probe-v2 with n=3 (Prompts 5 and 6) and n=5 (Prompts 7 and 8).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Appendix D to understand the complete pseudocode of the Water-Probe Algorithm 1, covering all steps from prompt construction to watermark detection.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D, Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Appendix E to understand the Water-Contrast algorithm for detecting global-fixed key (Unigram) watermarking using prior distribution from proxy LLMs (Equations 26–27, Prompt 9, Tables 3–4).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The agent has read Appendix G to understand the importance of rank transformation for stabilizing detection across different sampling temperatures by comparing z-score behavior with and without rank transformation (Figure 5).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix G"
+  },
+  {
+    "criteria": "The agent has read Appendix I to understand the comparison with Gloaguen et al. (2024), particularly how Water-Probe-v2 handles multinomial sampling for EXP-Edit (Equations 28–30) while the baseline method fails (Tables 9–10).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix I"
+  },
+  {
+    "criteria": "The agent has read Appendix L to understand the experiment testing Water-Probe-v2 on closed-source models (GPT-4o-mini, GPT-4o, GPT-3.5-turbo, Gemini-1.5-flash, Gemini-1.5-pro) at temperature 0.7 (Table 11).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix L"
+  },
+  {
+    "criteria": "The plan includes the implementation of N-Gram based watermarking algorithms (KGW with γ=0.5 and δ=2; Aar with N=1; KGW-Min with window size 4; KGW-Skip with window 3; DiPMark with α=0.45; γ-Reweight) using the MarkLLM framework.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The plan includes the implementation of Fixed-Key-List based watermarking algorithms (EXP-Edit and ITS-Edit, both with key length 420) using the MarkLLM framework.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The plan includes the loading of all 9 tested LLMs: Qwen2.5-1.5B, OPT-2.7B, Llama-3.2-3B, Qwen2.5-3B, Llama2-7B, Mixtral-7B, Qwen2.5-7B, Llama-3.1-8B, and Llama2-13B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the three-step Water-Probe pipeline: constructing correlated prompt pairs (Equation 5), sampling with simulated watermark keys (Equation 6), and computing average cross-prompt similarity with rank transformation (Equations 9–10).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes Water-Probe-v1 prompt construction using 50 fixed prefixes (as listed in Appendix C) where each prefix is prepended to two correlated questions to simulate repeated sampling with the same n-gram watermark key.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Appendix C"
+  },
+  {
+    "criteria": "The plan includes Water-Probe-v2 prompt construction using random prefix generation (n=3 with 1,040 combinations from A-Z × 0-9 × {cat,dog,tiger,lion}; n=5 additionally sampling from {apple,banana,orange} × {car,bus,truck}) with 10^4 samples for n=3 and 10^5 samples for n=5.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Appendix C"
+  },
+  {
+    "criteria": "The plan includes the z-test hypothesis testing with µ = 0.1, repeated 3 times to compute standard deviation σ, and the threshold: z < 4 for no watermark, 4 ≤ z ≤ 10 for low confidence, z > 10 for high confidence.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the Water-Bag strategy implementation with multiple master keys K = {K_1,...,K_n} and their inversions K̄ = {K̄_1,...,K̄_n}, randomly selecting K_j* from K∪K̄ for each generation (Equation 11), to be tested with bag sizes |K∪K̄| = 1, 2, 4, 8.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5, Definition 7"
+  },
+  {
+    "criteria": "The plan includes the Water-Contrast algorithm for detecting global-fixed key (Unigram) watermarking using prior distributions from 8 proxy LLMs (GPT2, OPT1.3B, OPT2.7B, Llama2-7B, Llama2-13B, Llama3-8.1B, Mixtral-7B, Qwen2.5-7B) and 10 random-number-sequence prompts (Prompt 9).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The plan includes the temperature robustness experiment using Llama2-7B with temperatures from 0.1 to 1.5, comparing z-scores of Water-Probe-v1 and v2 under KGW, EXP-Edit, and no-watermark conditions.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Figure 3"
+  },
+  {
+    "criteria": "The plan includes the sampling number experiment using Llama2-7B at temperature 1, comparing z-scores of Water-Probe-v1 and v2 with sample counts from 1,000 to 100,000 under KGW, EXP-Edit, and no-watermark conditions.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3, Figure 3"
+  },
+  {
+    "criteria": "The plan includes the comparison experiment with Gloaguen et al. (2024) on EXP-Edit using multinomial sampling (Equations 28–30), generating 1,000 samples of 200 tokens for Gloaguen's method and 10,000 samples of 5 tokens for Water-Probe-v2, using OPT-1.3B and Llama-7B for PPL.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix I"
+  },
+  {
+    "criteria": "The watermark rule F (Equation 1) has been implemented: P_M^F(y_i|x, y_{1:i-1}, k) = F(P_M(y_i|x, y_{1:i-1}), k), which modifies the LLM's probability distribution based on watermark key k.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The N-Gram based watermarking key derivation (Equation 2) has been implemented: k_i = f(K, y_{i-n:i-1}), ensuring consistent key assignment for the same n-token prefix.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The Fixed-Key-List based watermarking key selection (Equation 3) has been implemented: k_i = k_{((s+i-1) mod m)+1}, where the starting index s is randomly chosen for each generation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The KGW watermarking algorithm has been implemented with γ = 0.5 and δ = 2, partitioning the vocabulary into red/green lists based on the preceding token hash and adding bias δ to logits of green list tokens.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The Aar watermarking algorithm has been implemented with N = 1, generating a pseudo-random vector r_t from the preceding N-gram tokens and selecting the token i that maximizes r_t(i)^{1/p_t(i)} (exponential minimum sampling).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The KGW-Min watermarking algorithm has been implemented with window size 4, partitioning the vocabulary based on the minimum token ID within the 4-gram window of preceding tokens.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The KGW-Skip watermarking algorithm has been implemented with window size 3, partitioning the vocabulary based on the left-most token ID within the 3-gram window of preceding tokens.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The DiPMark watermarking algorithm has been implemented with α = 0.45, shuffling the probability vector using a preceding-token-based seed, discarding the left α portion, and amplifying remaining probabilities by 1/(1-α).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The γ-Reweight watermarking algorithm has been implemented, randomly shuffling the probability vector using a preceding-token seed, discarding the left half, and doubling the remaining probabilities.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The EXP-Edit watermarking algorithm has been implemented with key length 420, constructing a fixed pseudo-random vector list, randomly selecting a start index per generation, and using exponential minimum sampling with sequential vectors.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The ITS-Edit watermarking algorithm has been implemented with key length 420, constructing a fixed pseudo-random vector list and using inverse transform sampling (instead of exponential minimum sampling) sequentially from a random start index.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix F"
+  },
+  {
+    "criteria": "The highly correlated prompt construction (Step 1 of Water-Probe, Equation 5) has been implemented, producing prompt pairs x_1, x_2 where KL(P_M(·|x_1) || P_M(·|x_2)) ≤ ε by choosing questions with overlapping but non-identical answer spaces.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 5, Section 3.2"
+  },
+  {
+    "criteria": "The distribution estimation via repeated sampling (Equation 6) has been implemented: P̂_M^F(y|x_i, k_j) = (1/W) Σ_{w=1}^{W} 1[y^w_{i,j} = y], with W = 10^4 samples for main experiments.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The rank transformation has been implemented such that for a token y, R(P(y|x)) = |{y' ∈ V : P(y'|x) ≥ P(y|x)}|, and ΔR(x, k_m, k_n) = R(P̂_M^F(·|x, k_m)) - R(P̂_M^F(·|x, k_n)).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The average cross-prompt watermark consistency (Equation 9) has been implemented: S̄ = (1/N) Σ_{x_i≠x_j, k_m≠k_n} Sim(ΔR(x_i, k_m, k_n), ΔR(x_j, k_m, k_n)) using cosine similarity, where N = |X|(|X|-1)|K|(|K|-1).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The z-test for hypothesis testing (Equation 10) has been implemented: z = (S̄ - µ)/σ with µ = 0.1, σ estimated from 3 repeated runs, concluding watermark presence if z > 4.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 10, Section 4.1"
+  },
+  {
+    "criteria": "The complete Water-Probe Algorithm 1 has been implemented as described in Appendix D: iterating over prompt-key pairs, counting output tokens, estimating distributions, applying rank transformation, computing S̄, and performing the z-test.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Appendix D"
+  },
+  {
+    "criteria": "The Water-Probe-v1 prompt template has been implemented using 50 fixed prefixes (e.g., 'Y three lion', 'G three lion', etc.) as listed in Appendix C, instructing the LLM to generate the fixed prefix before answering one of two correlated questions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Appendix C"
+  },
+  {
+    "criteria": "The Water-Probe-v2 prompt template for n=3 has been implemented, instructing the LLM to first randomly sample a letter from A-Z, a digit from zero-nine, and an animal from {cat, dog, tiger, lion} before answering one of two correlated questions (Prompts 5 and 6 format).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Appendix C, Prompt 5 and 6"
+  },
+  {
+    "criteria": "The Water-Probe-v2 prompt template for n=5 has been implemented, extending the n=3 template with two additional random-word choices ({apple, banana, orange} and {car, bus, truck}), requiring 10^5 total samples (Prompts 7 and 8 format).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C, Prompt 7 and 8"
+  },
+  {
+    "criteria": "The two correlated question prompts have been implemented with highly overlapping answer spaces (e.g., 'Name a country with a large population' and 'Name a country with a large area') with format examples to enforce single-token or short answers.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Appendix C"
+  },
+  {
+    "criteria": "The Water-Bag strategy (Definition 7, Equation 11) has been implemented using KGW as the base algorithm: for each token generation, a master key K_j* is randomly sampled from the combined set K∪K̄ (original + inverted keys), with bag sizes |K∪K̄| = 1, 2, 4, 8.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 11, Section 5"
+  },
+  {
+    "criteria": "The inverted key calculation (Equations 12, 31–32) has been implemented: F(p, f(K̄_j, y_{i-n:i-1})) = 2p - q, where p is the original model distribution and q = F(p, f(K_j, y_{i-n:i-1})), ensuring the average effect of K_j and K̄_j equals the original distribution.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 12, Appendix M"
+  },
+  {
+    "criteria": "For the Water-Bag strategy, watermarked text detection has been implemented using the maximum detection score across all master keys in the bag, classifying text as watermarked if this maximum exceeds the detection threshold.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The Water-Contrast algorithm (Appendix E, Equation 26) has been implemented: S̄ = Σ_{P_i≠P_j} Sim(R(P_M(·|P_i) - P_prior(·|P_i)), R(P_M(·|P_j) - P_prior(·|P_j))), comparing the target LLM's output differences from a prior distribution across 10 random-number-sequence prompts.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 26, Appendix E"
+  },
+  {
+    "criteria": "The prior distribution for Water-Contrast (Equation 27) has been implemented as P_prior(·|p_i) = (1/N) Σ_{j=1}^{N} P_{M_j}(·|p_i) using 8 proxy LLMs (GPT2, OPT1.3B, OPT2.7B, Llama2-7B, Llama2-13B, Llama3-8.1B, Mixtral-7B, Qwen2.5-7B).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 27, Appendix E"
+  },
+  {
+    "criteria": "The 10 prompts for global-fixed key watermarking detection (Prompt 9) have been implemented as random digit-sequence generation tasks (e.g., 'Please generate random number sequence between 0 to 9: 2,3,9,8,...').",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix E, Prompt 9"
+  },
+  {
+    "criteria": "The watermark text detection metrics for Table 2 have been implemented: F1-score detection on C4 dataset (OPT-2.7B generating 200 tokens with 30-token prompts), PPL computation using Llama2-7B, robustness assessment via GPT-3.5 rewriting, and per-text detection time measurement.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Table 2"
+  },
+  {
+    "criteria": "The multinomial sampling variant of EXP-Edit (Equation 30) has been implemented: P(i) ∝ (ξ_i^(j))^{1/p_i}, where temperature-scaled probabilities p_i are computed via Equation 28, for comparison with Gloaguen et al. (2024)'s argmax method (Equation 29).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equations 28-30, Appendix I"
+  },
+  {
+    "criteria": "The main watermarked LLM identification experiment (Table 1) has been executed successfully for all 9 LLMs × 9 conditions (Non, KGW, Aar, KGW-Min, KGW-Skip, DiPmark, γ-Reweight, EXP-Edit, ITS-Edit) using both Water-Probe-v1 and Water-Probe-v2, with 3 repetitions each.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The Water-Bag and Exp-Edit comparison experiment (Table 2) has been executed successfully, testing Water-Probe-v1, Water-Probe-v2(n=3), and Water-Probe-v2(n=5) across 4 bag sizes and 3 key lengths, plus watermark text detection metrics on the C4 dataset.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The sampling temperature robustness experiment (Figure 3 left) has been executed successfully, recording z-scores of Water-Probe-v1 and Water-Probe-v2 for KGW, EXP-Edit, and no-watermark conditions on Llama2-7B across temperatures from 0.1 to 1.5.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The sampling number experiment (Figure 3 right) has been executed successfully, recording z-scores of Water-Probe-v1 and Water-Probe-v2 for KGW, EXP-Edit, and no-watermark conditions on Llama2-7B with sample counts from 1,000 to 100,000.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The global-fixed key (Unigram) watermarking identification experiment (Tables 3 and 4) has been executed successfully using Water-Contrast on 8 LLMs, comparing Unigram-watermarked vs. unwatermarked conditions with both ensemble and single-proxy prior distributions.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Tables 3, 4, Appendix E"
+  },
+  {
+    "criteria": "The rank transformation ablation experiment (Figure 5) has been executed successfully, recording z-scores across temperatures without rank transformation to demonstrate its importance for stabilizing detection of unwatermarked LLMs.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 5, Appendix G"
+  },
+  {
+    "criteria": "The EXP-Edit multinomial sampling comparison with Gloaguen et al. (2024) (Tables 9 and 10) has been executed using OPT-1.3B with 1,000 samples of 200 tokens for Gloaguen's method and 10,000 samples of 5 tokens for Water-Probe-v2, across temperatures 0.2 to 1.0.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Tables 9, 10, Appendix I"
+  },
+  {
+    "criteria": "The closed-source model testing (Table 11) has been executed on GPT-4o-mini, GPT-4o, GPT-3.5-turbo, Gemini-1.5-flash, and Gemini-1.5-pro using Water-Probe-v2 with temperature 0.7 and API versions as of November 2024.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Table 11, Appendix L"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 (Water-Probe-v1): all N-gram watermarked LLMs achieve high average similarity (KGW ≥0.33, Aar ≥0.75, KGW-Min ≥0.31, KGW-Skip ≥0.38, DiPmark ≥0.43, γ-Reweight ≥0.43), while non-watermarked and Fixed-Key-List watermarked LLMs show similarity ≤0.09.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 (Water-Probe-v2): all 9 LLMs achieve high average similarity for EXP-Edit (≥0.26) and ITS-Edit (≥0.60), and reasonable similarity for all N-gram watermarks (≥0.19 for KGW-Skip), while non-watermarked LLMs show similarity ≤0.09.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: the Aar algorithm achieves the highest average detection similarity (0.854 for v1, 0.813 for v2) due to its most pronounced perturbation, while Water-Probe-v1 yields stronger results for N-gram watermarks than Water-Probe-v2 given equal sample counts.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Water-Probe-v1 fails to detect Water-Bag for bag sizes ≥ 2 (similarity ~0.02–0.05), and Water-Probe-v2(n=5) also fails for bag size 8 (similarity ~0.07), confirming Water-Bag's enhanced imperceptibility.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: Water-Bag maintains watermark text detection F1-score of 1.0 for all bag sizes, with detection time scaling linearly from 0.045s (size 1) to 0.31s (size 8), while Exp-Edit key-length 1024 and 2048 incur much higher detection times (108.5s and 194.21s).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3 (left): both Water-Probe-v1 and v2 maintain high z-scores for watermarked LLMs and low z-scores for unwatermarked LLMs across temperatures 0.1–1.5, though unwatermarked detection shows fluctuation at T < 0.5.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3 (right): Water-Probe-v1 achieves stable detection with ~1,000 samples, while Water-Probe-v2 requires at least 10^4 samples; watermarked LLM z-scores generally increase with sample count.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Tables 3 and 4 (Appendix E): Water-Contrast correctly identifies Unigram-watermarked LLMs with high z-scores (all ≥8.96) using the ensemble prior, while unwatermarked LLMs show z-scores ≤4.54.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Tables 3, 4, Appendix E"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5 (Appendix G): without rank transformation, unwatermarked LLM z-scores are significantly elevated (especially at low temperatures), confirming that rank transformation is essential for accurate identification.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 5, Appendix G"
+  },
+  {
+    "criteria": "The execution outcomes match Tables 9 and 10 (Appendix I): under multinomial sampling (Table 10), Gloaguen et al.'s method yields p-values ≥ 0.33 for temperatures ≥ 0.3, indicating failure, while Water-Probe-v2 maintains p-values < 0.001 across all temperatures.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables 9, 10, Appendix I"
+  },
+  {
+    "criteria": "The execution outcomes match Table 11 (Appendix L): all tested closed-source models (GPT-4o-mini, GPT-4o, GPT-3.5-turbo, Gemini-1.5-flash, Gemini-1.5-pro) receive negative z-scores (all < 0), providing evidence that none of these services are watermarked.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 11, Appendix L"
+  }
+]

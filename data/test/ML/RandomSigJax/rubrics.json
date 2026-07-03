@@ -1,0 +1,236 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 to understand the R-CDE baseline model: the Euler-type recursion for the hidden state and the continuous-time CDE formulation (Eq. 8), including the role of random Gaussian matrices A_i and the 1/sqrt(N) scaling.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1, Eq. 8"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the RF-CDE model: the random Fourier feature lift of the input path, the RF-CDE differential equation (Eq. 9), and the Euler discretization with scaling parameters sigma_A, sigma_b, and sigma_0 (Eq. 10).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2, Eq. 9, Eq. 10"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand the R-RDE model: the Gamma_A algebra homomorphism (Eq. 11), the linear development S_t^A (Eq. 12), the Random RDE formulation (Eq. 15), and the log-ODE discretization using log-signatures and Lie brackets (Eq. 16).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3, Eq. 11, Eq. 15, Eq. 16"
+  },
+  {
+    "criteria": "The agent has read Section 4 and Appendix C.1 to understand the full experimental setup: UEA archive, preprocessing (min-max scaling to [-1,1], piecewise-linear interpolation, resampling to length 200, time and basepoint augmentation, optional lead-lag transform), SVM/LinearSVM readout, 3 runs per dataset with median accuracy, and single NVIDIA RTX 3090 GPU.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4, Appendix C.1"
+  },
+  {
+    "criteria": "The plan outlines implementation of the Random Fourier Feature map phi_mu^F (Eq. 4) that maps R^d to R^{2F} using sampled frequencies omega_j ~ Gaussian, producing (cos(omega_j^T x), sin(omega_j^T x)) components scaled by 1/sqrt(F).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Eq. 4"
+  },
+  {
+    "criteria": "The plan outlines implementation of the R-CDE model (Eq. 8): hidden state update driven by input increments using random Gaussian matrices A_i ~ xi_N scaled by 1/sqrt(N), with a nonlinearity phi applied to the state.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Eq. 8"
+  },
+  {
+    "criteria": "The plan outlines implementation of the RF-CDE discretization (Eq. 10): Euler update using lifted path increments Delta X_t^{F,i}, with random matrices sigma_A * A_i and bias sigma_b * b_i, and initial state sigma_0 * z_0.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Eq. 10"
+  },
+  {
+    "criteria": "The plan outlines implementation of the R-RDE log-ODE discretization (Eq. 16): state update using Pi_B applied to log-signature increments log_m(X_{t_i, t_{i+1}}), where B^(w) are nested Lie brackets of random matrices.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Eq. 16"
+  },
+  {
+    "criteria": "The plan includes the full preprocessing pipeline for UEA datasets: loading train/test splits, min-max scaling to [-1, 1], piecewise-linear interpolation, resampling sequences to length 200, and applying time and basepoint augmentation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "The plan specifies grid search hyperparameter ranges: sigma_A in {0.1, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0}, sigma_B in {0.1, 0.25, 0.5}, sigma_0 in {0.0, 0.5, 1.0, 1.5}, activation in {id, tanh, ReLU}, signature level M in {2,3,4,5}, and F in {32, 64, 128, 256, 512, 1024} for RF-CDE.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "The Random Fourier Feature map phi_mu^F is implemented: frequencies omega_j are sampled i.i.d. from a Gaussian distribution, and the feature map produces (cos(omega_j^T x), sin(omega_j^T x)) concatenated and scaled by 1/sqrt(F), mapping R^d to R^{2F}.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 4"
+  },
+  {
+    "criteria": "The R-CDE forward pass (Eq. 8) is implemented: random Gaussian matrices A_i are drawn i.i.d. from xi_N, the hidden state evolves via Z_{t+1} = Z_t + (1/sqrt(N)) * sum_i A_i * phi(Z_t) * Delta x_t^i, with configurable nonlinearity phi.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 8"
+  },
+  {
+    "criteria": "The RF-CDE discretization (Eq. 10) is implemented: the driving signal x_t is first lifted through phi_mu^F to get X_t^F in R^{2F}, then the Euler update Delta Z_t = (1/sqrt(N)) * sum_i (sigma_A * A_i * phi(Z_t) + sigma_b * b_i) * Delta X_t^{F,i} is applied, with initial state Z_0 = sigma_0 * z_0.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 10"
+  },
+  {
+    "criteria": "The Gamma_A algebra homomorphism (Eq. 11) is implemented for R-RDE: A_w := (1/N^{k/2}) * A_{i1} * ... * A_{ik} for word w = i1...ik, and Gamma_A(G) = sum_{w in W_d} A_w * <G, w>, extended multiplicatively.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Eq. 11"
+  },
+  {
+    "criteria": "The log-ODE discretization for R-RDE (Eq. 16) is implemented: at each time step, the state is updated as Z_{t_{i+1}} = Z_{t_i} + Pi_B(X_{t_i, t_{i+1}}) * phi(Z_{t_i}), where Pi_B maps the log-signature increment via a sum over a Hall/Lyndon basis of Lie words, with B^(w) = (1/N^{k/2}) * nested Lie brackets of B_i matrices.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Eq. 16"
+  },
+  {
+    "criteria": "Log-signatures are computed and used as input to the R-RDE: given a rough path X, the log-signature log_m(X_{t_i, t_{i+1}}) of the path increment over each interval is computed using a truncated Hall/Lyndon basis at level m.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The linear readout is implemented as SVM or LinearSVM trained on the final hidden state Z_T^N extracted by the reservoir model, with no backpropagation through the random dynamics (training only the linear readout layer).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The preprocessing pipeline for UEA classification is implemented: datasets are loaded with their pre-specified train/test splits, min-max scaled to [-1, 1], sequences are resampled to length 200 via piecewise-linear interpolation, and time and basepoint augmentation are applied.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "The optional lead-lag transform is implemented and tuned via grid search: for each input time series x_t, the lead-lag version interleaves x_t and x_{t-1} to create a 2d-dimensional path.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "Feature normalization is implemented as an optional step tunable via grid search: after extracting reservoir features Z_T^N, the features are optionally normalized before passing to the SVM classifier.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "The RFSF-DP baseline (Diagonal Projection variant of Random Fourier Signature Features, Toth et al. 2025) is implemented: random Fourier features are applied pointwise to the path, then the truncated signature is computed, with diagonal projection to control dimensionality.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4, Eq. 5"
+  },
+  {
+    "criteria": "The RFSF-TRP baseline (Tensorized Random Projection variant) is implemented: random Fourier features are applied pointwise to the path, then the truncated signature is computed with tensorized random projection.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The SigPDE baseline with RBF base kernel is implemented or interfaced: the signature kernel is computed as the solution to a Goursat PDE (Eq. 3), then used in an SVM.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4, Eq. 3"
+  },
+  {
+    "criteria": "The hyperparameter grid search is implemented: for each model, the specified hyperparameter grids are swept (sigma_A, sigma_b, sigma_0, activation, signature level M, feature count F, Fourier frequency scale), and the best configuration is selected on validation accuracy.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "Fractional Brownian motion (fBm) data generation is implemented for the Hurst exponent classification task: using the Davies-Harte method, for each H in {0.05, 0.15, ..., 0.75} (8 classes), 50 training and 25 test samples are generated of length 256, stacking 3 independent realisations for d=3.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.5, Eq. 26"
+  },
+  {
+    "criteria": "The V2 standardization variant for fBm classification is implemented: per-sample, per-dimension normalization (Eq. 27) subtracts the sample mean and divides by the sample standard deviation, forcing the model to exploit only geometric/temporal structure.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.5, Eq. 27"
+  },
+  {
+    "criteria": "The missing data experiment is implemented: a binary mask M is generated by independently removing entries of the test path with probability p (p=20% and p=40%), missing values are imputed via linear interpolation along the time axis, and models are trained on clean data and evaluated on corrupted-interpolated data.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.4"
+  },
+  {
+    "criteria": "The JAX-based implementation (RandomSigJax) runs correctly: all random differential equation models (R-CDE, RF-CDE, R-RDE) are implemented in JAX and leverage GPU acceleration for efficient matrix operations and feature extraction.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 1.2, Appendix C.1"
+  },
+  {
+    "criteria": "The UEA time series classification experiment is executed for all 16 datasets with N=250 features, comparing R-CDE, RF-CDE, R-RDE, RFSF-DP, RFSF-TRP, and SigPDE, running each model 3 times and reporting median test accuracy.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The UEA classification ablation experiments are executed for N=64 and N=500 features, repeating the full protocol for all random-feature models and reporting mean test accuracy per dataset.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Appendix C.2, Tables 4 and 5"
+  },
+  {
+    "criteria": "The Hurst exponent classification experiment is executed for both V1 (raw fBm) and V2 (standardized) settings, with N=64 and N=100 features, comparing R-CDE, RF-CDE, R-RDE, RFSF-DP, RFSF-TRP, NCDE, and NRDE.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.2, Table 3"
+  },
+  {
+    "criteria": "The missing data robustness experiment is executed on UEA datasets with N=64 features under 20% and 40% corruption rates, reporting per-dataset accuracy and average accuracy % decrease.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.3, Appendix C.4, Tables 7 and 8"
+  },
+  {
+    "criteria": "The UEA classification results (Table 2, N=250) match the paper: RF-CDE achieves average accuracy of 0.741 and average rank of 3.062, R-RDE achieves 0.708, RFSF-DP 0.726, RFSF-TRP 0.725, SigPDE 0.738, and R-CDE 0.695.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The per-dataset UEA classification results (Table 2) are approximately reproduced: RF-CDE performs particularly well on tasks such as Libras (0.911), NATOPS (0.944), and StandWalkJump (0.667), while R-RDE leads on UWaveGestureLibrary (0.903).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The Hurst exponent classification results (Table 3) are approximately reproduced: R-RDE achieves the best accuracy in all four settings (V1-N=64: 0.955, V1-N=100: 0.950, V2-N=64: 0.735, V2-N=100: 0.730), and R-RDE outperforms RFSF and neural baselines in the challenging V2 regime.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The N=64 UEA ablation results (Table 4) are approximately reproduced: RF-CDE achieves the best average accuracy (0.713) and best average rank (2.50) at low feature budget, outperforming RFSF-DP (0.687) and RFSF-TRP (0.701) by a larger margin than at N=250.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4, Appendix C.2"
+  },
+  {
+    "criteria": "The N=500 UEA ablation results (Table 5) are approximately reproduced: RFSF-DP and RFSF-TRP benefit more from increased features (0.747 and 0.737 respectively), while RF-CDE shows diminishing returns (0.733), and R-RDE shows a slight lift (0.711).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5, Appendix C.2"
+  },
+  {
+    "criteria": "The missing data robustness results (Tables 7 and 8) are approximately reproduced: RF-CDE shows the most stable performance under corruption (average accuracy decrease of ~2.7% at 20% missing and ~5.7% at 40%), with better average rank than RFSF and R-RDE in both regimes.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables 7 and 8, Section 4.3"
+  },
+  {
+    "criteria": "The computational complexity results (Table 1) are consistent with the implementation: RF-CDE has O(B*l*F*(N^2+d)) feature extraction cost, R-CDE has O(B*l*N^2*d), and R-RDE has O(N^2*d^M*(B*l+N)), where the N^3 component in R-RDE is independent of batch size.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  }
+]

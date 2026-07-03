@@ -1,0 +1,446 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the SFT objective (Equation 1-2) and importance sampling framework (Equations 3-5).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand the ATLANTIS method, including the derivation of the importance-weighted loss and the proportionality assumption used to estimate the sampling ratio.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 completely to understand the full training procedure: precomputing influence weights from p_b^L and p_b^S before training, then applying weighted loss each step.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 2.3 to understand the concept of influence weights (p_r(y|x)/p_b^S(y|x)) and the relationship to proxy-tuning (Equation 8-9).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the specific model triplets (p_b^L, p_b^S, p_r) for each model family used in experiments.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand all evaluation benchmarks: Open LLM Leaderboard 2 (BBH, GPQA, IFEval, MATH-Hard, MMLU-Pro, MUSR), TruthfulQA, MT-Bench, AlpacaEval, and Arena-Hard-Auto.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the main experimental results comparing ATLANTIS vs SFT across Llama2-13B, Qwen2-7B, and Gemma2-9B on all benchmarks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the data selection experiment settings and results with IFD and Superfiltering at sample rates 0.05, 0.10, and 0.15.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to understand the ATLANTIS-cross experiment design and the results of cross-model-family influence weight transfer.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Table 5 to understand the large-scale model experiments with Qwen2-72B and Gemma2-27B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The agent has read Appendix A (Table 6) to understand all implementation details including hardware, training steps, batch size, learning rate, gradient accumulation, optimizer, scheduler, and DeepSpeed configuration.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The plan includes implementing the standard SFT loss (Equation 2) as the baseline training objective.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The plan includes implementing the ATLANTIS loss function (Equation 7) by multiplying log p_b^L(y|x) by the precomputed ratio p_b^L(y|x)/p_b^S(y|x).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The plan includes precomputing per-sample influence weights W = {p_b^L(y_i|x_i)/p_b^S(y_i|x_i) * p_r(y_i|x_i)} over the entire training dataset before the training loop begins.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes setting up three model roles for each experiment: large base model p_b^L, small base model p_b^S, and reference (finetuned) model p_r as specified in Table 1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes loading and preparing the OpenHermes-2.5 training dataset for instruction tuning.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes all training hyperparameters from Table 6 differentiated by model size: training steps (60K/30K/15K), learning rate (2e-5/5e-6/5e-7), batch size (2/1/1), and gradient accumulation steps (8/8/4).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The plan includes configuring DeepSpeed ZeRO Stage 3 with both optimizer offload and parameter offload enabled.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The plan includes setting up lm-evaluation-harness to evaluate all six Open LLM Leaderboard 2 tasks (BBH, GPQA, IFEval, MATH-Hard, MMLU-Pro, MUSR) and TruthfulQA (MC1, MC2).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes configuring MT-Bench evaluation in both single-mode (scoring) and pairwise mode (win rate), AlpacaEval win rate evaluation, and Arena-Hard-Auto score evaluation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes conducting data selection experiments with IFD and Superfiltering at sample rates 0.05, 0.10, and 0.15 for Qwen2-7B and Gemma2-9B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes implementing ATLANTIS-cross by computing influence weights from a different model family than the one being finetuned (Qwen2 weights for Gemma2 training and vice versa).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes running scale experiments with Qwen2-72B (p_b^L=72B Base, p_b^S=7B Base, p_r=7B-Instruct) and Gemma2-27B (p_b^L=27B Base, p_b^S=9B Base, p_r=9B-it).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1, Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing proxy-tuning (Equation 9) as a comparison baseline by logit manipulation: softmax(s_b^L + s_r - s_b^S).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 9, Appendix B"
+  },
+  {
+    "criteria": "The standard SFT loss (Equation 2) has been implemented as: L(theta) = -sum_{x,y} p_d(y|x) log p_theta(y|x), computing cross-entropy only on output tokens y.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code computes token-level log probabilities from the large base model p_b^L and small base model p_b^S over all training samples (x_i, y_i) prior to training.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The per-sample influence weight W_i = p_b^L(y_i|x_i)/p_b^S(y_i|x_i) * p_r(y_i|x_i) has been precomputed over the full training dataset and stored before the training loop.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The ATLANTIS loss function (Equation 7) has been implemented as L = -sum_{i in B} W_i/|B| * log p_theta(y_i|x_i), where W_i is the precomputed fixed weight for each sample.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The proportionality assumption from Section 2.2 has been correctly implemented: p*(y|x)/p_r(y|x) is approximated by p_b^L(y|x)/p_b^S(y|x), derived from the proxy assumption p*(y|x)/p_b^L(y|x) ∝ p_r(y|x)/p_b^S(y|x).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The training loop from Algorithm 1 has been implemented: initialize p_theta_0 from p_b^L, iterate M steps fetching batches B and corresponding precomputed weights W_B, update via gradient of weighted loss.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The influence weight visualization (Figure 2) has been implemented to show similar weight distributions across Gemma-2-2B, Gemma-2-9B, Llama-2-7B, Qwen2-1.5B, Qwen2-7B models.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The Llama2 model triplet has been correctly loaded: p_b^L = Llama2-13B Base, p_b^S = Llama2-7B Base, p_r = Llama2-7B-chat.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The Qwen2-7B model triplet has been correctly loaded: p_b^L = Qwen2-7B Base, p_b^S = Qwen2-1.5B Base, p_r = Qwen2-1.5B-Instruct.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The Gemma2-9B model triplet has been correctly loaded: p_b^L = Gemma2-9B Base, p_b^S = Gemma2-2B Base, p_r = Gemma2-2B-it.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The OpenHermes-2.5 dataset has been loaded with instruction-tuning format (chat template applied) for computing token-level log probabilities and model training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The learning rates from Table 6 have been correctly implemented by model size: 2e-5 for models ≤13B, 5e-6 for 27B, 5e-7 for 72B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The training steps from Table 6 have been correctly implemented by model size: 60K for models ≤13B, 30K for 27B, 15K for 72B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The per-device batch size from Table 6 has been correctly implemented: 2 for models ≤13B, 1 for 27B and 72B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The gradient accumulation steps from Table 6 have been correctly implemented: 8 for models ≤27B, 4 for 72B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The AdamW optimizer has been configured with random seed 0 for reproducibility.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The learning rate scheduler has been implemented with linear warmup and linear decay: warmup steps of 6K for ≤13B, 3K for 27B, and 1.5K for 72B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "DeepSpeed ZeRO Stage 3 has been configured with optimizer_offload=True and parameter_offload=True to enable training of large models.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The correct GPU hardware configuration has been used: 16×A800 for models ≤13B, 32×A800 for 27B, 64×A800 for 72B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The Python package versions have been set correctly: accelerate==0.30.0, deepspeed==0.13.5, torch==2.1.0+cu118, transformers==4.43.4 for Gemma2 and 4.40.2 for others.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The lm-evaluation-harness evaluation pipeline has been implemented to run all six Open LLM Leaderboard 2 tasks (BBH, GPQA, IFEval, MATH-Hard, MMLU-Pro, MUSR) on trained models.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The TruthfulQA evaluation has been implemented with lm-evaluation-harness to report both MC1 and MC2 accuracy metrics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The MT-Bench evaluation has been implemented in both single mode (LLM scoring) and pairwise mode (win rate against a baseline) to match the paper's reported metrics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The AlpacaEval evaluation has been implemented to report easy and hard win rates (AlpacaEval-Easy and AlpacaEval-Hard) against a fixed baseline model.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The Arena-Hard-Auto evaluation has been implemented to report model scores judged by an LLM on model responses.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The IFD-based data selection pipeline has been implemented to score and select training samples at sample rates 0.05, 0.10, and 0.15 from OpenHermes-2.5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The Superfiltering-based data selection pipeline has been implemented to score and select training samples at sample rates 0.05, 0.10, and 0.15 from OpenHermes-2.5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The ATLANTIS-cross variant has been implemented: computing influence weights using Qwen2-1.5B/1.5B-Instruct pair to finetune Gemma2-9B, and using Gemma2-2B/2B-it pair to finetune Qwen2-7B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The proxy-tuning baseline (Equation 9) has been implemented as inference-time logit manipulation: softmax(s_b^L(y|x) + s_r(y|x) - s_b^S(y|x)) without any additional training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 9, Appendix B"
+  },
+  {
+    "criteria": "The Qwen2-72B scale experiment model triplet has been correctly set up: p_b^L = Qwen2-72B Base, p_b^S = Qwen2-7B Base, p_r = Qwen2-7B-Instruct.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The Gemma2-27B scale experiment model triplet has been correctly set up: p_b^L = Gemma2-27B Base, p_b^S = Gemma2-9B Base, p_r = Gemma2-9B-it.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The influence weight distribution visualization has been implemented for Figure 4, plotting 2000 randomly selected samples to compare Qwen2-1.5B and Gemma2-2B weight distributions.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The main ATLANTIS and SFT training experiments on Llama2-13B, Qwen2-7B, and Gemma2-9B have been executed successfully without errors using the OpenHermes-2.5 dataset.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "All evaluation benchmarks (Open LLM Leaderboard 2, TruthfulQA, MT-Bench, AlpacaEval, Arena-Hard-Auto) have been run successfully on all trained ATLANTIS and SFT model checkpoints.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The data selection experiments (IFD and Superfiltering at 0.05, 0.10, 0.15 sample rates) combined with ATLANTIS and SFT for Qwen2-7B and Gemma2-9B have been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The ATLANTIS-cross experiments for Qwen2-7B (using Gemma2 weights) and Gemma2-9B (using Qwen2 weights) have been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The large-scale experiments training Qwen2-72B and Gemma2-27B with both ATLANTIS and SFT have been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The proxy-tuning baseline experiment on Qwen2-7B has been executed successfully without requiring any model training.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: ATLANTIS consistently outperforms SFT on Open LLM Leaderboard 2 for Llama2-13B (33.50 vs 32.37), Qwen2-7B (38.19 vs 36.22), and Gemma2-9B (33.86 vs 33.51).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: ATLANTIS significantly improves MT-Bench pairwise win rates over SFT for Llama2-13B (21.56 vs 19.06), Qwen2-7B (26.25 vs 25.63), and Gemma2-9B (27.50 vs 20.31).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: ATLANTIS improves TruthfulQA MC2 scores for Llama2-13B (54.07 vs 53.36) and Gemma2-9B (55.23 vs 52.85), and MC1 for Gemma2-9B (39.41 vs 36.47).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: ATLANTIS improves AlpacaEval pairwise win rates for Llama2-13B (7.80 vs 6.81) and Gemma2-9B (6.92 vs 6.28), and Arena-Hard-Auto scores for Llama2-13B (5.4 vs 3.9).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: ATLANTIS consistently improves over plain SFT when combined with IFD data selection on Qwen2-7B across all sample rates (e.g., TruthfulQA MC2: 54.15 vs 52.59 at rate 0.05).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: for Gemma2-9B, ATLANTIS with no data selection outperforms most IFD and Superfiltering configurations (TruthfulQA MC2: 55.23 is the highest).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: ATLANTIS-cross (Qwen2 weights for Gemma2) achieves competitive or better results than same-structure ATLANTIS for Gemma2-9B TruthfulQA MC2 (55.40 vs 55.23) and MT-Bench single (7.31 vs 6.98).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: ATLANTIS-cross (Gemma2 weights for Qwen2) causes a drop in MT-Bench pairwise for Qwen2-7B (21.56 vs 26.25), showing the cross-structure transfer limitation.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5: ATLANTIS improves Qwen2-72B on TruthfulQA MC1 (42.59 vs 41.62), MC2 (61.73 vs 61.07), and MT-Bench pairwise (36.88 vs 31.88) compared to SFT.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5: ATLANTIS improves Gemma2-27B MT-Bench pairwise (32.50 vs 26.56) despite a slight TruthfulQA MC2 drop (59.30 vs 61.24).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 7: proxy-tuning severely underperforms SFT on MT-Bench single (3.76 vs 7.44) and pairwise (7.91 vs 25.63) for Qwen2-7B, while ATLANTIS matches or exceeds SFT.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The influence weight distribution analysis (Figure 4) shows that Qwen2-1.5B produces a higher-peak, narrower-variance distribution while Gemma2-2B produces a wider-variance distribution, with 46.78% disagreement rate when using 1.0 as the threshold.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  }
+]

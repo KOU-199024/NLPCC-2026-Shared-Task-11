@@ -1,0 +1,320 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the theoretical motivation for why expert pruning is preferred over merging, including the irreducible error of merging (Equations 5–6) and the pruning error bound (Equations 7–8).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand the REAP saliency criterion definition (Equation 9) and its motivation from the pruning error bound.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 5 completely to understand the experiment setup, including calibration sample counts, sequence lengths, seed configurations, and compression ratios.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Appendix D completely to understand the formal definitions of all baseline compression methods (frequency-based pruning, EAN, M-SMoE, HC-SMoE).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The agent has read Appendix C completely to understand the evaluation protocol for each benchmark category (MC, coding, math, creative writing, tool use).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes a calibration data collection step that records router gate-values and expert activation outputs for each expert across calibration tokens.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4, Section 5"
+  },
+  {
+    "criteria": "The plan specifies using 1,024 calibration samples packed to 2,048 sequence length for models with ≤110B parameters, and 12,228 samples with maximum sequence length 16,384 (without truncation or packing) for models with ≥110B parameters.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan specifies calibration datasets: C4 and evol-codealpaca for models ≤110B; additionally xlam-function-calling and SWE-smith-trajectories for models ≥110B; WritingPrompts-curated for creative writing; tulu-3-sft-personas-math for math.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan specifies using three different random seeds for evaluating models with ≤50B parameters on coding and MC benchmarks, and a single seed for larger models and generative tasks (creative writing, math).",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The plan includes implementation of the REAP saliency criterion that computes the conditional mean of the gate-weighted activation norm over tokens where each expert is active.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The plan includes implementation of all four baseline compression methods: frequency-based pruning, EAN, M-SMoE, and HC-SMoE.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The plan includes an expert pruning operation that removes experts with the lowest saliency scores and re-normalizes the remaining router gate-values.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Equation 2"
+  },
+  {
+    "criteria": "The plan covers evaluation on MC question answering (ARC-c, ARC-e, BoolQ, HellaSwag, MMLU, OBQA, RTE, WinoGrande), code generation (EvalPlus, LiveCodeBench), math (GSM8K, MATH-500), and creative writing (WildBench) benchmarks.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5, Appendix C"
+  },
+  {
+    "criteria": "The plan includes compression at both 25% and 50% expert compression ratios for all applicable models.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "A calibration data pipeline is implemented that loads samples from the specified datasets, applies the default chat template to SFT datasets, and explicitly closes </think> tags to disable reasoning in hybrid reasoning models.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "Forward hooks or equivalent mechanisms are implemented to collect, for each expert f_k and each token x where expert k is active, both the router gate-value g_k(x) and the expert output f_k(x) (or its L2 norm ||f_k(x)||_2).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4, Equation 9"
+  },
+  {
+    "criteria": "The REAP saliency score S_j is implemented as the conditional mean of g_j(x) * ||f_j(x)||_2 computed strictly over the token set X_j where expert j is active (i.e., j ∈ TopK(g(x))), not as a global average over all tokens.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The expert pruning routine is implemented to remove the experts with the lowest saliency scores per layer and re-normalize the remaining router gate outputs such that they sum to 1 over the surviving experts.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Equation 2"
+  },
+  {
+    "criteria": "Frequency-based pruning is implemented with saliency score S_i = ν_i (the usage frequency count, i.e., the number of calibration tokens for which expert i is activated).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "EAN pruning is implemented with saliency score S_i = sum_{x in X_i} ||f_i(x)||_2 (the cumulative activation norm across all tokens where expert i is active), as defined in Equation 13.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Equation 13"
+  },
+  {
+    "criteria": "M-SMoE is implemented to: (1) identify dominant experts by highest global usage frequency, (2) compute pairwise cosine distance of router gate-values per Equation 14, (3) cluster non-dominant experts to their closest dominant expert, (4) apply weight-matching permutations to align expert intermediate dimensions (up/gate/down projections), and (5) merge using frequency-weighted parameter averaging per Equation 15.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Equations 14–15"
+  },
+  {
+    "criteria": "HC-SMoE is implemented to: (1) compute representative vectors A_i as the mean activation of each expert across all calibration tokens (including tokens where the expert is inactive), (2) compute pairwise cosine distance between representative vectors per Equation 16, (3) perform hierarchical agglomerative clustering with average linkage criterion, and (4) merge clusters using frequency-weighted parameter averaging per Equation 15.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Equation 16"
+  },
+  {
+    "criteria": "The compression is applied globally (all layers compressed uniformly at the target ratio), with M-SMoE as the exception which determines per-layer cluster counts based on global expert usage frequency.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The seven SMoE model architectures are loaded correctly: ERNIE-4.5-21B-A3B-PT (64 routed experts, top-6), Qwen3-30B-A3B (128 routed experts, top-8), Mixtral-8x7B-Instruct-v0.1 (8 routed experts, top-2), GLM-4.5-Air (128 routed experts, top-8), Llama-4-Scout-17B-16E-Instruct (16 routed experts, top-1), Qwen3-Coder-480B-A35B-Instruct-FP8, and Kimi-K2-Instruct-W4A16 (384 routed experts, top-8, quantized W4A16).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "For models with shared experts (e.g., ERNIE-4.5-21B with 2 shared experts, GLM-4.5-Air with 1 shared expert, Llama-4-Scout with 1 shared expert, Kimi-K2 with 1 shared expert), the compression is applied only to the routed experts and shared experts are preserved.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "MC evaluation is implemented using the zero-shot log-likelihood approach with lm-evaluation-harness, and byte-length normalized accuracies are reported for ARC-c, ARC-e, HellaSwag, and OBQA.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Code generation evaluation is implemented for EvalPlus (HumanEval+ and MBPP+) and LiveCodeBench (182 questions from January–April 2025); greedy decoding (temperature=0.0) is used for models ≤110B; maximum output tokens is extended to 16,384 for generative tasks.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Mathematical reasoning evaluation is implemented on GSM8K and MATH-500 using the evalscope framework with greedy sampling for models ≤110B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Creative writing evaluation is implemented using 146 WildBench prompts with GPT-4o-2024-05-13 as a judge; normalized scores are reported using the WildBench rubric; the default temperature/top-P/top-K settings of each model are used (not greedy).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "For hybrid reasoning models (e.g., Qwen3-30B-A3B), reasoning is disabled on all evaluation tasks by setting enable_thinking=False in the chat template.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The PCA analysis of functional expert output manifolds is implemented by recording mean expert activations from 32 samples of 2,048 tokens from the C4 dataset and projecting onto the first two principal components for both original, pruned, and merged models.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The 1-Wasserstein distance (Earth Mover's distance) between original and compressed expert output manifolds is computed using normalized angular distance as the cost function, per Equation 12.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2, Equation 12"
+  },
+  {
+    "criteria": "The N-gram diversity and cross-perplexity analysis is implemented by prompting 50%-compressed Qwen3-30B models with 100 evol-codealpaca questions and measuring output diversity and perplexity under the original baseline model.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Figure 4"
+  },
+  {
+    "criteria": "The JSD (Jensen-Shannon Divergence) of logits between compressed and baseline models vs. completion token position is implemented for Qwen3-30B at 50% compression.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 4(c)"
+  },
+  {
+    "criteria": "The compression experiments for Qwen3-30B-A3B and GLM-4.5-Air are executed successfully using all five methods (Frequency, EAN, REAP, M-SMoE, HC-SMoE) at both 25% and 50% compression ratios, calibrated on evol-codealpaca, without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The evaluation of all compressed Qwen3-30B-A3B and GLM-4.5-Air models is executed successfully on coding (EvalPlus, LiveCodeBench), math (GSM8K, MATH-500), creative writing (WildBench), and MC benchmarks without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The compression experiments for large-scale models (Qwen3-Coder-480B-A35B-Instruct-FP8 and Kimi-K2-Instruct-W4A16) are executed using Frequency, EAN, and REAP at 25% and 50% compression ratios and evaluated on non-agentic coding (EvalPlus, LiveCodeBench), agentic coding (SWE-Bench Verified), tool calling (BFCLv3), and MC benchmarks without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The MC evaluation experiments are executed on all five SMoE models (ERNIE-4.5-21B, Qwen3-30B, Mixtral-8x7B, GLM-4.5-Air, Llama-4-Scout) with all compression methods at both 25% and 50% compression without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table A6"
+  },
+  {
+    "criteria": "The C4 calibration experiments are executed to produce Table A8, demonstrating the collapse in coding accuracy when C4 (instead of domain-specific data) is used for calibration.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table A8, Appendix F"
+  },
+  {
+    "criteria": "The functional subspace PCA analysis is executed for all four models (Qwen3-30B, ERNIE-4.5-21B, Mixtral-8x7B, Llama-4-Scout) at both early and late MoE layers without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.3, Figure 1, Figure A5"
+  },
+  {
+    "criteria": "The Wasserstein distance measurement between original and compressed expert output manifolds is executed for all four models across all layers without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: at 50% compression on coding benchmarks for Qwen3-30B-A3B, REAP achieves Code Avg ≈ 0.541, significantly outperforming both HC-SMoE (≈ 0.364) and M-SMoE (≈ 0.397).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: at 50% compression on coding benchmarks for GLM-4.5-Air, REAP achieves Code Avg ≈ 0.515, significantly outperforming both HC-SMoE (≈ 0.419) and M-SMoE (≈ 0.284).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: at 25% compression, REAP and EAN achieve near-lossless creative writing (WildBench) scores for both Qwen3-30B-A3B and GLM-4.5-Air, while merging methods degrade significantly at 50% compression (HC-SMoE drops to 0.008 for Qwen3-30B).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: at 25% compression, REAP achieves the best math average for both models (≈ 0.888 for Qwen3-30B and ≈ 0.879 for GLM-4.5-Air), and REAP attains a mean decrease of only 0.1% at 25% compression on math.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: REAP achieves near-lossless non-agentic code generation on Qwen3-Coder-480B at 50% compression (Code Avg ≈ 0.619 vs. baseline 0.636, ~2.7% drop), while frequency-based pruning collapses to near 0%.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: REAP achieves near-lossless non-agentic code generation on Kimi-K2 at 50% compression (Code Avg ≈ 0.624 vs. baseline 0.631), and at 25% compression REAP matches or slightly exceeds baseline on EvalPlus (0.840 vs. 0.828).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: both REAP and EAN maintain high SWE-Bench accuracy at 25% and 50% compression for large-scale models (Qwen3-Coder-480B and Kimi-K2), with some scores slightly exceeding the baseline.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table A6 (detailed MC results): REAP achieves first or second rank among all compression methods across all models and compression ratios on MC benchmarks, with mean MC accuracy decreases of approximately 4% and 13% at 25% and 50% compression respectively.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table A6"
+  },
+  {
+    "criteria": "The PCA analysis results match Figure 1 and Figure A5: in high-granularity SMoEs (Qwen3-30B, ERNIE-4.5-21B), pruning preserves the full spread of expert output manifolds while merging causes dramatic contraction toward the centre, especially in late layers; in low-granularity SMoEs (Mixtral-8x7B, Llama-4-Scout), the collapse is less pronounced but merging still introduces novel functions.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 1, Figure A5"
+  },
+  {
+    "criteria": "The Wasserstein distance results match Figure 2: across all four models and all layers, the merged expert output manifolds consistently exhibit higher 1-Wasserstein distance (normalized angular distance) from the original manifold than the pruned manifolds.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The generation quality analysis results match Figure 4: N-gram diversity of 50%-compressed Qwen3-30B shows merged models have significantly lower diversity than REAP pruned models at all N-gram sizes; cross-perplexity of merged model outputs is higher with greater variance; JSD of merged model logits diverges from baseline more rapidly with increasing token position.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The C4 calibration results match Table A8: calibrating with C4 (general domain data) instead of evol-codealpaca results in catastrophic collapse of code generation accuracy for most compressed models (0% accuracy for multiple methods/models), while MC performance is slightly improved.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table A8"
+  }
+]

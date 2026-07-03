@@ -1,0 +1,230 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the core EXPO methodology, including the first-order approximation formulation and the extrapolation formula (Equation 6).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the controlled experiment setup, including the training recipe, UltraFeedback dataset split (61K training, 1K development), and evaluation protocol on AlpacaEval 2.0.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the motivation: parameter change from SFT to DPO (normalized Frobenius norm ~6.348e-6) is significantly smaller than from Pre-trained to SFT (~1.955e-4), justifying the small parameter change hypothesis.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 and Table 2 to understand the varying training steps experiment (10%, 20%, 40%, 100% of 478 steps) and the EXPO results on AlpacaEval 2.0.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2, Table 2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 and Table 5 to understand the extended application of EXPO to 12 open-source LLMs trained via offline DPO, iterative DPO, and online RLHF.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1, Table 5"
+  },
+  {
+    "criteria": "The plan includes loading the SFT checkpoint (M0) and the alignment-trained model (M1) from HuggingFace, computing the parameter difference Δθ = θ₁ - θ₀ per tensor, and constructing the extrapolated model θ₂ = θ₁ + α·Δθ as specified in Equation 6.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The plan includes hyperparameter search for the optimal α using reward model scoring on the UltraFeedback development set (1K instructions), combining binary search and grid search with manually tuned intervals as described in Appendix B.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes the interpolation validation experiment varying γ within [0, 1] to construct interpolated models θ₀ + γΔθ and evaluating their alignment performance using reward models (RM-Mistral-7B and FsfairX-LLaMA3-RM-v0.1).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2, Figure 1"
+  },
+  {
+    "criteria": "The plan includes the controlled experiment on varying training steps: training DPO models with 10%, 20%, 40%, and 100% of the full 478-step training, applying EXPO to each, and evaluating on AlpacaEval 2.0.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Table 2"
+  },
+  {
+    "criteria": "The plan includes DPO training configuration: UltraFeedback dataset, zephyr-7b-sft-full as initialization and reference model, global batch size 128, learning rate 5e-7, AdamW optimizer, trained on 8 A100 80GB GPUs.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes inference configuration using vLLM: top-k sampling (k=40), nucleus sampling (p=0.9), temperature=0.7, presence penalty=0.1, frequency penalty=0.1, and random seed=42.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the extended application of EXPO to 12 existing open-source LLMs (zephyr-7b-alpha/beta, tulu2-7/13/70b, snorkel-7b-iter, llama3-8b-iter, starling-7b-alpha/beta, internlm2-1.8/7/20b) with grid search in [0.1, 0.5] at 0.1 intervals.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix C"
+  },
+  {
+    "criteria": "The core EXPO model extrapolation function is implemented: given M0 (SFT, parameterized by θ₀) and M1 (aligned model, parameterized by θ₁), compute Δθ = θ₁ - θ₀ for each parameter tensor and produce M2 with parameters θ₂ = θ₁ + α·Δθ = θ₀ + (1+α)·Δθ as per Equation 6.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code implements the Frobenius norm computation (and a normalized variant) to analyze parameter changes between checkpoint pairs (Pre-trained vs SFT, SFT vs DPO, Pre-trained vs DPO) as shown in Table 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1, Section 1"
+  },
+  {
+    "criteria": "The code implements linear interpolation to construct models parameterized by θ₀ + γΔθ = (1-γ)θ₀ + γθ₁ for varying γ ∈ [0, 1], to validate the first-order approximation as shown in Figure 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2, Figure 1"
+  },
+  {
+    "criteria": "The code loads and applies the two reward models (RM-Mistral-7B from 'weqweasdas/RM-Mistral-7B' and FsfairX-LLaMA3-RM-v0.1 from 'sfairXC/FsfairX-LLaMA3-RM-v0.1') to score model outputs on the UltraFeedback development set.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix C"
+  },
+  {
+    "criteria": "The code implements model inference using vLLM with the specified settings: top-k=40, nucleus sampling p=0.9, temperature=0.7, presence_penalty=0.1, frequency_penalty=0.1, seed=42.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements DPO training using the UltraFeedback dataset (61K training samples), with the SFT checkpoint 'alignment-handbook/zephyr-7b-sft-full' as both initialization and reference model, global batch size 128, learning rate 5e-7, and AdamW optimizer.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix C"
+  },
+  {
+    "criteria": "The code supports training DPO models with varying proportions of the full training steps (10%, 20%, 40%, 100% of 478 steps total), allowing model checkpointing at each proportion for subsequent EXPO application.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The hyperparameter search procedure for α is implemented using a combination of binary search and grid search with dynamically adjusted intervals, selecting the α that maximizes expected reward on the UltraFeedback development set as scored by RM-Mistral-7B.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The length-biased training data experiment is implemented: training data is sorted by length difference between preferred and non-preferred responses in descending order, so models prioritize samples with larger length differences, as described in Section 3.3.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Table 3"
+  },
+  {
+    "criteria": "The training configuration ablation is implemented to train models with different epochs (1, 2, 3), learning rates (5e-7, 1e-6, 2e-6), and optimizers (AdamW, AdaGrad, RMSprop) as specified in Table 4.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4, Table 4"
+  },
+  {
+    "criteria": "The code loads the correct HuggingFace model pairs for each of the 12 extended models, using the SFT (M0) and aligned (M1) checkpoints specified in Appendix C (e.g., 'allenai/tulu-2-7b' as M0 and 'allenai/tulu-2-dpo-7b' as M1 for tulu2-7b).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code applies EXPO to models trained via diverse alignment algorithms (RRHF, SLiC-HF, IPO, CPO, KTO, R-DPO, SimPO) using Mistral-7B and LLaMA-3-based SFT checkpoints from princeton-nlp, as described in Section 4.2 and Table 6.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Table 6"
+  },
+  {
+    "criteria": "The interpolation experiment (Figure 1) is executed successfully, evaluating alignment performance of interpolated models under two reward models for multiple DPO/RLHF model pairs as γ varies from 0 to 1.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 1"
+  },
+  {
+    "criteria": "The DPO training at varying training steps (10%, 20%, 40%, 100%) runs successfully, producing intermediate checkpoints that are then used for EXPO application and evaluated on AlpacaEval 2.0.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.2, Table 2"
+  },
+  {
+    "criteria": "The hyperparameter search for α is executed successfully for each partially-trained model (10%, 20%, 40%, 100% steps), producing the optimal α values (8.0, 2.5, 0.5, 0.3 respectively) consistent with Table 7.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Appendix B, Table 7"
+  },
+  {
+    "criteria": "The training data quality ablation (Table 3) is executed successfully for both random and length-biased sampling at 10%, 20%, and 40% training steps, including EXPO application and reward/length measurement.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.3, Table 3"
+  },
+  {
+    "criteria": "The training configuration ablation (Table 4) is executed successfully for all combinations of training epochs (1, 2, 3), learning rates (5e-7, 1e-6, 2e-6), and optimizers (AdamW, AdaGrad, RMSprop) with EXPO applied.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.4, Table 4"
+  },
+  {
+    "criteria": "EXPO is applied and evaluated on the 12 extended open-source LLMs on both AlpacaEval 2.0 (win rate and LC win rate) and MT-Bench, with optimal α searched in [0.1, 0.5] at 0.1 intervals.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 5"
+  },
+  {
+    "criteria": "EXPO is applied to models trained via different alignment algorithms (RRHF, SLiC-HF, IPO, CPO, KTO, R-DPO, SimPO) for both Mistral and LLaMA-3 base models, with results evaluated via reward model scoring on UltraFeedback.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 4.2, Table 6"
+  },
+  {
+    "criteria": "The execution outcome matches Figure 1: interpolated models (γ ∈ [0,1]) consistently achieve intermediate alignment performance between the original SFT (γ=0) and DPO/RLHF (γ=1) models, and performance increases monotonically with γ for the evaluated models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 1"
+  },
+  {
+    "criteria": "The execution outcome matches Table 2: EXPO boosts M1 with 20% training steps (LC win rate 12.9% → 21.3%) to outperform the fully-trained M1 (LC win rate 17.3%), and EXPO improves all partially-trained models.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcome matches Table 2: the EXPO-applied model trained with 20% steps (M2^{20%}) achieves a reward score of ~6.95, LC win rate ~21.3%, and win rate ~22.7%, outperforming the fully-trained M1 (reward ~6.16, LC WR ~17.3%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcome matches Table 3: length-biased training data consistently undermines EXPO effectiveness, resulting in much smaller optimal α values and lower reward improvements compared to random sampling at the same training step proportion.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcome matches Table 4: AdamW (default, 1 epoch) yields the best EXPO gain (reward 4.37→6.08, α=2.5); increasing epochs to 3 or training with RMSprop eliminates EXPO benefit (N/A); AdaGrad achieves highest M2 reward despite slowest M1 convergence.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcome matches Table 5: EXPO consistently improves all 12 evaluated LLMs, with the largest improvements of up to 10.1% win rate (internlm2-20b), 4.5% LC win rate (tulu2-70b), and 0.37 on MT-Bench (llama3-8b-iter).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcome matches Table 6: EXPO improves models trained with most alignment algorithms (RRHF, SLiC-HF, IPO, CPO, R-DPO, SimPO) for both Mistral and LLaMA-3 bases, with KTO being the exception for the Mistral base (N/A in Table 6).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  }
+]

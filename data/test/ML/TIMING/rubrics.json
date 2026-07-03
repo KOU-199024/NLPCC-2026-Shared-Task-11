@@ -1,0 +1,398 @@
+[
+  {
+    "criteria": "The agent has read Section 2 to understand the problem setup for feature attribution in time series classification, including the definitions of F, x, T, D, C, and the distinction between signed and unsigned attribution methods.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand the cancel-out problem in existing XAI evaluation metrics, where simultaneous removal of top-K points causes positive and negative attributions to cancel out, biasing toward direction-aligned methods.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand the definitions of CPD and CPP, including how CPD sequentially removes highest-attribution points (higher is better) and CPP removes lowest-attribution points (lower is better).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 to understand the standard Integrated Gradients (IG) formulation for time series with a zero baseline, integrating gradients along the straight-line path from 0 to x.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand the three-stage TIMING construction: modifying the baseline with binary mask M (Eq. 5), defining MaskingIG (Eq. 6), RandIG (Eq. 7), and TIMING with segment-based masking (Eq. 8).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the four theoretical propositions of TIMING: Effectiveness (Proposition 4.1), Sensitivity (Proposition 4.2), Implementation Invariance (Proposition 4.3), and Incompleteness (Proposition 4.4).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 in Appendix A to understand the efficient TIMING implementation, including the TotalGrad accumulation loop, per-step segment unmasking, gradient zeroing for retained points, and the final normalization by (n_samples - unmaskcount).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to check all experimental setup details: 8 datasets, 13 XAI baselines, single-layer GRU with 200 hidden units, and the choice of primary evaluation metrics CPD and CPP.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Table 7 in Appendix D to check the complete dataset statistics: sizes, time lengths, feature dimensions, and class counts for all 2 synthetic and 6 real-world datasets.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 7, Appendix D"
+  },
+  {
+    "criteria": "The agent has read Table 2 and Table 3 to check the main experimental results of TIMING and baselines on MIMIC-III and on all six real-world datasets under both average and zero substitution strategies.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2, Table 3"
+  },
+  {
+    "criteria": "The plan includes implementing the raw prediction difference metric (Equation 1) to serve as the flawed baseline evaluation, computing |F_y_hat(x) - F_y_hat(x_K)| after simultaneously removing top-K attribution points.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing CPD (Cumulative Prediction Difference) and CPP (Cumulative Prediction Preservation) as the primary evaluation metrics for all experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing standard Integrated Gradients (IG) with a zero baseline for time series as both a standalone baseline and the mathematical foundation of TIMING.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing MaskingIG, which modifies the IG path baseline to (1-M)⊙x so that only points where M_{t,d}=1 are scaled toward zero during integration.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing TIMING with segment-based masking using the mask generator G(n, s_min, s_max), with the default configuration (n=50, s_min=10, s_max=48).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2, Table 6"
+  },
+  {
+    "criteria": "The plan includes generating the Switch-Feature synthetic dataset using a 3-state HMM with the specified transition matrix, Gaussian Process emissions with RBF kernel (gamma=0.2), state-dependent means, and Bernoulli binary labels.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The plan includes generating the State synthetic dataset using a 2-state HMM with the specified transition matrix [[0.1, 0.9],[0.1, 0.9]], Gaussian emissions with the given mean vectors and covariance matrices.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The plan includes loading and preprocessing all 6 real-world datasets: MIMIC-III (T=48, D=32), PAM (T=600, D=17), Boiler (T=36, D=20), Epilepsy (T=178, D=1), Wafer (T=152, D=1), and Freezer (T=301, D=1).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix D.2, Table 7"
+  },
+  {
+    "criteria": "The plan includes training a single-layer GRU with 200 hidden units as the primary black-box time series classifier on each dataset before computing attributions.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing all 13 XAI baseline methods: FO, AFO, IG, GradSHAP, DeepLIFT, LIME, FIT, WinIT, Dynamask, Extrmask, ContraLSP, TimeX, and TimeX++.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes an ablation study comparing TIMING against standard IG and RandIG variants (p=0.3, 0.5, 0.7) on MIMIC-III under both average and zero substitution strategies.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The plan includes a hyperparameter sensitivity analysis for TIMING covering all 12 (n, s_min, s_max) configurations listed in Table 6, with CPD(K=50) as the evaluation metric.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The plan includes model-agnostic experiments on Transformer and CNN classifiers to validate TIMING's generalizability beyond GRU.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix E, Table 8"
+  },
+  {
+    "criteria": "The code for the raw prediction difference metric (Equation 1) has been implemented, computing the absolute difference |F_y_hat(x) - F_y_hat(x_K_up)| after simultaneously replacing the top-K highest-attribution points with zero or average values.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for CPD (Cumulative Prediction Difference) has been implemented as in Equation 2: sequentially removing points in descending order of absolute attribution and cumulatively summing the L1 norm of consecutive prediction vector differences.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for CPP (Cumulative Prediction Preservation) has been implemented as in Equation 3: sequentially removing points in ascending order of absolute attribution and cumulatively summing the L1 norm of consecutive prediction vector differences.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for standard Integrated Gradients (IG) has been implemented as in Equation 4, computing per-point attributions as x_{t,d} multiplied by the integral of gradients along the path alpha*x from alpha=0 to 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The modified IG path for MaskingIG has been implemented according to Equation 5, where intermediate points are computed as alpha*(M⊙x) + (1-M)⊙x, retaining original values where M_{t,d}=0.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for MaskingIG has been implemented as in Equation 6, computing x_{t,d}*M_{t,d} multiplied by the integral of gradients along the masked IG path, only attributing to points where M_{t,d}=1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for RandIG has been implemented as in Equation 7, computing the conditional expectation of MaskingIG over Bernoulli(p) random masks M_p, conditioned on the target point (t,d) being masked (M_p_{t,d}=1).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code for TIMING has been implemented as in Equation 8, computing the conditional expectation of MaskingIG over segment-based masks drawn from G(n, s_min, s_max), conditioned on the target point being masked.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "Algorithm 1 (Appendix A) has been fully implemented: for each integration step alpha, n random segments are selected (each with random dimension d and start position s), the intermediate input x_tilde is constructed, gradients are computed, retained-point gradients are zeroed out, and TotalGrad is accumulated.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Appendix A"
+  },
+  {
+    "criteria": "The segment sampling in Algorithm 1 has been implemented correctly: for each of the n segments, independently sampling segment length l from [s_min, s_max], dimension d from {0,...,D-1}, and start position s from {0,...,T-l}, then setting x_tilde_{s:s+l, d} = x_{s:s+l, d}.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The final attribution normalization in Algorithm 1 has been implemented as (TotalGrad ⊙ (x - Baselines)) / (n_samples - unmaskcount), where unmaskcount tracks how many times each point was retained (not masked) across all integration steps.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The Switch-Feature dataset generation has been implemented with a 3-state HMM: initial distribution pi=[1/3,1/3,1/3], the specified 3x3 transition matrix, GP emissions with RBF kernel (gamma=0.2, marginal variance=0.1), state-dependent means mu_0=[0.8,-0.5,-0.2], mu_1=[0,-1.0,0], mu_2=[-0.2,-0.2,0.8], and Bernoulli labels with state-switching logistic probabilities, generating 1000 sequences of length T=100.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The State dataset generation has been implemented with a 2-state HMM: initial distribution pi=[0.5,0.5], transition matrix [[0.1,0.9],[0.1,0.9]], Gaussian emissions N(mu_s, Sigma_s) with the specified mean vectors and covariance matrices, and Bernoulli labels with state-dependent logistic probabilities, generating 1000 sequences of length T=200.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The MIMIC-III dataset loading pipeline has been implemented with T=48 time steps, D=32 clinical features, 22,988 ICU admissions, and uniform constant fill for missing entries, following the processing protocol of Tonekaboni et al. (2020) with the lab variable restoration.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The PAM dataset loading pipeline has been implemented retaining the 8 activity classes with at least 500 samples each, producing 5,333 samples with T=600 and D=17 sensor channels.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The Boiler, Epilepsy, Wafer, and Freezer dataset loading pipelines have been implemented with their correct dimensions (Boiler: T=36/D=20/90115 samples; Epilepsy: T=178/D=1/11500 samples; Wafer: T=152/D=1/7164 samples; Freezer: T=301/D=1/3000 samples).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 7, Appendix D.2"
+  },
+  {
+    "criteria": "The single-layer GRU classifier with 200 hidden units has been implemented and trained as the primary black-box time series classifier for attribution evaluation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The five-fold cross-validation pipeline has been implemented to run all experiments over five random repetitions and report results as mean ± standard error.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The six gradient-based and modality-agnostic XAI baselines (FO, AFO, IG, GradSHAP, DeepLIFT, LIME) have been implemented for comparison.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The seven time series-specific XAI baselines (FIT, WinIT, Dynamask, Extrmask, ContraLSP, TimeX, TimeX++) have been implemented for comparison.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The feature substitution strategies for evaluation have been implemented: zero substitution (replacing removed points with 0) and average substitution (replacing with the dataset mean), both used for CPD/CPP computation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The AUP (Area Under Precision) and AUR (Area Under Recall) metrics for synthetic datasets have been implemented to evaluate how well attributions recover the true saliency map.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix C"
+  },
+  {
+    "criteria": "The existing real-world XAI evaluation metrics have been implemented: Accuracy (Acc), Cross-Entropy (CE), Sufficiency (Suff), and Comprehensiveness (Comp) under 20% masking.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The RandIG ablation variants with masking probabilities p=0.3, p=0.5, and p=0.7 have been implemented for comparison against TIMING.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The CNN and Transformer classifiers have been implemented as additional black-box models for the model-agnostic evaluation in Appendix E.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The timing/efficiency measurement code has been implemented to record elapsed real time per sample for TIMING and post-training-free baselines as shown in Figure 4.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The main experiments comparing TIMING and all 13 XAI baselines on MIMIC-III mortality prediction have been executed successfully without errors, producing CPD (K=50, K=100), Acc, CE, Suff, and Comp scores under 20% and cumulative masking.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The main experiments comparing TIMING and 5 selected baselines across all 6 real-world datasets (MIMIC-III, PAM, Boiler, Epilepsy, Wafer, Freezer) under both average and zero substitution have been executed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The experiments on both synthetic datasets (Switch-Feature and State) comparing TIMING and all baselines using CPD, AUP, and AUR have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The ablation study comparing TIMING, IG, and RandIG (p=0.3, 0.5, 0.7) on MIMIC-III using CPD (K=50) under both average and zero substitutions has been executed successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The hyperparameter sensitivity analysis for all 12 (n, s_min, s_max) configurations of TIMING has been executed on MIMIC-III using CPD (K=50) under average and zero substitution.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The CPP comparison experiments on MIMIC-III with all XAI methods under 10%, 20%, and 40% random masking with zero substitution have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3, Figure 5"
+  },
+  {
+    "criteria": "The model-agnostic experiments evaluating TIMING and selected baselines on Transformer and CNN classifiers on MIMIC-III have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 8, Appendix E"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: IG (Signed) achieves the best Acc (10%) at 0.855±0.011, TIMING achieves the best CPD (K=50) at 0.366±0.021, and IG (Unsigned) achieves the second-best CPD at 0.342±0.021 on MIMIC-III.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: TIMING achieves the best CPD scores of 0.366±0.021 (K=50) and 0.505±0.029 (K=100) on MIMIC-III, outperforming IG (0.342±0.021 / 0.469±0.030) and all other baselines in cumulative masking.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: TIMING achieves best zero substitution CPD (10% masking) on all 6 real-world datasets, with specific improvements including 109.8% for Boiler (1.578 vs 0.752 for IG), 34.8% for Wafer (0.674 vs 0.500), and 8.7% for MIMIC-III.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: on the Switch-Feature dataset, TIMING achieves CPD=0.208±0.003 and AUP=0.926±0.011; ContraLSP and Extrmask achieve higher AUP/AUR but lower CPD scores, confirming the trade-off between saliency map estimation and model explanation quality.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: TIMING outperforms all RandIG variants (p=0.3/0.5/0.7) and IG on both average and zero substitution CPD (K=50), with TIMING achieving 0.177/0.366 vs IG's 0.172/0.342, confirming segment-based masking superiority over random point masking.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: the default TIMING setting (n=50, s_min=10, s_max=48) achieves the best or tied-best performance (0.177±0.011 avg, 0.366±0.021 zero), and moderate s_min paired with larger s_max generally outperforms small maximum segment lengths.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3 and Figure 5: TIMING achieves the lowest CPP among all XAI methods on MIMIC-III (approximately 0.31±0.04 at 10% masking, 0.64±0.07 at 20%, 1.93±0.20 at 40%), while masking-based methods like FIT and WinIT have CPP values exceeding 35.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: TIMING achieves approximately 0.040 sec/sample computational efficiency on MIMIC-III, near IG (0.034 sec/sample) and far faster than AFO (3.54 sec/sample) and LIME (3.74 sec/sample), while achieving the highest CPD (K=50).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8: TIMING achieves the best CPD (K=50) on both Transformer (0.109±0.005) and CNN (1.173±0.077) classifiers on MIMIC-III, demonstrating consistent improvement over IG (0.103±0.005 and 0.925±0.087 respectively).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes confirm that recent masking-based methods (Extrmask, ContraLSP) perform well on standard metrics (Acc, Comp) but exhibit the highest CPP values in Figure 3, indicating they assign zero importance to negatively contributing features.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.2, Figure 3"
+  }
+]

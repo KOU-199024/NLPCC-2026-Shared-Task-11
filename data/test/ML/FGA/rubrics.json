@@ -1,0 +1,368 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the CLIP architecture, the classification probability formula, and prompt tuning methodology.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2.1 completely to understand the Sharpness-Aware Prompt Tuning (SAPT) method and its role in identifying the training flat minimum.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2.2 completely to understand the Sharpness-based Test Sample Selection (STSS) method and how it aligns training and test flat minima.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2.2"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 completely to understand the experimental setup, including datasets, backbone models, hyperparameters, and evaluation protocols.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the domain generalization results on ImageNet and its OOD variants (IN-A, IN-V2, IN-R, IN-Sketch) with CLIP-ViT-B/16.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the cross-dataset generalization results across 10 fine-grained classification datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Section 5.3 to understand the ablation study on main components (SAPT, STSS, and their combination FGA) and the hyperparameter analysis of ρ'.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The agent has read Figure 3 to understand the ablation on the key hyperparameter ρ' and its effect on test accuracy and sample retention on ImageNet-R.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The plan includes the setup of the CLIP model (ViT-B/16 and ResNet50 encoders) and integration with the CoOp prompt tuning framework.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes implementing the SAPT training objective (Equation 3) combining cross-entropy loss and sharpness penalty.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The plan includes implementing the optimal perturbation computation ε* via gradient normalization (Equation 4) for the SAPT training step.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The plan includes implementing the STSS sharpness-based scoring mechanism using R random Gaussian perturbations at test time (Equation 5).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The plan includes the batch computation of perturbed text features across R perturbations for all K categories (Equation 6).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The plan includes the selection of the top-s augmented test samples with the lowest sharpness-based scores for final prediction aggregation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2.2"
+  },
+  {
+    "criteria": "The plan includes loading the ImageNet training dataset in a 16-shot setting and setting up 64 augmented views (1 original + 63 augmented) for test-time evaluation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes loading the four ImageNet OOD datasets (ImageNet-A, ImageNet-V2, ImageNet-R, ImageNet-Sketch) for domain generalization evaluation.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes loading the 10 fine-grained cross-dataset benchmarks (Caltech101, OxfordPets, StanfordCars, Flower102, Aircraft, SUN397, DTD, Food101, UCF101, Eurosat).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes the training hyperparameters: 4 prompt tokens, SGD optimizer, learning rate 0.002, cross-dataset (5 epochs, batch 4), domain generalization (50 epochs, batch 32).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing or adapting the baseline methods (at minimum TPT, DiffTPT, C-TPT, ZERO, MTA, TDA, DPE, SAR) for comparison.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes ablation experiments: SAPT+CoOp, STSS+CoOp, and full FGA (SAPT+STSS+CoOp) on the domain generalization benchmark.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The plan includes a grid search for hyperparameter ρ over [0.05, 0.1, 0.3, 0.5, 0.7] and fixing λ=1, ρ'=0.5 for all experiments.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for the CLIP image encoder (ViT-B/16) and text encoder loading from the pretrained CLIP model has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for the CLIP classification probability (Equation 1) using cosine similarity between image and text embeddings with temperature τ has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for the standard cross-entropy loss (Equation 2) for prompt training has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for learnable prompt parameters p = (p1, ..., pL) integrated into the CLIP text encoder following the CoOp framework has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for the SAPT loss function (Equation 3) combining cross-entropy loss and sharpness term weighted by λ has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for computing the optimal perturbation ε* as the normalized gradient of the CE loss scaled by ρ (Equation 4) has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code for the SAPT two-step training procedure (first compute ε*, then update prompt parameters using the perturbed gradient) has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2.1"
+  },
+  {
+    "criteria": "The code for generating R random Gaussian perturbation directions {ε_r / ||ε_r||} for the STSS sharpness computation at test time has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for computing the STSS sharpness-based score (Equation 5) as the maximum variation in surrogate loss over R random perturbations plus the baseline loss has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for batched text feature computation for all R perturbed prompts and all K categories via the text encoder (Equation 6) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for computing the perturbed surrogate loss (entropy) for each perturbation r as Equation 7 using the text features of the r-th perturbation has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code for computing the per-perturbation classification probability P_r(y_k|x) using cosine similarity between perturbed text features and the fixed image embedding (Equation 8) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The code for the full STSS inference pipeline: generate 64 augmented views, compute sharpness-based score for each, select top-s samples with lowest scores, aggregate their predictions for final output has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2.2"
+  },
+  {
+    "criteria": "The code uses ρ'=0.5 as the perturbation magnitude for test-time sharpness computation and λ=1 to balance loss and sharpness terms in both SAPT and STSS.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for loading ImageNet training data in the 16-shot setting (16 samples per class) for prompt tuning has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for loading the four ImageNet OOD evaluation datasets (ImageNet-A, ImageNet-V2, ImageNet-R, ImageNet-Sketch) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for loading the 10 cross-dataset benchmarks (Caltech101, OxfordPets, StanfordCars, Flower102, Aircraft, SUN397, DTD, Food101, UCF101, Eurosat) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for the TPT-style data augmentation strategy producing 64 augmented views per test image has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for the prompt training loop with SGD optimizer (lr=0.002), 4 prompt tokens, 50 epochs (batch 32) for domain generalization and 5 epochs (batch 4) for cross-dataset has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for the STSS+CoOp ablation variant (applying STSS at test time with standard CoOp-trained prompts, without SAPT) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The code for the SAPT+CoOp ablation variant (training with SAPT but using standard entropy-based selection at test time, without STSS) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The code for the ρ' hyperparameter sensitivity analysis, varying ρ' across multiple values and sample retention sizes s on ImageNet-R, has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The code for the CLIP-ResNet50 backbone variant of FGA (deferred to appendix) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for the full FGA framework (SAPT training + STSS test-time selection) has been executed successfully without errors on the domain generalization benchmark.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code for the full FGA framework has been executed successfully without errors on all 10 cross-dataset generalization benchmarks.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The ablation experiments (CoOp baseline, SAPT+CoOp, STSS+CoOp, full FGA) have been executed successfully without errors on the domain generalization benchmark.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The ρ' sensitivity analysis experiment has been executed successfully without errors on ImageNet-R with varying s and ρ' values.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The baseline methods (at minimum TPT+CoOp, DiffTPT+CoOp, ZERO+CoOp, SAR+CoOp, MTA+CoOp) have been executed successfully without errors on the domain generalization benchmark.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: FGA achieves the highest overall average (68.04%) and OOD average (66.55%) on CLIP-ViT-B/16 across ImageNet, IN-A, IN-V2, IN-R, and IN-Sketch.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: FGA outperforms TPT+CoOp by an average of 4.88% on the four OOD variants (61.67% → 66.55%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: STSS+CoOp achieves an OOD average of 64.60% and an overall average of 66.48%, outperforming all previous TTA+CoOp methods.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 ablation: SAPT+CoOp achieves a 0.92% improvement over CoOp alone (61.72% → 62.64%) on the domain generalization benchmark.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1, Section 5.3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 ablation: full FGA achieves a 5.40% gain over SAPT+CoOp alone (62.64% → 68.04%), exceeding the standalone STSS improvement of 4.76%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: FGA achieves the highest average accuracy of 67.60% across all 10 cross-dataset benchmarks.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: FGA achieves an average accuracy improvement of 1.94% over TPT+CoOp (65.66% → 67.60%) on cross-dataset generalization.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: FGA attains top-tier results on at least 6 out of 10 cross-dataset benchmarks, including notably strong performance on Caltech101 (96.96%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: test accuracy shows non-monotonic dependence on ρ', initially rising then falling for extreme values, with ρ'=0 (pure entropy) performing worse than non-zero ρ' values.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: sample retention follows a similar non-monotonic trend, with accuracy peaking then declining as more augmented samples are retained.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes confirm the computational efficiency of FGA: inference requires approximately 0.07s per image (≈8.86× faster than TPT at 0.62s and ≈23.86× faster than DiffTPT at 1.67s) on a single GPU.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The execution outcomes confirm FGA's memory efficiency: peak GPU memory consumption is approximately 4.14 GB, which is approximately 4.67× lower than TPT (19.33 GB).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Section 5.2"
+  }
+]

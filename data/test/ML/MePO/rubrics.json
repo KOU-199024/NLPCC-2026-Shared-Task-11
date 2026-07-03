@@ -1,0 +1,290 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the empirical analysis of prompt merits and the methodology used to discover them.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the construction of the merit-aligned prompt preference (POP) dataset.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the DPO-based training objective for MePO.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the experimental setup, datasets, baselines, and evaluation protocol.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the performance comparison of MePO against BPO, FIPO, and inference-model-as-optimizer across multiple QA and math datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the win-rate evaluation results on instruction-following benchmarks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Appendix C (C.5, C.6) to understand the DPO input construction and the specific training hyperparameters.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C.5, C.6"
+  },
+  {
+    "criteria": "The plan includes the merit discovery pipeline: sampling 5000 raw prompts from Alpaca, rewriting each 5 times with a lightweight LLM, scoring responses with DeepSeek-R1, and identifying merits from prompt pairs with score differences greater than 4.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes the construction of the POP dataset using Alpaca (30k) and BPO (13.96k) as base datasets with Qwen2.5-7B-Instruct as the reference model for prompt optimization.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the DPO training of MePO on Qwen2.5-7B-Instruct with the specific hyperparameters: epochs=2, lr=1e-6, beta=0.01, sequence length=2048, loss type='sigmoid'.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 7 / Appendix C.6"
+  },
+  {
+    "criteria": "The plan includes running experiments on ARC-Easy, ARC-Challenge, GSM8K, BBH, and PiQA datasets with evaluation on multiple inference models: Qwen2-7b, Tulu2-7b-dpo, LLaMA2-7b-chat-hf, Gemma2-9b, and Qwen3-8b.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1 / Table 2"
+  },
+  {
+    "criteria": "The plan includes the ablation study removing each of the four merits (Clarity, Precision, Concise CoT, Preserve Original Information) one at a time.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.5 / Table 5"
+  },
+  {
+    "criteria": "The code implements the merit discovery process: loading 5000 random samples from the Alpaca dataset and prompting a lightweight LLM (Qwen2.5-7B-Instruct) to rewrite each prompt 5 times.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1 / Appendix B"
+  },
+  {
+    "criteria": "The code implements response scoring using DeepSeek-R1 to assess quality on a 0–10 scale, identifying pairs where the score difference exceeds 4 points as representing substantially better prompts.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1 / Appendix B"
+  },
+  {
+    "criteria": "The code implements a pairwise prompt comparison using DeepSeek-R1 to identify the merits (Clarity, Precision, Conciseness, etc.) that make higher-scoring prompts more effective.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.1 / Appendix B.1"
+  },
+  {
+    "criteria": "The code identifies and formalizes the four prompt merits: (1) Clarity, (2) Precision, (3) Concise Chain-of-Thought, and (4) Preserve Original Information, matching the paper's definitions exactly.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code implements loading Alpaca (instruction field as P_silver) and BPO (prompt field as P_silver) as base datasets for POP dataset construction.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements merit-guided prompt optimization using Qwen2.5-7B-Instruct with the four-merit instruction template to generate P_golden from P_silver.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1 / Fig. 16"
+  },
+  {
+    "criteria": "The code implements response generation from each P_golden (via Qwen2.5-7B-Instruct) and retrieves R_silver from Alpaca's output and BPO's bad_res field.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements the two filtering criteria for retaining 4-tuples: (1) R_golden receives a higher DeepSeek-R1 score than R_silver, and (2) the score of R_golden exceeds 8.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code implements the prompt degradation procedure: randomly selecting 10% of P_silver from Alpaca and BPO datasets and intentionally degrading them using a base model to simulate noisy user inputs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1 / Appendix C.4"
+  },
+  {
+    "criteria": "The constructed POP dataset produces approximately 40k 4-tuples (P_silver, P_golden, R_silver, R_golden), with the correct composition: ~25526 Alpaca Naive, ~3000 Alpaca Degraded, ~10225 BPO Naive, ~1400 BPO Degraded.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1 / Section 3.1"
+  },
+  {
+    "criteria": "The DPO training input for each instance is formatted as a tuple (x, c, r) where x is the input prompt containing P_silver and R_silver, c is P_golden (chosen), and r is P_silver (rejected), consistent with the DPO objective in Equations (1)–(2).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2 / Appendix C.5 / Fig. 12"
+  },
+  {
+    "criteria": "The code implements DPO training with the sigmoid loss type, beta=0.01, learning rate=1e-6, per-GPU batch size=1, gradient accumulation steps=4, epoch=2, and sequence length=2048.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Table 7 / Appendix C.6"
+  },
+  {
+    "criteria": "MePO is fine-tuned on Qwen2.5-7B-Instruct (not another model) using 4 NVIDIA RTX A5000 GPUs with input instructions truncated or padded to 2000 tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1 / Appendix C.6"
+  },
+  {
+    "criteria": "The code loads optimization models (MePO, BPO, FIPO) in 8-bit precision and inference models in 4-bit mode with generation length below 512 tokens.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The evaluation protocol uses 3-shot for GSM8K, BBH, and PiQA, and zero-shot for ARC-Easy, ARC-Challenge, and instruction-following datasets.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1 / Appendix D"
+  },
+  {
+    "criteria": "Answer extraction uses a format-specific instruction approach with ## markers (e.g., 'Reply with the answer option starting with ##, like ##A, ##B, ##C, or ##D') and extracts the answer from model reasoning output rather than relying on next-token logit probabilities.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "For BBH evaluation, all tasks are reformatted into multiple-choice format except multistep_arithmetic_two, object_counting, and word_sorting, which retain their original formats.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The baselines BPO (LLaMA2-7B-based, trained on GPT-3.5-optimized ChatGPT prompts) and FIPO (Tulu2-70B-DPO-based, trained on GPT-3.5/GPT-4-generated preference dataset) are implemented correctly.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1 / Appendix D"
+  },
+  {
+    "criteria": "The inference-model-as-optimizer baseline is implemented: each inference model is prompted using the format shown in Fig. 13 to rewrite its own prompts before generating responses.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1 / Appendix D / Fig. 13"
+  },
+  {
+    "criteria": "The code implements evaluation on the instruction-following datasets (Vicuna Eval with 80 questions, BPO-Test Eval with 200 samples, Self-Instruct Eval with 252 instructions), using GPT-4o for win-rate scoring.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3 / Table 3"
+  },
+  {
+    "criteria": "The training-free ablation baseline is implemented: the inference model rewrites raw prompts using static merit-guided templates (Fig. 16) without any training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.4 / Table 4"
+  },
+  {
+    "criteria": "The merit ablation study implements four variants MePO_wo1–MePO_wo4, each removing one merit (Clarity, Precision, Concise CoT, Preserve Original Information) from the training-free template.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.5 / Table 5"
+  },
+  {
+    "criteria": "The downward compatibility analysis is implemented: evaluating MePO and baselines on lightweight inference models LLaMA3-8b-instruct, LLaMA3.2-3b-instruct, and LLaMA3.2-1b-instruct.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.1 / Table 14"
+  },
+  {
+    "criteria": "The upward compatibility analysis is implemented: evaluating MePO-optimized prompts on large-scale models LLaMA2-13b-chat-hf, LLaMA3.3-70b-instruct, and Tulu2-70b-dpo.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2 / Table 15"
+  },
+  {
+    "criteria": "The MePO training pipeline executes successfully end-to-end: dataset construction, DPO fine-tuning of Qwen2.5-7B-Instruct, and generation of the final MePO optimizer model.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3 / Appendix C.6"
+  },
+  {
+    "criteria": "The main experiments across ARC-Easy, ARC-Challenge, GSM8K, BBH, and PiQA on all five inference models (Qwen2-7b, Tulu2-7b-dpo, LLaMA2-7b-chat-hf, Gemma2-9b, Qwen3-8b) execute successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The instruction-following evaluation (Vicuna Eval, BPO-Test Eval, Self-Instruct Eval) across GPT-4o, DeepSeek-R1, Qwen-7B-Chat, and Vicuna-7B executes successfully.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The training-free baseline comparison experiments (Table 4) and merit ablation experiments (Table 5) execute successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4 / Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: MePO achieves the highest average accuracy across all five inference models, outperforming BPO, FIPO, and the inference-model-as-optimizer baseline by approximately 1–3% on average.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: MePO achieves average accuracy gains of approximately 1.0% on Qwen2-7b, 2.37% on Tulu2-7b, 2.34% on LLaMA2-7b, 2.86% on Gemma2-9b, and 1.69% on Qwen3-8b compared to the best baseline.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes demonstrate MePO's robustness: BPO and FIPO show performance drops on Qwen3-8b compared to the inference-model baseline (BPO -0.8%, FIPO -3.97% on average), while MePO consistently outperforms the inference-model optimizer across all datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2 / Section 4.2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: MePO achieves positive delta win rate (ΔWR) over all compared methods (unoptimized, inference model optimizer, BPO, FIPO) across Vicuna Eval, BPO-Test Eval, and Self-Instruct Eval for all four inference models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: MePO outperforms the training-free merit-guided approach across all model backbones, with average accuracy improvements of approximately 1.01% on Qwen2, 2.38% on Tulu2, 2.53% on LLaMA2, 1.33% on Gemma2, and 0.6% on Qwen3.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: removing Clarity (MePO_wo1) and Precision (MePO_wo2) results in the largest performance drops, consistent with those merits being the most frequently identified by DeepSeek-R1 in Fig. 2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5 / Section 4.5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 14: MePO shows consistent performance gains on lightweight inference models (LLaMA3-8b, LLaMA3.2-3b, LLaMA3.2-1b) while BPO and FIPO show notable performance degradation on these models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 14 / Appendix E.1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 15: MePO prompts consistently match or improve performance on larger inference models (LLaMA2-13b, LLaMA3.3-70b, Tulu2-70b) across ARC, GSM8K, BBH, and PiQA datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 15 / Appendix E.2"
+  }
+]

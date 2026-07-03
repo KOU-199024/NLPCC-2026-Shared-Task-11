@@ -1,0 +1,434 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the overall Swin UNETR architecture including the encoder, decoder, and their connections via skip connections.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the hierarchical Swin Transformer encoder including patch partition, window partitioning, shifted window mechanism, and patch merging.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Equations 1 and 2 to understand the W-MSA, SW-MSA, MLP, LN computations and the scaled dot-product attention formula in the Swin Transformer block.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equations 1, 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the CNN-based decoder design with residual blocks, deconvolutional upsampling, and skip connections at each resolution stage.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the soft Dice loss function formulation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 completely to understand all implementation details including training hyperparameters, data augmentation strategies, and sliding window inference settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The agent has read Section 3.5 completely to understand the BraTS 2021 dataset, five-fold cross-validation scheme, and 10-model ensembling strategy.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the Swin UNETR model configurations: embed dimension 768, feature size 48, number of blocks [2,2,2,2], window size [7,7,7], number of heads [3,6,12,24], 61.98M parameters, and 394.84G FLOPs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the five-fold cross-validation benchmark results for Swin UNETR, nnU-Net, SegResNet, and TransBTS across ET, WT, and TC sub-regions.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Tables 3 and 4 to check BraTS 2021 validation and testing dataset benchmark results in terms of mean Dice score and Hausdorff distance.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Tables 3, 4"
+  },
+  {
+    "criteria": "The plan includes implementing the Swin UNETR architecture as a U-shaped network with a Swin Transformer encoder connected to a CNN-based decoder via skip connections at multiple resolutions.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes implementing the patch partition layer that creates 3D non-overlapping patches of size 2×2×2 from the 4-channel MRI input and projects them into an embedding space of dimension C=48.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing the shifted window mechanism with window size [7,7,7] and 3D cyclic shifting by (⌊M/2⌋, ⌊M/2⌋, ⌊M/2⌋) voxels in alternating layers.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing the 4-stage Swin Transformer encoder with [2,2,2,2] blocks per stage and attention heads [3,6,12,24] per stage.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 1, Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing the patch merging layer that groups 2×2×2 patches, concatenates them into 4C-dimensional embeddings, and reduces dimensionality to 2C via a linear layer.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes implementing the CNN-based decoder with residual blocks containing two 3×3×3 convolutional layers normalized by instance normalization.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing skip connections that feed encoder feature representations at each of the 5 resolution stages (i ∈ {0,1,2,3,4}) and the bottleneck (i=5) into the decoder.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes implementing the soft Dice loss function as defined in Equation 3, computed voxel-wise over J classes.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The plan includes implementing the BraTS 2021 data loading pipeline with 4 MRI modalities (T1, T1Gd, T2, T2-FLAIR) as a 4-channel 240×240×155 input volume.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The plan includes all data preprocessing and augmentation steps: zero-mean unit-std normalization over non-zero voxels, random 128×128×128 patch cropping, random axis mirror flip, per-channel intensity shift, and per-channel intensity scale.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes training for 800 epochs with learning rate 0.0008, linear warmup, and cosine annealing LR scheduler with batch size 1 per GPU.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes implementing five-fold cross-validation with an 80:20 ratio on the 1251 BraTS 2021 training cases.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The plan includes implementing sliding window inference with an overlap of 0.7 for neighboring voxels.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes implementing an ensemble of 10 Swin UNETR models from two separate five-fold cross-validation training runs.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The plan includes implementing the baseline models (nnU-Net, SegResNet, TransBTS) for comparison in the five-fold cross-validation experiments.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for the patch partition layer has been implemented to divide the input volume X ∈ R^{H×W×D×S} into non-overlapping 3D tokens of size 2×2×2, resulting in tokens of dimension H/2 × W/2 × D/2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code for the linear embedding layer has been implemented to project the 3D patch tokens (with raw feature dimension 2×2×2×4=32) into an embedding space of dimension C=48.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Table 1"
+  },
+  {
+    "criteria": "The code for non-overlapping window partitioning has been implemented with window size M×M×M=[7,7,7] to partition 3D token grids into local windows for self-attention computation.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Table 1"
+  },
+  {
+    "criteria": "The code for 3D cyclic shifting has been implemented to shift feature maps by (⌊M/2⌋, ⌊M/2⌋, ⌊M/2⌋) voxels for efficient computation of the shifted window self-attention (SW-MSA).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The W-MSA (Window Multi-head Self-Attention) module has been implemented as per Equation 1: z_hat^l = W-MSA(LN(z^{l-1})) + z^{l-1}, z^l = MLP(LN(z_hat^l)) + z_hat^l.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The SW-MSA (Shifted Window Multi-head Self-Attention) module has been implemented as per Equation 1 for layer l+1: z_hat^{l+1} = SW-MSA(LN(z^l)) + z^l, z^{l+1} = MLP(LN(z_hat^{l+1})) + z_hat^{l+1}.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The scaled dot-product attention has been implemented as Equation 2: Attention(Q,K,V) = Softmax(QK^T / sqrt(d))V, where d is the size of the query and key.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The complete Swin Transformer block has been implemented with the paired W-MSA and SW-MSA structure (Equation 1), where consecutive layers l and l+1 alternate between regular and shifted window self-attention.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The 4-stage hierarchical encoder has been implemented with [2,2,2,2] Swin Transformer blocks per stage, producing feature maps at resolutions H/2, H/4, H/8, and H/16 with total L=8 layers.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Table 1"
+  },
+  {
+    "criteria": "The number of attention heads for the 4 encoder stages has been correctly set to [3,6,12,24] as specified in Table 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The patch merging layer has been implemented to group 2×2×2 neighboring patches (producing 4C-dimensional concatenated features), then reduce to 2C via a linear layer, halving the spatial resolution between encoder stages.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The decoder feature extraction has been implemented to reshape encoder output feature representations at each stage i ∈ {0,1,2,3,4} into spatial tensors of shape H/2^i × W/2^i × D/2^i.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The residual block in the decoder has been implemented with two sequential 3×3×3 convolutional layers, each followed by instance normalization.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The deconvolutional upsampling layer has been implemented in the decoder to increase the spatial resolution of feature maps by a factor of 2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "Skip connections have been implemented to concatenate the encoder feature representations from each stage (0 through 4 and the bottleneck stage 5) with the corresponding upsampled decoder feature maps before feeding into a residual block.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The final segmentation head has been implemented as a 1×1×1 convolutional layer followed by a sigmoid activation function, producing 3 output channels corresponding to the ET, WT, and TC tumor sub-regions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The soft Dice loss has been implemented as per Equation 3: L(G,Y) = 1 - (2/J) * sum_{j=1}^{J} [sum_{i=1}^{I} G_{i,j} * Y_{i,j} / (sum_{i=1}^{I} G_{i,j}^2 + sum_{i=1}^{I} Y_{i,j}^2)], computed voxel-wise across all J classes.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The BraTS 2021 data loading pipeline has been implemented to load 4 MRI modalities (T1, T1Gd, T2, T2-FLAIR) as a single 4-channel 3D volume of size 240×240×155.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The image normalization has been implemented to compute zero mean and unit standard deviation statistics computed only over non-zero voxels for each input channel.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The random 128×128×128 patch cropping data augmentation has been implemented for sampling training patches from the full 3D MRI volumes.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The random axis mirror flip augmentation has been implemented with probability 0.5, applied independently for all 3 spatial axes.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The random per-channel intensity shift augmentation has been implemented with additive values sampled uniformly from the range (-0.1, 0.1).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The random per-channel intensity scale augmentation has been implemented with multiplicative values sampled uniformly from the range (0.9, 1.1).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The sliding window inference has been implemented with an overlap ratio of 0.7 between neighboring windows to handle full-volume 3D MRI segmentation at inference time.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The optimizer has been configured with a learning rate of 0.0008 for training Swin UNETR.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The learning rate scheduler has been implemented with linear warmup followed by cosine annealing over the full 800 training epochs.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The training configuration has been set with batch size 1 per GPU and training on 8 NVIDIA V100 GPUs for distributed training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The five-fold cross-validation splits have been implemented with an 80:20 ratio on the 1251 BraTS 2021 training cases for all models.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The model ensembling has been implemented to aggregate predictions from 10 Swin UNETR models, obtained from 2 separate five-fold cross-validation training runs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The SegResNet baseline has been implemented with its residual encoder-decoder architecture for comparison in the five-fold cross-validation experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4, Table 2"
+  },
+  {
+    "criteria": "The nnU-Net baseline has been implemented with its generic U-Net architecture for comparison in the five-fold cross-validation experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4, Table 2"
+  },
+  {
+    "criteria": "The TransBTS baseline has been implemented with its ViT-based architecture for comparison in the five-fold cross-validation experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4, Table 2"
+  },
+  {
+    "criteria": "The evaluation metrics (mean Dice score and Hausdorff distance in mm) have been implemented for all three tumor sub-regions: ET (Enhancing Tumor), WT (Whole Tumor), and TC (Tumor Core).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Tables 2, 3, 4"
+  },
+  {
+    "criteria": "The Swin UNETR model has been trained for all 5 folds of cross-validation on the BraTS 2021 training dataset and executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.5, Table 2"
+  },
+  {
+    "criteria": "All three baseline models (nnU-Net, SegResNet, TransBTS) have been trained on the BraTS 2021 dataset and executed successfully without errors for 5-fold cross-validation comparison.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4, Table 2"
+  },
+  {
+    "criteria": "The sliding window inference has been executed on the BraTS 2021 validation dataset (219 cases) using the 10-model ensemble of Swin UNETR without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.4, Table 3"
+  },
+  {
+    "criteria": "The five-fold cross-validation evaluation has been executed to compute mean Dice scores for ET, WT, and TC sub-regions for Swin UNETR and all baseline models.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The 10-model ensemble inference has been executed on the BraTS 2021 testing dataset to produce final segmentation results.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The five-fold cross-validation Dice results of Swin UNETR match Table 2: average Dice of ET=0.891, WT=0.933, TC=0.917, and overall average=0.913 across all 5 folds.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The per-fold results in Table 2 for Swin UNETR are reproduced: Fold 1 (ET=0.876, WT=0.929, TC=0.914), Fold 2 (ET=0.908, WT=0.938, TC=0.919), Fold 3 (ET=0.891, WT=0.931, TC=0.919), Fold 4 (ET=0.890, WT=0.937, TC=0.920), Fold 5 (ET=0.891, WT=0.934, TC=0.917).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The five-fold cross-validation results confirm that Swin UNETR outperforms nnU-Net (average Dice 0.913 vs 0.908) across all five folds and all three tumor sub-regions as shown in Table 2.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The five-fold cross-validation results confirm that Swin UNETR outperforms SegResNet (average Dice 0.913 vs 0.907) across all five folds and all three tumor sub-regions as shown in Table 2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The five-fold cross-validation results confirm that Swin UNETR outperforms TransBTS (average Dice 0.913 vs 0.891) across all five folds and all three tumor sub-regions as shown in Table 2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The BraTS 2021 validation dataset Dice score results match Table 3: Swin UNETR achieves ET=0.858, WT=0.926, TC=0.885.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The BraTS 2021 validation dataset Hausdorff distance results match Table 3: Swin UNETR achieves ET=6.016mm, WT=5.831mm, TC=3.770mm.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The BraTS 2021 testing dataset Dice score results match Table 4: Swin UNETR achieves ET=0.853, WT=0.927, TC=0.876.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The BraTS 2021 testing dataset Hausdorff distance results match Table 4: Swin UNETR achieves ET=16.326mm, WT=4.739mm, TC=15.309mm.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  }
+]

@@ -1,0 +1,542 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the formal definition of the SKP paradigm, including the KG formulation KG=(E,R,T), the structural encoder ENC, and adapter P as described in Equations 1-3.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand the SUBARU benchmark construction, including the 3-granularity (EG/TG/SG) × 3-level (CLS/MC/DESC) task design.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 completely to understand the implementation details, including the four structural encoders (TransE, DistMult, RotatE, R-GCN), four adapters (FC, MLP, MoE, Qformer), and the main LLM (Llama3-8B-Instruct).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Appendix B.2 completely to obtain the detailed hyperparameter settings: 3 epochs, batch size 16, context length 384, learning rate tuned in {1e-4, 3e-4, 5e-4}, structural encoder embedding dimension 512, KG embeddings trained for 3000 epochs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The agent has read Appendix A.2 (Figures 10-18) to understand all 9 prompt templates used in the SUBARU benchmark for the EG-CLS, EG-MC, EG-DESC, TG-CLS, TG-MC, TG-DESC, SG-CLS, SG-MC, and SG-DESC tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the dataset statistics of SUBARU, including train/valid/test split sizes for all 9 tasks.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the main experiment results for 16 SKP settings (4 adapters × 4 encoders) across all 9 SUBARU tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Figure 4 to understand the transferability experiment design: Base, w/ Tasks, w/ Granularity, and w/ All training configurations.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The agent has read Figure 5 to understand the inductive transfer experiment, which evaluates TG MC performance by varying the ratio of training entities (40%-80%) and comparing unseen (U) vs. seen (S) triples.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The agent has read Figure 6 to understand the scalability experiment that varies MLP depth from 1 to 6 layers on Entity MC and Triple MC tasks.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The agent has read Appendix B.3 and Figure 9 to understand the GPTScore evaluation protocol, including the exact prompt template used for GPT-3.5-turbo scoring on a 0-100 scale.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.3, Figure 9"
+  },
+  {
+    "criteria": "The plan includes downloading and loading the CoDeX KG (~110K triples) from WikiData as the data source for SUBARU benchmark construction.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.2"
+  },
+  {
+    "criteria": "The plan includes the construction of all 9 SUBARU tasks covering 3 granularities (Entity, Triple, Subgraph) and 3 difficulty levels (CLS, MC, DESC).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.1"
+  },
+  {
+    "criteria": "The plan includes generating negative samples for CLS tasks using random perturbation in a 1:1 positive-to-negative ratio.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.2"
+  },
+  {
+    "criteria": "The plan includes generating SG DESC golden answers using GPT-3.5-turbo with the prompt template in Figure 8.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Figure 8, Section 4.2.2"
+  },
+  {
+    "criteria": "The plan includes implementing all 9 task-specific prompt templates as shown in Figures 10-18 in Appendix A.2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The plan includes training four structural encoders (TransE, DistMult, RotatE, R-GCN) on the CoDeX KG with embedding dimension 512 using the self-adversarial loss in Equation 5.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2, Equation 5"
+  },
+  {
+    "criteria": "The plan includes implementing four adapter architectures (FC, MLP, MoE, Qformer) as described in Appendix B.2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes the end-to-end training setup with a frozen LLM, optimizing only the adapter via Equation 4 with AdamW, FP16 precision, batch size 16, context length 384, and 3 epochs.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.3, Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes implementing the evaluation metrics: Accuracy for CLS/MC tasks, Exact Match (EM) for EG-DESC and TG-DESC, and BLEU-4 + GPTScore for SG-DESC.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1, Appendix B.3"
+  },
+  {
+    "criteria": "The plan includes the main RQ1 experiment running all 16 SKP settings (4 adapters × 4 encoders) across all 9 SUBARU tasks.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.2, Table 2"
+  },
+  {
+    "criteria": "The plan includes the RQ2 transferability experiments among tasks (Base / w/ Tasks / w/ Granularity / w/ All) and the inductive transfer experiment with entity ratio variations.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The plan includes the RQ3 scalability experiments varying MLP depth from 1 to 6 layers on Entity MC and Triple MC tasks.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The plan includes the RQ4 universality experiments using Llama2-7B-chat, Llama3.1-8B-Instruct, and Mistral-7B as alternative backbone LLMs.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.5"
+  },
+  {
+    "criteria": "The code for loading the CoDeX KG and extracting entity/triple/subgraph instances at different granularities has been implemented, including ~20K entity sampling for EG with an 8:1:1 train/valid/test split.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.2, Table 1"
+  },
+  {
+    "criteria": "The code for constructing the EG task dataset with CLS (32122 train / 4016 valid / 4016 test), MC (16096 / 2012 / 2013), and DESC (16061 / 2008 / 2008) splits has been implemented to match Table 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for constructing the TG task dataset using CoDeX-M triples with CLS (371168 / 20620 / 20622), MC (185584 / 10310 / 10311), and DESC (185584 / 10310 / 10311) splits has been implemented to match Table 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for constructing the SG task dataset by sampling 1-hop and 2-hop neighborhoods with CLS (29454 / 3998 / 5142), MC (14727 / 1999 / 2571), and DESC (7453 / 931 / 939) splits has been implemented to match Table 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code for generating negative samples for CLS tasks via random perturbation (replacing entity/relation with a random one) maintaining a 1:1 positive-to-negative ratio has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.2"
+  },
+  {
+    "criteria": "The code for constructing MC tasks with 4 candidate choices (1 correct + 3 random negatives) for EG-MC (entity name prediction), TG-MC (missing entity/relation prediction), and SG-MC (center entity prediction) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.2, Appendix A.1"
+  },
+  {
+    "criteria": "The code for generating SG DESC golden answers using GPT-3.5-turbo with the exact prompt template in Figure 8 (organizing subgraph triples into text paragraphs) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 8, Appendix A.1"
+  },
+  {
+    "criteria": "The EG-CLS prompt template has been implemented following Figure 10: providing entity embedding SKP, instruction 'Given an entity embedding in the front and answer the following question', asking 'Is this entity [name]?', and outputting 'Yes/No'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 10"
+  },
+  {
+    "criteria": "The EG-MC prompt template has been implemented following Figure 11: providing entity embedding SKP, instruction to select the true answer, and asking 'Which is the possible type of entity?' with 4 labeled options (A/B/C/D).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 11"
+  },
+  {
+    "criteria": "The EG-DESC prompt template has been implemented following Figure 12: providing entity embedding SKP, instruction 'Given an entity embedding in the front and describe this entity', and generating the entity name followed by a description.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 12"
+  },
+  {
+    "criteria": "The TG-CLS prompt template has been implemented following Figure 13: providing triple embeddings (S_h, S_r, S_t), instruction about a knowledge triple, asking 'Is this a positive triple?', and outputting 'Yes/No'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 13"
+  },
+  {
+    "criteria": "The TG-MC prompt template has been implemented following Figure 14: providing query embeddings (excluding masked entity), text-based query with [MASK] placeholder (e.g., ([MASK] | occupation | romanist)), and 4 candidate options.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 14"
+  },
+  {
+    "criteria": "The TG-DESC prompt template has been implemented following Figure 15: providing full triple embeddings (S_h, S_r, S_t), instruction to describe head entity, relation, and tail entity, outputting them separated by '###'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 15"
+  },
+  {
+    "criteria": "The SG-CLS prompt template has been implemented following Figure 16: providing subgraph embeddings (S_h, S_r1, S_t1, ..., S_rk, S_tk), asking 'Is there any anomaly in this subgraph?', and outputting 'Yes/No'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 16"
+  },
+  {
+    "criteria": "The SG-MC prompt template has been implemented following Figure 17: providing subgraph embeddings with center entity removed, asking which is the center entity described by the subgraph, and providing 4 labeled options.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 17"
+  },
+  {
+    "criteria": "The SG-DESC prompt template has been implemented following Figure 18: providing full subgraph embeddings (S_h, S_r1, S_t1, ..., S_rk, S_tk) and generating a descriptive paragraph about the subgraph.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 18"
+  },
+  {
+    "criteria": "The structural encoder for TransE has been implemented with the score function F(h,r,t) = -||h+r-t||_1 as in Equation 6, using NeuralKG.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6, Appendix B.2"
+  },
+  {
+    "criteria": "The structural encoder for DistMult has been implemented using NeuralKG with embedding dimension 512.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.2"
+  },
+  {
+    "criteria": "The structural encoder for RotatE has been implemented using NeuralKG with embedding dimension 512.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.2"
+  },
+  {
+    "criteria": "The structural encoder for R-GCN has been implemented using NeuralKG with relational graph convolution layers for message aggregation, with embedding dimension 512.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.2"
+  },
+  {
+    "criteria": "The KG embedding self-supervised training loss has been implemented as Equation 5, using the sigmoid function, margin hyperparameter gamma, and self-adversarial training weights p_i from RotatE.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5, Appendix B.2"
+  },
+  {
+    "criteria": "The KG embedding training is configured for 3000 epochs until convergence with all four structural encoders (TransE, DistMult, RotatE, R-GCN) on CoDeX.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The SKP token generation has been implemented following Equation 2: S(e_i) = P(ENC(e_i | KG)), where ENC is the structural encoder and P is the adapter, mapping structural embeddings into the LLM token space.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The FC adapter has been implemented as a single linear layer of shape d_e × d_l, where d_e is the structural embedding dimension (512) and d_l is the LLM token embedding dimension.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The MLP adapter has been implemented with multiple linear layers and ReLU activations, intermediate dimension 3×d_e, defaulting to 2 layers for all non-scalability experiments.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The MoE adapter has been implemented following XRec with 4 expert networks and adaptive gated fusion.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The Qformer adapter has been implemented following BLIP-2 with 2 transformer layers, 2 attention heads, and a 2-layer MLP readout layer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The SKP-enhanced LLM prediction pipeline has been implemented as Equation 3: A* = argmax_A P_M(A | Q, S), prepending the structural prompt tokens S to the task instruction tokens.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The SKP training objective has been implemented as Equation 4: L_SKP = -log P_M(A | Q_task, S), with the LLM frozen and only the adapter updated.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4, Section 4.2.3"
+  },
+  {
+    "criteria": "The training configuration has been implemented with AdamW optimizer, 3 training epochs, batch size 16, context length 384, and learning rate selected from {1e-4, 3e-4, 5e-4}.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The LLM is set to FP16 precision during training and inference, implemented using PyTorch and HuggingFace transformers.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.2"
+  },
+  {
+    "criteria": "The accuracy (ACC) evaluation metric has been implemented for all CLS and MC tasks across all three granularities.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.3"
+  },
+  {
+    "criteria": "The Exact Match (EM) evaluation metric has been implemented for EG-DESC (comparing predicted entity name to ground truth) and TG-DESC (comparing predicted triple components to ground truth).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.3"
+  },
+  {
+    "criteria": "The BLEU-4 (B-4) evaluation metric has been implemented for SG-DESC, measuring n-gram overlap between generated descriptions and golden answers.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix B.3"
+  },
+  {
+    "criteria": "The GPTScore evaluation has been implemented for SG-DESC using GPT-3.5-turbo as judge, with the exact prompt template from Figure 9: scoring generated text against ground truth on 0-100 scale, focusing on meaning alignment.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 9, Appendix B.3"
+  },
+  {
+    "criteria": "The code for the main RQ1 experiment has been implemented to run all 16 SKP combinations (4 adapters: FC, MLP, MoE, Qformer × 4 encoders: TransE, DistMult, RotatE, R-GCN) across all 9 SUBARU tasks.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Table 2"
+  },
+  {
+    "criteria": "The code for the RQ2a transferability experiment has been implemented with four training settings: Base (single task only), w/ Tasks (all tasks same level), w/ Granularity (all tasks same granularity), and w/ All (full SUBARU), using the MLP adapter.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3.1, Figure 4"
+  },
+  {
+    "criteria": "The code for the RQ2b inductive transfer experiment has been implemented by re-splitting TG datasets with varying entity ratios (40%-80% in training), and evaluating separately on seen (S) and unseen (U) triples.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3.2, Figure 5"
+  },
+  {
+    "criteria": "The code for the RQ3 scalability experiment has been implemented by varying MLP adapter depth from 1 to 6 layers on Entity MC and Triple MC tasks with all four structural encoders.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.4, Figure 6"
+  },
+  {
+    "criteria": "The code for the RQ4 universality experiment has been implemented using Llama2-7B-chat, Llama3.1-8B-Instruct, and Mistral-7B as backbone LLMs with the MLP adapter on SUBARU MC tasks.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.5, Figure 7"
+  },
+  {
+    "criteria": "The code for the TG-MC text ablation experiment (Appendix B.4) has been implemented, comparing performance with and without textual query descriptions in the TG-MC prompt, using all four encoders with MLP adapter.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4, Table 4"
+  },
+  {
+    "criteria": "The code for training efficiency measurement has been implemented to record training time (in minutes) for different SKP methods (None, FC, MLP, MoE, QFormer) across Entity MC, Triple MC, and Subgraph MC tasks.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.6, Table 7"
+  },
+  {
+    "criteria": "The code for additional experiments on LLaMA2-13B model for Entity MC and Triple MC tasks has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.7, Table 8"
+  },
+  {
+    "criteria": "The four structural encoders (TransE, DistMult, RotatE, R-GCN) have all been trained successfully on CoDeX KG for 3000 epochs with embedding dimension 512 without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The main experiment with all 16 SKP settings across all 9 SUBARU tasks has been executed successfully without errors using Llama3-8B-Instruct as the backbone LLM.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.2, Table 2"
+  },
+  {
+    "criteria": "The RQ2 transferability experiments (Base / w/ Tasks / w/ Granularity / w/ All) have been executed successfully using MLP adapter across all task combinations.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.3.1, Figure 4"
+  },
+  {
+    "criteria": "The inductive transfer experiments with varying entity ratios (40%, 50%, 60%, 70%, 80%) on TG MC have been executed successfully for all four encoder methods.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.3.2, Figure 5"
+  },
+  {
+    "criteria": "The scalability experiments with MLP layers 1 to 6 have been executed successfully on Entity MC and Triple MC for all four structural encoders.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.4, Figure 6"
+  },
+  {
+    "criteria": "The universality experiments with Llama2-7B-chat, Llama3.1-8B-Instruct, and Mistral-7B using MLP adapter have been executed successfully on SUBARU MC and CLS tasks.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.5, Tables 5-6"
+  },
+  {
+    "criteria": "The TG-MC text ablation experiment comparing w/ text and w/o text conditions has been executed successfully for all four encoders with MLP adapter.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B.4, Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: MLP adapter achieves top-3 performance in the majority of the 9 SUBARU tasks, outperforming FC, MoE, and Qformer on most tasks.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: the EG-DESC task shows EM = 0.00 for all methods (FC, MLP, MoE, Qformer with all encoders), demonstrating complete failure in fine-grained entity description.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: TG-MC and SG-MC tasks achieve high accuracy (>85%) for top-performing methods (MLP), while EG-MC lags behind, confirming that SKP excels at coarse-grained reasoning.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: Random Choice baseline achieves 50.00 on CLS tasks and 25.00 on MC tasks, providing the correct lower bound for all methods.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: MLP-DistMult achieves EM of 97.91 on TG-DESC, the highest among all methods, while most other methods also achieve high EM on TG-DESC.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 4: training with additional tasks (w/ Tasks, w/ Granularity, w/ All) does not provide consistent improvement over the Base setting for CLS and MC tasks, demonstrating limited transferability.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 4: the DESC tasks (especially SG-DESC) benefit from additional training data, unlike CLS and MC tasks, suggesting task-type-dependent transferability.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 5: SKP performs comparably on unseen (U) vs. seen (S) triples in TG MC, with performance difference being minimal across all four encoders at 80% entity ratio.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 5: increasing the entity ratio from 40% to 80% in training data improves model performance on both U and S subsets for most encoders.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 6: MLP adapter performance peaks at 3-4 layers for Entity MC and Triple MC tasks, showing an upward-then-downward trend as depth increases from 1 to 6.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 6: this scalability pattern (peak at 3-4 layers) is consistent across all four structural encoders (TransE, DistMult, RotatE, R-GCN) for both Entity MC and Triple MC tasks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Tables 5-6 and Figure 7: SKP shows universality across Llama2-7B-chat, Llama3.1-8B-Instruct, and Mistral-7B, with consistent trends, while Llama3.1-based models generally outperform Llama2-based ones.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 7, Tables 5-6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: removing textual query descriptions in TG-MC significantly drops performance (e.g., TransE drops from 86.51 to 49.09), while models still achieve above-random results with SKP alone.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4, Appendix B.4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 7: the addition of SKP adapters adds minimal training time overhead (all adapters complete Entity MC in ~12-13 min, Triple MC in ~187-199 min, Subgraph MC in ~14-16 min).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7, Appendix B.6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5 (LlaMA3.1-8B): MLP-TransE achieves 94.83 on Entity MC, and MLP-based methods achieve >85% on Triple MC and Subgraph MC, while FC-based methods perform poorly on Entity MC.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 5, Appendix B.5"
+  },
+  {
+    "criteria": "The execution outcomes for the case study match Table 3: predictions receiving high GPTScore (90) correctly identify coarse attributes (profession, nationality, language) while still failing to identify the specific entity name, and bad predictions (GPTScore 25) fail on both.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 3, Section 5.6"
+  }
+]

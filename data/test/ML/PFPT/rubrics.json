@@ -1,0 +1,368 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the CLIP architecture including image and text encoders, cosine similarity scoring, and default prompt structure.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the Parameter-Free Prompt Tuning (PFPT) framework and its coarse-to-fine strategy with Single Token Search and Parallel Tokens Search.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.2.1 to understand how adversarial examples are generated on-the-fly during training using gradient-based PGD perturbations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2.2 to understand the parameterization of defense tokens as K tokens appended to the class prompt from the pre-trained vocabulary, and the overall search objective (Equation 6).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.2.3 and Algorithm 2 to understand the Single Token Search (STS) procedure, including the gradient-based defense objective in Equation 7 and the top-L candidate selection.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.2.4 and Algorithm 3 to understand the Parallel Tokens Search (PTS) procedure, including candidate concatenation (Equation 8), the consistency score (Equations 9-10), the accuracy score (Equation 11), and the total scoring formula.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2.4"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to check the adversarial attack procedure: uniform perturbation initialization in [-ε, ε], iterative PGD updates with step size η, sign gradient update, and L-inf projection.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 4 to understand the full experimental setup: 11 in-distribution datasets, ViT-B/32 backbone with TeCoA pre-trained weights, two perturbation budgets (ε = 1/255 and ε = 4/255), and 1-/4-/16-/100-shot sampling strategies.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the average in-distribution accuracy and robustness results for HEP, APT, and PFPT across various ε and shot settings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the generalization evaluation results on distribution shift datasets (ImageNet-V2, ImageNet-Sketch, ImageNet-R) and the cross-dataset average on 10 other datasets.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Figure 5 and Figure 6 to check the per-dataset in-distribution performance and the accuracy-robustness trade-off results.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 5, Figure 6"
+  },
+  {
+    "criteria": "The plan includes loading a pre-trained CLIP model (ViT-B/32) with TeCoA adversarially pre-trained image encoder weights, keeping all model parameters frozen during defense token search.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes implementing feature extraction using CLIP's image and text encoders as in Equation 1, producing d-dimensional feature vectors.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing cosine similarity-based classification probability with temperature parameter τ as in Equation 2.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The plan includes parameterizing K defense tokens appended as suffixes (or prefixes) to the default text prompt, with tokens selected from the pre-trained CLIP vocabulary as in Equation 5.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The plan includes implementing the adversarial attack procedure (Algorithm 1) for on-the-fly adversarial example generation, with 3 PGD steps and step size 2ε/3 during training.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes implementing the Single Token Search (STS) to compute the gradient-based defense objective for each token position and select top-L candidate tokens per position.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The plan includes implementing the Parallel Tokens Search (PTS) to concatenate same-rank tokens across positions, score each candidate combination by consistency and accuracy, and select the lowest-score combination.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The plan includes implementing the consistency score using KL divergence between predictions with and without defense tokens on clean images as in Equations 9-10.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 9-10"
+  },
+  {
+    "criteria": "The plan includes implementing the accuracy score as an indicator function for correct classification on adversarial examples as in Equation 11.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 11"
+  },
+  {
+    "criteria": "The plan includes implementing the total score formula L^total = L^consist + λ(1 - L^acc) for PTS candidate ranking, selecting the minimum-score candidate as the final defense tokens.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2.4"
+  },
+  {
+    "criteria": "The plan includes preparing all 11 in-distribution datasets (ImageNet, Caltech101, OxfordPets, StanfordCars, Flowers102, Food101, FGVCAircraft, SUN397, DTD, EuroSAT, UCF101) with N-shot random sampling from training sets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes setting up evaluation using PGD with 100 steps and step size ε/4 for measuring adversarial robustness.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes implementing baseline methods: HEP (CLIP's default 'a photo of a [CLASS]' prompt) and APT (continuous text embedding optimization converted to nearest vocabulary word by Euclidean distance).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The plan includes setting up generalization evaluation by training defense tokens on ImageNet with 16-shots and evaluating on ImageNet-V2, ImageNet-Sketch, ImageNet-R (distribution shift) and 10 other datasets (cross-dataset).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for loading the CLIP ViT-B/32 model with TeCoA adversarially pre-trained image encoder weights has been implemented, with all model parameters frozen during the search process.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for computing image features f^v and text features f^t via CLIP's visual encoder E_v and text encoder E_t has been implemented as in Equation 1.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for computing cosine similarity-based alignment probability between image and text features using temperature τ has been implemented as in Equation 2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for constructing class text prompts T'_j with K defense tokens appended after the class token has been implemented as in Equation 5.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for generating adversarial examples following Algorithm 1 has been implemented, including: uniform initialization of δ in [-ε, ε], S iterative PGD steps, signed gradient update with step size η, and L-inf projection back to the ε-ball.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The code for the adversarial attack objective (Equation 4) maximizing the loss between the adversarial image feature and the ground-truth text feature has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code for the overall search objective (Equation 6) minimizing the expected loss over adversarial examples in a batch has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for the Single Token Search (STS) defense objective (Equation 7) computing the gradient of the log-likelihood loss with respect to the one-hot embedding of each candidate token t_k has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The code for constructing K candidate sets {C_{k,l}} by selecting the top-L tokens ranked by descending defense objective scores for each of the K defense token positions has been implemented following Algorithm 2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The code for concatenating same-rank tokens across all K positions to form parallel candidate defense token sets A_l has been implemented as in Equation 8.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The code for computing the consistency score between predictions with defense tokens (q^1) and without defense tokens (q^2) on clean images has been implemented as in Equations 9-10, using KL divergence.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 9-10"
+  },
+  {
+    "criteria": "The code for computing the accuracy score as an indicator function checking correct classification of adversarial examples when using prompts with defense tokens has been implemented as in Equation 11.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 11"
+  },
+  {
+    "criteria": "The code for computing the total score L^total(t') = L^consist(t') + λ(1 - L^acc(t')) and selecting the minimum-score candidate from {A_l} as the final defense tokens has been implemented following Algorithm 3.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The code for loading, preprocessing, and N-shot sampling of all 11 in-distribution datasets (ImageNet, Caltech101, OxfordPets, StanfordCars, Flowers102, Food101, FGVCAircraft, SUN397, DTD, EuroSAT, UCF101) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for evaluating adversarial robustness using PGD with 100 attack steps and step size ε/4 at test time has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for evaluating standard (clean) accuracy and adversarial robustness as the two reported metrics has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for the HEP baseline using CLIP's default prompt 'a photo of a [CLASS]' without any learned defense tokens has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": null
+  },
+  {
+    "criteria": "The code for the APT baseline optimizing continuous text embeddings for adversarial robustness and converting to nearest vocabulary word by Euclidean distance for fair comparison has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for running PFPT with K=16 defense tokens and both position settings (prefix and suffix) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2.2, Figure 5"
+  },
+  {
+    "criteria": "The code for using 3 PGD steps with step size 2ε/3 for on-the-fly adversarial example generation during the defense token search (training phase) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code for loading the three distribution shift evaluation datasets (ImageNet-V2, ImageNet-Sketch, ImageNet-R) for the generalization evaluation has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for comparing adversarially-trained defense tokens against standardly-trained prompts to measure the accuracy-robustness trade-off has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The in-distribution PFPT defense token search has been executed successfully for all 11 datasets across 1-, 4-, 16-, and 100-shot settings with both ε = 1/255 and ε = 4/255.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The HEP and APT baseline evaluations have been executed successfully on all 11 datasets across 1-, 4-, 16-, and 100-shot settings with both ε = 1/255 and ε = 4/255.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The generalization evaluation of defense tokens learned on ImageNet (16-shot, ε = 4/255) has been executed successfully on distribution shift datasets (ImageNet-V2, ImageNet-Sketch, ImageNet-R).",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The cross-dataset generalization evaluation of defense tokens learned on ImageNet has been executed successfully on the remaining 10 datasets.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The accuracy-robustness trade-off evaluation comparing adversarially-trained vs. standardly-trained prompts has been executed successfully on all 11 datasets under 16-shot and ε = 4/255.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: PFPT outperforms HEP with +4.49% accuracy and +5.58% robustness under 1-shot setting at ε = 1/255 (PFPT: 49.41% Acc., 37.51% Rob. vs. HEP: 44.92% Acc., 31.93% Rob.).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: PFPT consistently outperforms APT across all shot settings (1, 4, 16, 100-shot) and both perturbation budgets (ε = 1/255 and ε = 4/255).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: APT underperforms HEP in the 4-shot setting under ε = 1/255, showing APT requires more data to converge.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: PFPT achieves 50.36% accuracy and 38.32% robustness in the 100-shot setting at ε = 1/255, showing consistent gains with more training data.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: PFPT achieves the highest accuracy and robustness on the source ImageNet dataset (44.9% Acc., 14.8% Rob.) under 16-shots and ε = 4/255.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: PFPT outperforms HEP and APT on all three distribution shift datasets (ImageNet-V2: 34.5%/9.6%, ImageNet-Sketch: 18.9%/8.0%, ImageNet-R: 22.3%/6.5%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: PFPT achieves the best cross-dataset average performance (33.6% Acc., 12.0% Rob.) among all methods, while APT (31.1% Acc.) underperforms HEP (32.3% Acc.) on cross-dataset evaluation.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes confirm Figure 6: PFPT adversarially-trained prompts improve robustness while incurring a minor accuracy decrease compared to standardly-trained prompts on most of the 11 datasets, with OxfordPets showing the largest robustness gain (+10.3%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes confirm Figure 5: PFPT outperforms baseline methods across all 11 datasets at ε = 4/255, K = 16 in the averaged performance chart.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  }
+]

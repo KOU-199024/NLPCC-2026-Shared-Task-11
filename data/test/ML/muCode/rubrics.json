@@ -1,0 +1,512 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the MDP formulation for multi-turn code generation, including state, action, oracle reward, and objective (Equation 1).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to understand the complete iterative training procedure of µCODE, including rollout collection, verifier training, local expert construction, relabeling, and generator fine-tuning.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 to understand both verifier loss functions (BCE and Bradley-Terry) and how preference pairs are constructed.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 to understand the generator training procedure using the local expert with oracle and learned verifier scores combined via weights β_O and β_L.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.4 and Algorithm 2 to understand the multi-turn Best-of-N inference procedure including the per-turn candidate selection strategy.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.4, Algorithm 2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to check the experiment setup: models (Llama-3.2-1B-Instruct, Llama-3.1-8B-Instruct), datasets (MBPP, HumanEval, CodeContests), baselines, and evaluation metrics.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the main comparison results of µCODE against baselines across MBPP, HumanEval, and CodeContests with both 1B and 8B models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the ablation study on one-step recoverability and verifier types (oracle vs. learned vs. both).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the comparison of different verifier strategies (Random, LV, PT, PT+LV) for multi-turn BoN search.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Appendix C (Tables 6, C.1, C.2) to understand hyperparameters for generator and verifier training, prompt templates, and public-private test split design.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes the MDP formulation for multi-turn code generation with state s_t = {x, y_1, o_1, ..., y_{t-1}, o_{t-1}}, action y_t, and oracle reward R(x, y_t) = C(x, y_t).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The plan includes the iterative µCODE training loop over M iterations, alternating between rollout collection, verifier training, local expert construction, relabeling, and generator fine-tuning.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes training the verifier with both BCE loss (Equation 2) and Bradley-Terry loss (Equation 3), and constructing preference pairs (y+, y-) from oracle reward labels for BT.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the generator training strategy: constructing the local expert via Equation 4 (linear combination of oracle and learned verifier), building the expert dataset D_* via Equation 5, and fine-tuning the generator on D_*.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the multi-turn BoN inference procedure: generating N solutions per turn, selecting the best via verifier (Equation 6), executing the selected solution, and updating the state.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The plan includes loading the MBPP dataset (374 training, 500 test problems), HumanEval (164 problems), and CodeContests (1000 training, 165 test problems) with public-private test splits.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix C.2"
+  },
+  {
+    "criteria": "The plan includes implementing the prompt templates for single-step generation and multi-step feedback from Appendix C.1.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix C.1"
+  },
+  {
+    "criteria": "The plan includes all three baselines: base Instruct model, single-turn RFT, and multi-turn RFT (fine-tuned on all sub-trajectories of positive rollouts).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the training hyperparameters from Table 6: 2 epochs, generator LR 5×10^-7, verifier LR 1×10^-6, generator batch 32, verifier batch 64, generator max seq 4096, verifier max seq 2048.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 6, Appendix C"
+  },
+  {
+    "criteria": "The plan includes the ablation experiments: comparing µCODE_OV (oracle verifier only), µCODE_LV (learned verifier only), µCODE (both), and RFT_LV (top-K selection by learned verifier).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.1"
+  },
+  {
+    "criteria": "The plan includes the MBPP POMDP evaluation variant where public unit tests are removed from the prompt to test execution feedback utilization.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3.3"
+  },
+  {
+    "criteria": "The code for multi-turn code environment tracking the interaction history state s_t = {x, y_1, o_1, ..., y_{t-1}, o_{t-1}} has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The code for computing the oracle reward R(x, y_t) = C(x, y_t) ∈ {0, 1} by executing code on public and private test cases has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The code for rolling out the generator π_θ in the multi-turn environment to collect trajectories D_i = {(x, s_t, y_t, o_t)} has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Section 3.1"
+  },
+  {
+    "criteria": "The code for aggregating rollout data across iterations D ← D ∪ D_i has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The code for the learned verifier R_φ(x, y) using the base language model with a randomly initialized linear layer to output a scalar score has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for training the verifier with Binary Cross-Entropy loss as defined in Equation 2 has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for training the verifier with Bradley-Terry loss as defined in Equation 3, including construction of preference pairs (y+, y-) for each prompt x, has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for constructing the local search expert π_* as defined in Equation 4 — selecting the code with the highest linear combination of oracle and learned verifier scores — has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The code for applying the verifier weight combination with β_O = 1.0 (oracle) and β_L = 0.1 (learned) in the expert construction (Equation 4) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code for relabeling the collected dataset D with optimal solutions y* to produce the expert dataset D_* = {(x, s_t, y*) | (x, s_t) ~ D} as defined in Equation 5 has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for fine-tuning the generator π_θ on the expert dataset D_* via supervised fine-tuning has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code for the full µCODE iterative training loop (Algorithm 1) running M iterations and returning the best generator and verifier pair on the validation set has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The code for the multi-turn Best-of-N inference (Algorithm 2): generating N rollouts per turn, selecting the best via verifier, executing the chosen solution, updating state, and stopping when public tests pass or turn limit is reached, has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2, Section 3.4"
+  },
+  {
+    "criteria": "The code for verifier-based candidate selection y_t* = argmax_n R_φ(x, y_t^n) during BoN inference (Equation 6) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The code for the PT+LV hybrid selection strategy (preferring solutions that pass public tests, then using learned verifier scores to break ties) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Section 4.3.2"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the MBPP dataset with 374 training problems and 500 test problems has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the HumanEval dataset (164 problems, using HumanEvalPack for ease of parsing) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix C.2"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the DeepMind CodeContests dataset (1000 training problems, 165 test problems) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for the MBPP public-private test split (1 test from the official suite as public, remaining tests and challenge tests as private) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.2"
+  },
+  {
+    "criteria": "The code for the HumanEval public-private test split (1 test from the code prompt docstring as public, remaining tests plus official test suite as private) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.2"
+  },
+  {
+    "criteria": "The code for loading and using Llama-3.2-1B-Instruct as the base generator model has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading and using Llama-3.1-8B-Instruct as the base generator model has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for initializing the verifier from the same base model as the generator (Llama-3.2-1B-Instruct or Llama-3.1-8B-Instruct) with a randomly initialized linear layer for scalar scoring has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The single-step prompt template from Appendix C.1.1 (including the {prompt} and {test} placeholders, reasoning instruction, code format instruction, and no-test instruction) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.1.1"
+  },
+  {
+    "criteria": "The multi-step feedback prompt template from Appendix C.1.2 providing execution error traces as 'Feedback: {feedback}' has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.1.2"
+  },
+  {
+    "criteria": "The code for the RFT baseline — collecting multiple rollouts and filtering trajectories with a correct solution for supervised fine-tuning — has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for the multi-turn RFT baseline — fine-tuning on all sub-trajectories {s_i, y_{i+1}} from positive rollouts — has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for the RFT_LV ablation — selecting the top K=3 rollouts ranked by the learned verifier for each prompt to use as fine-tuning data — has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1"
+  },
+  {
+    "criteria": "The generator training uses the hyperparameters from Table 6: learning rate 5×10^-7, batch size 32, 2 epochs, and maximum sequence length 4096.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The verifier training uses the hyperparameters from Table 6: learning rate 1×10^-6, batch size 64, 2 epochs, and maximum sequence length 2048.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The code for running 2 training iterations of µCODE on MBPP and HumanEval, and 1 training iteration on CodeContests, has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for greedy decoding with temperature=0 for BoN@1 evaluation has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix C.0.2"
+  },
+  {
+    "criteria": "The code for sampling with temperature=0.7 for BoN@N evaluation has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix C.0.2"
+  },
+  {
+    "criteria": "The code enforcing a maximum of T=3 turns per episode during training and standard evaluation has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for evaluation with N=5 candidate solutions per turn for the main BoN comparison (Table 1) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 1"
+  },
+  {
+    "criteria": "The code capping each completion to 1000 tokens per turn during inference has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix C.0.2"
+  },
+  {
+    "criteria": "The code for the MBPP POMDP evaluation variant — constructing inputs where public unit test information is removed from the prompt — has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.3"
+  },
+  {
+    "criteria": "The code for the µCODE_OV ablation (β_O=1.0, β_L=0, oracle verifier only for expert construction) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1, Table 2"
+  },
+  {
+    "criteria": "The code for the µCODE_LV ablation (β_O=0, β_L=1.0, learned verifier only for expert construction) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.1, Table 2"
+  },
+  {
+    "criteria": "The code for the inference-time scaling experiment varying N ∈ {1, 3, 5, 7, 9, 11} candidate solutions per turn has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.4, Figure 3"
+  },
+  {
+    "criteria": "The code for the verifier loss comparison experiment (BCE vs BT) using single-step rollouts from the base model has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3.5, Figure 4"
+  },
+  {
+    "criteria": "The code for the Qwen-2.5-1.5B-Instruct model variant training and evaluation on MBPP and HumanEval has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1, Table 4"
+  },
+  {
+    "criteria": "The code for evaluating µCODE and baselines on MBPP+ and HumanEval+ (with additional private tests) using the 1B model has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2, Table 5"
+  },
+  {
+    "criteria": "The µCODE training (2 iterations) on MBPP for both Llama-3.2-1B-Instruct and Llama-3.1-8B-Instruct has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The µCODE training (1 iteration) on CodeContests for Llama-3.1-8B-Instruct has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The evaluation of all methods (Instruct, RFT, µCODE) with BoN@1 and BoN@5 on MBPP, HumanEval, and CodeContests has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The Table 2 ablation experiments (RFT, RFT_LV, µCODE_OV, µCODE_LV, µCODE) with the 1B model on MBPP and HumanEval have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2, Section 4.3.1"
+  },
+  {
+    "criteria": "The Table 3 experiments comparing Random, LV, PT, and PT+LV selection strategies for BoN search with both 1B and 8B models on MBPP and HumanEval have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3, Section 4.3.2"
+  },
+  {
+    "criteria": "The Figure 2 multi-turn evaluation (up to 6 turns) on HumanEval, MBPP, and MBPP POMDP datasets for all three methods has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 2, Section 4.3.3"
+  },
+  {
+    "criteria": "The Figure 3 inference-time scaling experiments with N ∈ {1, 3, 5, 7, 9, 11} on MBPP and HumanEval using the 1B µCODE model have been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 3, Section 4.3.4"
+  },
+  {
+    "criteria": "The Figure 4 verifier loss comparison experiments (BCE vs BT) on MBPP and HumanEval using the base Llama-3.2-1B-Instruct model have been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 4, Section 4.3.5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: µCODE with 1B model achieves BoN@5 accuracy of 51.1 on MBPP and 41.5 on HumanEval, outperforming all baselines.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: µCODE with 8B model achieves BoN@5 accuracy of 70.6 on MBPP, 63.8 on HumanEval, and 16.3 on CodeContests, outperforming all baselines.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: µCODE BoN@1 with 1B model outperforms multi-turn RFT BoN@1 on MBPP (37.9 vs 31.1) and HumanEval (35.4 vs 31.7).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 1: multi-turn RFT BoN@1 performance drops below the base Instruct multi-turn model on MBPP (31.1 vs 35.1 for 1B), demonstrating the failure mode of sub-trajectory fine-tuning.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: µCODE using both verifiers achieves the best performance (51.1 MBPP, 41.5 HumanEval), outperforming all ablation variants by approximately 2%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: µCODE_OV (one-step recoverability with oracle verifier) outperforms RFT baseline on both MBPP (48.2 vs 46.7) and HumanEval (38.0 vs 36.5).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: the PT+LV hierarchical strategy outperforms using PT or LV alone across all methods (Base, RFT, µCODE) and both model sizes.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: learned verifier (LV) alone outperforms random selection for all methods and datasets.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 2: µCODE BoN accuracy improves over successive turns on both MBPP and HumanEval datasets, demonstrating effective use of multi-turn feedback.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 2: in the MBPP POMDP setting, µCODE achieves a 15.9% gain from turn 1 to turn 6 and closes the gap with MBPP, while baselines remain ~6% below their MBPP performance.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 3: BoN performance improves with increasing N for µCODE on MBPP (continuous gains up to N=11) and HumanEval (plateaus around N=5).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 4: the verifier trained with BT loss consistently outperforms the verifier trained with BCE loss across all values of N on both MBPP and HumanEval.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4 (Appendix B.1): µCODE with Qwen-2.5-1.5B-Instruct achieves BoN@5 accuracy of 63.1 on MBPP and 74.0 on HumanEval, outperforming Instruct and RFT baselines.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4, Appendix B.1"
+  }
+]

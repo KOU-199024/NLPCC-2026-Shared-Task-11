@@ -1,0 +1,350 @@
+[
+  {
+    "criteria": "The agent has read Section 4 completely to understand the core methodology of PromptFE, including the cRPN feature representation and the iterative LLM-based feature construction process.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 to understand the complete AutoFE by Prompting algorithm, including initialization, iterative LLM querying, feature canonicalization, cross-validation evaluation, prompt updating, and feature selection steps.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Appendix A to understand why RPN is chosen as the feature representation format and the canonicalization scheme details.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Algorithms 2 and 3 (Appendix B) to understand the conversion between feature expression trees and RPN strings.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Section 5.1 to check the experiment settings including datasets, downstream models, data splitting, evaluation metrics, and hyperparameters.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the main performance comparison results between PromptFE and baseline methods across three downstream models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the ablation study results comparing PromptFE with versions without semantic context and without canonicalization.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Appendix D.4 and Table 7 to understand the hyperparameter search configurations for all three downstream models (linear, Random Forests, LightGBM).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix D.4, Table 7"
+  },
+  {
+    "criteria": "The plan includes the implementation of the cRPN (canonical Reverse Polish Notation) feature representation scheme with canonicalization.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": null
+  },
+  {
+    "criteria": "The plan includes implementing Algorithms 2 and 3 for converting between feature expression trees and RPN strings, including syntactic validity checking.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes the construction of the six-component prompt template (dataset description, attribute list, operator descriptions, ranked feature examples, feedback, output template).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4, Figure 3"
+  },
+  {
+    "criteria": "The plan includes implementing the main iterative AutoFE loop from Algorithm 1, covering LLM querying, canonicalization, validation, candidate set update, and feature selection.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes downloading and loading the 7 benchmark datasets (Airfoil, Boston Housing, Bikeshare, Wine Quality Red, AIDS Clinical Trials, Credit Default, German Credit).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes implementing the four baseline methods: DIFER, OpenFE, CAAFE, and OCTree.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes implementing the three downstream models (linear models, Random Forests, LightGBM) with randomized hyperparameter search before and after AutoFE.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The plan includes the ablation experiments: version without semantic context (blinded prompt) and version without cRPN canonicalization.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.3, 5.4"
+  },
+  {
+    "criteria": "The plan includes the hyperparameter sensitivity experiments: varying the number of example features k (1, 5, 10, 20) and varying the LLM sampling temperature (0.5, 1, 1.5).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.7, Tables 4-5"
+  },
+  {
+    "criteria": "The plan includes the performance analysis experiments (Figures 7-10): feature learning (cross-validation score), feature complexity (order), feature divergence (tree edit distance), and feature construction efficiency (LLM generations).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5.6"
+  },
+  {
+    "criteria": "The code computes the feature order as defined in Equation 1: order is 0 for raw features, and 1 + max child order for operator nodes.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code implements the feature expression tree-to-RPN conversion as detailed in Algorithm 2, using a postorder depth-first traversal with a visited set.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 2"
+  },
+  {
+    "criteria": "The code implements the RPN-to-feature expression tree conversion as detailed in Algorithm 3, using a stack-based parsing approach.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The code implements syntactic validity checking of RPN feature strings: verifying sufficient child nodes exist in the stack and that exactly one node (the root) remains after parsing.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 3"
+  },
+  {
+    "criteria": "The code implements the cRPN canonicalization scheme: arranging operator nodes before feature nodes (left skewness) and lexicographically sorting nodes within each group.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4, Appendix A.2"
+  },
+  {
+    "criteria": "The code implements all nine transformation operators: unary (log, sqrt_abs, min_max, reciprocal) and binary (+, -, *, /, mod_column), where min_max normalization uses statistics collected from training data only.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4, Appendix D.3"
+  },
+  {
+    "criteria": "The code constructs the six-component prompt: (1) dataset meta-description, (2) indexed attribute list with types, value ranges, and text descriptions, (3) operator descriptions grouped by arity, (4) ranked example features with performance scores in ascending order, (5) feedback on previous feature constructions with error messages, and (6) output template requesting feature string and semantic explanation.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4, Figure 3"
+  },
+  {
+    "criteria": "The code initializes the prompt with k random features sampled from the constrained feature space X_T^(2) (order at most 2), where feature attributes are sampled per softmax probabilities of feature importance from fitting the downstream model.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The code implements the full iterative AutoFE algorithm (Algorithm 1): querying the LLM for m=1 feature per generation, canonicalizing the output, checking validity and duplication against the candidate set, and evaluating cross-validation performance.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The code updates the prompt after each iteration with the top-k candidate feature-score pairs ranked in ascending order of score (taking score increment over baseline), and includes feedback of previous LLM constructions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Section 4"
+  },
+  {
+    "criteria": "The code implements the feature selection procedure: successively adding candidate features from best to worst and determining the optimal number of features via validation performance evaluated over sets of candidate features (run every 10 new candidate features).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Section 4"
+  },
+  {
+    "criteria": "The code terminates the algorithm after constructing 200 candidate features and returns the feature set with the maximum validation score.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code uses gpt-3.5-turbo-0125 and gpt-4-0613 as the LLMs via the OpenAI API with a sampling temperature of 1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code implements cross-validation performance evaluation of a single candidate feature by computing E_M(X ∪ {x_f}, y) on the training data.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, Section 4"
+  },
+  {
+    "criteria": "The code loads and preprocesses all 7 benchmark datasets (Airfoil, Boston Housing, Bikeshare, Wine Quality Red, AIDS Clinical Trials, Credit Default, German Credit), splitting data into 64% training, 16% validation, and 20% test sets.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Table 1"
+  },
+  {
+    "criteria": "The code applies target-encoding for categorical features and min-max scaling for all features when using linear models.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code implements randomized hyperparameter search (100 iterations) for all three downstream models both before and after AutoFE, using the search spaces defined in Table 7.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1, Appendix D.4, Table 7"
+  },
+  {
+    "criteria": "The code implements the evaluation metric for regression tasks as 1 minus the relative absolute error (RAE), and for classification tasks as accuracy, with higher values indicating better performance.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code implements the blinded (semantically stripped) prompt for the ablation study, removing all dataset and attribute descriptions while retaining only column indices and operator definitions.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.3, Appendix C.2, Figure 12"
+  },
+  {
+    "criteria": "The code implements the ablated version without cRPN canonicalization, allowing multiple RPN representations for the same feature expression.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.4"
+  },
+  {
+    "criteria": "The code computes the normalized tree edit distance between candidate features using the Zhang-Shasha algorithm, normalizing by the total number of nodes in both trees, for the feature divergence analysis.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.6, Figure 9"
+  },
+  {
+    "criteria": "The code implements the DIFER baseline with LSTM-based encoder-decoder for feature optimization in the embedding space.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code implements the OpenFE baseline using its feature boost algorithm for feature evaluation up to a specified order.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code implements the CAAFE baseline by querying an LLM to generate Python code that manipulates datasets stored in Pandas data frames.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code implements the OCTree baseline by querying an LLM to produce rules that manipulate datasets and encode features using decision tree algorithms.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code for the main performance comparison experiments (PromptFE with GPT-3.5 and GPT-4 vs. all four baselines, with and without post-AutoFE parameter tuning, across all 7 datasets and 3 downstream models) has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 5.2, Table 2"
+  },
+  {
+    "criteria": "The code for the ablation experiments (without semantic context, without canonicalization) has been executed successfully without errors across all 7 datasets and 3 downstream models.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 5.3, 5.4, Table 3"
+  },
+  {
+    "criteria": "The code for the performance analysis experiments (feature learning, complexity, divergence, and construction efficiency across iterations) has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.6, Figures 7-10"
+  },
+  {
+    "criteria": "The code for the number-of-examples hyperparameter experiments (k=1, 5, 10, 20) using GPT-3.5 has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.7, Table 4"
+  },
+  {
+    "criteria": "The code for the temperature hyperparameter experiments (T=0.5, 1, 1.5) using GPT-3.5 has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 5.7, Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: PromptFE attains the best mean performance score and highest mean rank across all three downstream models (linear, Random Forests, LightGBM), yielding over 5% mean performance gain.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: PromptFE with GPT-3.5 achieves mean performance scores of approximately 0.6485/0.7408/0.7522 for linear/RF/LightGBM models (without post-AutoFE tuning).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: PromptFE consistently outperforms CAAFE and OCTree with statistical significance at p<0.01 by the Friedman-Nemenyi test.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2: PromptFE with GPT-4 yields better performance for linear models but slightly worse performance for Random Forests compared to GPT-3.5.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: PromptFE outperforms the blinded version (without semantic context) for all downstream models, with statistical significance (p<0.01 for Random Forests and LightGBM with GPT-4).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: PromptFE outperforms the ablated version without canonicalization for all downstream models, with GPT-4 results showing p<0.01 statistical significance.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figures 7-10: feature cross-validation scores show a significantly upward trend, feature order increases rapidly early then stabilizes, normalized tree edit distance shows a downward trend, and number of LLM generations shows a slightly upward non-significant trend.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figures 7-10"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: the best performance with GPT-3.5 is attained with k=10 example features, and feature construction efficiency (number of LLM generations) improves as k increases.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5: the best performance and efficiency are both attained at temperature=1, with lower temperatures (0.5) causing many more LLM generations and higher temperatures (1.5) also degrading efficiency.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match the feature attribute selection analysis in Figure 6: with semantic context, the LLM prioritizes semantically informative attributes (e.g., CD4 at baseline in ACT, alcohol in WQR), while without semantic context, the LLM tends to prioritize earlier attributes.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  }
+]

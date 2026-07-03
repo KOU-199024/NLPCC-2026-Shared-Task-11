@@ -1,0 +1,458 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the auto-regressive language model notation, vocabulary V, and the factorized joint probability formulation in Equation 1.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand the formal definition of Extractable Memorization (Definition 1), including the greedy decoding condition for verbatim reproduction.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 3 completely to understand the TOKENSWAP algorithm, including how the main and auxiliary model probabilities are combined using a scaling factor α.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Algorithm 1 carefully to understand the per-token procedure: querying both models, computing the normalization factor α, applying selective probability replacement for tokens in G, and sampling the next token.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The agent has read Section 3 to understand the criteria for selecting G: tokens must be high-frequency, grammar-based (e.g., function words), and their replacement must not degrade task-specific capabilities.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Appendix C.2 completely to understand how G is constructed: starting from the 500 most frequent COCA words, applying NLTK POS filtering to retain determiners, prepositions, conjunctions, pronouns, modal verbs, wh-words, and auxiliary verbs, yielding |G| = 110 tokens.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the extreme memorization experimental setup: fine-tuning Llama-3.2-3B on 2,000 sequences from MathAbstracts and WritingPrompts for 50 epochs, using a 20-token prefix and 128-token greedy sampling.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand the real-world memorization evaluation setup on Pile-Memorized (Pythia-6.9B, 184 examples, 32-token prefix, 48-token suffix) and LeetCode (Llama-3-8B, 1,825 problems, 20-token prefix, 100 tokens sampled).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the comparison with Goldfish: using pre-trained Goldfish models with k∈{3,4,32} trained on Wikipedia sequences duplicated 50 times in RedPajama.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the expected extreme memorization results: ML, EMR, ROUGE-L, and Levenshtein scores for Standard, MemFree, CP-Fuse-mix, CP-Fuse-half, and TOKENSWAP on WritingPrompts and MathAbstracts.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to check the expected real-world memorization results on LeetCode (Llama-3-8B) and Pile-Memorized (Pythia-6.9B), including performance metrics CE Loss, MT-Bench, and commonsense reasoning accuracy.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Appendix C.1.2 to check the fine-tuning hyperparameters: sequence length 2048, batch size 1, learning rate 5×10^-5, AdamW optimizer, gradient accumulation steps 1, warmup steps 50.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix C.1.2"
+  },
+  {
+    "criteria": "The plan includes an implementation of the TOKENSWAP algorithm (Algorithm 1) using PyTorch and HuggingFace, with a main model and a small auxiliary model running in parallel at inference time.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The plan includes construction of the token subset G using the 500 most frequent COCA words filtered by NLTK POS tags to yield 110 grammar-based tokens.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix C.2"
+  },
+  {
+    "criteria": "The plan includes fine-tuning Llama-3.2-3B on 2,000 randomly sampled sequences each from MathAbstracts and WritingPrompts datasets for 50 epochs with the specified hyperparameters.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix C.1.2"
+  },
+  {
+    "criteria": "The plan includes loading and preprocessing the Pile-Memorized dataset (184 filtered natural language sequences with 32-token prefixes and 48-token suffixes) for evaluation on Pythia-6.9B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes loading and preprocessing the LeetCode dataset (1,825 problems with punctuation removed, using 20-token prefixes and 100-token greedy sampling) for evaluation on Llama-3-8B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing all memorization metrics: Matching Length (ML), Exact Match Rate (EMR), ROUGE-L, and Normalized Levenshtein Distance.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1, Appendix D.1"
+  },
+  {
+    "criteria": "The plan includes implementing inference-time baselines: Standard (greedy decoding), MemFree (blocking n-gram matches), CP-Fuse (logit combination from disjoint models), for the extreme memorization experiment.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing performance metrics: Cross-Entropy Loss on SlimPajama, MT-Bench evaluation (with GPT-4 as judge), and 5-shot commonsense reasoning benchmarks (BoolQ, SIQA, PIQA, ARC-Challenge, ARC-Easy, OBQA, WinoGrande).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes an ablation study on the size of G, constructing it from the top-k most frequent words for k∈{10, 50, 100, 500, 2500} and evaluating on the Pile-memorized task.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5, Appendix B.5"
+  },
+  {
+    "criteria": "The plan includes an ablation study on auxiliary model size using SmolLM variants (135M, 360M, 1.7B) evaluated on both LeetCode (Llama-3-8B) and Pile-Memorized (Pythia-6.9B) datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5, Appendix B.6"
+  },
+  {
+    "criteria": "The plan includes evaluation of TOKENSWAP across the Pythia model family (70M to 6.9B) using Pythia-70M as the auxiliary model to demonstrate performance-memorization tradeoff.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 5, Appendix B.8"
+  },
+  {
+    "criteria": "The core TOKENSWAP algorithm (Algorithm 1) has been implemented: at each decoding step, both the main and auxiliary model distributions are queried, the scaling factor α is computed as the ratio of the total probability mass assigned to G by the main model to that assigned by the auxiliary model, and token probabilities are selectively replaced.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1"
+  },
+  {
+    "criteria": "The scaling factor α computation has been implemented correctly as α = sum(p_i^main[v] for v in G) / sum(p_i^aux[v] for v in G), ensuring the final distribution p_i^final remains a valid probability distribution.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, line 4"
+  },
+  {
+    "criteria": "The selective token replacement has been implemented: for tokens v NOT in G, p_i^final[v] = p_i^main[v]; for tokens v IN G, p_i^final[v] = α * p_i^aux[v].",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, line 6"
+  },
+  {
+    "criteria": "The next token is sampled from p_i^final (line 8 of Algorithm 1), and the generated token is appended to the context for subsequent steps.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Algorithm 1, line 8"
+  },
+  {
+    "criteria": "The token subset G has been constructed by starting with the 500 most frequent English words from COCA, applying NLTK POS tagging to retain only grammatical function words (DT, IN, CC, PRP, PRP$, MD, WDT, WP, WRB) and auxiliary verbs (be, do, have), yielding |G| = 110 tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C.2"
+  },
+  {
+    "criteria": "Tokenizer consistency has been verified: all 110 grammar-based tokens in G appear as single tokens across the vocabularies of all models used (GPT-2/Pythia BPE, LLaMA-3 WordPiece, OLMo-2 Unigram, SmolLM Byte-BPE), enabling cross-tokenizer application without vocabulary alignment.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.3"
+  },
+  {
+    "criteria": "The fine-tuning of Llama-3.2-3B has been implemented with 2,000 randomly sampled sequences from both MathAbstracts (AutoMathText) and WritingPrompts datasets, training for 50 epochs with hyperparameters: sequence length 2048, batch size 1, learning rate 5×10^-5, AdamW optimizer, gradient accumulation steps 1, warmup steps 50.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix C.1.2, C.4"
+  },
+  {
+    "criteria": "The MathAbstracts and WritingPrompts datasets have been downloaded from HuggingFace, with 2,000 training examples sampled using a fixed seed and 500 distinct evaluation points sampled separately.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.4"
+  },
+  {
+    "criteria": "The Pile-Memorized dataset has been loaded: 184 examples of memorized sequences (filtered to natural language only) from the Pile dataset with 32-token prefixes and 48-token suffixes as identified by Chang et al.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The LeetCode dataset has been loaded: 1,825 problem statements downloaded from Kaggle, with punctuation removed for evaluation, and using a 20-token prefix to generate the next 100 tokens.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The Matching Length (ML) metric has been implemented: it measures the number of verbatim characters or tokens generated before the first deviation from the reference.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix D.1"
+  },
+  {
+    "criteria": "The Exact Match Rate (EMR) metric has been implemented: it computes the fraction of sequences reproduced verbatim via greedy decoding.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix D.1"
+  },
+  {
+    "criteria": "The ROUGE-L metric has been implemented as ROUGE-L = LCS / len(reference text), where LCS is the longest common subsequence length between generated and reference text (Equation 2).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1, Equation 2"
+  },
+  {
+    "criteria": "The Normalized Levenshtein Distance metric has been implemented: it quantifies the minimum number of character-level edits needed to transform generated text into the original, normalized to [0,1], where larger values indicate lower memorization.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The Cross-Entropy Loss performance metric (Equation 3) has been implemented to evaluate on SlimPajama dataset samples: CE = -sum_i P(x_i) log Q(x_i).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2, Equation 3"
+  },
+  {
+    "criteria": "The MemFree baseline has been implemented: it blocks next-token outputs that would create exact n-gram matches with the training data.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The CP-Fuse baseline has been implemented in two variants for the extreme memorization experiment: CP-FUSE-HALF (disjoint 1,000-sequence splits) and CP-FUSE-MIXTURE (1,500-sequence splits with 500 overlapping), using the public CP-Fuse implementation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The CP-Fuse baseline for real-world evaluation (Section 4.2) has been implemented using model pairs: Pythia-2.8B paired with Pythia-6.9B, and Llama-3.2-3B paired with Llama-3-8B.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Appendix C.1.4"
+  },
+  {
+    "criteria": "The commonsense reasoning evaluation has been implemented: 5-shot evaluation across 128-sample subsets of WinoGrande, PIQA, OpenBookQA, BoolQ, ARC-Easy, and ARC-Challenge, generating the next 10 tokens per example.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Appendix C.5"
+  },
+  {
+    "criteria": "The MT-Bench evaluation has been implemented using GPT-4 as a judge to assess multi-turn conversation, instruction-following, and generation quality.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The TOKENSWAP inference using DistilGPT-2 (80M) as the auxiliary model has been implemented for the extreme memorization experiments (Section 4.1), with G = 110 tokens and 20-token prefix, 128-token greedy sampling.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The TOKENSWAP inference using SmolLM-135M as the auxiliary model has been implemented for the LeetCode evaluation on Llama-3-8B (an instruction-tuned auxiliary is needed for MT-Bench evaluation).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The Goldfish comparison experiment has been implemented by loading pre-trained Goldfish models (k∈{3,4,32}) from the public repository and evaluating on the Wikipedia sequences duplicated 50 times in RedPajama.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The ROUGE-L > 0.8 threshold has been implemented as the memorization criterion for the LeetCode dataset (instead of exact match rate), with appropriate preprocessing (punctuation removal).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The Fractional Exact Rate (FER) metric has been implemented: it computes the fraction of tokens identical at the same position between generated and reference text.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The OLMo-2-13B evaluation has been implemented: 5,000 random Wikipedia sequences from Dolma corpus, prompted with 50-token prefixes to generate 50 tokens, with ROUGE-L > 0.9 used to identify memorized sequences, and OLMo-2-7B used for CP-Fuse.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1"
+  },
+  {
+    "criteria": "The ablation on G size has been implemented: constructing G from the top-k most frequent English words for k∈{10, 50, 100, 500, 2500}, yielding |G|∈{9, 43, 66, 110, 136} tokens, and evaluating on Pile-memorized with Pythia-6.9B and Pythia-70M.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.5"
+  },
+  {
+    "criteria": "The ablation on auxiliary model size has been implemented using the SmolLM family (135M, 360M, 1.7B) on both LeetCode (Llama-3-8B) and Pile-Memorized (Pythia-6.9B).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.6"
+  },
+  {
+    "criteria": "The performance-memorization tradeoff analysis has been implemented across seven Pythia model sizes (70M to 6.9B) using Pythia-70M as the auxiliary model, computing EMR vs. CE Loss for both Standard and TOKENSWAP.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5, Appendix B.8"
+  },
+  {
+    "criteria": "The speculative decoding comparison has been implemented: using Pythia-6.9B as main model and Pythia-70M as auxiliary with γ=5 proposed tokens and temperature T=1.0, evaluated on the Pile-Memorized dataset.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.9"
+  },
+  {
+    "criteria": "The extreme memorization experiment (Section 4.1) has been executed successfully without errors: fine-tuning Llama-3.2-3B and evaluating Standard, MemFree, CP-Fuse-half, CP-Fuse-mix, and TOKENSWAP on both WritingPrompts and MathAbstracts with all four memorization metrics.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.1, Table 2"
+  },
+  {
+    "criteria": "The real-world memorization evaluation (Section 4.2) on the Pile-Memorized dataset has been executed successfully without errors on Pythia-6.9B, comparing Standard, CP-Fuse, and TOKENSWAP.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2, Table 3"
+  },
+  {
+    "criteria": "The real-world memorization evaluation (Section 4.2) on the LeetCode dataset has been executed successfully without errors on Llama-3-8B, comparing Standard, CP-Fuse, TOKENSWAP with DistilGPT-2, and TOKENSWAP with SmolLM-135M, including MT-Bench and commonsense reasoning benchmarks.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2, Table 3"
+  },
+  {
+    "criteria": "The Goldfish comparison experiment (Section 4.3) has been executed successfully without errors, evaluating TOKENSWAP against Standard and Goldfish (k=3,4,32) on all five metrics (ML, EMR, ROUGE-L, Levenshtein, CE Loss).",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.3, Table 4"
+  },
+  {
+    "criteria": "The OLMo-2-13B evaluation experiment (Appendix B.1) has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B.1, Table 5"
+  },
+  {
+    "criteria": "The G-size ablation experiment (Appendix B.5) has been executed successfully without errors across all five values of k.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B.5, Table 9"
+  },
+  {
+    "criteria": "The auxiliary model size ablation experiment (Appendix B.6) has been executed successfully without errors for all SmolLM variants on both LeetCode and Pile-Memorized datasets.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Appendix B.6, Table 10"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2 for WritingPrompts: TOKENSWAP reduces EMR from 83.4% to approximately 0.1% (~800× reduction) and ROUGE-L from 0.89 to 0.19 (~4.6× reduction) compared to Standard generation.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 2 for MathAbstracts: TOKENSWAP reduces EMR from 93.6% to approximately 1.8% (~50× reduction) and ROUGE-L from 0.98 to 0.38 (~2.6× reduction) compared to Standard generation.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: MemFree achieves EMR=0 but with higher ROUGE-L and lower Levenshtein than TOKENSWAP, demonstrating it prevents exact verbatim generation but allows near-verbatim generation.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3 for the Pile-Memorized (Pythia-6.9B): TOKENSWAP reduces EMR from 65.22% (Standard) to approximately 5.98% (~10× reduction) and ML from 151.6 to approximately 35.10.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3 for the LeetCode (Llama-3-8B): TOKENSWAP with DistilGPT-2 reduces ROUGE-L>0.8 from 9.65% to approximately 0.96%, while maintaining commonsense reasoning accuracy at 71.87% (same as Standard).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: TOKENSWAP with SmolLM-135M achieves MT-Bench score approximately 7.78, comparable to Standard (7.75), demonstrating preservation of instruction-following and conversational abilities.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: TOKENSWAP achieves comparable or better ML (~12.4) and ROUGE-L (~0.22) and Levenshtein (~0.72) to Goldfish (k=3) while maintaining a lower CE Loss (~3.44 vs. 3.54), demonstrating that TOKENSWAP matches aggressive pre-training methods without modifying training.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: combining TOKENSWAP with Goldfish (k=3) as the main model achieves lower ML (~7.9) than either method alone, demonstrating the two approaches are orthogonal and complementary.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5 (OLMo-2-13B): TOKENSWAP completely eliminates exact verbatim generation (EMR=0) and substantially reduces ROUGE-L from 0.95 to approximately 0.38 and Levenshtein from 0.07 to approximately 0.60.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5, Appendix B.1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 9 (G-size ablation): as |G| increases from 9 to 136, EMR decreases monotonically from ~22.28% to ~8.15%, while CE Loss remains stable (~2.87), confirming that larger G enables more memorization disruption with negligible performance cost.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 9, Appendix B.5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 10 (auxiliary model ablation): smaller auxiliary models lead to greater memorization reduction (e.g., DistilGPT-2 achieves lower EMR than SmolLM-1.7B), while performance metrics (CE Loss) show minimal variation across auxiliary model sizes.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 10, Appendix B.6"
+  },
+  {
+    "criteria": "The execution outcomes match Appendix B.8 (Table 12): across the Pythia model family, TOKENSWAP significantly reduces EMR and ROUGE-L at each model size while incurring only a ~0.1 increase in CE Loss, confirming a substantially improved performance-memorization tradeoff compared to standard models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Appendix B.8, Table 12"
+  },
+  {
+    "criteria": "The execution outcomes match Table 13 (speculative decoding comparison): speculative decoding with γ=5, T=1.0 yields ~4× higher EMR than TOKENSWAP with greedy decoding, confirming that speculative decoding fails to mitigate verbatim generation.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix B.9, Table 13"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7 (commonsense reasoning): TOKENSWAP achieves identical accuracy to Standard across all six benchmarks (WinoGrande, PIQA, OpenBookQA, BoolQ, ARC-E, ARC-C), confirming no degradation in reasoning ability.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Appendix B.3, Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8 (FER results): TOKENSWAP achieves the lowest Fractional Exact Rate across all three real-world datasets (LeetCode: 0.11, Pile-Memorized: 0.26, Wikipedia: 0.17) compared to Standard and CP-Fuse.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix B.4, Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6 (cross-entropy for extreme memorization): TOKENSWAP achieves lower CE Loss than Standard on both WritingPrompts (5.98 vs. 6.68) and MathAbstracts (4.65 vs. 4.94), while CP-Fuse variants incur substantially higher CE Loss.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Appendix B.2, Table 6"
+  }
+]

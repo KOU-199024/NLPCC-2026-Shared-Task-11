@@ -1,0 +1,470 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the three quantization strategies (GPTQ, AWQ, SmoothQuant) and the four evaluated models (LLaMA-3.1-8B-Instruct, Qwen2.5-14B-Instruct, DeepSeek-R1-Distill-LLaMA-8B, DeepSeek-R1-Distill-Qwen-14B).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 and Table 2 to understand all 13 benchmarks, their bias dimensions (capabilities, stereotypes, fairness, toxicity, sentiment), task types (FT, SP, CG, SC), and metric types (probability-based vs. generated text-based).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2, Table 2"
+  },
+  {
+    "criteria": "The agent has read Appendix B completely to understand the detailed metric formulas for all benchmarks, including StereotypeScore, effect size (Cohen's d), BBQ bias scores, DiscrimEval fairness, DiscrimEvalGen fairness, Toxic-BERT toxicity, and VADER sentiment.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Appendix C to understand the three quantization methods (AWQ, GPTQ, SmoothQuant) in detail and the use of fake quantization for W3 and W4A8 settings via the LightCompress library.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Appendix F.5 to check all hyperparameters: greedy decoding with temperature=0, vLLM library, max 2000 tokens for generative tasks (MMLU, WinoBias, DiscrimEvalGen, DT-Fairness), and max 250 tokens for sentence completion tasks (BOLD, DT-Toxicity).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix F.5"
+  },
+  {
+    "criteria": "The agent has read Appendix F.6 to understand the statistical significance test: approximate randomization test with 10,000 iterations and significance level α=0.05.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix F.6"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 and all result tables (Tables 3–8) to understand the general impact findings across capabilities, stereotypes, fairness, toxicity, and sentiment.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 to understand the subgroup-level analysis methodology across gender, race, and religion categories.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Appendix D.1 to understand the extra reasoning capabilities analysis using MathArena benchmarks (AIME, CMIMC, HMMT) with 4 generations per question.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The agent has read the prompt templates (Prompts 1–11) to understand the exact format used for each benchmark task, including the step-by-step reasoning instruction and \\boxed{} answer format.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Prompts 1-11"
+  },
+  {
+    "criteria": "The plan includes loading all four models (LLaMA-3.1-8B-Instruct, Qwen2.5-14B-Instruct, DeepSeek-R1-Distill-LLaMA-8B, DeepSeek-R1-Distill-Qwen-14B) in their original (unquantized) form as baselines.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes applying all 7 quantization settings: AWQ (W3, W4, W8), GPTQ (W4, W8), and SmoothQuant (W4A8, W8A8) to each of the four models using the LightCompress library.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1, Appendix C"
+  },
+  {
+    "criteria": "The plan includes using fake quantization for the W3 (AWQ) and W4A8 (SmoothQuant) settings, which are not supported as true quantization by LightCompress.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes running inference with vLLM using greedy decoding (temperature=0) for all experiments.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix F.5"
+  },
+  {
+    "criteria": "The plan includes evaluating MMLU with 5-shot prompts, extracting the last \\boxed{} answer, and computing accuracy.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.1, Prompt 1"
+  },
+  {
+    "criteria": "The plan includes implementing StereotypeScore and Cohen's d effect size metrics for StereoSet and RedditBias using perplexity-based comparisons of pro- and anti-stereotypical sentence pairs.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes implementing WinoBias evaluation by prompting the model for pronoun coreference resolution with randomly shuffled answer options, computing historical bias and population bias.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2, Prompt 4"
+  },
+  {
+    "criteria": "The plan includes implementing both ambiguous and disambiguated BBQ bias score formulas across Gender, Race, and Religion categories.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2, Equations"
+  },
+  {
+    "criteria": "The plan includes implementing DiscrimEval with first-token softmax probability of 'yes', DiscrimEvalGen with shuffled subgroup options (unbiased answer always last), and DT-Fairness with DPD and EOD metrics.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The plan includes implementing Toxic-BERT scoring with threshold 0.5 for toxicity evaluation on BOLD and DT-Toxicity, and VADER sentiment scoring for BOLD.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The plan includes using LLaMA-3.3-70B-Instruct as a judge to classify useful vs. non-useful model continuations in BOLD and DT-Toxicity evaluations.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.4, Prompt 11"
+  },
+  {
+    "criteria": "The plan includes applying post-processing to remove empty and refusal answers before computing metrics, and recording non-answers when no \\boxed{} pattern is found.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Appendix B"
+  },
+  {
+    "criteria": "The plan includes implementing the approximate randomization test with 10,000 iterations (p-value < 0.05) to assess statistical significance of differences between unquantized and quantized models.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix F.6"
+  },
+  {
+    "criteria": "The plan includes the subgroup-level analysis across gender (male, female, non-binary), race (African Americans, Asian Americans, Hispanic and Latino Americans, White, Black, Asian, etc.), and religion (Christianity, Judaism, Islam) categories.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for loading and quantizing all four models with all 7 quantization settings using the LightCompress library has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix C"
+  },
+  {
+    "criteria": "The code for applying fake quantization via quantize-dequantize operations for W3 (AWQ) and W4A8 (SmoothQuant) settings has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The code for setting up vLLM inference with greedy decoding (temperature=0) and fixed random seed for deterministic execution has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F.5"
+  },
+  {
+    "criteria": "The code for loading and running MMLU with 5-shot examples from the dev split, prompting the model with step-by-step reasoning and \\boxed{A/B/C/D} answer format, and computing accuracy has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.1, Prompt 1"
+  },
+  {
+    "criteria": "The code for computing the StereotypeScore as the fraction of sentence pairs where the model assigns lower perplexity to the pro-stereotypical sentence has been implemented as described in Appendix B.2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for computing Cohen's d effect size using a Student's t-test on log-likelihood differences between pro- and anti-stereotypical sentences for StereoSet and RedditBias has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for the WinoBias coreference resolution evaluation using the step-by-step reasoning prompt format (Prompt 4) with randomly shuffled answer options has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2, Prompt 4"
+  },
+  {
+    "criteria": "The code for computing the BBQ bias score in ambiguous context as (n_pro-stereo - n_anti-stereo) / (n_pro-stereo + n_anti-stereo + n_unbiased) has been implemented as the formula in Appendix B.2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2, Equation"
+  },
+  {
+    "criteria": "The code for computing the BBQ bias score in disambiguated context as (n_pro-stereo - n_anti-stereo) / (n_pro-stereo + n_anti-stereo) has been implemented as the formula in Appendix B.2.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2, Equation"
+  },
+  {
+    "criteria": "The code for loading and filtering BBQ to only Gender, Race, and Religion demographic categories has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code for computing the DiscrimEval fairness metric as (1/|Q|) * sum_q(max_g P(yes|q,g) - min_g P(yes|q,g)) using first-token softmax probabilities has been implemented as the formula in Appendix B.3.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3, Equation"
+  },
+  {
+    "criteria": "The code for the DiscrimEvalGen evaluation with randomly shuffled subgroup options (neutral 'Prefer not to answer' always last) and computing the fairness metric (1/|Q|)(max_g n_g - min_g n_g) has been implemented as Equation 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3, Equation 1"
+  },
+  {
+    "criteria": "The code for DT-Fairness evaluation with binary income classification, computing Demographic Parity Difference (DPD) and Equalized Odds Difference (EOD) across gender subgroups has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The code for BOLD sentence completion evaluation for both toxicity and sentiment has been implemented, including the separate system prompts for toxic generation (Prompt 9) vs. neutral completion (Prompt 9 sentiment variant).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4, Prompt 9"
+  },
+  {
+    "criteria": "The code for DT-Toxicity evaluation using subgroup persona impersonation (Prompt 10) to generate toxic content as a specific demographic group has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4, Prompt 10"
+  },
+  {
+    "criteria": "The code for scoring model continuations using Toxic-BERT, classifying sentences as toxic (1) if the score is >= 0.5 and computing toxicity as the fraction of toxic continuations per subgroup has been implemented.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The code for scoring model continuations using VADER, classifying as negative (-1) if score <= -0.5, positive (+1) if score >= 0.5, and neutral (0) otherwise, then averaging per subgroup has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The code for using LLaMA-3.3-70B-Instruct as a judge (Prompt 11) to classify model toxic continuations as incoherent (A), refusal (B), or coherent continuation (C), and excluding non-useful responses from toxicity computation has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4, Prompt 11"
+  },
+  {
+    "criteria": "The code for post-processing all generated text-based metric tasks by extracting the last \\boxed{} occurrence as the model answer and recording non-answers when this pattern is absent has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B, Section 3.2"
+  },
+  {
+    "criteria": "The code for computing the approximate randomization test with 10,000 iterations (swapping outputs with probability 0.5 per iteration) to compute two-sided p-values for significance testing has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F.6"
+  },
+  {
+    "criteria": "The code for setting the maximum generated token limit to 2000 for generative tasks (MMLU, WinoBias, DiscrimEvalGen, DT-Fairness) and 250 for sentence completion tasks (BOLD, DT-Toxicity) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F.5"
+  },
+  {
+    "criteria": "The code for subgroup-level analysis on WinoBias computing historical bias (accuracy gap between pro- and anti-stereotypical sentences) and population bias (accuracy gap between male and female subgroups) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2, Section 4.2.1"
+  },
+  {
+    "criteria": "The code for computing average pairwise subgroup toxicity and sentiment differences across subgroups in BOLD and DT-Toxicity has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Tables G.7, G.8, G.9"
+  },
+  {
+    "criteria": "The code for MathArena reasoning evaluation (AIME, CMIMC, HMMT benchmarks) generating 4 samples per question and computing global accuracy has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The code for the generation length control experiment (limiting BOLD generation to 50, 100, and 150 tokens) to analyze correlation between quantization, toxicity, and output length has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The code for log-likelihood analysis of pro- and anti-stereotypical sentences across categories in RedditBias and StereoSet to study model uncertainty under quantization has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.4"
+  },
+  {
+    "criteria": "The code for subgroup preference analysis on DiscrimEval using mean absolute deviation (MAD) from the uniform allocation baseline to measure disparity in yes-token probabilities has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix D.6"
+  },
+  {
+    "criteria": "The code for all 4 models × 8 settings (original + 7 quantization) on the MMLU benchmark has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The code for all 4 models × 8 settings on all stereotype benchmarks (StereoSet, RedditBias, WinoBias, BBQ) has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Tables 4, 5, Figure 1"
+  },
+  {
+    "criteria": "The code for all 4 models × 8 settings on all fairness benchmarks (DiscrimEval, DiscrimEvalGen, DT-Fairness) has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 2, Tables 6, G.4"
+  },
+  {
+    "criteria": "The code for all 4 models × 8 settings on BOLD and DT-Toxicity (for toxicity and sentiment evaluation) has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Tables 7, 8"
+  },
+  {
+    "criteria": "The LLaMA-3.3-70B-Instruct judge model has been run to evaluate useful-answer rate for all toxic generation experiments (BOLD, DT-Toxicity) across all model-quantization combinations.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table G.10"
+  },
+  {
+    "criteria": "The MathArena evaluation (AIME, CMIMC, HMMT) with 4 generations per question on Reasoning and Non-reasoning models under quantization has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table D.2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: W8 and W8A8 have negligible impact on MMLU accuracy, W4 causes moderate degradation, and W3 and W4A8 cause the largest accuracy drops especially for LLaMA-based models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 4: stronger quantization drives StereotypeScore on RedditBias toward 50% (neutral), with W3 and W4A8 having the largest effects on LLaMA-based models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table G.1: StereotypeScore on StereoSet follows a similar trend to RedditBias, with minimal changes under W4 and W8 quantization.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table G.1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 1: historical bias on WinoBias tends to increase after quantization, especially under aggressive settings like W3 and W4A8, showing amplification of gender stereotypes.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 5: quantization increases the BBQ ambiguous-context bias score in most cases, with W3 and W4A8 showing the largest increases.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 2: stronger quantization consistently reduces the unbiased-answer rate in DiscrimEvalGen and increases disparity across subgroups.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 6: quantization increases DPD on DT-Fairness for most model-quantization combinations, indicating more discriminatory decision-making.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table G.4: the effect of quantization on DiscrimEval probability-based fairness metric is generally small (below 2% for most settings).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table G.4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 7: quantization significantly reduces raw toxicity on BOLD, with W3 and W4A8 causing reductions of up to ~35% for LLaMA-based models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table G.6: quantization also reduces raw toxicity on DT-Toxicity, with differential impacts across Non-reasoning (greater reduction) and Reasoning models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table G.6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Tables G.7 and G.8: inter-subgroup toxicity differences on BOLD and DT-Toxicity remain relatively stable under quantization (rarely exceeding 5%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Tables G.7, G.8"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 8: quantization has a smaller effect on sentiment than toxicity, generally slightly neutralizing positive sentiment.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 3 and Figure G.1: the StereotypeScore ordering across categories (gender, race, religion) remains largely unchanged after quantization.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3, Figure G.1"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Figure 4 and Figure G.7: the ordering of raw toxicity scores across categories (gender, race, religion) on BOLD remains consistent after quantization.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table G.3: stronger quantization (W3, W4A8) substantially increases no-answer rates on generative tasks, especially for choice generation benchmarks.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table G.3"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table D.2: W3 and W4A8 quantization significantly reduces reasoning accuracy on AIME/CMIMC/HMMT for Reasoning models (e.g., DS-LLaMA, DS-Qwen), while Non-reasoning models already score near 0.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table D.2"
+  },
+  {
+    "criteria": "The execution outcomes confirm the key finding in Section 4.1.2: the reduction in StereotypeScore from probability-based metrics reflects increased model uncertainty (lower log-likelihood symmetrically across pro- and anti-stereotypical sentences) rather than reduced bias.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.1.2, Appendix D.4"
+  },
+  {
+    "criteria": "The execution outcomes confirm the finding in Appendix D.2: constraining generation length to fixed values (50, 100, 150 tokens) does not significantly reduce toxicity in the unquantized model, confirming that toxicity reduction is driven by quantization, not output length.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix D.2, Figure D.1"
+  },
+  {
+    "criteria": "The execution outcomes match the key findings comparing Reasoning vs. Non-reasoning models: Reasoning models (DeepSeek-R1 variants) are generally less toxic and fairer than Non-reasoning counterparts in the original unquantized setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 4.3.2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table G.10: Reasoning models exhibit a lower useful-answer rate on toxic generation tasks compared to Non-reasoning models, making their toxicity evaluation less reliable.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table G.10"
+  },
+  {
+    "criteria": "The execution outcomes confirm that SQ (W4A8) generally has the strongest impact across all bias dimensions, while W8 and W8A8 achieve bias levels comparable to unquantized models.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Section 4.1.6"
+  }
+]

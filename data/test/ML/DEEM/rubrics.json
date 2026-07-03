@@ -1,0 +1,494 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the three-component architecture of DEEM: VFM-based Image Encoder, LLM-based Multi-modal Decoder, and DM-based Image Decoder.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to understand the pipeline for interleaved image-text modeling and the role of each loss term in Equations 1–5.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 2.3 completely to understand the three-stage training process and how the training objectives differ across stages.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the network configuration and dataset recipes for all three training stages.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the zero-shot visual robustness, hallucination, and perception evaluation results.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the multi-modal comprehension evaluation results across VQA and captioning benchmarks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the ablation study of CSR loss and its impact on training latency.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 11 in Appendix E to understand all hyperparameters across the three training stages.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 11, Appendix E"
+  },
+  {
+    "criteria": "The agent has read Appendix E.1 to understand the RobustVQA benchmark construction process using CLIP-ViT-L hard example mining.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix E.1"
+  },
+  {
+    "criteria": "The agent has read Figure 8 to understand the prompt templates used for evaluating VQA, captioning, hallucination, and robustness tasks.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 8, Appendix E.5"
+  },
+  {
+    "criteria": "The agent has read Tables 4 and 5 to understand the scalability and architecture generalization ablation experiments.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 4, Table 5"
+  },
+  {
+    "criteria": "The plan includes the implementation of the three-component DEEM architecture: CLIP-ConvNeXt-B image encoder, Vicuna-7B LLM, and Stable Diffusion v2.1 diffusion model.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes two separate Perceiver Resampler modules: one connecting the LLM output to the diffusion model, and one connecting the image encoder output to the diffusion model.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The plan includes the mask-aware visual extractor that applies a dot-product mask operation to image embeddings for region-level feature extraction.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2, Figure 3"
+  },
+  {
+    "criteria": "The plan includes the Consistency Semantic Regularization (CSR) loss term as defined in Equation 5, using the diffusion model to reconstruct images conditioned on image encoder features.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The plan describes the three-stage training with distinct loss functions: Stage I (L_NTP + λL_NIP + λL_CSR), Stage II (L_NTP + λL_CSR), and Stage III (L_NTP only).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The plan includes preparation of the pre-training datasets: MMC4-Core (~6M samples) and BLIP-LCS (~20M from LAION-400M, SBU, CC-12M filtered by BLIP-2).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "The plan includes preparation of the instruction fine-tuning dataset mixture (~800K samples) from LLaVA-665K, COCO Caption, VQAv2, TextCaps, OCR-VQA, GQA, OK-VQA, TextVQA, and AOK-VQA.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E.3"
+  },
+  {
+    "criteria": "The plan includes preparation of the mask-text instruction fine-tuning dataset (~200K) from COCO, RefCOCO, RefCOCO+, Pascal Part, Part ImageNet, VG, and VCR.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix E.4"
+  },
+  {
+    "criteria": "The plan includes construction of the RobustVQA benchmark using hard example mining with CLIP-ViT-L on ImageNet-A, ImageNet-R, and ImageNet-V2, converting into yes/no VQA format.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix E.1"
+  },
+  {
+    "criteria": "The plan specifies the hyperparameter λ=5 for weighting image and text decoding branches in both Stage I and Stage II.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The plan specifies keeping the VFM (CLIP-ConvNeXt-B) unfrozen and DM (Stable Diffusion v2.1) frozen during training, as supported by the ablation in Table 10.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 10, Appendix D.2"
+  },
+  {
+    "criteria": "The plan includes evaluations on the RobustVQA benchmarks (RVQA-A, RVQA-R, RVQA-V), POPE (Random, Popular, Adversarial), and MMVP using accuracy metric.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes evaluations on VQA and captioning benchmarks: COCO, Image2Paragraph, VQAv2, OKVQA, GQA, VizWiz, VisDial, MMBench, MMVet.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes text-to-image generation evaluation on MS-COCO and LN-COCO using FID metric, with CLIP reranking (8 images per text) on MS-COCO.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix C, Table 7"
+  },
+  {
+    "criteria": "The plan includes ablation studies: (1) with/without CSR during pre-training and SFT, (2) scalability with different data and model sizes, (3) different architectures (LLaVA with CSR).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The code for the VFM-based image encoder using CLIP-ConvNeXt-B (122M parameters) has been implemented to encode images into embeddings.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1, Section 3.1"
+  },
+  {
+    "criteria": "The code for the LLM-based multi-modal decoder using Vicuna-7B v1.5 has been implemented to process interleaved image-text token sequences.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1, Table 11"
+  },
+  {
+    "criteria": "The code for the DM-based image decoder using Stable Diffusion v2.1 has been implemented to generate or reconstruct images conditioned on image-text context features.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1, Table 11"
+  },
+  {
+    "criteria": "The code for two separate Perceiver Resampler modules has been implemented: one mapping LLM output features to diffusion conditioning tokens, and one mapping image encoder features to diffusion conditioning tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The code for the mask-aware visual extractor has been implemented using a simple dot-product operation between the binary mask M^V and the image embedding e^V before input to the LLM.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2, Figure 3"
+  },
+  {
+    "criteria": "The code for the interleaved image-text input pipeline has been implemented, encoding each text token via word embedding and each image via CLIP-ConvNeXt-B followed by the mask-aware extractor.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The code for the NTP (next-text prediction) loss has been implemented as in Equation 2: L_NTP = -log p(x_n^L | D_LLM(e_{<n})).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for the NIP (next-image prediction) diffusion loss has been implemented as in Equation 3: L_NIP = E[||epsilon - D_DM(x_{n,t}^V, t, D_LLM(e_{<n}))||^2].",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code for the Consistency Semantic Regularization (CSR) loss has been implemented as in Equation 5: L_CSR = E[||epsilon - D_DM(x_{n,t}^V, t, e_n)||^2], where e_n is the image encoder output.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The code for the Stage I training objective has been implemented as L_S1 = L_NTP + λ*L_NIP + λ*L_CSR with λ=5.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.3, Table 11"
+  },
+  {
+    "criteria": "The code for the Stage II training objective has been implemented as L_S2 = L_NTP + λ*L_CSR with λ=5, removing the L_NIP term.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.3, Table 11"
+  },
+  {
+    "criteria": "The code for the Stage III training objective has been implemented as L_S3 = L_NTP only, with no image generation or CSR losses.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3, Table 11"
+  },
+  {
+    "criteria": "The VFM (image encoder) is set to be unfrozen and DM is frozen during both Stage I and Stage II training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 10, Table 11"
+  },
+  {
+    "criteria": "The code for Stage I training hyperparameters has been implemented: LR 2e-5 for image encoder/decoder and 1e-4 for others, AdamW with β1=0.9, β2=0.995, ε=1e-6, weight decay 0.05, 10k iterations, 1k warmup, cosine scheduler, batch size 4 per GPU.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The code for Stage II training hyperparameters has been implemented: LR 1e-6 for LLM and 1e-5 for others, AdamW with β1=0.9, β2=0.999, ε=1e-8, weight decay 0.05, 10k iterations, 500 warmup, cosine scheduler, batch size 16 per GPU.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The code for Stage III training hyperparameters has been implemented: LR 1e-6 for LLM and 1e-5 for others, 10k iterations, 500 warmup steps, batch size 2 per GPU.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The input image resolution is set to 256×256 for Stage I and 448×448 for Stage II and III; the output image resolution for the diffusion model is 512×512 across all stages.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The code for the MMC4-Core and BLIP-LCS pre-training data loading pipeline has been implemented, including CLIP similarity score filtering (≥0.24), text prompt length filtering (>10), and concatenation to maximum context length 2048.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "The MMC4-Core sampling probability is set to be twice that of BLIP-LCS during pre-training, and images are inserted before or after their corresponding text sentences with equal probability.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "The MMC4-Core data filtering is implemented: at most 6 images per document, 100% exclusion of documents without images, 50% exclusion of documents with only 1 image.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "The text condition for image generation is dropped with 10% probability during pre-training to enable classifier-free guidance sampling.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "The training loss for images that are the first element in the sequence is ignored during pre-training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.2"
+  },
+  {
+    "criteria": "The code for the instruction fine-tuning prompt template has been implemented: 'Based on the image, please answer the question. {image} {question}. The answer is: {answer}' for VQA-style tasks.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E.3"
+  },
+  {
+    "criteria": "The code for loading and mixing the ~800K instruction fine-tuning data from LLaVA-665K, COCO Caption, VQAv2, TextCaps, OCR-VQA, GQA, OK-VQA, TextVQA, and AOK-VQA has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.3"
+  },
+  {
+    "criteria": "The code for loading and mixing the ~200K mask-text instruction data from COCO, RefCOCO, RefCOCO+, Pascal Part, Part ImageNet, Visual Genome, and VCR has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix E.4"
+  },
+  {
+    "criteria": "The RobustVQA benchmark construction pipeline has been implemented: using CLIP-ViT-L for hard example mining (highest-confidence incorrect category), generating positive/negative yes-no question pairs with the template 'Is [category label] the main object in this image? Please answer yes or no.'",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E.1"
+  },
+  {
+    "criteria": "The evaluation prompt for VQA tasks has been implemented as: 'Based on the image, please answer the question. {IMAGE} {QUESTION} Please provide an accurate answer within one word.'",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 8(a)"
+  },
+  {
+    "criteria": "The evaluation prompt for image captioning has been implemented as: '{IMAGE} Could you provide a short description of the image?' with the response starting with 'A photo of'.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 8(b)"
+  },
+  {
+    "criteria": "The evaluation prompt for hallucination (POPE) has been implemented as: 'Based on the image, please answer the question. {IMAGE} Is there a <OBJECT> in the image? Please answer yes or no.'",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 8(d)"
+  },
+  {
+    "criteria": "The evaluation prompt for robustness (RobustVQA) has been implemented as: 'Based on the image, please answer the question. {IMAGE} Is <OBJECT> the main object in this image? Please answer yes or no.'",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 8(e)"
+  },
+  {
+    "criteria": "The autoregressive inference pipeline has been implemented: text tokens are sampled autoregressively from the LLM, and when the <SOI> token is generated, the diffusion model is invoked to generate the next image.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The referring/region-level captioning prompt has been implemented as: '{IMAGE} Provide a short description for this <ref>region1</ref> {MASK}' using the mask-aware extractor.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 8(c)"
+  },
+  {
+    "criteria": "The text-to-image generation evaluation pipeline has been implemented: sampling 8 images per text condition on MS-COCO and selecting via CLIP-ViT-L reranking, computing FID on the val-30K split; no reranking for LN-COCO.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The LLaVA architecture variant with CSR (for the architecture generalization ablation) has been implemented, using CLIP-ViT-L encoder with CSR applied in the same way as DEEM.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The scalability experiment has been implemented to test different data sizes (32K, 96K, 160K training steps) and model sizes (ConvNext-B/Vicuna 7B, ConvNext-L/Vicuna 7B, ConvNext-B/Vicuna 13B).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "Stage I image-text alignment pre-training has been executed successfully on 32×NVIDIA A100 GPUs without errors, using the MMC4-Core and BLIP-LCS datasets.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "Stage II image-text instruction fine-tuning has been executed successfully on 32×NVIDIA A100 GPUs without errors, loading Stage I weights and using the ~800K instruction dataset.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "Stage III mask-text instruction fine-tuning has been executed successfully on 32×NVIDIA A100 GPUs without errors, using the ~200K mask-text instruction dataset.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 11"
+  },
+  {
+    "criteria": "The evaluation on RobustVQA (RVQA-A, RVQA-R, RVQA-V), POPE (Random, Popular, Adversarial), and MMVP benchmarks has been executed successfully without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The evaluation on VQA and captioning benchmarks (COCO, Image2Paragraph, VQAv2, OKVQA, GQA, VizWiz, VisDial, MMBench, MMVet) has been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The ablation experiments for CSR (with/without L_CSR in pre-training and SFT) have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The region-level image captioning evaluation on RefCOCOg using DEEM-Mask has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6, Appendix C"
+  },
+  {
+    "criteria": "The text-to-image generation evaluation (FID on MS-COCO and LN-COCO) has been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 7, Appendix C"
+  },
+  {
+    "criteria": "The scalability ablation experiments (Table 4) and architecture ablation (Table 5) have been executed successfully without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4, Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: without SFT, DEEM achieves approximately 56.86/68.63/63.08 on RVQA-A/R/V and 69.93/70.27/68.87 on POPE-R/P/A, and 28.74 on MMVP.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: DEEM (no SFT) outperforms the baseline without CSR (DEEM*) by approximately 4% average on RobustVQA, 12.8% on POPE, and 6.5% on MMVP.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: DEEM-VQA (with SFT) achieves 55.22/64.12/62.99 on RVQA-A/R/V, 87.40/82.80/78.49 on POPE-R/P/A, and 32.89 on MMVP.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: DEEM-VQA achieves 115.4 CIDEr on COCO caption, 22.4 on Image2Paragraph, 68.2 on VQAv2, 53.4 on OKVQA, 55.7 on GQA, 50.4 on VizWiz, 42.1 on VisDial, 60.8 on MMBench, and 37.4 on MMVet.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: adding CSR during pre-training improves RVQA-A from 53.2 to 57.8, RVQA-R from 56.1 to 69.0, and POPE-R from 50.6 to 69.9, with only marginal latency increase (8.11 to 9.25 s/step).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: adding CSR during SFT (row 4 vs row 3) further improves POPE and RobustVQA results while incurring only 2.22 vs 2.14 s/step latency overhead.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: DEEM with ConvNext-B/Vicuna 7B shows increasing performance as training data grows from 32K to 160K, and further gains with larger VFM (ConvNext-L) or LLM (Vicuna 13B).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: applying CSR to the LLaVA architecture improves MMVP from 18.6 to 25.1, and RVQA-R from 60.0 to 66.7, demonstrating the architecture-agnostic generalization of CSR.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: DEEM-Mask achieves 14.1 CIDEr and competitive METEOR on RefCOCOg for region-level image captioning using mask input.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7: DEEM-7B achieves FID of 8.89 on MS-COCO and 24.13 on LN-COCO for text-conditional image synthesis.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8: λ=5 achieves better overall balance than λ=1 or λ=10 across RobustVQA and POPE benchmarks; increasing input resolution from 256 to 448 further improves OK-VQA from 38.7 to 41.0.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Table 10: the configuration with VFM unfrozen and DM frozen achieves the best results (RVQA-R 68.6, POPE-R 69.9), substantially outperforming both the VFM-frozen and both-unfrozen configurations.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 10"
+  }
+]

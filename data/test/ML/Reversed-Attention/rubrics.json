@@ -1,0 +1,266 @@
+[
+  {
+    "criteria": "The agent has read Section 3 (Background) completely to understand the GPT architecture, attention mechanism notation (Q, K, V, Wo matrices, heads, forward attention A), and the VJP formulation used throughout the paper.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 (Attention Layers Gradients) completely to understand the mathematical derivation of VJPs for Wo, Wv, Wq, Wk and the softmax derivative R.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 5 (Reversed Attention) completely to understand the definition and properties of Reversed Attention (RA) as an implicit attention matrix analogous to the forward attention.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Section 5.2 completely to understand the perturbation test setup: head masking/unmasking, AUC metric, comparison methods (RA, FA, CM, Random), tasks, and models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The agent has read Section 5.3 completely to understand the attention patching procedure: collecting RA from training examples, averaging per head, and injecting into the forward pass attention maps.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the full perturbation test details: ICL task format (Q/A n-shot prompts), the two CM implementations (CM1: zero-out, CM2: average activation from Todd et al.), and the use of GPT-j and OPT models.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The plan includes implementing the full GPT forward pass with correct attention head splitting and multi-head attention, producing per-head Q, K, V, A matrices as defined in Equations 1 and 2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 1-2"
+  },
+  {
+    "criteria": "The plan includes computing the Reversed Attention matrix R following Equations 14-17, using the backward pass error signal from Wo, multiplied by V, and normalized via element-wise product with forward attention A.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 14-17"
+  },
+  {
+    "criteria": "The plan includes using RA (R) to compute VJPs for Wq (Equation 18) and Wk (Equation 19) by multiplying the RA matrix with forward pass keys K and queries Q respectively.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equations 18-19"
+  },
+  {
+    "criteria": "The plan includes implementing the perturbation test: masking all attention heads, unmasking them one at a time according to different orderings (RA norm, FA norm, CM, Random), measuring model accuracy at each step, and computing AUC.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The plan includes using GPT2-xl as the primary model for the ICL perturbation test and Llama2-7B for the natural language perturbation test.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Tables 1-2"
+  },
+  {
+    "criteria": "The plan includes implementing the attention patching method: collecting RA maps from training examples without updating weights, averaging them per attention head, and adding them (with a scaling factor) to the forward pass attention maps during inference on test examples.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The plan includes evaluating attention patching on ICL tasks from Todd et al. (2023) with varying numbers of shots (N=0, 1, 5, 10) using GPT2-xl and OPT-1.3B.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The code correctly implements the forward pass attention computation for a single head as A^l = softmax(Q^l K^l^T / sqrt(d/h) + M), including the causal masking matrix M that sets upper-triangular entries to -inf.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equations 2-3"
+  },
+  {
+    "criteria": "The code correctly computes the intermediate error signal e^l = delta_o^l * Wo^T (Equation 12) from the VJP of the output projection matrix Wo for each token l.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 12"
+  },
+  {
+    "criteria": "The code correctly computes the VJP for the value matrix Wv as delta_v^j = sum_{l>=j} A_{l,j} * e^l (Equation 13), a weighted sum of error signals weighted by forward attention scores.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 13"
+  },
+  {
+    "criteria": "The code correctly computes the intermediate matrix E_tilde = Delta * Wo^T * V^T (Equation 16), representing a score between each token's error signal and each forward pass value vector.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 14, 16"
+  },
+  {
+    "criteria": "The code correctly computes the full Reversed Attention matrix R = A odot (E_tilde^T - diag(A * E_tilde^T))^T * sqrt(h/d) (Equation 17), using the element-wise (Hadamard) product with the forward attention A to obtain the lower-triangular RA matrix.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equations 15, 17"
+  },
+  {
+    "criteria": "The code correctly computes the VJP for the query matrix Wq as delta_q^j = R_j * K (Equation 18), where R_j is the j-th row of the Reversed Attention matrix and K contains all forward pass key vectors.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 18"
+  },
+  {
+    "criteria": "The code correctly computes the VJP for the key matrix Wk as delta_k^j = R_j^T * Q (Equation 19), where R_j^T is the j-th column of R and Q contains forward pass query vectors from all subsequent tokens.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 19"
+  },
+  {
+    "criteria": "The code loads GPT2-xl via HuggingFace Transformers and correctly hooks into or extracts the per-head attention matrices (Q, K, V, A, Wo outputs) needed to compute RA during a forward+backward pass.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.1"
+  },
+  {
+    "criteria": "The code loads Llama2-7B for the natural language perturbation test and correctly adapts the RA computation to this model architecture.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The code loads OPT-1.3B (and optionally GPT-j and OPT-350m) and correctly adapts the RA computation to these model architectures.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3, Appendix B"
+  },
+  {
+    "criteria": "The code computes the norm of the RA map per attention head and uses it to rank heads from highest to lowest norm, enabling head-importance ordering for the perturbation test.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code implements head masking (zeroing out the output of a given attention head) and supports the progressive unmasking procedure used in the perturbation test.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code implements Causal Mediation (CM1): for each attention head, patch its output to zero and measure the indirect effect on the model's output probability for the target token, averaging over training examples to rank heads.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Appendix B"
+  },
+  {
+    "criteria": "The code implements the second CM variant (CM2) from Todd et al. (2023) that patches each head's activation with the average activation collected from held-out examples instead of zeroing it out.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The code computes the AUC (Area Under the Curve) of model accuracy as a function of the percentage of unmasked attention heads for each head-ordering method, enabling comparison of RA, FA, CM, and Random.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 5.2"
+  },
+  {
+    "criteria": "The code loads the 21 ICL tasks from Todd et al. (2023) and formats them as n-shot prompts using the template 'Q: <question> \\nA: <answer> \\n...Q: <question> \\nA:' with configurable shot counts (1-shot and 5-shot at minimum).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.2, Appendix B"
+  },
+  {
+    "criteria": "The code loads the 6 natural language relation tasks from Hernandez et al. (2024) using explicit sentence templates (e.g., 'The capital city of <X> is [Y]').",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 2, Section 5.2"
+  },
+  {
+    "criteria": "The code implements the attention patching procedure: performs forward and backward passes on each training example to collect per-head RA maps without modifying model weights, then averages the RA maps across training examples for each head.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The code injects the averaged RA map into the forward pass attention map of each corresponding attention head during test inference (adding RA scaled by a learning rate factor to the forward attention logits before softmax).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 5.3, Figure 5"
+  },
+  {
+    "criteria": "The code implements the FA (forward attention) patching baseline using the same procedure as RA patching but averaging forward attention maps from training examples instead of RA maps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The attention patching implementation enforces that all training and test examples have the same token length and format, as required by the paper for consistent attention matrix sizes.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 5.3"
+  },
+  {
+    "criteria": "The perturbation test code is executed successfully on GPT2-xl for all 15 ICL tasks with both 1-shot and 5-shot prompting, and the AUC results for RA, FA, CM, and Random are computed without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The perturbation test code is executed successfully on GPT2-xl for the 6 natural language tasks, producing AUC scores for RA, FA, CM, and Random ordering.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The perturbation test code is executed successfully on Llama2-7B for the natural language tasks, producing AUC scores comparable to those in Table 2.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The attention patching experiment is executed successfully on GPT2-xl for the ICL tasks (antonym, capitalize, choose-middle-of-3, next-item) with N=0, 1, 5, 10 shots, producing accuracy results without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The attention patching experiment is executed successfully on OPT-1.3B for the same ICL tasks and shot counts as GPT2-xl, producing accuracy results without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: RA consistently outperforms FA and Random in AUC for most ICL tasks with 5-shot prompting on GPT2-xl (e.g., RA=0.32 vs FA=0.05 for antonym, 5-shot; RA=0.44 vs FA=0.09 for person-sport, 5-shot).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: RA achieves competitive or better AUC than CM on country-capital and person-plays-pro-sport tasks in Llama2-7B (RA=0.43 and 0.48 respectively vs CM=0.07 and 0.39).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: RA patching consistently outperforms FA patching across tasks and shot counts for both GPT2-xl and OPT-1.3B (e.g., RA=0.56 vs FA=0.43 for antonym with N=1 on GPT2-xl; RA=1.00 vs FA=0.50 for capitalize with N=1 on GPT2-xl).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes show that RA maps are visually sparse compared to FA maps: only a few rows/entries in the RA matrix have high norms while the majority are near zero, consistent with the qualitative analysis in Section 5.1 and Figure 2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5.1, Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes confirm that the RA matrix R is lower triangular (causal), consistent with its derivation via element-wise multiplication with the lower-triangular forward attention A (Equation 17).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 5, Equation 17"
+  }
+]

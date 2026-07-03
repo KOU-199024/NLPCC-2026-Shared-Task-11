@@ -1,0 +1,284 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the three-agent pipeline of MAIN-RAG: Agent-1 (Predictor), Agent-2 (Judge), and Agent-3 (Final-Predictor).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand how document relevance scores are computed using log probabilities of 'Yes' and 'No' tokens.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the adaptive judge bar τq mechanism, including the mean score baseline and standard deviation adjustment.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the experimental settings: Contriever-MS MARCO retriever, up to 20 retrieved documents per query, greedy generation, and zero-shot evaluation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Appendix C to obtain the exact system instructions for Agent-1 (Predictor), Agent-2 (Judge), and Agent-3 (Final-Predictor).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the main experimental results for MAIN-RAG-Mistral7B and MAIN-RAG-Llama3-8B across all four benchmarks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the ablation study results comparing different τq adjustments (τq, τq - 0.5σ, τq - 1.0σ, τq - 1.5σ) and document ordering (ascending vs. descending).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes the overall MAIN-RAG pipeline: retrieval → Agent-1 generating per-document answers → Agent-2 scoring → adaptive filtering and sorting → Agent-3 final answer generation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan specifies using Contriever-MS MARCO as the retriever, retrieving up to 20 candidate documents per query.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan specifies that Agent-1 processes each retrieved document independently to generate a predicted answer for the given query, forming Doc-Q-A triplets.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan specifies that Agent-2 uses log probability scoring: the relevance score for each document is computed as log_prob('Yes') - log_prob('No') from Agent-2's output.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan specifies the adaptive judge bar τq as the mean of all relevance scores for documents retrieved for a given query, with optional relaxation using τq - n·σ.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes document filtering (retaining documents with score ≥ τq) and ordering the retained documents in descending score order before passing to Agent-3.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the evaluation on all four benchmarks: TriviaQA (accuracy), PopQA (accuracy), ARC-Challenge (accuracy), and ASQA (str-em, ROUGE, MAUVE).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the Naïve Multi-agent RAG baseline (Agent-2 replaced with plain 'Yes'/'No' NL judgment without log-prob scoring) and MAIN-RAG (Random) variant (post-filter documents randomly ordered).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code loads and configures the Contriever-MS MARCO retriever to fetch up to 20 documents per query.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Agent-1 (Predictor) is implemented with the exact system instruction from Appendix C: 'You are an accurate and reliable AI assistant that can answer questions with the help of external documents. You should only provide the correct answer without repeating the question and instruction.'",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Agent-1 generates an independent answer for each retrieved document separately (not concatenating all documents), producing one Doc-Q-A triplet per document.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "Agent-2 (Judge) is implemented with the exact system instruction from Appendix C, specifying it evaluates two conditions: (1) the document provides specific information for answering the question; (2) the LLM answer directly answers the question based on the document; and responds with 'Yes' or 'No' with evidence.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The relevance score for each document is computed as the difference of log probabilities: score = log_prob('Yes') - log_prob('No'), extracted from Agent-2's token-level output for the Doc-Q-A triplet.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The adaptive judge bar τq is computed per query as the arithmetic mean of all N document relevance scores: τq = mean([r1, r2, ..., rN]).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The hyperparameter n is implemented to allow relaxing the judge bar as τq - n·σ, where σ is the standard deviation of relevance scores for the current query's documents. The default setting uses n=0 (i.e., plain τq).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "Documents with relevance score ri ≥ τq are retained in the filtered set Dq_filtered, while documents with ri < τq are discarded.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1, Section 3.3"
+  },
+  {
+    "criteria": "Retained documents are sorted in descending order of their relevance scores before being passed to Agent-3, placing the most relevant documents at the beginning of the context.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.5"
+  },
+  {
+    "criteria": "Agent-3 (Final-Predictor) is implemented with the same system instruction as Agent-1 from Appendix C, and receives the filtered and sorted document list along with the query to generate the final answer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C, Section 3.1"
+  },
+  {
+    "criteria": "All three agents use greedy decoding (greedy generation) for inference, with no sampling or temperature scaling.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "All experiments are conducted in a zero-shot setting with no few-shot demonstrations provided to the agents.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "Mistral-7B (pre-trained, not instruction-tuned or fine-tuned) is loaded and used as the backbone LLM for all three agents in the primary experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Llama3-8B (pre-trained, not fine-tuned) is loaded and used as the backbone LLM for all three agents in the secondary experiments.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The TriviaQA dataset (unfiltered split) is loaded using the validation and test sets from the Self-RAG work, comprising 11,313 test queries evaluated with exact match accuracy.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The PopQA dataset is loaded using the long-tail subset (1,399 rare entity queries with monthly Wikipedia page views < 100), and evaluation checks whether the gold answer string is included in the model's generated response (not strict exact match).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The ARC-Challenge dataset is loaded and evaluated on its testing set with accuracy as the metric.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The ASQA dataset is loaded and evaluated using the official metrics: str-em (em), ROUGE (rg), and MAUVE (mau).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The Naïve Multi-agent RAG baseline is implemented, where Agent-2's role is replaced with a simple natural language 'Yes'/'No' judgment (without log-prob scoring), so documents are filtered by this binary judgment alone without scoring or ordering.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The MAIN-RAG (Random) variant is implemented, where after scoring and filtering documents, the remaining documents are randomly shuffled before passing to Agent-3.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The standard RAG baseline (Mistral-7B with documents) is implemented, where the top-k retrieved documents are prepended to the query and passed directly to Mistral-7B without any filtering or scoring.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The full MAIN-RAG pipeline is correctly assembled end-to-end: retrieval → Agent-1 per-doc answers → Agent-2 log-prob scoring → adaptive τq computation → filtering (score ≥ τq) → descending sort → Agent-3 final answer.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The ablation variants MAIN-RAG (Asc.) and MAIN-RAG with τq - n·σ relaxation (n=0.5, 1.0, 1.5) are implemented to enable the ablation study from Table 2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.5, Table 2"
+  },
+  {
+    "criteria": "The main MAIN-RAG experiments (with Mistral-7B and Llama3-8B) are executed successfully on TriviaQA, PopQA, ARC-Challenge, and ASQA benchmarks without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The Naïve Multi-agent RAG and MAIN-RAG (Random) variant experiments are executed successfully on TriviaQA, PopQA, and ARC-Challenge benchmarks.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.4, Figure 7"
+  },
+  {
+    "criteria": "The ablation study experiments are executed successfully: MAIN-RAG (Decs.), MAIN-RAG (Asc.), and MAIN-RAG (τq - n·σ) for n ∈ {0.5, 1.0, 1.5} on TriviaQA, PopQA, and ARC-Challenge with both Mistral-7B and Llama3-8B.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.5, Table 2"
+  },
+  {
+    "criteria": "MAIN-RAG-Mistral7B achieves accuracy results close to the reported values in Table 1: TriviaQA ~71.0%, PopQA ~58.9%, ARC-Challenge ~58.9%, ASQA str-em ~35.7, ROUGE ~36.2, MAUVE ~60.0.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "MAIN-RAG-Llama3-8B achieves accuracy results close to the reported values in Table 1: TriviaQA ~74.1%, PopQA ~64.0%, ARC-Challenge ~61.9%, ASQA str-em ~39.2, ROUGE ~42.0, MAUVE ~70.6.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "MAIN-RAG (Decs.) outperforms MAIN-RAG (Asc.) on TriviaQA, PopQA, and ARC-Challenge for both Mistral-7B and Llama3-8B backbones, consistent with Table 2.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "For Mistral-7B, the ablation results show that default τq (Decs.) consistently ranks first or second among the four τq variants across all three benchmarks, consistent with Table 2.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "MAIN-RAG (Decs.) outperforms both Naïve Multi-agent RAG and MAIN-RAG (Random) on TriviaQA, PopQA, and ARC-Challenge for Mistral-7B agents, consistent with Figure 7.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "MAIN-RAG-Mistral7B outperforms the standard RAG baseline (Mistral-7B with documents, no filtering) on all four benchmarks, demonstrating the benefit of the filtering mechanism.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1, Section 4.4"
+  }
+]

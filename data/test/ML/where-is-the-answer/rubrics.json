@@ -1,0 +1,392 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the SynthLang and Wiki2023+ datasets, including their construction procedures, sizes, and the role of answer-position annotations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the preliminary setup: models used, Adam optimizer with lr=1e-5 and linear decay, 3000/1800 training steps, batch size of 256, and the dual training objectives for QA and document data.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand all four analyzed training recipes: standard AR, Denoising AR (D-AR), Sentence Shuffling, and Attention Dropout.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the positional bias study setup including the document modulation procedure D^k that swaps sentence s_1 with sentence s_k.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.4 to understand the evaluation on unmodulated Wiki2023+ with position-grouped EM and F1 scoring across six position groups.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.4"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the QA generation and filtering pipeline for Wiki2023+, including sentence extraction, LLM-based QA generation, and sentence-BERT classifier-based filtering.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Appendix C to understand the key hyperparameters: D-AR token replacement ratio of 0.2, Attn Drop rates of 0.5 (SynthLang) and 0.2 (Wiki2023+), max training length of 512 tokens, and inference settings (temperature=0.6, top-k=50, repetition_penalty=1.2).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the main comparison of AR, Shuffle, Attn Drop, and D-AR methods on unmodulated Wiki2023+ with Llama-2 7B.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to understand the cross-model comparison (Llama-2 7B/13B/70B, Llama-3.1 8B, Zephyr 7B, Mistral 7B) using AR and D-AR on unmodulated Wiki2023+.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Figure 4 and Figure 5 to understand the per-position EM accuracy trends for each training method and model on modulated and unmodulated Wiki2023+.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4, Figure 5"
+  },
+  {
+    "criteria": "The plan includes constructing the SynthLang dataset with generated person names, 5 languages per person chosen from 363 candidates, and QA pairs using a fixed template.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes constructing the Wiki2023+ dataset by downloading Wikipedia 2023 articles, extracting summary sections, splitting film documents into 1785/100/500 train/val/test, and generating QA pairs per sentence.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the QA filtering pipeline for Wiki2023+: human annotation of 500 samples, training a sentence-BERT classifier, and keeping the top 60% by predicted validity score.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The plan includes implementing all four training methods: standard AR, Denoising AR (D-AR), Sentence Shuffling, and Attention Dropout.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes mixed mini-batch sampling that randomly draws from both QA and document data within each batch of 256 samples.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes the positional modulation experiment design: creating D^k document variants by swapping s_1 with s_k for k in {1, 2, 3, 4, 5} across all articles, and evaluating the model's ability to answer about the moved sentence.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes position-grouped evaluation for unmodulated Wiki2023+: grouping QA pairs by answer sentence index into six groups (positions 1-5 and a sixth group for positions >= 6), computing EM and F1 per group.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes loading all studied LLMs from HuggingFace: Llama-2 7B/13B/70B Chat, Llama-3.1 8B Instruct, Zephyr-7B-beta, and Mistral-7B-Instruct-v0.3.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table B, Appendix C"
+  },
+  {
+    "criteria": "The plan includes ablation experiments: D-AR without denoising (no loss on replaced positions), Yes/No question evaluation, combined regularization (D-AR + Shuffle + Attn Drop), and text augmentation with ChatGPT-rephrased documents.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The code constructs the SynthLang dataset: generates person names, randomly assigns 5 languages per person from 363 candidates, and formats documents as 'Ahmed Lopez's 1st language is Fante. His/Her 2nd language is Tausug...', with 2000 training persons and 500 each for validation and testing.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code constructs SynthLang QA pairs using the fixed template 'What is [person]'s [ordinal] language?' with 10000 training questions, and 500 per position group for validation and testing.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The code loads Wikipedia articles from the 2023 category (5911 articles total) and extracts only the summary section of each article.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code implements QA generation for Wiki2023+ by feeding each sentence individually to an LLM (e.g., ChatGPT) and generating question-answer pairs, with each pair annotated with the index of the source sentence.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Appendix B.2"
+  },
+  {
+    "criteria": "The code implements QA filtering using a sentence-BERT classifier trained on 500 human-annotated samples (valid/invalid), keeping QA pairs in the top 60% by predicted validity score.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The code correctly splits Wiki2023+ film documents into 1785 training, 100 validation, and 500 test documents, training on all 2385 film documents but using QA labels only from the 1785 training split.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The QA training objective computes the average negative log-likelihood on answer tokens only given question context: -(1/|a|) * sum_k log P(a_k | q, a_{<k}).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The document training objective computes standard next-token prediction loss over all document tokens, with the document prompted by its title: -(1/|d|) * sum_k log P(d_hat_k | t, d_{<k}).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "D-AR is implemented by randomly selecting 20% of input token positions and replacing those input tokens with random tokens, while the loss target remains the original token sequence.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Appendix C"
+  },
+  {
+    "criteria": "The D-AR modified objective computes -(1/|d|) * sum_k log P(d_k | t, d_tilde_{<k}), where d_tilde_{<k} are the corrupted (randomly-replaced) input tokens.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "Sentence Shuffling is implemented by randomly permuting the sentence order within each document before computing the standard AR loss.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "Attention Dropout is implemented by randomly dropping values in the causal attention mask during training, with dropout rate 0.5 for SynthLang and 0.2 for Wiki2023+.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2, Appendix C"
+  },
+  {
+    "criteria": "Mixed mini-batch sampling draws 256 total samples per batch, randomly mixing QA data and document data, with separate loss objectives applied to each type.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The positional modulation procedure is implemented to create D^k versions of every document by swapping sentence s_1 with sentence s_k, for k in {1, 2, 3, 4, 5}, and training a separate model on each modulated dataset.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "All HuggingFace instruction-tuned LLMs are loaded correctly: Llama-2 7B/13B/70B Chat (meta-llama/Llama-2-*b-chat-hf), Llama-3.1 8B Instruct (meta-llama/Meta-Llama-3.1-8B-Instruct), Zephyr-7B-beta (HuggingFaceH4/zephyr-7b-beta), and Mistral-7B-Instruct-v0.3 (mistralai/Mistral-7B-Instruct-v0.3).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table B, Appendix C"
+  },
+  {
+    "criteria": "The optimizer is Adam with an initial learning rate of 1e-5 and linear decay scheduling, trained for 3000 steps on Wiki2023+ and 1800 steps on SynthLang.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Appendix C"
+  },
+  {
+    "criteria": "The maximum training sequence length is set to 512 tokens.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Distributed training is implemented using DeepSpeed ZeRO3 to support efficient training on 8 A100 GPUs.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Text generation at inference uses temperature=0.6, top-k=50, and repetition_penalty=1.2 in the HuggingFace text generation pipeline.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Evaluation computes exact match (EM) and F1 scores per position group: positions 1 through 5 individually and a sixth group aggregating all positions >= 6 for unmodulated Wiki2023+.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.1, Table 1"
+  },
+  {
+    "criteria": "The perplexity analysis computes the model's perplexity on the first sentence s_1 of the original document for models trained on each D^k variant, to measure position-dependent token dependence.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "Attention entropy is computed per head and layer and averaged across positions, comparing AR and D-AR to quantify how much each model relies on prior tokens.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 7, Section 4.3"
+  },
+  {
+    "criteria": "The Yes/No question variant of SynthLang is implemented by converting factual statements into binary questions (20000 training, 1000 val, 1000 test), generating one 'yes' and one 'no' question per original factual statement.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The D-AR denoising ablation is implemented by disabling loss computation on token positions where the input was replaced with a random token, isolating the contribution of the denoising objective from the noise perturbation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The text augmentation experiment is implemented by rephrasing Wiki2023+ documents with ChatGPT in four ways (diversifying sentence order) and combining these augmented documents with originals during training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D, Table E"
+  },
+  {
+    "criteria": "Combined regularization experiments are implemented by applying D-AR together with Shuffle and/or Attn Drop simultaneously during training.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table F"
+  },
+  {
+    "criteria": "The code for the positional bias study on modulated Wiki2023+ (D^k for k=1..5) and SynthLang with all four models (Llama-2 7B, Llama-3.1 8B, Zephyr 7B, Mistral 7B) using AR training has been executed successfully.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The code for all four training methods (AR, D-AR, Shuffle, Attn Drop) on modulated Wiki2023+ with Llama-2 7B has been executed successfully for k=1..5.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The code for AR and D-AR training on unmodulated Wiki2023+ for all models (Llama-2 7B/13B/70B, Llama-3.1 8B, Zephyr 7B, Mistral 7B) has been executed successfully to produce Table 1 and Table 2 results.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1, Table 2"
+  },
+  {
+    "criteria": "The perplexity analysis on modulated Wiki2023+ documents (Fig. 6a) and the model-size perplexity comparison (Fig. 6b) have been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The Yes/No question experiment on SynthLang with Llama-2 7B and Mistral 7B using AR and D-AR training has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The D-AR ablation experiment (no loss on replaced positions) on Wiki2023+ with Llama-2 7B has been executed successfully.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The combined regularization experiment (D-AR + Shuffle + Attn Drop combinations) on Wiki2023+ with Llama-2 7B has been executed successfully.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table F"
+  },
+  {
+    "criteria": "The text augmentation experiment with ChatGPT-rephrased documents combined with AR and D-AR on Wiki2023+ has been executed successfully.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Table E"
+  },
+  {
+    "criteria": "The longer training experiment (doubled training iterations) for both AR and D-AR on Wiki2023+ with Llama-2 7B has been executed successfully.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Figure 6c"
+  },
+  {
+    "criteria": "The execution results for Figure 3 match: all studied LLMs (Llama-2 7B, Llama-3.1 8B, Zephyr 7B, Mistral 7B) show clear accuracy degradation as the answer position moves further from the first sentence in both Wiki2023+ and SynthLang when trained with AR.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution results for Figure 4 match: D-AR shows the highest EM accuracy across all positions and the smallest accuracy drop from position 1 to 5 compared to AR, Shuffle, and Attn Drop on Wiki2023+ with Llama-2 7B.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution results for Table 1 match: D-AR achieves the highest average EM (30.4) and F1 (55.3) over all six position groups, substantially outperforming AR (14.9 / 35.7), Shuffle (24.4 / 49.4), and Attn Drop (21.0 / 43.1) for Llama-2 7B on unmodulated Wiki2023+.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution results for Table 2 match: D-AR significantly improves over AR for all models, and Zephyr 7B and Mistral 7B achieve performance comparable to Llama-2 70B despite being smaller.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution results for Figure 5 match: D-AR significantly improves all studied models (Llama-2 70B, Llama-3.1 8B, Mistral 7B, Zephyr 7B) compared to AR across positions, and Llama-2 70B with D-AR greatly reduces positional performance degradation.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The perplexity analysis results match (Figure 6a): perplexity of s_1 increases as it is placed at later positions (D^k), and the AR model exhibits the steepest perplexity increase compared to D-AR and Shuffle; the trend mirrors the QA accuracy results.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6a"
+  },
+  {
+    "criteria": "The execution results for Figure 6b match: larger Llama-2 models (7B < 13B < 70B) show progressively smaller perplexity on s_1 when placed later, indicating greater robustness to positional bias.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6b"
+  },
+  {
+    "criteria": "The execution results for Figure 8 match: Yes/No question accuracy degrades as the answer position moves later in both Llama-2 7B and Mistral 7B; D-AR mitigates the degradation but the improvement is less pronounced than in standard QA experiments.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 8"
+  },
+  {
+    "criteria": "The D-AR ablation result matches: turning off the denoising loss on replaced tokens yields 29.3/54.8 EM/F1, only marginally lower than full D-AR (30.4/55.3), confirming that the noise perturbation rather than denoising is the main source of the performance gain.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Appendix D"
+  },
+  {
+    "criteria": "The execution results for Table E match: adding ChatGPT-rephrased document augmentation improves both AR and D-AR performance, especially in early positions, and D-AR with augmentation (average EM 37.8) outperforms D-AR alone (30.4).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table E"
+  },
+  {
+    "criteria": "The execution results for Table F match: combining D-AR with Shuffle and/or Attn Drop further improves average EM and F1 over D-AR alone, with the full combination (D-AR + Shuffle + Attn Drop) achieving the best average EM (36.0) and F1 (68.0).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table F"
+  }
+]

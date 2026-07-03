@@ -1,0 +1,518 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the problem formulation of prompt tuning and the standard prompt embedding setup.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the core ULPT methodology: decomposing the prompt embedding matrix into low-dimensional embeddings and a frozen random projection matrix.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Equation 3 to understand how each entry in the up-projected embedding matrix is computed using the low-dimensional embeddings, frozen projection, shift, and scale vectors.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The plan includes implementing the prompt tuning framework with learnable prefix embeddings prepended to the input as described in Equation 1.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes the ULPT decomposition: learning only r-dimensional prompt embeddings Z while keeping the projection matrix P frozen and randomly initialized.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the learnable shift embedding b ∈ R^d and scale embedding s ∈ R^d shared across prompt token positions.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan specifies that only the random seed is stored to reconstruct the frozen projection matrix P̃ when an LLM is loaded.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code for the standard prompt tuning input structure has been implemented as Equation 1: learnable prompt embeddings (e_1, ..., e_n) followed by tokenized text embeddings (x_1, ..., x_l).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code for the conditional log-likelihood objective has been implemented as Equation 2: arg max_E Σ_{(x,y)∈D} log P(y|E,x).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code for the ULPT up-projected embedding has been implemented as Equation 3: ê_{ij} = (Σ_{k=1}^{r} z_{ik} p̃_{kj}) s_j + b_j, where z_{ik} and p̃_{kj} are entries in Z and P̃, and s_j, b_j are entries in the scale and shift vectors.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The code initializes the frozen random projection matrix P̃ ∈ R^{r×d} from a standard normal distribution and keeps it frozen (not updated) during training.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The code stores only a single random seed to reconstruct the frozen projection matrix P̃, rather than storing the full matrix.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The total number of trainable parameters in ULPT is nr + 2d (n prompt tokens × rank r, plus two d-dimensional shift and scale vectors), not including the frozen projection.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The learnable shift embedding b and scale embedding s are shared across all prompt token positions but independent per task.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the language understanding experiment setup, including the 21 NLP tasks grouped into 4 categories.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Appendix A.2 to check the training hyperparameters for language understanding experiments.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the GLUE and SuperGLUE benchmark results, including all baseline comparisons.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes loading and preprocessing all 21 NLP tasks: GLUE (MNLI, QQP, QNLI, SST-2, STS-B, MRPC, RTE, CoLA), SuperGLUE (MultiRC, BoolQ, WiC, WSC, CB), MRQA (NQ, HotpotQA, SearchQA, NewsQA), and Others (WinoGrande, Yelp-2, SciTail, PAWS-Wiki).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan specifies using the T5-base model (d=768) as the backbone for language understanding experiments.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan specifies evaluating ULPT with four rank configurations: r=2, r=16, r=64, and r=256, with n=100 prompt tokens.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan includes implementing the baselines: vanilla prompt tuning (PT), DPT (with r=10 and r=64), and DePT.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The plan specifies the training hyperparameters: batch size 16, learning rate 6e-4, AdamW optimizer, linear schedule with 500-step warm-up, and training for up to 100,000 steps.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The plan specifies the maximum sequence lengths: 256 for most tasks, 348 for SuperGLUE-MultiRC, and 512 for MRQA tasks.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the 8 GLUE benchmark datasets (MNLI, QQP, QNLI, SST-2, STS-B, MRPC, RTE, CoLA) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the 5 SuperGLUE benchmark datasets (MultiRC, BoolQ, WiC, WSC, CB) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the 4 MRQA datasets (Natural Questions, HotpotQA, SearchQA, NewsQA) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the 4 other classification tasks (WinoGrande, Yelp-2, SciTail, PAWS-Wiki) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The code preprocesses classification and multiple-choice task labels into single-token labels (e.g., 0, 1, 2, ...) as described in Appendix A.1.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "The code implements ULPT training with T5-base using AdamW optimizer, batch size 16, learning rate 6e-4, linear schedule with 500-step warm-up, and up to 100,000 training steps.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code evaluates performance every 1,000 steps and selects the best checkpoint based on the validation set.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.2"
+  },
+  {
+    "criteria": "The code reports Pearson correlation for STS-B, F1 for MultiRC and MRQA tasks, and accuracy for all other classification tasks.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The main ULPT experiments on GLUE and SuperGLUE with T5-base have been executed successfully without errors for all four rank configurations (r=2, 16, 64, 256).",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The ULPT experiments on MRQA and other classification tasks with T5-base have been executed successfully without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: ULPT at r=2 achieves at least 97% of vanilla PT performance on GLUE while using only 1.7K parameters (98% parameter reduction vs PT's 76.8K).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: ULPT at r=64 (7.9K params) outperforms vanilla PT (76.8K params) on average GLUE score, achieving approximately 86.0 vs 84.9.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: ULPT at r=64 outperforms DPT at r=64 (55.6K params) on GLUE average despite using 7x fewer parameters.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: ULPT on MRQA tasks shows improvement with increasing rank, with ULPT (r=256) achieving competitive performance close to DePT.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The agent has read Section 4.2 completely to understand the reasoning task experiments using decoder-only Llama 3.2 models.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The agent has read Appendix A.3 to check the implementation and training details for reasoning tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the efficiency and performance results on GSM8K and MBPP tasks.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes evaluating ULPT on Llama 3.2 models at 1B (d=2048) and 3B (d=3072) scales on GSM8K and MBPP tasks.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The plan includes implementing baselines for reasoning tasks: 4-shot ICL, LoRA (r=1,4,8), VeRA (r=1,4,8), FourierFT (n=128,512,1024), IA3, and vanilla PT.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The plan specifies the reasoning task training hyperparameters: batch size 4, 3 epochs for GSM8K, 10 epochs for MBPP, learning rate 1e-3 for LoRA/VeRA, 1e-2 for ULPT/PT/FourierFT.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The plan specifies using 10 learnable tokens for vanilla PT and ULPT on Llama models, with rank configurations r=2, 64, 256.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The code for ULPT on Llama 3.2 (1B and 3B) has been implemented and correctly handles the larger hidden dimensionalities (d=2048 and d=3072).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code for LoRA, VeRA, FourierFT, IA3, and vanilla PT baselines on Llama 3.2 models has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2"
+  },
+  {
+    "criteria": "The code applies greedy decoding with maximum generation length of 1024 tokens at inference time for reasoning tasks.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A.3"
+  },
+  {
+    "criteria": "The code for ULPT and all baselines on Llama 3.2 models has been executed successfully without errors on both GSM8K and MBPP tasks.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: ULPT at r=64 achieves the best performance on Llama 1B (GSM8K: ~42.4, MBPP: ~28.7, avg ~35.6) using only 4.7K parameters.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: ULPT uses significantly less VRAM than LoRA/VeRA/FourierFT while achieving higher accuracy, confirming memory efficiency.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: ULPT has faster training runtime (seconds/1K steps) compared to FourierFT, IA3, and LoRA at the same parameter scale.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Section 4.3 to understand the dimension-length trade-off analysis comparing ULPT with fixed token count (n=100, varying rank) vs vanilla PT with fixed rank (varying token count).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The agent has read Figure 3 to understand that ULPT with longer low-dimensional prompts consistently outperforms vanilla PT with fewer high-dimensional tokens under controlled parameter budgets.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The agent has read Figure 5 to understand the ablation study on shift and scale embeddings: no alignment, shift only, and both shift and scale.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The plan includes the dimension-length trade-off experiment: fixing n=100 for ULPT (varying rank 2 to 256) and varying token count (2 to 50) for vanilla PT, on MNLI and Natural Questions across T5-small, T5-base, and T5-large.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.3"
+  },
+  {
+    "criteria": "The plan includes the prompt length sensitivity experiment (Figure 4): varying n from 10 to 100 for both ULPT and vanilla PT.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The plan includes the ablation study on shift and scale embeddings using SST-2 with T5-base (n=100): three conditions — no alignment, learnable shift only (w/ b), both shift and scale (w/ b and s).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The plan includes the comparison between tuning Z (frozen P̃, our ULPT) and tuning P (frozen Z) under controlled parameter budgets on MNLI and Natural Questions.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The code for the dimension-length trade-off experiment is implemented: ULPT with fixed n=100 and varying rank (2, 16, 64, 256) vs vanilla PT with varying token count (2 to 50 tokens) across T5-small (d=512), T5-base (d=768), and T5-large (d=1024).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The code for the prompt length sensitivity experiment is implemented: varying n from 10 to 100 for both ULPT and vanilla PT, with different rank configurations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The code for the ablation study on shift and scale embeddings is implemented with three conditions: (1) no shift/scale (plain frozen projection), (2) learnable shift b only, (3) both shift b and scale s.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The code for the comparison between tuning Z (our ULPT) vs tuning P under controlled parameter budgets is implemented on MNLI and Natural Questions with T5-base.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The dimension-length trade-off experiment has been executed successfully without errors across three T5 model sizes on MNLI and Natural Questions.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The ablation study on shift and scale embeddings has been executed successfully without errors, producing training loss curves and evaluation accuracy curves.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: ULPT with lower-dimensional embeddings and more tokens (solid lines) consistently outperforms vanilla PT with fewer high-dimensional tokens (dashed lines) under the same parameter budget across all three model sizes.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: ULPT performance improves with longer prompts (n=10 to 100), and ULPT with appropriate rank consistently outperforms vanilla PT across all prompt lengths.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: removing both shift and scale leads to high training loss (training fails to converge); adding shift b substantially improves optimization; adding both shift b and scale s further improves training loss and accuracy.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: tuning P (frozen Z) is infeasible at 1.7K parameters, and with equivalent parameter budgets, tuning Z (our ULPT) achieves slightly better performance than tuning P.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Appendix B.3 to understand the Bloomz family analysis: comparing ULPT vs vanilla PT across three model sizes (560M, 1.7B, 3B) on SST-2, HotpotQA, and WinoGrande.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The agent has read Appendix B.4 to check the inference overhead analysis comparing ULPT up-projection time vs vanilla PT and end-to-end decoding speed.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The plan includes the Bloomz family analysis: evaluating ULPT on Bloomz (560M, 1.7B, 3B) on SST-2, HotpotQA, and WinoGrande under controlled parameter budgets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The plan specifies Bloomz training details: up to 30K steps, batch size 4, same learning rates as the main experiment.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The plan includes the inference overhead analysis: measuring ULPT up-projection runtime (rank 2, 64, 256) vs vanilla PT loading, and end-to-end decoding speed comparison.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The code for evaluating ULPT on Bloomz (560M, 1.7B, 3B) with hidden dimensions (1024, 2048, 2560) on SST-2, HotpotQA, and WinoGrande has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.3"
+  },
+  {
+    "criteria": "The code for measuring ULPT up-projection runtime at inference time (rank 2, 64, 256) compared to vanilla PT embedding loading has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Appendix B.4"
+  },
+  {
+    "criteria": "The Bloomz family experiments have been executed successfully without errors across all three model sizes and three tasks.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: ULPT consistently outperforms vanilla PT under controlled parameter budgets across Bloomz-560M, 1.7B, and 3B models.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7: ULPT up-projection overhead is negligible compared to decoding time (e.g., ULPT r=2 takes ~0.56ms for Llama 1B vs decoding ~1481ms).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8: ULPT does not meaningfully degrade decoding speed (tokens/second) compared to no adaptation baseline.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The agent has read Figure 6 to understand the pairwise cosine similarity analysis of shift and scale embeddings across different rank configurations.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The plan includes analyzing pairwise cosine similarities of shift (b) and scale (s) vectors learned with different rank configurations.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The code for computing pairwise cosine similarities between shift embeddings and between scale embeddings learned with different ranks (r=2, 16, 64, 256) has been implemented.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6: shift embeddings show consistently high cosine similarity across different ranks (indicating a stable alignment role), while scale embeddings show near-zero cosine similarity (indicating dependence on the random projection).",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The agent has read Appendix B.2 to check additional results on MRQA and other classification tasks, including mean and standard deviation over 3 runs with different seeds.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "ULPT experiments on MRQA and other classification tasks are run three times with different random seeds to report mean and standard deviation, assessing sensitivity to random projection initialization.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B.2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 5: ULPT on MRQA and Other tasks shows monotonic improvement as rank increases from r=2 to r=256, with ULPT (r=256) achieving competitive performance relative to DePT.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5"
+  }
+]

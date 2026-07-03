@@ -1,0 +1,410 @@
+[
+  {
+    "criteria": "The agent has read Section 2 completely to understand the three-stage adaptive multi-paradigm reasoning framework: Problem Decomposition, Inference Routing, and Solver-based Reasoning (Autoformalization + Solving).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand the five datasets and their reasoning types: PrOntoQA and ProofWriter (LP), FOLIO (FOL), LogDed7 (CSP), and TRECtrials (SMT).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand the four logical solver backends: Pyke for LP, Prover9 for FOL, Z3 for SMT, and MiniZinc+Gecode for CSP.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.1 to understand the three baseline settings (Zero-shot, CoT, Symbolic CoT) and their routing-augmented variants (w/ routing).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the main experimental results for frontier models (GPT-4o, DeepSeek-V3.1) across all five datasets and the Mixed dataset.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the main experimental results for small open-source models (Llama-3.1-8B, Qwen-2.5-7B, Qwen-2.5-Coder-7B) including Ours_sft results.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Table 3 to understand the ablation study with random solver assignment and its results across all five models.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The agent has read Table 4 to understand the multi-question sequential reasoning evaluation setup and results with Overall Accuracy metric.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The agent has read Appendix A to understand the LLMToolAgent base class with its three methods (formalize, solve/reason, convert), and the iterative syntax-error refinement mechanism.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Appendix B to understand the agentic workflow execution semantics: the DAG representation, Memory shared cache, module ID system, and virtual <START>/<END> nodes.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The agent has read Appendix D.2 to understand evaluation details: pass@1 for large models, 3-seed average for small models, temperature=0.01, max_new_tokens=4096, JSON output with 'ans' keyword.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The agent has read Appendix D.3 to understand fine-tuning details: LoRA rank=16, Llamafactory framework, sequence_length=3072, batch_size=2, gradient_accumulation=8, lr from {1e-3, 1e-4}, 3 epochs on 2 H100 GPUs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix D.3"
+  },
+  {
+    "criteria": "The agent has read Figures 2 and 3 to understand the varying difficulty evaluation on LogDed3, LogDed5, LogDed7 and the associated error type distributions.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figures 2, 3"
+  },
+  {
+    "criteria": "The agent has read Figure 4 to understand the error taxonomy across models: Invalid Decomposition, Incorrect Decomposition, Invalid Routing, Incorrect Routing, Invalid Formalization, and Semantic Errors.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 4"
+  },
+  {
+    "criteria": "The plan includes the three-stage adaptive framework design: Problem Decomposition producing structured (Q, T) pairs, Inference Routing building a solver execution plan, and Solver-based Reasoning via autoformalization.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The plan includes the LLM-based problem decomposition module that produces structured Q = {Q_i} with components C_{i,j} and reasoning types T = {T_i} from {LP, FOL, CSP, SAT}.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The plan includes the Router component that dynamically selects appropriate solvers based on inferred reasoning types and constructs an executable DAG workflow as JSON with 'agents' and 'edges'.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2"
+  },
+  {
+    "criteria": "The plan includes all four symbolic solver implementations: LP solver (Pyke), FOL solver (Prover9), CSP solver (MiniZinc+Gecode), and SMT solver (Z3).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes loading the five datasets with correct sizes and converting them to unified natural language format using task-specific templates, then creating the Mixed dataset by shuffling and merging.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1, Appendix C"
+  },
+  {
+    "criteria": "The plan includes implementing the three baseline settings (Zero-shot, CoT, CoTsym) with and without routing-augmented variants for all five foundation models.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes fine-tuning small models on GPT-4o-generated formalization datasets for each solver type using LoRA via Llamafactory.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix D.3"
+  },
+  {
+    "criteria": "The plan includes the ablation study with random solver assignment (Table 3) and the multi-question evaluation batching three examples per prompt (Table 4).",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.4, Section 3.6"
+  },
+  {
+    "criteria": "The plan includes the difficulty scaling experiments evaluating all methods on the LogDed3, LogDed5, and LogDed7 subsets from BigBench.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "The problem decomposition module is implemented as an LLM-based parser that takes natural language input x and produces structured Q = {Q_i} (sub-problems with components C_{i,j}) and T = {T_i} (reasoning types from {LP, FOL, CSP, SAT}), along with an overall_goal field.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2, Appendix F"
+  },
+  {
+    "criteria": "The decomposition module outputs the correct JSON structure per problem type: for LP/FOL, fields include 'premise', 'hypothesis', and 'options'; for CSP, fields include 'context', 'question', and 'options'; for SAT, fields include 'trial_description', 'sample_description', and 'options'.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The inference routing module is implemented and produces an executable workflow DAG in JSON format with 'agents' (list of selected solver agents including problem IDs and <END>) and 'edges' (source-target execution pairs), supporting suffixed multi-instance naming (e.g., csp_solver:1, csp_solver:2).",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2, Appendix G"
+  },
+  {
+    "criteria": "The agentic workflow execution engine is implemented as a DAG executor with a Memory shared cache: each module reads required inputs from Memory (keyed by module ID as 'result_[ID]') and writes its outputs back before the next module is invoked.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The DAG execution includes virtual <START> and <END> modules: <START> connects to all source nodes to initialize Memory with problem data, and <END> aggregates all terminal node outputs into the final answer list.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The LP solver is implemented with Pyke as the backend engine: autoformalization translates premise and hypothesis into Pyke-compatible predicates, facts, and inference rules; the engine performs rule-based deduction; the result is translated back to an answer label.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.1"
+  },
+  {
+    "criteria": "The FOL solver is implemented with Prover9 as the backend engine: autoformalization translates premise and hypothesis into first-order logic formulas (predicates, premises with quantifiers, conclusions); Prover9 performs first-order deduction; the result is mapped to an answer label.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.1"
+  },
+  {
+    "criteria": "The CSP solver is implemented with MiniZinc and Gecode as the backend: autoformalization translates natural language constraint problems into MiniZinc models with variable declarations, domain bounds, and constraints (e.g., all_different, ordering); the model is solved to find valid assignments.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.2"
+  },
+  {
+    "criteria": "The SMT solver is implemented with Z3 as the backend: autoformalization translates natural language constraints (e.g., clinical trial inclusion/exclusion criteria and patient attributes) into SMT-LIB format with variable declarations, assertions, and check-sat queries; Z3 determines satisfiability.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix A.2"
+  },
+  {
+    "criteria": "Each solver inherits from an LLMToolAgent base class implementing three methods: (1) formalize — LLM translates natural language problem into formal language; (2) solve/reason — symbolic engine executes the formalized problem; (3) convert — maps solver output to a final answer label.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "Each solver implements iterative refinement: when the generated formalization produces a syntax error, the error message is fed back to the LLM to automatically regenerate corrected formal code, repeating until success or a maximum retry count.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A.1"
+  },
+  {
+    "criteria": "A neural LLM-based fallback solver is instantiated on-the-fly (from the dynamic pool S-hat) when no suitable symbolic solver is found in the portfolio for a given reasoning type.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix B"
+  },
+  {
+    "criteria": "The five datasets are loaded with the correct evaluation subsets: PrOntoQA (500 examples, 5-hop fictional reasoning), ProofWriter (600 examples, depth-5 open-world assumption), FOLIO (204 examples, full test set), LogDed7 (700 examples, 7-object ordering), TRECtrials (300 trial-patient pairs).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "Natural language conversion templates are implemented for each dataset: LP/FOL tasks use 'STATEMENT:{premise} / QUESTION:{conclusion} / {options}' format; CSP tasks use 'STATEMENT:{input} / Which of the following is true? {options}'; SMT tasks use 'TRIAL:{trial_description} / PATIENT:{patient_description} / Does the patient match the trial?' format.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix H"
+  },
+  {
+    "criteria": "The Mixed dataset is constructed by converting all five individual datasets to the unified natural language format and then shuffling and merging them into a single dataset, removing dataset boundary information from the input.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The Zero-shot baseline is implemented: the LLM is directly prompted to provide the final answer in JSON format with the 'ans' keyword, without any intermediate reasoning steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The CoT baseline is implemented: the LLM is prompted to output both step-by-step reasoning (keyword 'reasoning') and a final answer (keyword 'ans') in JSON format.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The Symbolic CoT (CoTsym) baseline is implemented: the LLM is first prompted to translate the problem into a formal language representation, then performs LLM-based reasoning over the formalization without invoking an external symbolic solver.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "The routing-augmented baseline variants (Zero-shot w/ routing, CoT w/ routing, CoTsym w/ routing) are implemented by prepending the Router's selected reasoning type as an auxiliary hint prompt before the original question; for CoTsym w/ routing, the Router's produced formalization is directly provided.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.2"
+  },
+  {
+    "criteria": "Routing accuracy is computed as the fraction of test cases where the Router correctly identifies the expected solver type, and is reported per backbone model in the last column of Tables 1 and 2.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "For small models, the pretrained version is used for problem decomposition and routing (not fine-tuned), while LoRA fine-tuning only targets the autoformalization step; routing and parsing results are computed once and shared across all inference settings.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, Appendix D.2"
+  },
+  {
+    "criteria": "Fine-tuning training data is prepared by collecting problems per solver: LP from ProofWriter training split and ProntoQA one-hop problems; FOL from FOLIO training split; CSP from LogDed training split; SMT from TREC 2022 Clinical Trials Track. GPT-4o generates formalizations and only successfully executed code is retained (~5,125 total examples).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.3"
+  },
+  {
+    "criteria": "LoRA fine-tuning is implemented via Llamafactory with: rank=16 applied to all modules, sequence_length=3072, per_device_train_batch_size=2, gradient_accumulation_steps=8, learning_rate selected from {1e-3, 1e-4} based on validation performance, trained for 3 epochs on two H100 GPUs.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix D.3"
+  },
+  {
+    "criteria": "The random routing ablation is implemented by randomly assigning one of the four solver types to each problem, and allowing the assigned solver to directly formalize the original input text (bypassing type-specific decomposition fields).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The multi-question evaluation setup is implemented: Mixed dataset examples are grouped into batches of three, concatenated using the Q1/Q2/Q3 prompt template ('Answer the following questions one by one'), and evaluated using Overall Accuracy (all three answers must be correct).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.6, Appendix I"
+  },
+  {
+    "criteria": "The difficulty scaling evaluation is implemented by loading the LogDed3, LogDed5, and LogDed7 subsets from BigBench and running all methods (Zero-shot, CoT, CoTsym, Ours with/without routing) on each subset with GPT-4o.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.5"
+  },
+  {
+    "criteria": "Error analysis is implemented to classify incorrect predictions into six types: Invalid Decomposition, Incorrect Decomposition, Invalid Routing, Incorrect Routing, Invalid Formalization, and Semantic Errors, with distribution reported per model and dataset.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 3.7"
+  },
+  {
+    "criteria": "The main experiments with GPT-4o have been executed on all five individual datasets (PrOntoQA, ProofWriter, FOLIO, LogDed7, TRECtrials) and the Mixed dataset for all settings (Zero-shot, CoT, CoTsym, Ours) both with and without routing, completing without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The main experiments with DeepSeek-V3.1 have been executed on all five individual datasets and the Mixed dataset for all settings (Zero-shot, CoT, CoTsym, Ours) with and without routing, completing without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The small model experiments (Llama-3.1-8B, Qwen-2.5-7B, Qwen-2.5-Coder-7B) have been executed three times with different random seeds on all five datasets and Mixed, for all settings including Ours_sft.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The LoRA fine-tuning experiments for all three small models have been executed and the Ours_sft results evaluated across all five datasets and Mixed dataset.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The random routing ablation experiments have been executed with 3 random seeds for GPT-4o, DeepSeek-V3.1, Llama-3.1-8B, Qwen-2.5-7B, and Qwen-2.5-Coder-7B on the Mixed dataset.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The difficulty scaling experiments have been executed for all methods on LogDed3, LogDed5, and LogDed7 subsets with GPT-4o, and error analysis distributions have been computed.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Figures 2, 3"
+  },
+  {
+    "criteria": "The multi-question sequential reasoning experiments have been executed for GPT-4o on all settings (Zero-shot, CoT, CoTsym, Ours) with and without routing, computing Overall Accuracy.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 for GPT-4o: the framework (Ours) achieves 92.1% accuracy on the Mixed dataset, outperforming Zero-shot (65.1%), CoT (65.1%), and CoTsym (61.8%) by approximately 17%, 21%, and 24% respectively.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 individual dataset results for GPT-4o Ours: approximately 99.4% on PrOntoQA, 94.7% on ProofWriter, 69.1% on FOLIO, 95.6% on LogDed7, and 82.3% on TRECtrials.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 routing accuracy: GPT-4o achieves approximately 98.0% routing accuracy and DeepSeek-V3.1 achieves approximately 99.3% on the Mixed dataset.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 for DeepSeek-V3.1: the framework (Ours) achieves 73.4% accuracy on the Mixed dataset, outperforming CoTsym w/ routing (67.2%) and Zero-shot w/ routing (13.1%).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2 for small models without fine-tuning (Ours): Llama-3.1-8B achieves approximately 8.0%, Qwen-2.5-7B achieves approximately 12.6%, and Qwen-2.5-Coder-7B achieves approximately 26.2% on Mixed dataset.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2 for fine-tuned models (Ours_sft): Llama-3.1-8B reaches approximately 41.0%, Qwen-2.5-7B reaches approximately 50.1%, and Qwen-2.5-Coder-7B reaches approximately 59.6% on Mixed dataset, representing gains of approximately 33%, 37.5%, and 33.4% respectively.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2 routing accuracy for small models: Qwen-2.5-7B achieves approximately 97.7%, Qwen-2.5-Coder-7B achieves approximately 92.9%, and Llama-3.1-8B achieves approximately 76.8%.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: random routing severely degrades performance compared to adaptive routing for all models (e.g., GPT-4o drops from 92.1% to 29.0%, DeepSeek-V3.1 from 73.4% to 32.8%, Qwen-2.5-Coder-7B from 59.6% to 20.5%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: our framework achieves 54.4% Overall Accuracy on the multi-question task, outperforming the best baseline (GPT-CoTsym w/ routing at 38.2%) by 16.2%, while pure LLM methods without routing achieve only 21.0%–27.3%.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2: as difficulty scales from LogDed3 to LogDed7, the framework maintains stable and high accuracy (around 84%–94%), while Zero-shot and CoT baselines fluctuate significantly and degrade with increasing difficulty.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 4: Invalid Formalization is the predominant error type for open-source smaller models (including DeepSeek-V3.1), while GPT-4o's errors are primarily Semantic Errors with only minor Invalid Formalization cases on FOLIO and CSP.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4"
+  }
+]

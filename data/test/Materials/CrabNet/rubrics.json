@@ -1,0 +1,542 @@
+[
+  {
+    "criteria": "The agent has read the Introduction completely to understand the motivation for structure-agnostic, composition-only property prediction and why composition-weighted CBFV approaches lose chemical signal from low-fraction (dopant) elements.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Introduction"
+  },
+  {
+    "criteria": "The agent has read the 'Data and materials properties procurement' section to understand the Matbench/Extended dataset sources, the fivefold-CV vs. fixed-seed splitting schemes, and the duplicate-composition handling rules.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The agent has read the 'Benchmark comparisons' section to understand the MAE-based comparison of Roost, CrabNet, HotCrab, ElemNet, and RF, and why only two Matbench properties are compared against Automatminer.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Benchmark comparisons"
+  },
+  {
+    "criteria": "The agent has read Table 1 to understand the full list of 28 benchmark datasets, their sources, target properties, sample counts, and train/val/test split proportions.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read the Methods section 'Self-attention and the CrabNet architecture' to understand the EDM featurization scheme, mat2vec vs. one-hot element representations, and the dual sine/cosine fractional embedding.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The agent has read Table 2 together with Figs. 6-8 to understand the exact default architecture hyperparameters and the data flow through the attention blocks and residual network.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2, Figs. 6-8"
+  },
+  {
+    "criteria": "The agent has read the 'Training CrabNet' section to understand the optimizer, cyclical learning-rate schedule, batch-size logic, random seed, and hardware used for all training runs.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The agent has read the 'Reference models' section to understand how Roost, ElemNet, and the RF baseline were configured and adapted for benchmarking.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Reference models"
+  },
+  {
+    "criteria": "The agent has read the 'Visualizing self-attention' section and Figs. 2-5 to understand the four interpretability analyses enabled by CrabNet's attention-based design.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Visualizing self-attention"
+  },
+  {
+    "criteria": "The agent has read the Data Availability and Code Availability statements to understand that pre-split benchmark data, the CrabNet source code, and pre-trained weights are hosted on the cited GitHub/Zenodo repositories.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Data/Code Availability"
+  },
+  {
+    "criteria": "The plan includes collecting and combining the 10 Matbench datasets and 18 Extended datasets into the full set of 28 benchmark properties.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The plan includes splitting the Matbench datasets using fivefold cross-validation as defined in the original Automatminer publication.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The plan includes splitting the Extended datasets into train, validation, and test sets using a fixed random seed.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The plan includes the post-split deduplication procedure: removing duplicate compositions within each split, and removing any validation/test compound whose composition already exists in the train or validation split.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The plan includes the dataset-specific duplicate-resolution rule: keeping the lowest-formation-enthalpy entry for OQMD/MP datasets and the mean target value for all other datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The plan includes implementing the EDM (element-derived matrix) featurization as the element-wise sum of an element embedding matrix and a fractional embedding matrix.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The plan includes using mat2vec embeddings as the default chemical element representation, with a separate one-hot atomic-number representation for the HotCrab ablation.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The plan includes the dual sine/cosine fractional embedding consisting of a linear-scale component and a logarithmic-scale component, inspired by Transformer positional encoding, to preserve both ordinary and dopant-level stoichiometry.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The plan includes a Transformer encoder with N=3 stacked self-attention layers and H=4 attention heads per layer, matching Table 2.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The plan includes a residual output network mapping each element's final representation to an element-proto-contribution, element-uncertainty, and element-logit, using hidden layer sizes [1024, 512, 256, 128].",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 2, Fig. 8"
+  },
+  {
+    "criteria": "The plan includes the prediction logic of scaling proto-contributions by a sigmoid-gated logit and averaging the resulting element contributions (and element-uncertainties) across all elements to obtain the compound-level prediction and aleatoric uncertainty.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Fig. 8"
+  },
+  {
+    "criteria": "The plan includes the training procedure: a Lookahead-wrapped Lamb optimizer, a cyclical learning rate between 1e-4 and 6e-3 every 4 epochs, a robust MAE loss, and a fixed random seed of 42 for every run.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The plan includes dynamically sized training batches bounded to the range [2^7, 2^12] and a fixed inference batch size of 2^7.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The plan includes benchmarking CrabNet against Roost, ElemNet, and a Magpie-CBFV random forest, each run with its published default settings on all 28 datasets.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Benchmark comparisons"
+  },
+  {
+    "criteria": "The plan includes evaluating all models with the MAE metric (Equation 1) only after training and hyperparameter tuning are complete, using a strictly held-out test set.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 1; Data and materials properties procurement"
+  },
+  {
+    "criteria": "The plan includes the four self-attention interpretability analyses: per-head attention matrices for a single composition, dataset-averaged per-element attention, element-contribution maps, and composition-sweep predictions for a binary A_xB_(1-x) system.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Visualizing self-attention"
+  },
+  {
+    "criteria": "The code parses chemical formulas into constituent atomic numbers and their fractional (stoichiometric) amounts as the raw model input representation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The code implements the mat2vec embedding lookup as the default element representation, with input dimension d_in=200.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The code implements a one-hot atomic-number element representation (d_in=118) used for the HotCrab variant.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The code implements a learned fully connected embedding network that projects the chosen element representation into the d_model=512 attention input space.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The code implements the fractional embedding's linear-scale sine/cosine projection of normalized fractional amounts with a fractional resolution of 0.01.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The code implements the fractional embedding's logarithmic-scale sine/cosine projection that preserves very small fractional amounts (down to roughly 1e-6), enabling representation of dopant-level stoichiometry.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The code concatenates the linear-scale and log-scale fractional embedding halves (each of dimension d_model/2) across the embedding dimension to form the full fractional embedding matrix.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The code computes the EDM as the element-wise sum of the element embedding matrix and the fractional embedding matrix for each composition.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Fig. 6"
+  },
+  {
+    "criteria": "The code zero-pads EDM rows for compositions with fewer elements than the maximum number of element rows (inferred from the largest composition in the dataset/batch).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Fig. 6"
+  },
+  {
+    "criteria": "The code batches per-composition EDM slices into a 3D tensor of shape (n_compounds, n_elements, d_model) for input to the Transformer encoder.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The code implements three independent fully connected projections (FC_Q, FC_K, FC_V) that generate the Query, Key, and Value tensors from the EDM.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Fig. 7a"
+  },
+  {
+    "criteria": "The code implements scaled dot-product self-attention, computing softmax(QK^T / sqrt(d_k)) and multiplying by V to produce the updated element representation Z.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Fig. 7b"
+  },
+  {
+    "criteria": "The code implements H=4 independent attention heads per layer, each computing its own Q_h, K_h, V_h, and Z_h tensors.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The code concatenates the per-head Z_h tensors along the feature dimension and passes the result through a combining fully connected layer to produce the updated EDM' for the layer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Fig. 8a"
+  },
+  {
+    "criteria": "The code stacks N=3 self-attention blocks (Transformer encoder layers) that iteratively refine element representations into the final EDM''.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Methods: Self-attention and the CrabNet architecture"
+  },
+  {
+    "criteria": "The code implements the residual output network with hidden layer sizes [1024, 512, 256, 128] that maps each element's final representation (EDM'') to a 3-channel output.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The code interprets the residual network's three output channels per element as the element-proto-contribution p', element-uncertainty u', and element-logit, respectively.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Fig. 8b"
+  },
+  {
+    "criteria": "The code computes the element scaling factor s as the sigmoid of the element-logit.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Fig. 8b"
+  },
+  {
+    "criteria": "The code computes each element's contribution y' as the product of its proto-contribution p' and its scaling factor s.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Fig. 8b"
+  },
+  {
+    "criteria": "The code computes the final per-compound property prediction as the mean of the element contributions y' across all elements present in the composition.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Fig. 8b"
+  },
+  {
+    "criteria": "The code computes the aleatoric uncertainty prediction as the mean of the element-uncertainties u' across all elements in the composition.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Fig. 8b"
+  },
+  {
+    "criteria": "The code configures the default CrabNet hyperparameters to match Table 2: d_model=512, d_ff=2048, d_k=d_q=128, H=4, N=3, d_out=3.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The code implements PyTorch Dataset and DataLoader classes to load and batch the featurized EDM data for training and inference.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The code scales target property values to zero mean and unit variance for training and inverts this scaling before computing evaluation metrics.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The code dynamically computes the training batch size from the training-set size, clipped to the range [2^7, 2^12], and fixes the inference batch size at 2^7.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The code wraps the Lamb optimizer with the Lookahead mechanism for updating model weights.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The code implements a cyclical learning-rate schedule oscillating between 1e-4 and 6e-3 with a 4-epoch cycle length.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The code implements the robust MAE loss criterion (adopted from Roost) used to train CrabNet.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Training CrabNet; Reference models"
+  },
+  {
+    "criteria": "The code fixes the random seed to 42 for every training run across all 28 materials properties.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Training CrabNet"
+  },
+  {
+    "criteria": "The code implements data loading and preprocessing for the 10 Matbench properties using the fivefold cross-validation splits matching Automatminer.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code implements data loading and preprocessing for the 18 Extended-dataset properties using fixed-seed train/validation/test splits.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The code implements duplicate-composition filtering applied after splitting, removing within-split duplicates and any validation/test compound whose composition already appears in train or validation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The code implements the OQMD/MP-specific duplicate-resolution rule that retains the entry with the lowest formation enthalpy among duplicate compositions.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The code implements the mean-target duplicate-resolution rule for duplicate compositions in all non-OQMD/MP datasets.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The code implements the MAE metric (Equation 1) used to evaluate and compare all benchmarked models.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code integrates the public Roost repository, with the minor adaptations needed to automate training and benchmarking across all 28 properties.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Reference models"
+  },
+  {
+    "criteria": "The code integrates the public ElemNet repository with custom scripts to train and evaluate it with default parameters across all 28 properties.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Reference models"
+  },
+  {
+    "criteria": "The code implements the random-forest baseline using a Magpie CBFV (via Matminer) with scikit-learn's RandomForestRegressor at n_estimators=500 and otherwise default parameters.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Reference models"
+  },
+  {
+    "criteria": "The code ensures training and validation data are used only for fitting and hyperparameter tuning, with the held-out test set used exclusively for final performance evaluation.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Data and materials properties procurement"
+  },
+  {
+    "criteria": "The code consumes pre-split, cleaned CSV files for each of the 28 datasets to guarantee that data splits exactly match those used to generate the paper's reported results.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Data Availability"
+  },
+  {
+    "criteria": "The code extracts and visualizes per-head attention matrices for a single composition (e.g., Al2O3) from a trained CrabNet model.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Fig. 2"
+  },
+  {
+    "criteria": "The code computes and visualizes the dataset-averaged per-element attention (e.g., Si's average attention across all Si-containing compounds) for each attention head.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Fig. 3"
+  },
+  {
+    "criteria": "The code extracts and visualizes average per-element contributions to a target property on a periodic table layout and as per-element contribution distributions.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Fig. 4"
+  },
+  {
+    "criteria": "The code implements a composition-sweep prediction utility that generates predictions, element contributions, and aleatoric uncertainty for a binary system A_xB_(1-x) across a swept range of x values.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Fig. 5"
+  },
+  {
+    "criteria": "Default CrabNet (mat2vec) has been trained and evaluated successfully on all 28 benchmark datasets without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Fig. 1"
+  },
+  {
+    "criteria": "HotCrab (one-hot CrabNet variant) has been trained and evaluated successfully on all 28 benchmark datasets without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Fig. 1"
+  },
+  {
+    "criteria": "Roost has been trained and evaluated successfully on all 28 benchmark datasets without errors.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Fig. 1"
+  },
+  {
+    "criteria": "ElemNet has been trained and evaluated on all 28 benchmark datasets, including the expected convergence failures (NaN outputs) on properties such as phonons and steels_yield.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Fig. 1; Reference models"
+  },
+  {
+    "criteria": "The Magpie-CBFV random forest baseline has been trained and evaluated successfully on all 28 benchmark datasets without errors.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Fig. 1"
+  },
+  {
+    "criteria": "The attention and element-contribution visualization scripts have been executed successfully to reproduce the figures corresponding to Figs. 2-5.",
+    "score": 2,
+    "type": "Command Execution",
+    "comment": "Figs. 2-5"
+  },
+  {
+    "criteria": "The execution outcomes match Fig. 1a: on the Matbench properties, default CrabNet achieves the best or near-best MAE among Roost/CrabNet/HotCrab/ElemNet/RF on most properties (e.g., Castelli perovskites MAE ~0.127, experimental band gap MAE ~0.338).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Fig. 1a"
+  },
+  {
+    "criteria": "The execution outcomes match Fig. 1b: on the Extended dataset properties, CrabNet and Roost achieve comparable MAEs that are consistently better than ElemNet and RF (e.g., AFLOW bulk modulus MAE ~8.7-8.8 GPa).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Fig. 1b"
+  },
+  {
+    "criteria": "The execution outcomes confirm that Roost and both CrabNet variants achieve substantially lower MAE than ElemNet and RF on nearly all 28 benchmark properties.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Fig. 1"
+  },
+  {
+    "criteria": "The execution outcomes confirm that mat2vec-based CrabNet outperforms the one-hot HotCrab variant on most properties, except AFLOW thermal conductivity, MP elastic anisotropy, and the largest (OQMD) datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Benchmark comparisons"
+  },
+  {
+    "criteria": "The execution outcomes reproduce ElemNet's convergence failures (NaN MAE) on the phonons and steels_yield properties.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Fig. 1; Reference models"
+  },
+  {
+    "criteria": "The execution outcomes match the reported CrabNet vs. Automatminer comparison on expt_gap, with CrabNet's MAE (~0.338-0.416 eV depending on run) better than Automatminer's reported 0.416 eV.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Benchmark comparisons"
+  },
+  {
+    "criteria": "The execution outcomes match the reported CrabNet vs. Automatminer comparison on steels_yield, with CrabNet's MAE (~91.7-92 GPa) better than Automatminer's reported 95.2 GPa.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Benchmark comparisons"
+  },
+  {
+    "criteria": "The execution outcomes confirm CrabNet outperforms the RF baseline on the data-poor steels_yield task (312 samples, up to 13 elements per composition), despite RF's typical advantage in low-data regimes.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Benchmark comparisons"
+  },
+  {
+    "criteria": "The execution outcomes are consistent with the paper's claim that CrabNet's validation-tuned default hyperparameters do not give it a decisive unfair advantage, given its consistently strong performance across all 28 properties.",
+    "score": 1,
+    "type": "Result Matching",
+    "comment": "Benchmark comparisons"
+  },
+  {
+    "criteria": "The execution outcomes match Fig. 2: visualizing per-head attention matrices for Al2O3 shows Al and O attending strongly to each other in at least one head (e.g., an attention score near 1.00 between Al and O).",
+    "score": 1,
+    "type": "Result Matching",
+    "comment": "Fig. 2"
+  },
+  {
+    "criteria": "The execution outcomes match Fig. 3: the averaged attention from Si in the aflow__Egap-trained CrabNet model shows each of the 4 attention heads exhibiting distinct, non-redundant element groupings.",
+    "score": 1,
+    "type": "Result Matching",
+    "comment": "Fig. 3"
+  },
+  {
+    "criteria": "The execution outcomes match Fig. 4: the AFLOW bulk-modulus element-contribution analysis shows lithium contributing little and tungsten contributing substantially to predicted bulk modulus.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Fig. 4"
+  },
+  {
+    "criteria": "The execution outcomes match Fig. 5: predicted band gap for the Si_xO_(1-x) system shows a transition between conducting and semiconducting behavior between x=0.5 and x=0.7.",
+    "score": 1,
+    "type": "Result Matching",
+    "comment": "Fig. 5"
+  },
+  {
+    "criteria": "The execution outcomes confirm the sample counts and split proportions for all 28 benchmark properties match Table 1.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  }
+]

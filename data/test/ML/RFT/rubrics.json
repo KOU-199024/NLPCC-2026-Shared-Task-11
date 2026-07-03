@@ -1,0 +1,428 @@
+[
+  {
+    "criteria": "The agent has read Section 3 completely to understand the supervised fine-tuning setup, adversarial training formulation, and the RFT-fix baseline.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The agent has read Section 4 completely to understand the suboptimal transfer phenomenon and how RFT delays task adaptation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4"
+  },
+  {
+    "criteria": "The agent has read Section 5 completely to understand Epsilon-Scheduling (Equation 2) and the expected robustness metric (Equation 3).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 5"
+  },
+  {
+    "criteria": "The agent has read Section 6 and Appendix A completely to extract all experimental settings: backbones, datasets, data splits, augmentations, optimizer, scheduler, APGD configuration, and hyperparameter optimization procedure.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 6, Appendix A"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check clean accuracy, adversarial accuracy, and expected adversarial accuracy results for all six non-robust backbones across five datasets at epsilon_g = 4/255.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check clean accuracy, adversarial accuracy, and expected adversarial accuracy results for all six non-robust backbones across five datasets at epsilon_g = 8/255.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Figure 2 to understand the two-hinge linear structure of Epsilon-Scheduling with the three phases defined by T1 and T2.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The agent has read Appendix A to extract training details: AdamW with cosine LR scheduler and warmup, 50 training epochs, APGD with 7 steps for training and 10 for evaluation, images resized to 224x224 with pixel values in [0,1], augmentations (random horizontal flips p=0.5, color jitter with brightness/contrast/saturation=0.25, random rotations).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The agent has read Table 5 to obtain the exact HuggingFace model IDs for all six non-robust backbones (ViT, SWIN, CNX, ClipViT, ClipCNX, R50).",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The agent has read Appendix C.1 and Table 7 to understand the ablation study on T1 and T2 hyperparameters of Epsilon-Scheduling.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Appendix C.1, Table 7"
+  },
+  {
+    "criteria": "The plan includes loading all six non-robust pretrained backbone models (ViT-Base, SWIN-Base, ConvNext-Base, ResNet-50, CLIP-ViT, CLIP-ConvNext) from timm and HuggingFace using the exact identifiers in Table 5.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The plan includes loading all five downstream datasets (CUB-200-2011 with 200 classes, Stanford Dogs with 120 classes, Caltech256 with 257 classes, Stanford Cars with 196 classes, FGVC-Aircraft with 100 classes) with train/val/test splits from Hua et al. (2024) for Caltech/Cub/Dogs and Heuillet et al. (2025) for Aircraft/Cars.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 6, Appendix A"
+  },
+  {
+    "criteria": "The plan includes implementing data preprocessing: resize images to 224x224, pixel values in [0,1], normalization integrated into the model.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The plan includes training augmentations: random horizontal flips (p=0.5), color jitter (brightness, contrast, and saturation set to 0.25), and random rotations.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The plan includes implementing full fine-tuning where both the backbone and the randomly initialized classifier head are trainable parameters.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes implementing the adversarial training objective (Equation 1) using APGD to generate adversarial perturbations under the ell_inf norm.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The plan includes implementing the RFT-fix baseline, which keeps the perturbation strength fixed at epsilon_g throughout all fine-tuning epochs.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The plan includes implementing the two-hinge linear Epsilon-Scheduling strategy as defined by Equation 2, with parameters T1=12 and T2=37 for a 50-epoch training run.",
+    "score": 4,
+    "type": "Plan Writing",
+    "comment": "Equation 2, Section 6"
+  },
+  {
+    "criteria": "The plan includes implementing the expected robustness metric (Equation 3) as the area under the accuracy curve from 0 to epsilon_g, estimated using the trapezoidal rule with evaluation steps of 1/255.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equation 3, Appendix A"
+  },
+  {
+    "criteria": "The plan includes performing hyperparameter optimization (HPO) for learning rate and weight decay using the ASHA scheduler (Hyperband variant) with a 30-minute budget, searching in the range [1e-5, 1e-1], only for the fix setting, and reusing those hyperparameters for the scheduler setting.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The plan includes conducting the main experiments at two perturbation regimes: epsilon_g = 4/255 (moderate) and epsilon_g = 8/255 (high) for both RFT-fix and RFT-scheduler across all six backbones and five datasets.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 6.1"
+  },
+  {
+    "criteria": "The plan includes the ablation study varying T1 and T2 hyperparameters of Epsilon-Scheduling on SWIN-Cars at both perturbation regimes.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix C.1, Table 7"
+  },
+  {
+    "criteria": "The plan includes experiments with robust backbones (RobViT, RobSWIN, RobCNX, RobR50) using RFT-fix and RFT-scheduler on Aircraft, Caltech, and Cars datasets.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The code for loading the six non-robust pretrained backbone models from timm and HuggingFace has been implemented using the exact model IDs specified in Table 5 (e.g., timm/vit_base_patch16_224.augreg_in1k for ViT).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Table 5"
+  },
+  {
+    "criteria": "The code for loading and preprocessing the five downstream datasets (CUB-200-2011, Stanford Dogs, Caltech256, Stanford Cars, FGVC-Aircraft) with the correct number of classes has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code applies the correct train/val/test data splits: splits from Hua et al. (2024) for Caltech, Cub, and Stanford Dogs; and from Heuillet et al. (2025) for Aircraft and Stanford Cars.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The code for training data augmentations has been implemented: random horizontal flips with p=0.5, color jitter with brightness, contrast, and saturation all set to 0.25, and random rotations.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The code resizes all images to 224x224 with pixel values in the range [0, 1], and integrates data normalization and standardization directly into the model rather than applying it externally.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "The adversarial training objective has been implemented as Equation 1: minimizing the expected max-perturbation cross-entropy loss R_epsilon(f) = E_{(x,y)~D}[max_{||delta||_p < epsilon} L_CE(f(x+delta), y)] using empirical risk minimization.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "APGD (Auto PGD) with cross-entropy loss has been implemented for generating adversarial examples during training with 7 steps.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "APGD with 10 steps has been implemented for evaluating adversarial accuracy under the ell_inf norm at the target threshold epsilon_g.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The RFT-fix baseline has been implemented: it fixes the perturbation strength at epsilon_g for adversarial example generation across all training epochs.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The two-hinge linear Epsilon-Scheduling has been implemented as Equation 2: alpha(t)=0 for t<T1, alpha(t)=(t-T1)/(T2-T1) for T1<=t<T2, alpha(t)=1 for t>=T2, applied as epsilon(t)=alpha(t)*epsilon_g.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The Epsilon-Scheduling parameters are set to T1=12 and T2=37 for a 50-epoch training run, corresponding to approximately 25% and 75% of total training epochs respectively.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The expected robustness metric has been implemented as Equation 3: Acc_{[0,eps_g]}(f) = (1/eps_g) * AUC_{eps_g}(f), where the AUC is estimated using the trapezoidal rule with evaluation steps of 1/255.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3, Appendix A"
+  },
+  {
+    "criteria": "The trapezoidal rule for expected robustness estimation has been implemented as shown in Appendix A: AUC_{4/255}(f) = (1/4) * sum_{i=0}^{3} [Acc_{i/255}(f) + Acc_{(i+1)/255}(f)] / 2, evaluating at each integer 1/255 step from 0 to epsilon_g.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "Full fine-tuning is implemented such that both the pretrained backbone parameters and the randomly initialized classifier head parameters are updated during training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3"
+  },
+  {
+    "criteria": "The AdamW optimizer with a cosine learning rate scheduler that includes a warmup period has been implemented for training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "HPO using the ASHA scheduler (a Hyperband variant) has been implemented or integrated, searching learning rate and weight decay in the range [1e-5, 1e-1] with a 30-minute budget, applied only to the fix setting.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "Hyperparameters (learning rate and weight decay) found via HPO on the fix setting are reused for the scheduler setting to ensure a fair comparison.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix A"
+  },
+  {
+    "criteria": "Models are trained for exactly 50 epochs in all experiments.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "Results are reported from the model checkpoint at the end of training (epoch 50), not from early stopping or the best validation checkpoint.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6"
+  },
+  {
+    "criteria": "The code for loading the four robust backbone models (RobViT, RobSWIN, RobCNX, RobR50) from the ARES repository (github.com/thu-ml/ares/) has been implemented.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Table 3, Table 5, Appendix A"
+  },
+  {
+    "criteria": "The delay time measurement has been implemented: the epoch from which the validation accuracy first exceeds 5% is used as the task adaptation delay time.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4, Figure 8"
+  },
+  {
+    "criteria": "The uniform random baseline for direct minimization of expected robustness has been implemented: at each epoch, epsilon is drawn uniformly from U[0, epsilon_g].",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix C.2, Table 8"
+  },
+  {
+    "criteria": "The automated epsilon scheduler (auto) has been implemented: it starts with epsilon=0, then initiates a linear increase from T1 (automatically detected as the epoch when validation accuracy converges, with patience of 5 epochs and a tolerance of 2%) to the end of training.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 6.3, Table 4"
+  },
+  {
+    "criteria": "Evaluation with AutoAttack has been implemented as an ensemble of four attacks (untargeted APGD-CE, targeted APGD-DLR, targeted FAB, and black-box Square Attack) for the subset of experiments in Table 6.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 6, Appendix B.2, Table 6"
+  },
+  {
+    "criteria": "The suboptimal transfer characterization experiments (Figure 1) have been executed successfully: RFT-fix with epsilon_g in [1/255, 9/255] for SWIN and ViT across all five datasets.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 1, Section 4"
+  },
+  {
+    "criteria": "The training dynamics experiments (Figure 3) have been executed successfully: validation clean accuracy under standard fine-tuning and RFT-fix with epsilon_g in [1/255, 9/255] on multiple datasets to measure task adaptation delay.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Figure 3, Section 4"
+  },
+  {
+    "criteria": "The main experiments for Table 1 have been executed successfully: RFT-fix and RFT-scheduler for all six non-robust backbones across all five datasets at epsilon_g = 4/255.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The main experiments for Table 2 have been executed successfully: RFT-fix and RFT-scheduler for all six non-robust backbones across all five datasets at epsilon_g = 8/255.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The robust backbone experiments (Table 3) have been executed successfully: RFT-fix and RFT-scheduler for RobViT, RobSWIN, RobCNX, RobR50 on Aircraft, Caltech, and Cars at both epsilon_g = 4/255 and 8/255.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The ablation study on T1 and T2 (Table 7) has been executed successfully for SWIN-Cars at epsilon_g = 4/255 and 8/255 across all specified (T1, T2) configurations.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 7, Appendix C.1"
+  },
+  {
+    "criteria": "The automated scheduler experiment (Table 4) has been executed successfully for SWIN and ConvNext on Aircraft, Caltech, and Cars at both perturbation regimes.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 4, Section 6.3"
+  },
+  {
+    "criteria": "The uniform random baseline experiments (Table 8) have been executed successfully for SWIN, R50, and ClipCNX on Aircraft, Caltech, and Cars at both perturbation regimes.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 8, Appendix C.2"
+  },
+  {
+    "criteria": "The AutoAttack evaluation (Table 6) has been executed successfully for SWIN on Cars and Aircraft at epsilon_g = 4/255 and 8/255 for both fix and scheduler settings.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Table 6, Appendix B.2"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 1: suboptimal transfer is highly model- and dataset-dependent, with Aircraft and Cars showing severe degradation (clean accuracy below 5% at moderate epsilon_g) while Caltech remains more robust.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 1"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 3: standard fine-tuning (epsilon_g=0) shows task adaptation from the first epoch, while RFT-fix with increasing epsilon_g causes progressively longer delays in task adaptation (delay time measured as epoch when validation accuracy exceeds 5%).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 9: delay times strongly correlate negatively with final clean accuracy (correlation above 90% across all five datasets for both ViT and SWIN).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 9, Appendix B.1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1: at epsilon_g = 4/255, RFT-scheduler achieves substantially higher clean accuracy and expected adversarial accuracy than RFT-fix across all six backbone-dataset configurations, while sometimes trading off adversarial accuracy.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 2: at epsilon_g = 8/255, RFT-fix mostly fails (very low clean accuracy) while RFT-scheduler consistently preserves performance, improving clean accuracy, adversarial accuracy (28/30 cases), and expected robustness (all 30 cases).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match Table 3: for robust backbones, RFT-scheduler consistently improves clean accuracy over RFT-fix but at the cost of reduced adversarial accuracy; expected robustness is still improved for easier tasks (e.g., Caltech).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match Table 7: when T1=T2 (instant switch from 0 to epsilon_g), performance collapses; increasing T2 yields the most significant improvement in expected robustness; the reported RFT-scheduler results correspond to T1=12, T2=37 marked with (*) in the table.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 8: the uniform random baseline often results in suboptimal transfer (except on easier datasets like Caltech), confirming that Epsilon-Scheduling is superior to direct uniform minimization of expected robustness.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 8"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4: the automated scheduler achieves comparable performance to RFT-scheduler on Aircraft, Caltech, and Cars, effectively mitigating suboptimal transfer without requiring manual selection of T1.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 6: AutoAttack results for SWIN on Cars and Aircraft closely mirror APGD results, confirming that APGD evaluation is a reliable proxy for the stronger ensemble attack.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 5: in the aggregated analysis, Epsilon-Scheduling consistently improves expected robustness through significant clean accuracy gains across all backbones and both perturbation regimes.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 5"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 6: training dynamics show RFT-scheduler achieving high clean accuracy during the first phase (T<T1) and then maintaining stable clean accuracy while building robust accuracy as epsilon increases.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 6"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 7: the clean loss evolution shows RFT-scheduler initially following standard fine-tuning (low clean loss), while RFT-fix struggles to reduce adversarial loss and keeps clean loss high in early epochs.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 7"
+  },
+  {
+    "criteria": "The execution outcomes match Table 9: paired t-tests between RFT-fix and RFT-scheduler show statistically significant differences (p < 0.05) for clean accuracy, adversarial accuracy, and expected adversarial accuracy at both epsilon_g = 4/255 and 8/255.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 9"
+  },
+  {
+    "criteria": "The execution outcomes match Table 12: on ImageNette at both epsilon_g = 4/255 and 8/255, SWIN and CNX with RFT-scheduler achieve higher clean accuracy and expected robustness than with RFT-fix.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Table 12"
+  }
+]

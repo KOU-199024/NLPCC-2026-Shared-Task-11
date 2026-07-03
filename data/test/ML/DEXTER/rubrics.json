@@ -1,0 +1,464 @@
+[
+  {
+    "criteria": "The agent has read Section 3.1 completely to understand the text pipeline, including the soft prompt, BERT masked token prediction, and Gumbel-Softmax mechanism.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the vision pipeline, including how Stable Diffusion is conditioned and how the neuron activation maximization loss is defined.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Section 3.3 completely to understand the masked pseudo-label prediction auxiliary task, including the aggregated activation loss and historical mean comparison mechanism.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The agent has read Section 4.1 completely to understand the four datasets (SalientImageNet, Waterbirds, CelebA, FairFaces) and their roles in evaluation.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 4.1"
+  },
+  {
+    "criteria": "The agent has read Appendix C completely to check all training hyperparameters, including CLIP encoder, Stable Diffusion v1.4, LCM LoRA adapter, batch size, learning rate, soft prompt dimensions, and Gumbel-Softmax temperature.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The agent has read Appendix E completely to understand the slice discovery pipeline, including k=4 words, 1000 optimization steps, single-word prompting, and top-k word selection strategy.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "The agent has read Appendix F completely to understand the bias reasoning pipeline, including VLM prompts, 50 images, up to 5000 optimization steps, multi-word prompting, and ChatGPT-4o mini configuration.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The agent has read Table 1 to check the slice discovery and debiasing results for CelebA and Waterbirds against baselines (ERM, LfF, GEORGE, JTT, CNC, DRO, LADDER, DRO-B2T).",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The agent has read Table 2 to check the bias report evaluation results (STS, G-eval_con, MOS_LLM, MOS_Humans) for FairFaces classifiers with and without gender bias.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The agent has read Tables 3 and 4 to understand the ablation study: the four prompting strategies comparison and the single-word vs. multi-word with/without L_mask configurations.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Tables 3, 4"
+  },
+  {
+    "criteria": "The plan includes initializing a learnable soft prompt p as the only trainable parameter and prepending it to BERT's input sequence [p, t_emb].",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the BERT masked token prediction step using Gumbel-Softmax (temperature τ=1) to obtain differentiable one-hot predicted tokens.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes the translation matrix M mapping BERT's vocabulary (V=30522) to CLIP's vocabulary (W=49408) and how it is applied to convert tokens.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes how Stable Diffusion is conditioned by the CLIP text embedding e derived from the translated prompt, and how the target classifier's activation is obtained.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes the neuron activation maximization loss L_act and the distinction between feature neurons (−n_i) and class neurons (−log n_i).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Equations 1-2"
+  },
+  {
+    "criteria": "The plan includes the masked pseudo-label auxiliary task: initializing pseudo-labels y_i and reference losses L_i to +∞, updating them based on aggregated activation loss L_agg,i.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes the overall loss function L combining neuron activation loss and masked token cross-entropy loss for pseudo-label supervision.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Equation 4"
+  },
+  {
+    "criteria": "The plan includes the historical mean comparison strategy for pseudo-label updates to prevent selection of outlier tokens.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3, Equation 5"
+  },
+  {
+    "criteria": "The plan specifies both the single-word ('a picture of a [MASK]') and multi-word ('a picture of a [MASK] with [MASK] and [MASK] and [MASK] and [MASK] and [MASK].') prompt templates.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes the training setup: CLIP text encoder, Stable Diffusion v1.4 with LCM LoRA (4 inference steps), batch size=1, learning rate=0.1, P=1, d=768, τ=1.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The plan includes visual explanation experiments on SalientImageNet (30 classes: 15 spurious, 15 core) using 2000 optimization steps, RobustResNet50, and single-word prompting.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.1, Appendix D"
+  },
+  {
+    "criteria": "The plan includes CLIP-IQA and Semantic CLIP-IQA evaluation metrics, noting that Semantic CLIP-IQA uses class-specific prompts ('Good/Bad photo of a [CLASS]') instead of fixed prompts.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The plan includes the ablation study comparing four prompt strategies (class label, ChatGPT descriptions, DiffExplainer captions, DEXTER) and four configurations (single/multi-word with/without L_mask).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.4"
+  },
+  {
+    "criteria": "The plan includes the slice discovery pipeline: using DEXTER to find k=4 descriptive words per class, computing CLIP similarity between words and dataset images, and labeling slices.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.2, Appendix E"
+  },
+  {
+    "criteria": "The plan includes training a debiased classifier using Distributionally Robust Optimization (DRO) on the identified slices for CelebA and Waterbirds.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.2"
+  },
+  {
+    "criteria": "The plan includes the bias explanation pipeline: generating 50 DEXTER images per class (up to 5000 steps, multi-word), captioning with ChatGPT-4o mini, and generating a report from captions.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.3, Appendix F"
+  },
+  {
+    "criteria": "The plan includes training two ResNet18 classifiers on FairFaces: one with gender bias (male overrepresentation in class 0, female overrepresentation in class 1) and one balanced.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 4.2.3"
+  },
+  {
+    "criteria": "The learnable soft prompt p ∈ R^(P×d) is implemented with P=1 and d=768, and correctly prepended to BERT's input sequence [p, t_emb] where t_emb includes positional encoding.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "BERT reads the full input [p, t_emb] and outputs logits l_i ∈ R^V for each masked token position, where V=30522 is BERT's vocabulary size.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The Gumbel-Softmax (temperature τ=1) is applied to the masked token logits l_i to produce differentiable one-hot vectors o_i ∈ {0,1}^V, from which the predicted token t̂_i is retrieved.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The translation matrix M ∈ {0,1}^(V×W) is implemented to map each BERT one-hot vector o_i to its CLIP equivalent o_i^(C) = o_i M, with zero rows for BERT tokens absent from CLIP's vocabulary.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The translated CLIP token embeddings are used to compute the CLIP text embedding e for conditioning Stable Diffusion, and the whole pipeline from soft prompt to image is differentiable.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.1, 3.2"
+  },
+  {
+    "criteria": "Stable Diffusion v1.4 is used as the frozen diffusion model d, conditioned on the CLIP embedding e, to generate images used for classifier activation.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The LCM LoRA adapter is applied to Stable Diffusion with 4 inference steps to reduce inference time while maintaining differentiability.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The target visual classifier f is loaded as a frozen model providing K selected neuron activations n = f(d(e)) from either intermediate (feature neurons) or output (class neurons) layers.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The neuron activation maximization loss L_act = Σ_{i=1}^{K} l_act(n_i) is implemented as per Equation 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Equation 1"
+  },
+  {
+    "criteria": "The per-neuron loss l_act is implemented to distinguish between feature neurons (l_act = −n_i) and class neurons (l_act = −log n_i) as defined in Equation 2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Equation 2"
+  },
+  {
+    "criteria": "Pseudo-labels y_1,...,y_N and reference losses L_1,...,L_N are initialized (L_i = +∞) and each pseudo-label is associated with a subset of reference neurons N_i.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The aggregated activation loss L_agg,i = Σ_{j ∈ N_i} l_act(n_j) is computed for each masked token position as defined in Equation 3.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Equation 3"
+  },
+  {
+    "criteria": "The pseudo-label update rule is implemented: update y_i ← t̂_i and L_i ← L_agg,i only when the historical mean of aggregated losses is less than L_i.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Equation 5"
+  },
+  {
+    "criteria": "The historical mean comparison for pseudo-label updates is implemented: for token t* predicted in T iterations, the mean (1/T)Σ L_agg,i^(j) < L_i is used instead of the single most recent loss, as per Equation 5.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Equation 5"
+  },
+  {
+    "criteria": "The cross-entropy auxiliary loss L_mask,i = −log s_{i,y_i} is computed only when pseudo-label y_i has been set (L_i is finite), using the softmax vector s_i from BERT logits.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The overall loss L = Σ_{k=1}^{K} l_act(n_k) − Σ_{i=1}^{N} log s_{i,y_i} combining activation maximization and masked pseudo-label supervision is implemented as per Equation 4.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 3.3, Equation 4"
+  },
+  {
+    "criteria": "Both single-word prompting ('a picture of a [MASK].') and multi-word prompting ('a picture of a [MASK] with [MASK] and [MASK] and [MASK] and [MASK] and [MASK].') templates are implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "The optimizer is configured with learning rate 0.1, batch size 1 (one image per iteration), and only the soft prompt p is updated; all other components (BERT, CLIP, Stable Diffusion, classifier) are frozen.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix C"
+  },
+  {
+    "criteria": "RobustResNet50 is loaded as the target visual classifier for the visual explanation and activation maximization experiments on SalientImageNet.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.1, Appendix D"
+  },
+  {
+    "criteria": "The CLIP-IQA metric is implemented by computing the probability that a generated image is closer to 'Good photo.' than 'Bad photo.' using CLIP similarity scores.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The Semantic CLIP-IQA metric is implemented by replacing the fixed prompts with class-specific 'Good photo of a [CLASS].' and 'Bad photo of a [CLASS].' for each target class.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix D.1"
+  },
+  {
+    "criteria": "The activation score computation is implemented: after optimization, 100 images are generated using the final discovered prompt, and the activation score is the percentage of images for which the classifier predicts the target class.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.4, Appendix G"
+  },
+  {
+    "criteria": "The slice discovery pipeline is implemented: DEXTER is run k=4 times with single-word prompting and 1000 optimization steps to extract k=4 descriptive words per class (excluding previously selected words in each run).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.2, Appendix E"
+  },
+  {
+    "criteria": "The class prototype t̄_c is computed as the average CLIP text embedding of the k discovered words, and CLIP similarity between dataset images and class prototypes is computed as per Equation 6.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.2, Equation 6, Appendix E"
+  },
+  {
+    "criteria": "The slice labeling is implemented: images with higher CLIP similarity to their real class words are labeled as unbiased slices, and those with higher similarity to the counterpart class words are labeled as biased slices.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix E"
+  },
+  {
+    "criteria": "Distributionally Robust Optimization (DRO) is implemented for training a debiased classifier on the discovered slices for both CelebA and Waterbirds datasets.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.2"
+  },
+  {
+    "criteria": "ResNet18 classifiers are trained on the FairFaces dataset in two settings: (1) gender-biased (male overrepresentation in the 20-29 class, female overrepresentation in the 50-59 class) and (2) gender-balanced.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.3"
+  },
+  {
+    "criteria": "The bias explanation pipeline is implemented: 50 DEXTER images are generated per class (up to 5000 optimization steps, multi-word prompting), each image correctly classified by the target model is captioned using ChatGPT-4o mini.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.3, Appendix F"
+  },
+  {
+    "criteria": "The caption system prompt is implemented with ChatGPT-4o mini using temperature=0.2, max_tokens=0, top_p=1.0, frequency_penalty=0, presence_penalty=0, n=1 to generate one-sentence image descriptions.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "The report system prompt is implemented to prompt a second ChatGPT-4o mini instance with the list of captions and produce a textual bias report following the defined structure (title + hypothesis on model bias + conclusion).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Appendix F"
+  },
+  {
+    "criteria": "Sentence Transformer Similarity (STS) is implemented to measure alignment between DEXTER's data-free bias reports and reports generated from actual training set images using the same pipeline.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 4.2.3"
+  },
+  {
+    "criteria": "G-eval consistency (G-eval_con) is implemented using gpt-4-0613 with temperature=2, max_tokens=0, top_p=1.0, n=20 outputs to assess factual alignment of bias reports.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F.2"
+  },
+  {
+    "criteria": "MOS_LLM is implemented using gpt-4-0613 with the MOS_LLM system prompt, temperature=2, max_tokens=0, top_p=1.0, n=20 outputs to rate reports on a 1-5 scale.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Appendix F.2"
+  },
+  {
+    "criteria": "The full DEXTER pipeline (prompt optimization + image generation + VLM reasoning) has been executed successfully without errors on SalientImageNet with RobustResNet50, 2000 optimization steps, single-word prompting.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2.1, Appendix D"
+  },
+  {
+    "criteria": "The ablation experiments have been executed successfully without errors on 30 SalientImageNet classes (15 spurious, 15 core), comparing 4 prompting strategies and generating 100 images per class.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.2.4"
+  },
+  {
+    "criteria": "The single-word vs. multi-word with/without L_mask ablation experiments have been executed successfully without errors, producing activation scores for all four configurations.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.2.4, Table 4"
+  },
+  {
+    "criteria": "The slice discovery experiments have been executed successfully without errors on CelebA (blonde/non-blonde) and Waterbirds (waterbird/landbird) datasets using k=4 words, 1000 optimization steps, and single-word prompting.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2.2, Appendix E"
+  },
+  {
+    "criteria": "The DRO debiasing training has been executed successfully without errors on CelebA and Waterbirds using DEXTER-discovered slice labels, producing worst-group and average accuracy metrics.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2.2, Table 1"
+  },
+  {
+    "criteria": "The bias explanation experiments have been executed successfully without errors on FairFaces, generating bias reports for both the biased and balanced ResNet18 classifiers for both age groups (20-29, 50-59).",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 4.2.3, Appendix F"
+  },
+  {
+    "criteria": "The bias report evaluation has been executed successfully without errors, producing STS, G-eval_con, MOS_LLM, and MOS_Humans scores for all four classifier/class combinations.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 4.2.3, Table 2"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 6: DEXTER achieves CLIP-IQA 0.94±0.03 and Semantic CLIP-IQA 0.96±0.03, outperforming DiffExplainer (0.89±0.09 / 0.90±0.05).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 6"
+  },
+  {
+    "criteria": "The execution outcomes match the results in Table 3: DEXTER's optimized prompts achieve a mean activation score of 75.43 (spurious: 63.00, core: 87.86), outperforming the baseline (64.73), ChatGPT (59.87), and DiffExplainer (39.83).",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 3"
+  },
+  {
+    "criteria": "The execution outcomes match the ablation results in Table 4: multi-word + L_mask achieves the best mean score (75.43), while single-word without L_mask (23.73) and multi-word without L_mask (11.83) perform significantly worse.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match Table 4 in that introducing L_mask consistently improves performance for both single-word (23.73 → 43.93) and multi-word (11.83 → 75.43) configurations, confirming L_mask's importance for stable optimization.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 4"
+  },
+  {
+    "criteria": "The execution outcomes match the slice discovery results in Table 1: DEXTER achieves worst-group accuracy of 91.3% on CelebA and 90.5% on Waterbirds, outperforming data-dependent methods including DRO-B2T (90.4% / 90.7%) on CelebA.",
+    "score": 5,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes match Table 1 in that DEXTER achieves these results without using any training data or ground-truth labels, unlike all baseline methods that require training data.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 1"
+  },
+  {
+    "criteria": "The execution outcomes for bias explanation match Table 2: all metrics (STS, G-eval_con, MOS_LLM, MOS_Humans) exceed 3 and approach 4, with mean STS ~0.90, mean G-eval_con ~4.19, mean MOS_LLM ~4.48, mean MOS_Humans ~4.01.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Table 2"
+  },
+  {
+    "criteria": "The execution outcomes for bias explanation show that DEXTER correctly identifies gender bias in the biased classifier and correctly identifies the absence of significant bias in the balanced classifier, as illustrated by the reports in Appendix F.1.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Appendix F.1"
+  },
+  {
+    "criteria": "The execution outcomes for slice discovery on Waterbirds show that DEXTER's ROC curves outperform SOTA baselines (ERM Confidence, Domino, Failure Direction, B2T) for both waterbird and landbird classes.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 7, Appendix E"
+  },
+  {
+    "criteria": "The soft prompt P=1 configuration achieves the best average activation score (87.75) compared to P=3, P=5, and P=10, confirming that increasing P weakens the classifier gradient signal in this data-free setting.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Table 5, Appendix C.1"
+  }
+]

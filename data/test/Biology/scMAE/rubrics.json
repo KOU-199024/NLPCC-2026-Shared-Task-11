@@ -1,0 +1,500 @@
+[
+  {
+    "criteria": "The agent has read Section 2.1 completely to understand the overall scMAE methodology: the three-step masking process, autoencoder architecture, and downstream clustering strategy.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.1.1 completely to understand how the masked gene expression matrix is generated through within-gene shuffling, Bernoulli mask generation, and element-wise masking.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1.1"
+  },
+  {
+    "criteria": "The agent has read Section 2.1.2 completely to understand the three-component masked autoencoder (encoder, mask predictor, decoder) and the two distinct loss functions.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.1.2"
+  },
+  {
+    "criteria": "The agent has read Section 2.1.3 completely to understand the downstream clustering strategy: K-means for datasets with fewer than 10,000 cells and Leiden for larger datasets.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 2.1.3"
+  },
+  {
+    "criteria": "The agent has read Section 2.2 completely to identify all 16 scRNA-seq datasets and their characteristics, including sequencing platforms, cell counts, and which datasets contain rare cell types or batch effects.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The agent has read Section 2.3 completely to understand the seven comparison methods (scNAME, scGNN, graph-sc, contrastive-sc, scVI, scVI-LD, CLEAR) and the specific preprocessing required for each.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The agent has read Section 2.4 completely to understand the three evaluation metrics: ARI, NMI, and cell-type ASW, and the separate batch ASW for batch-effect datasets.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The agent has read Section 3.2 completely to understand the three ablation scenarios (scMAE-U, scMAE-M, scMAE-W) and the hyperparameter sensitivity analysis covering masked data ratio, lambda, gamma, and learning rate.",
+    "score": 2,
+    "type": "Paper Observation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The agent has read Figure 2 to understand the main comparison results, including the ARI rank heatmap across 15 datasets, average ARI and NMI bar plots, and UMAP visualizations for the Macosko dataset.",
+    "score": 1,
+    "type": "Paper Observation",
+    "comment": "Figure 2"
+  },
+  {
+    "criteria": "The plan includes the three-step masked gene expression generation: shuffling gene values within each gene across cells, generating a per-gene Bernoulli mask matrix, and computing element-wise masked expression.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1.1"
+  },
+  {
+    "criteria": "The plan includes the full masked autoencoder architecture: a multi-layer MLP encoder, a linear mask predictor, and a linear decoder receiving the concatenation of embedding and predicted mask.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1.2"
+  },
+  {
+    "criteria": "The plan includes implementing the mask estimation cross-entropy loss (Lm) and the weighted MSE reconstruction loss (Lr) with the lambda hyperparameter controlling emphasis on corrupted genes.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Equations 4-6"
+  },
+  {
+    "criteria": "The plan includes combining both losses into the total loss L = (1-gamma)*Lr + gamma*Lm with the gamma hyperparameter.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The plan includes applying K-means clustering for datasets with fewer than 10,000 cells and Leiden clustering for datasets with 10,000 or more cells.",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 2.1.3"
+  },
+  {
+    "criteria": "The plan includes loading and preprocessing all 16 scRNA-seq datasets with their respective preprocessing pipelines.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The plan includes running each method 10 times with different random seeds and reporting median values for all evaluation metrics.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The plan includes all seven comparison methods (scNAME, scGNN, graph-sc, contrastive-sc, scVI, scVI-LD, CLEAR) with their required preprocessing steps.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The plan includes implementing the three ablation scenarios: scMAE-U (only unmasked reconstruction), scMAE-M (only masked reconstruction), and scMAE-W (remove mask estimation loss).",
+    "score": 3,
+    "type": "Plan Writing",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The plan includes hyperparameter sensitivity analysis for all four hyperparameters: masked data ratio, lambda, gamma, and learning rate.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.2, Supplementary Figure S9"
+  },
+  {
+    "criteria": "The plan includes a rare cell type identification experiment on the Shekhar dataset using differential expression analysis of top 50 DEGs per cluster.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The plan includes evaluation of all three metrics (ARI, NMI, cell-type ASW) per Equations 8 and batch ASW per Equation 9 for the MouseRetina batch-effect dataset.",
+    "score": 2,
+    "type": "Plan Writing",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The plan includes biological analysis on the Hrvatin dataset: differential expression analysis between oligodendrocyte sub-clusters and GO enrichment analysis.",
+    "score": 1,
+    "type": "Plan Writing",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The code for within-gene shuffling permutes expression values across cells within each gene column independently, preserving the within-gene distribution while disrupting cell-level gene correlations.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.1"
+  },
+  {
+    "criteria": "The code generates the binary mask matrix M by independently sampling each element M_{ij} from a Bernoulli distribution with per-gene probability p_j, as defined in Equation 1.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The code computes the masked gene expression matrix X_M using the element-wise formula X_{M_ij} = X_{ij}*(1-M_{ij}) + X'_{ij}*M_{ij} as defined in Equation 2.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 2"
+  },
+  {
+    "criteria": "The code applies independent per-gene masking probabilities (p_1, ..., p_G) so that different genes can have different proportions of masked values.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 1"
+  },
+  {
+    "criteria": "The encoder is implemented as a multi-layer MLP where each hidden layer l applies E_l = sigma(W_l * E_{l-1} + b_l) with a nonlinear activation function sigma, as per Equation 3.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 3"
+  },
+  {
+    "criteria": "The last layer of the encoder uses a linear (identity) activation function rather than a nonlinear activation, producing the final cell embedding E.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.2"
+  },
+  {
+    "criteria": "The encoder takes the masked gene expression X_M as input (not the original expression X) and outputs the low-dimensional cell embedding E.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.2"
+  },
+  {
+    "criteria": "The mask predictor is implemented as a single linear layer that takes the embedding E as input and outputs the predicted mask M~.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.2"
+  },
+  {
+    "criteria": "The mask estimation loss L_m is implemented as cross-entropy between the true binary mask M and the predicted mask M~, as defined in Equation 4.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 4"
+  },
+  {
+    "criteria": "The decoder is implemented as a single linear layer (not a multi-layer network) that maps its concatenated input to the reconstructed gene expression X~.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.2"
+  },
+  {
+    "criteria": "The decoder input is the concatenation of the cell embedding E and the predicted mask M~, not the embedding alone.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.2"
+  },
+  {
+    "criteria": "The weighted reconstruction loss L_r is implemented as a weighted MSE as defined in Equation 5, with per-element weights omega_{ij} applied to each gene-cell pair.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 5"
+  },
+  {
+    "criteria": "The per-element weight omega_{ij} is computed as M_{ij}*lambda + (1-M_{ij})*(1-lambda) per Equation 6, where lambda is a hyperparameter controlling emphasis on corrupted entries versus non-corrupted entries.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 6"
+  },
+  {
+    "criteria": "The total loss L is implemented as L = (1-gamma)*L_r + gamma*L_m per Equation 7, where gamma balances the reconstruction and mask estimation losses.",
+    "score": 5,
+    "type": "Code Implementation",
+    "comment": "Equation 7"
+  },
+  {
+    "criteria": "The encoder parameters are shared between the reconstruction path and the mask estimation path, so both losses update the same encoder.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.2"
+  },
+  {
+    "criteria": "K-means clustering is applied to the cell embeddings E (output of encoder) for datasets with fewer than 10,000 cells, with the number of clusters set to the true number of cell types.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.3"
+  },
+  {
+    "criteria": "Leiden clustering is applied to the cell embeddings E (output of encoder) for datasets with 10,000 or more cells.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.3"
+  },
+  {
+    "criteria": "Only the cell embeddings E from the encoder are used for downstream clustering; the decoder and mask predictor outputs are not used during inference.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.1.3"
+  },
+  {
+    "criteria": "The code for loading and preprocessing all 15 main scRNA-seq datasets (Pollen, Lung, Limb_Muscle, Worm_Neuron, Melanoma, Young, Guo, Baron, Wang, Spleen, Tosches, Bach, Shekhar, Macosko, Hrvatin) has been implemented.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.2"
+  },
+  {
+    "criteria": "The MouseRetina batch-effect dataset is loaded and preprocessed for the batch effect evaluation experiment.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.2, Supplementary Figure S14"
+  },
+  {
+    "criteria": "Standard scRNA-seq preprocessing steps (e.g., library size normalization, log transformation, and/or highly variable gene selection) are applied to the raw count data before model input.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Supplementary Note S1"
+  },
+  {
+    "criteria": "The ARI (Adjusted Rand Index) metric is implemented to compare predicted clustering labels against true cell type labels.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The NMI (Normalized Mutual Information) metric is implemented to evaluate the alignment between predicted clustering and true cell type labels.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 2.4"
+  },
+  {
+    "criteria": "The cell-type ASW is computed by scaling the raw silhouette score using the formula cell-type ASW = (ASW + 1) / 2 as per Equation 8.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 8"
+  },
+  {
+    "criteria": "The batch ASW is computed using BatchASW = 1 - abs(ASW) per Equation 9, so that higher values indicate better batch mixing.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Equation 9"
+  },
+  {
+    "criteria": "The scNAME comparison method is implemented or invoked with its required preprocessing steps for fair comparison.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The scGNN comparison method is implemented or invoked including LTMG (left truncated mixed Gaussian) model processing as specified in its methodology.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The graph-sc comparison method is implemented or invoked with its required preprocessing steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The contrastive-sc comparison method is implemented or invoked with its required preprocessing steps.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The scVI comparison method is implemented or invoked using the original count matrix with highly variable gene selection as input.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The scVI-LD comparison method is implemented or invoked using the original count matrix with highly variable gene selection as input.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The CLEAR comparison method is implemented or invoked with normalization, log transformation, highly variable gene selection, and scaling as its preprocessing pipeline.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 2.3"
+  },
+  {
+    "criteria": "The scMAE-U ablation variant is implemented by setting lambda such that only the unmasked genes contribute to the reconstruction loss (removing the weighted loss on masked genes).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The scMAE-M ablation variant is implemented by setting lambda such that only the masked genes contribute to the reconstruction loss (removing the weighted loss on unmasked genes).",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The scMAE-W ablation variant is implemented by setting gamma to zero or removing the mask estimation loss term L_m from the total loss, training with reconstruction loss only.",
+    "score": 4,
+    "type": "Code Implementation",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The hyperparameter sensitivity analysis is implemented for the masked data ratio (gene masking probability), testing multiple values including those in the range 0.2-0.4.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Supplementary Figure S9"
+  },
+  {
+    "criteria": "The hyperparameter sensitivity analysis is implemented for lambda (the weight controlling emphasis on masked vs. non-masked genes in the reconstruction loss, Equation 6).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Supplementary Figure S9"
+  },
+  {
+    "criteria": "The hyperparameter sensitivity analysis is implemented for gamma (the balance between reconstruction loss and mask estimation loss in Equation 7).",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Supplementary Figure S9"
+  },
+  {
+    "criteria": "The hyperparameter sensitivity analysis is implemented for the learning rate, covering multiple candidate values.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 3.2, Supplementary Figure S9"
+  },
+  {
+    "criteria": "The differential expression analysis code is implemented to identify the top 50 DEGs for each cluster, using both true labels and clustering labels from each method, for the Shekhar dataset.",
+    "score": 3,
+    "type": "Code Implementation",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The UMAP dimensionality reduction and visualization code is implemented to produce 2D cell embedding plots colored by both clustering labels and true cell type labels.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The Gene Ontology (GO) enrichment analysis code is implemented to characterize the functional differences between sub-clusters in the Hrvatin dataset.",
+    "score": 2,
+    "type": "Code Implementation",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The scMAE training and clustering pipeline has been executed successfully on all 15 main scRNA-seq datasets without errors.",
+    "score": 5,
+    "type": "Command Execution",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "All seven comparison methods (scNAME, scGNN, graph-sc, contrastive-sc, scVI, scVI-LD, CLEAR) and scMAE have each been run 10 times with different random seeds on all 15 datasets.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The three ablation experiments (scMAE-U, scMAE-M, scMAE-W) have been executed successfully on all 15 datasets.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.2, Supplementary Figure S8"
+  },
+  {
+    "criteria": "The hyperparameter sensitivity experiments have been executed successfully, producing results for multiple values of masked data ratio, lambda, gamma, and learning rate.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.2, Supplementary Figure S9"
+  },
+  {
+    "criteria": "The rare cell type identification experiment on the Shekhar dataset has been executed successfully, including differential expression analysis comparing top 50 DEGs per cluster against true cell type DEGs.",
+    "score": 4,
+    "type": "Command Execution",
+    "comment": "Section 3.3"
+  },
+  {
+    "criteria": "The biological analysis experiment on the Hrvatin dataset has been executed successfully, including UMAP visualization, differential expression analysis for oligodendrocyte sub-clusters, and GO enrichment analysis.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Section 3.4"
+  },
+  {
+    "criteria": "The batch effect experiment has been executed successfully on the MouseRetina dataset, producing ARI, NMI, and batch ASW scores.",
+    "score": 3,
+    "type": "Command Execution",
+    "comment": "Supplementary Figure S14"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2B: scMAE achieves an average ARI of approximately 0.84 across the 15 datasets, the highest among all eight compared methods.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2B"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2C: scMAE achieves an average NMI of approximately 0.85 across the 15 datasets, the highest among all eight compared methods.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2C"
+  },
+  {
+    "criteria": "The execution outcomes match Figure 2A: scMAE achieves the highest ARI on exactly 10 out of 15 datasets (Lung, Melanoma, Young, Guo, Baron, Spleen, Bach, Shekhar, Macosko, Hrvatin).",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 2A"
+  },
+  {
+    "criteria": "The execution outcomes confirm that scMAE achieves the highest average ARI rank across all 15 datasets, with scNAME as the second-best method.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2A"
+  },
+  {
+    "criteria": "The execution outcomes confirm that scMAE outperforms the second-best method by more than 0.01 in ARI on at least 9 datasets, and by more than 0.1 on the Baron, Shekhar, and Macosko datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 3.1"
+  },
+  {
+    "criteria": "The ablation outcomes match Supplementary Figure S8B: the full scMAE achieves higher average ARI, NMI, and ASW than all three ablation variants (scMAE-U, scMAE-M, scMAE-W).",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Supplementary Figure S8B, Section 3.2"
+  },
+  {
+    "criteria": "The ablation outcomes confirm that scMAE-M (only masked reconstruction) produces the worst clustering performance, with particularly severe degradation on Shekhar, Spleen, Macosko, and Worm_Neuron datasets.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Section 3.2"
+  },
+  {
+    "criteria": "The hyperparameter sensitivity outcomes confirm that the masked data ratio is robust within the range of 0.2-0.4, with minimal performance degradation across this range.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Section 3.2, Supplementary Figure S9"
+  },
+  {
+    "criteria": "The execution outcomes on the Shekhar dataset confirm that only scMAE can uniquely assign each of the 18 cell subtypes (including the extremely rare Rod PR at 0.003% and Cone PR at 0.001%) to a distinct cluster.",
+    "score": 4,
+    "type": "Result Matching",
+    "comment": "Figure 3, Section 3.3"
+  },
+  {
+    "criteria": "The UMAP visualization of the Macosko dataset confirms that scMAE clearly delineates the boundaries of rare cell types (fibroblasts, microglia, horizontal cells) that other methods fail to separate.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 2D, Section 3.1"
+  },
+  {
+    "criteria": "The Hrvatin dataset results confirm that scMAE separates oligodendrocytes into two biologically distinct clusters: Cluster 2 enriched in myelination and neural system development, and Cluster 5 enriched in Golgi lumen and perisynaptic extracellular matrix pathways.",
+    "score": 3,
+    "type": "Result Matching",
+    "comment": "Figure 4, Section 3.4"
+  },
+  {
+    "criteria": "The training loss curves confirm that the mask estimation loss (Lm) rapidly converges to near zero within the first few epochs across datasets, indicating the mask predictor quickly learns to identify corrupted gene values.",
+    "score": 2,
+    "type": "Result Matching",
+    "comment": "Supplementary Figure S12, Section 4"
+  }
+]
