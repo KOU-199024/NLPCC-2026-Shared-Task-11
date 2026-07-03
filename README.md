@@ -319,13 +319,13 @@ You can use this directory as a template when setting up your own reproduction w
 
 Read and Write operations are restricted to the `--work-dir` directory. Attempts to access paths outside (e.g., `../../etc/passwd` or `/etc/secret`) return an error. Execute commands are not path-restricted but run with `cwd` set to `--work-dir`.
 
-<!-- # Ranking
+# Ranking
 
-Here is the performance and ranking of all submitted teams. We additionally report a baseline of Codex with GPT-5.5 on medium.
+Here is the performance and ranking of all submitted teams. We additionally report a baseline of Codex with GPT-5.5 on medium thinking effort.
 
-| Ranking | Team Name             | Replication Score |
-| ------- | --------------------- | ----------------- |
-| 1       | YNJTC-Task11-AgentRep |                   |
-| 2       | zzunlp_wu             |                   |
-| 3       | QueenAgent            |                   |
-| 4       | *Codex*             |                   | -->
+| Ranking | Team Name               | Replication Score |
+| ------- | ----------------------- | ----------------- |
+| 1       | YNJTC-Task11-AgentRep   | 49.64%            |
+| 2       | zzunlp_wu               | 24.70%            |
+| 3       | QueenAgent              | 7.03%             |
+| -       | *Codex-GPT5.5-Medium* | 24.19%            |
