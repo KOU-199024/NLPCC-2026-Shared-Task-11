@@ -321,7 +321,7 @@ Read and Write operations are restricted to the `--work-dir` directory. Attempts
 
 # Ranking
 
-Here is the performance and ranking of all submitted teams. We additionally report a baseline of Codex with GPT-5.5 on medium thinking effort.
+The performance and rankings of all submitted teams are shown below. We additionally report a Codex baseline using GPT-5.5 with medium reasoning effort.
 
 | Ranking | Team Name               | Replication Score |
 | ------- | ----------------------- | ----------------- |
