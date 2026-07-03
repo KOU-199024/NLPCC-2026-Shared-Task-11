@@ -122,7 +122,7 @@ python tools/record_tools.py --work-dir /path/to/workspace
 | Argument       | Required | Default             | Description                                                                 |
 | -------------- | -------- | ------------------- | --------------------------------------------------------------------------- |
 | `--work-dir` | Yes      | —                  | Agent working directory. Read/Write operations are restricted to this path. |
-| `--log-dir`  | No       | `<work-dir>/log/` | Directory where `actions.json` will be saved.                             |
+| `--log-dir`  | No       | `<work-dir>/log/` | Directory where`actions.json` will be saved.                              |
 
 ### Tools
 
@@ -318,3 +318,15 @@ You can use this directory as a template when setting up your own reproduction w
 ### Path Restriction
 
 Read and Write operations are restricted to the `--work-dir` directory. Attempts to access paths outside (e.g., `../../etc/passwd` or `/etc/secret`) return an error. Execute commands are not path-restricted but run with `cwd` set to `--work-dir`.
+
+
+# Ranking
+
+Here is the performance and ranking of all submitted teams. We additionally report a baseline of Codex with GPT-5.5 on medium.
+
+| Ranking | Team Name             | Replication Score |
+| ------- | --------------------- | ----------------- |
+| 1       | YNJTC-Task11-AgentRep | 0.543             |
+| 2       | zzunlp_wu             | 0.511             |
+| 3       | QueenAgent            | 0.447             |
+| 4       | *Codex*             | 0.436             |
