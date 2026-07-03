@@ -2,6 +2,8 @@
 
 ## Agent-Based Experiment Reproduction from Scientific Papers
 
+The team scores and rankings are released in [Ranking](#ranking).
+
 ### Task Introduction
 
 As LLM-based AI systems become increasingly integral to scientific workflows, they provide substantial support across multiple stages of research. However, experiment reproduction remains a significant challenge for current AI agents. This task evaluates agents' ability to reconstruct experimental pipelines from research papers by interpreting text, planning implementations, generating code, and executing experiments within a controlled environment. Unlike prior work that focuses only on final outputs, this task emphasizes the full reproduction process through fine-grained action logs and predefined rubrics covering key stages such as paper understanding, planning, coding, and execution.
