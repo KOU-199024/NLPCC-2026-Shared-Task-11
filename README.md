@@ -321,11 +321,11 @@ Read and Write operations are restricted to the `--work-dir` directory. Attempts
 
 # Ranking
 
-The performance and rankings of all submitted teams are shown below. We additionally report a Codex baseline using GPT-5.5 with medium reasoning effort.
+Here is the performance and ranking of all submitted teams. We additionally report a baseline of Codex with GPT-5.5 on medium thinking effort.
 
-| Ranking | Team Name               | Replication Score |
-| ------- | ----------------------- | ----------------- |
-| 1       | YNU-HPC-Task11-AgentRep | 49.64%            |
-| 2       | zzunlp_wu               | 24.70%            |
-| 3       | QueenAgent              | 7.03%             |
-| -       | *Codex-GPT5.5-Medium* | 24.19%            |
+| Ranking | Team Name                | Replication Score |
+| ------- | ------------------------ | ----------------- |
+| 1       | YNU-HPCC-Task11-AgentRep | 49.64%            |
+| 2       | zzunlp_wu                | 24.70%            |
+| 3       | QueenAgent               | 7.03%             |
+| -       | *Codex-GPT5.5-Medium*  | 24.19%            |
