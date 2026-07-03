@@ -325,7 +325,7 @@ The performance and rankings of all submitted teams are shown below. We addition
 
 | Ranking | Team Name               | Replication Score |
 | ------- | ----------------------- | ----------------- |
-| 1       | YNJTC-Task11-AgentRep   | 49.64%            |
+| 1       | YNU-Task11-AgentRep     | 49.64%            |
 | 2       | zzunlp_wu               | 24.70%            |
 | 3       | QueenAgent              | 7.03%             |
 | -       | *Codex-GPT5.5-Medium* | 24.19%            |
